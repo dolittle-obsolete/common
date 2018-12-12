@@ -1,0 +1,50 @@
+{
+  "name": "@dolittle/common",
+  "version": "1.0.0",
+  "description": "CLI tool for Dolittle",
+  "homepage": "https://dolittle.io",
+  "author": "Dolittle",
+  "contributors": [
+    "woksin"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dolittle-tools/cli.git"
+  },
+  "main": "bin/common.js",
+  "module": "Source/common.js",
+  "scripts": {
+    "build": "babel Source -d bin --source-maps inline --ignore **/for_*"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-async-generator-functions": "^6.24.1",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.7.0",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^5.7.0",
+    "karma": "^3.0.0",
+    "karma-babel-preprocessor": "^7.0.0",
+    "karma-chai-plugins": "^0.9.0",
+    "karma-mocha": "^1.3.0",
+    "mocha": "^5.2.0",
+    "sinon": "^6.1.5",
+    "sinon-chai": "^3.2.0"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "fs-extra": "^7.0.0",
+    "handlebars": "^4.0.12",
+    "rc": "^1.2.8",
+    "shelljs": "^0.8.2",
+    "simple-git": "^1.96.0",
+    "winston": "^3.1.0"
+  }
+}
