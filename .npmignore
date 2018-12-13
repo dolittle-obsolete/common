@@ -1,6 +1,7 @@
 node_modules
 .babelrc
 .editorconfig
+.eslintrc.json
 jsconfig.jscon
 karma.conf.js
 README.md
