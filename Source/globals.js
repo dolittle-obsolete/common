@@ -9,21 +9,11 @@ import simpleGit from 'simple-git';
 import { Git } from 'simple-git';
 import { ConfigManager } from './configuration/ConfigManager';
 import { ConfigParser } from './configuration/ConfigParser';
-import { ApplicationManager } from './applications/ApplicationManager';
-import { BoundedContextManager } from './boundedContexts/BoundedContextManager';
 import { BoilerPlatesManager } from './boilerPlates/BoilerPlatesManager';
 import { HttpWrapper } from './HttpWrapper';
 import { Folders } from './Folders';
-import { ArtifactsManager } from './artifacts/ArtifactsManager';
-import { InquirerManager } from './artifacts/InquirerManager';
 /* eslint-enable no-unused-vars */
 
-export const areas = [
-    'concepts',
-    'domain',
-    'events',
-    'read'
-];
 /**
  * @type {WeakMap<globals, ConfigManager>}
  */
@@ -96,6 +86,14 @@ class globals {
         _git.set(this, git);
         _folders.set(this, new Folders(fs));
         _boilerPlatesManager.set(this, new BoilerPlatesManager(this.configManager, this.httpWrapper, git, this.folders, fs, this.logger));
+    }
+    get areas() {
+        return [
+            'concepts',
+            'domain',
+            'events',
+            'read'
+        ];
     }
 
     get fileSystem() {
