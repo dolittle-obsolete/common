@@ -12,7 +12,7 @@ import { Guid } from './Guid';
  * @param {string} destinationPath The absolute path of the destination of the application
  */
 export function createApplication(context, destinationPath) {
-    globals.logger.info(`Creating application with name '${context.applicationName}'`);
+    globals.logger.info(`Creating application with name '${context.name}'`);
     
     let boilerPlate = globals.boilerPlatesManager.boilerPlatesByType('application')[0];
 
@@ -22,8 +22,6 @@ export function createApplication(context, destinationPath) {
     }
     context.id = Guid.create();
 
-    globals.folders.makeFolderIfNotExists(destinationPath);
-    
     globals.boilerPlatesManager.createInstance(boilerPlate, destinationPath, context);
 }
 

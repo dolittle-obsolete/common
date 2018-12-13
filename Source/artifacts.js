@@ -57,17 +57,13 @@ export function templateByBoilerplate(boilerPlate, artifactType)
 /**
  * Creates an artifact of the given type at the given destination with the given name 
  * @param {any} context 
- * @param {string} artifactType
- * @param {string} area
- * @param {string} path
+ * @param {string} language
+ * @param {ArtifactTemplate} artifactTemplate
+ * @param {string} destinationPath
  * 
  */
-export function createArtifact(context, artifactType, language, destinationPath) {
-    let boilerPlate = this._getArtifactsBoilerPlateByLanguage(language);
-    let artifactTemplate = this._getArtifactTemplateByBoilerplate(boilerPlate, artifactType);
-
-    globals.folders.makeFolderIfNotExists(destinationPath);
-    globals.logger.info(`Creating an artifact of type '${context.artifactType}' and language '${language}'`);
+export function createArtifact(context, language, artifactTemplate, destinationPath) {
+    globals.logger.info(`Creating an artifact of type '${artifactTemplate.type}' and language '${language}'`);
     globals.boilerPlatesManager.createArtifactInstance(artifactTemplate, destinationPath, context);
         
 }

@@ -28,8 +28,6 @@ export function createBoundedContext(context, language, destinationPath) {
     context.id = Guid.create();
 
     const boundedContextPath = path.join(destinationPath, context.name);
-    
-    globals.folders.makeFolderIfNotExists(boundedContextPath);
 
     globals.boilerPlatesManager.createInstance(boilerPlate, boundedContextPath, context);
 }

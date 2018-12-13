@@ -15,6 +15,7 @@ import { BoilerPlate } from './BoilerPlate';
 import Handlebars from 'handlebars';
 import { Guid } from '../Guid';
 import { getFileNameAndExtension } from '../helpers';
+import { ArtifactTemplate } from '../artifacts/ArtifactTemplate';
 /* eslint-enable no-unused-vars */
 
 const boilerPlateFolder = 'boiler-plates';
@@ -329,6 +330,7 @@ export class BoilerPlatesManager {
      * @param {object} context 
      */
     createInstance(boilerPlate, destination, context) {
+        _folders.get(this).makeFolderIfNotExists(destinationPath);
         _folders.get(this).copy(destination, boilerPlate.location);
         boilerPlate.pathsNeedingBinding.forEach(_ => {
             let pathToRename = path.join(destination, _);
@@ -348,12 +350,13 @@ export class BoilerPlatesManager {
     }
     /**
      * Create an instance of {BoilerPlate} of an artifact into a specific destination folder with a given context
-     * @param {{template: any, location: string}} artifactTemplate
+     * @param {ArtifactTemplate} artifactTemplate
      * @param {string} destination 
-     * @param {object} context 
+     * @param {any} context 
      */
     createArtifactInstance(artifactTemplate, destination, context) {
-        let filesToCreate = _folders.get(this).getArtifactTemplateFilesRecursivelyIn(artifactTemplate.location, artifactTemplate.template.includedFiles);
+        _folders.get(this).makeFolderIfNotExists(destinationPath);
+        let filesToCreate = _folders.get(this).getArtifactTemplateFilesRecursivelyIn(artifactTemplate.location, artifactTemplate.includedFiles);
         
         filesToCreate.forEach( filePath => {
             const filename = getFileNameAndExtension(filePath);
