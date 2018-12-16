@@ -9,9 +9,6 @@
     "type": "git",
     "url": "https://github.com/dolittle-tools/cli.git"
   },
-  "main": "dist/commonjs/index.js",
-  "module": "dist/es2015/common.js",
-  "typings": "dist/common.d.ts",
   "files": [
     "Source"
   ],
@@ -19,7 +16,6 @@
     "@dolittle/build": "1.0.0"
   },
   "dependencies": {
-    "esm": "^3.0.84",
     "fs-extra": "^7.0.0",
     "handlebars": "^4.0.12",
     "rc": "^1.2.8",
