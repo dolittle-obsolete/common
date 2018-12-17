@@ -9,9 +9,12 @@
     "type": "git",
     "url": "https://github.com/dolittle-tools/cli.git"
   },
-  "files": [
-    "Source"
-  ],
+  "main": "./dist/common.js",
+  "module": "./Source/common.js",
+  "scripts": {
+    "transpile": "npx babel Source -d dist --source-maps inline --ignore **/for_*",
+    "prepublish": "yarn transpile"
+  },
   "devDependencies": {
     "@dolittle/build": "1.0.0"
   },

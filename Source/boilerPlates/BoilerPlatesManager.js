@@ -330,7 +330,7 @@ export class BoilerPlatesManager {
      * @param {object} context 
      */
     createInstance(boilerPlate, destination, context) {
-        _folders.get(this).makeFolderIfNotExists(destinationPath);
+        _folders.get(this).makeFolderIfNotExists(destination);
         _folders.get(this).copy(destination, boilerPlate.location);
         boilerPlate.pathsNeedingBinding.forEach(_ => {
             let pathToRename = path.join(destination, _);
@@ -355,7 +355,7 @@ export class BoilerPlatesManager {
      * @param {any} context 
      */
     createArtifactInstance(artifactTemplate, destination, context) {
-        _folders.get(this).makeFolderIfNotExists(destinationPath);
+        _folders.get(this).makeFolderIfNotExists(destination);
         let filesToCreate = _folders.get(this).getArtifactTemplateFilesRecursivelyIn(artifactTemplate.location, artifactTemplate.includedFiles);
         
         filesToCreate.forEach( filePath => {
