@@ -9,9 +9,10 @@ import simpleGit from 'simple-git';
 import { Git } from 'simple-git';
 import { ConfigManager } from './configuration/ConfigManager';
 import { ConfigParser } from './configuration/ConfigParser';
-import { BoilerPlatesManager } from './boilerPlates/BoilerPlatesManager';
 import { HttpWrapper } from './HttpWrapper';
 import { Folders } from './Folders';
+import { BoilerPlatesManager } from './boilerPlates/BoilerPlatesManager';
+import { ArtifactTemplate } from './artifacts/ArtifactTemplate';
 /* eslint-enable no-unused-vars */
 
 /**
@@ -85,15 +86,8 @@ class globals {
         }));
         _git.set(this, git);
         _folders.set(this, new Folders(fs));
+        new ArtifactTemplate('')
         _boilerPlatesManager.set(this, new BoilerPlatesManager(this.configManager, this.httpWrapper, git, this.folders, fs, this.logger));
-    }
-    get areas() {
-        return [
-            'concepts',
-            'domain',
-            'events',
-            'read'
-        ];
     }
 
     get fileSystem() {

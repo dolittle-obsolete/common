@@ -1,4 +1,4 @@
-import globals from '../globals';
+import { areas } from '../helpers';
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Dolittle. All rights reserved.
@@ -60,13 +60,11 @@ function throwIfInvalidDependency(type, discoverType, userInputType, milestone, 
     }
 
     if (throwError) {
-        globals.logger.error(`Invalid dependency. Errors:\n\t${errors.join('\n\t')}`);
         throw 'Invalid dependency';
     }
 }
 function throwIfInvalidArea(fromArea) {
-    if (!globals.areas.includes(fromArea)) {
-        globals.logger.error(`'${fromArea}' is not a valid area. It must be one of '[${globals.areas.join(', ')}]'`);
+    if (!areas.includes(fromArea)) {
         throw 'Invalid area';
     }
 }

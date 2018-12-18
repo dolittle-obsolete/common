@@ -5,15 +5,16 @@ module.exports = function(wallaby) {
     
     return {
         files: [
+
             { pattern: 'node_modules/chai/chai.js', instrument: false },
             { pattern: 'node_modules/chai-as-promised/chai-as-promised.js', instrument: false },
             { pattern: 'node_modules/sinon/pkg/sinon.js', instrument: false },
             { pattern: 'node_modules/sinon-chai/lib/sinon-chai.js', instrument: false },
-            { pattern: 'Source/**/for_*/*.js', ignore: true },
+            { pattern: 'Source/**/for_*/**/*.js', ignore: true },
             { pattern: 'Source/**/*.js' }
         ],
         tests: [
-            { pattern: 'Source/**/for_*/*.js' }
+            { pattern: 'Source/**/for_*/**/*.js' }
         ],
 
         testFramework: 'mocha',

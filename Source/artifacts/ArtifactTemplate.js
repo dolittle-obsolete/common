@@ -1,5 +1,5 @@
 import { Dependency, dependencyFromJson } from '../dependencies/Dependency';
-import globals from '../globals';
+import { areas } from '../helpers';
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Dolittle. All rights reserved.
@@ -12,8 +12,7 @@ export function artifactTemplateFromJson(obj, location) {
         obj.dependencies.map(depObj => dependencyFromJson(depObj)), obj.includedFiles, location);
 }
 function throwIfInvalidArea(area) {
-    if (!globals.areas.includes(area)) {
-        globals.logger.error(`'${area}' is not a valid area. It must be one of '[${globals.areas.join(', ')}]'`);
+    if (!areas.includes(area)) {
         throw 'Invalid area';
     }
 }

@@ -1,4 +1,7 @@
+Source
 node_modules
+.yalc
+yalc.lock
 .babelrc
 .editorconfig
 .eslintrc.json

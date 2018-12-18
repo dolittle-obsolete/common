@@ -1,18 +1,21 @@
 {
   "plugins": [
-    "transform-decorators-legacy",
-    "transform-class-properties",
-    "transform-async-to-generator",
-    "transform-async-generator-functions",
-    "transform-object-rest-spread",
-    ["transform-runtime", {
-      "polyfill": false,
-      "regenerator": true
-    }]    
+    "@babel/plugin-proposal-class-properties",
+    ["@babel/plugin-proposal-decorators", {"legacy": true}],
+    "@babel/plugin-syntax-flow",
+    "@babel/plugin-transform-flow-strip-types",
+    ["@babel/plugin-transform-runtime",
+      {
+        "corejs": false,
+        "helpers": false,
+        "regenerator": true,
+        "useESModules": false
+      }
+    ]
   ],
   "presets": [
-    "env"
-  ],
-  "sourceMaps": "inline"
-    
+    [
+      "@babel/preset-env"
+    ]
+  ]
 }

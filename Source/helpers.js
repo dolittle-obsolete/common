@@ -9,6 +9,12 @@
  */
 export const usagePrefix = '\n\t ';
 
+export const areas = [
+    'concepts',
+    'domain',
+    'events',
+    'read'
+];
 
 /**
  * Gets the full directory path

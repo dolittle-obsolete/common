@@ -1,4 +1,4 @@
-import { a_boiler_plate_json } from './given/a_boiler_plate_json'
+import { a_boiler_plate_json } from './given/a_boiler_plate_json';
 import { BoilerPlate } from '../../BoilerPlate';
 describe('when parsing a boiler plate json back and forth', () => {
     let context = new a_boiler_plate_json();

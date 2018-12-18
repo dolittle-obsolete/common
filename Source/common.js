@@ -14,8 +14,8 @@ import { ArtifactTemplate } from './artifacts/ArtifactTemplate';
 import { Folders } from './Folders';
 import { Guid } from './Guid';
 
-module.exports = Object.assign(
-    {},
+
+module.exports = {
     ArtifactTemplate,
     BoilerPlate,
     BoilerPlatesManager,
@@ -27,10 +27,10 @@ module.exports = Object.assign(
     Folders,
     Guid,
     globals,
-    require('./applications'),
-    require('./artifacts'),
-    require('./boundedContexts'),
-    require('./dependencies'),
-    require('./helpers')
-);
+    applications: require('./applications'),
+    artifacts: require('./artifacts'),
+    boundedContexts: require('./boundedContexts'),
+    dependencies: require('./dependencies'),
+    helpers: require('./helpers')
+};
 

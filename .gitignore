@@ -1,5 +1,7 @@
 bin
 dist
+.yalc
+yalc.lock
 # Logs
 logs
 *.log
