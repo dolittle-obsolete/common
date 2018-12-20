@@ -8,7 +8,7 @@
   */
 export class Cluster
 {
-    name = ""
-    url = 0
-    token = ""
+    name = '';
+    url = 0;
+    token = "";
 }

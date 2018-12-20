@@ -10,11 +10,11 @@ export class Config
      * Array of all the configured clusters
      * @type {Cluster[]}
      */
-    clusters = []
+    clusters = [];
 
     /**
      * Current cluster being used
      * @type {Cluster}
      */
-    current = null
+    current = null;
 }
