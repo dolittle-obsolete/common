@@ -9,14 +9,14 @@
     "type": "git",
     "url": "https://github.com/dolittle-tools/cli.git"
   },
-  "main": "./dist/common.js",
-  "module": "./Source/common.js",
+  "main": "./dist/index.js",
+  "module": "./Source/index.js",
   "scripts": {
-    "transpile": "npx babel Source -d dist --source-maps inline --ignore **/for_*",
+    "transpile": "./node_modules/@dolittle/build/node_modules/.bin/babel Source -d dist --source-maps inline --ignore **/for_* --config-file ./.babelrc",
     "prepublish": "yarn transpile"
   },
   "devDependencies": {
-    "@dolittle/build": "1.0.0"
+    "@dolittle/build": "2.0.0"
   },
   "dependencies": {
     "fs-extra": "^7.0.0",
