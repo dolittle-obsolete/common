@@ -4,16 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 /**
- * @type {string[]} List of the artifact areas
- */
-export const areas = [
-    'concepts',
-    'domain',
-    'events',
-    'read'
-];
-
-/**
  * Gets the full directory path
  * @param {string} filePath
  * @returns {string} directory path
@@ -90,3 +80,13 @@ export function determineDestination(area, language, name, cwd, boundedContextPa
 function escapeRegex(s) {
     return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
+
+/**
+ * @type {string[]} List of the artifact areas
+ */
+export const areas = [
+    'concepts',
+    'domain',
+    'events',
+    'read'
+];

@@ -4,16 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 
 /* eslint-disable no-unused-vars */
-import { ConfigManager } from '../configuration/ConfigManager';
-import { HttpWrapper } from '../HttpWrapper';
-import { Git } from 'simple-git';
-import { Folders } from '../Folders';
 import path from 'path';
 import { BoilerPlate } from './BoilerPlate';
 import Handlebars from 'handlebars';
 import { Guid } from '../Guid';
 import { getFileNameAndExtension } from '../helpers';
-import { ArtifactTemplate } from '../artifacts/ArtifactTemplate';
 import { dependencyFromJson } from '../dependencies/Dependency';
 /* eslint-enable no-unused-vars */
 

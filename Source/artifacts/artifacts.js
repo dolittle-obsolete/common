@@ -7,8 +7,6 @@ import globals from '../globals';
 import { getFileDirPath } from '../helpers';
 import { artifactTemplateFromJson } from './ArtifactTemplate';
 
-export const artifactsBoilerplateType = 'artifacts';
-
 /**
  * Retrieves the boilerplate.json configuration for artifacts with the given language
  * @param {string} language 
@@ -66,3 +64,6 @@ export function createArtifact(context, language, artifactTemplate, destinationP
     globals.boilerPlatesManager.createArtifactInstance(artifactTemplate, destinationPath, context);
         
 }
+
+
+export const artifactsBoilerplateType = 'artifacts';

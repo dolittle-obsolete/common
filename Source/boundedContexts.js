@@ -7,8 +7,6 @@ import { Guid } from './Guid';
 
 const path = require('path');
 
-export const boundedContextBoilerplateType = 'boundedContext';
-
 /**
  * Creates a dolittle bounded context based on the boilerplates provided in your .dolittle folder in your user's root directory
  *
@@ -27,8 +25,11 @@ export function createBoundedContext(context, language, destinationPath) {
         throw 'Missing boilerplate';
     }
     context.id = Guid.create();
-
+    
     const boundedContextPath = path.join(destinationPath, context.name);
-
+    
     globals.boilerPlatesManager.createInstance(boilerPlate, boundedContextPath, context);
 }
+
+
+export const boundedContextBoilerplateType = 'boundedContext';
