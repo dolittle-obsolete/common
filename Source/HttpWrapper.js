@@ -15,8 +15,8 @@ export class HttpWrapper {
      * Get from a specific source with a specific mimetype and output into a stream
      * @param {string} source 
      * @param {string} mimeType 
-     * @param {stream} stream 
-     * @returns {Promise} A promise that can be continued
+     * @param {streams.PassThrough} stream 
+     * @returns {Promise<void>} A promise that can be continued
      */
     get(source, mimeType, stream) {
         let promise = new Promise((resolve, reject) => {
@@ -50,9 +50,9 @@ export class HttpWrapper {
 
     /**
      * Get text from a specific source with a specific mimetype
-     * @param {*} source 
-     * @param {*} mimetype 
-     * @returns {Promise} A promise that can be continued with the result
+     * @param {string} source 
+     * @param {string} mimetype 
+     * @returns {Promise<string>} A promise that can be continued with the result
      */
     getText(source, mimetype) {
         let promise = new Promise((resolve, reject) => {
@@ -70,8 +70,8 @@ export class HttpWrapper {
 
     /**
      * Get HTML from a specific source with a specific mimetype
-     * @param {*} source 
-     * @returns {Promise} A promise that can be continued with the result
+     * @param {string} source 
+     * @returns {Promise<string>} A promise that can be continued with the result
      */
     getHtml(source) {
         return this.getText(source, 'text/html');
@@ -79,8 +79,8 @@ export class HttpWrapper {
 
     /**
      * Get JSON from a specific source with a specific mimetype
-     * @param {*} source 
-     * @returns {Promise} A promise that can be continued with the result
+     * @param {string} source 
+     * @returns {Promise<string>} A promise that can be continued with the result
      */
     getJson(source) {
         return this.getText(source, 'application/json');

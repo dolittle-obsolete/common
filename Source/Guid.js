@@ -4,12 +4,20 @@
  *--------------------------------------------------------------------------------------------*/
 
 /**
- * Represents a globalsly unique identifier
+ * Represents a globally unique identifier
+ *
+ * @export
+ * @class Guid
  */
 export class Guid {
 
     /**
-     * Get the empty representation
+     * Get the empty representation of a {Guid}
+     *
+     * @readonly 
+     * @static
+     * @returns {string}
+     * @memberof Guid
      */
     static get empty() {
         return '00000000-0000-0000-0000-000000000000';
@@ -17,7 +25,10 @@ export class Guid {
 
     /**
      * Create a new {Guid} as {string}
+     *
+     * @static
      * @returns {string} String representation of {Guid}
+     * @memberof Guid
      */
     static create() {
         let S4 = () => {

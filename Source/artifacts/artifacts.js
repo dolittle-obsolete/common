@@ -5,15 +5,14 @@
 
 import globals from '../globals';
 import { getFileDirPath } from '../helpers';
-import { ArtifactTemplate, artifactTemplateFromJson } from './ArtifactTemplate';
-import { BoilerPlate } from '../boilerPlates/BoilerPlate';
+import { artifactTemplateFromJson } from './ArtifactTemplate';
 
 export const artifactsBoilerplateType = 'artifacts';
 
 /**
  * Retrieves the boilerplate.json configuration for artifacts with the given language
  * @param {string} language 
- * @return {BoilerPlate} The Boilerplate with of the given language
+ * @return {import('../boilerPlates/BoilerPlate').BoilerPlate} The Boilerplate with of the given language
  */
 export function boilerPlateByLanguage(language) {
     let boilerPlates = globals.boilerPlatesManager.boilerPlatesByLanguageAndType(language, artifactsBoilerplateType);
@@ -29,9 +28,9 @@ export function boilerPlateByLanguage(language) {
 }
 /**
  * Gets the artifact template alongside with the location of where it was found based on the language and type of the artifact
- * @param {BoilerPlate} boilerPlate 
+ * @param {import('../boilerPlates/BoilerPlate').BoilerPlate} boilerPlate 
  * @param {string} artifactType
- * @returns {ArtifactTemplate}
+ * @returns {import('./ArtifactTemplate').ArtifactTemplate}
  */
 export function templateByBoilerplate(boilerPlate, artifactType)
 {
@@ -58,7 +57,7 @@ export function templateByBoilerplate(boilerPlate, artifactType)
  * Creates an artifact of the given type at the given destination with the given name 
  * @param {any} context 
  * @param {string} language
- * @param {ArtifactTemplate} artifactTemplate
+ * @param {import('./ArtifactTemplate').ArtifactTemplate} artifactTemplate
  * @param {string} destinationPath
  * 
  */

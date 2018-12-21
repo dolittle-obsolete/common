@@ -15,6 +15,7 @@ export const boundedContextBoilerplateType = 'boundedContext';
  * @param {{name: string, applicationId: string}} context The template context
  * @param {string} language The core language of the bounded context
  * @param {string} destinationPath The absolute path of the destination of the bounded context
+ * @returns {void}
  */
 export function createBoundedContext(context, language, destinationPath) {
     this._logger.info(`Creating bounded context with name '${context.name}'`);

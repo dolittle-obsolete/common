@@ -4,11 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 /**
- * The usage prefix used in commands info
- * @returns {string} the usage prefix
+ * @type {string[]} List of the artifact areas
  */
-export const usagePrefix = '\n\t ';
-
 export const areas = [
     'concepts',
     'domain',
@@ -57,35 +54,16 @@ export function getFileDir(filePath) {
     return path.dirname(filePath);
 }
 /**
- * Validate the name argument
- * @param {string} name 
- */
-export function validateArgsNameInput(name) {
-    const path = require('path');
-    if (name.includes(' ')) {
-        throw 'Argument parsing error. Name contained spaces';
-    }
-    if (name.includes('-')) {
-        throw 'Argument parsing error. Name contained dashes (-)';
-    }
-    if (name !== path.basename(name)) {
-        throw 'Argument parsing error. Invalid name';
-    }
-    if (/^\.*?$/.test(name)) {
-        throw 'Argument parsing error. Invalid name';
-    }
-}
-/**
- *
- *
- * @param {string} area
- * @param {string} language
- * @param {string} name
- * @param {string} cwd
- * @param {string} boundedContextPath
- * @param {any} dolittleConfig
+ * Determines the destination of an artifact given the area, the core language, the input name of artifact, cwd and path of the bounded context
  * 
- * @returns {{destination: string, name: string}}
+ * @param {string} area Area of the artifact (read, events, domain, concepts)
+ * @param {string} language The core language of the bounded context
+ * @param {string} name The inputted name of the artifact (dots, '.', used to derive feature/module path )
+ * @param {string} cwd The current working directory
+ * @param {string} boundedContextPath The path of the bounded-context.json configuration
+ * @param {any} dolittleConfig A configuration object that tells us what folder an artifact should go into depending on the area
+ * 
+ * @returns {{destination: string, name: string}} The destination path and the actual name of the artifact
  */
 export function determineDestination(area, language, name, cwd, boundedContextPath, dolittleConfig){
     const path = require('path');

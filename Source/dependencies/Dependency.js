@@ -5,6 +5,13 @@ import { areas } from '../helpers';
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+/**
+ * Creates a new {Dependency} object based on the given json obj
+ *
+ * @export
+ * @param {any} obj
+ * @returns {Dependency}
+ */
 export function dependencyFromJson(obj) {
     return new Dependency(obj.description, obj.name, obj.type, obj.discoverType, obj.userInputType, obj.choices,
         obj.promptMessage, obj.customInput, obj.withNamespace, obj.milestone, obj.fileMatch, obj.contentMatch, obj.fromArea);
@@ -123,7 +130,7 @@ const _fromArea = new WeakMap();
 
 export class Dependency {
     /**
-     *Creates an instance of Dependency.
+     * Creates an instance of Dependency.
      * @param {string} description
      * @param {string} name
      * @param {string} type
@@ -231,7 +238,7 @@ export class Dependency {
      * @memberof Dependency
      */
     get choices() {
-        return _userInputType.get(this);
+        return _choices.get(this);
     }
     /**
      * Gets the message that the user is prompted with

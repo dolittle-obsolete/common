@@ -2,8 +2,6 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
-import { Dependency } from './Dependency';
 import { boilerPlateByLanguage, templateByBoilerplate } from '../artifacts/artifacts';
 import globals from '../globals';
 import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir } from '../helpers';
@@ -14,7 +12,7 @@ import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir } from
  * @export
  * @param {string} artifactType
  * @param {string} language
- * @returns {Dependency[]}
+ * @returns {import('./Dependency').Dependency[]}
  */
 export function getDependencies(artifactType, language) {
     let dependencies = [];
@@ -28,7 +26,7 @@ export function getDependencies(artifactType, language) {
 
 /**
  * 
- * @param {Dependency} dependency 
+ * @param {import('./Dependency').Dependency} dependency 
  * @param {string} location 
  * @param {string} language
  */
@@ -45,7 +43,7 @@ export function discover(dependency, location, language) {
 
 /**
  * 
- * @param {Dependency} dependency
+ * @param {import('./Dependency').Dependency} dependency
  * @param {string} location
  * @param {string} language
  * @returns {string[] | {value: string, namespace: string}[]} 
@@ -83,7 +81,7 @@ function discoverMultipleFiles(dependency, location, language) {
 
 /**
  * Creates the namespace
- * @param {Dependency} dependency 
+ * @param {import('./Dependency').Dependency} dependency 
  * @param {string} location
  * @returns {string} 
  */

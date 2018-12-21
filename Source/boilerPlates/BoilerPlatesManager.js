@@ -8,14 +8,13 @@ import { ConfigManager } from '../configuration/ConfigManager';
 import { HttpWrapper } from '../HttpWrapper';
 import { Git } from 'simple-git';
 import { Folders } from '../Folders';
-import fs from 'fs-extra';
-import { Logger } from 'winston';
 import path from 'path';
 import { BoilerPlate } from './BoilerPlate';
 import Handlebars from 'handlebars';
 import { Guid } from '../Guid';
 import { getFileNameAndExtension } from '../helpers';
 import { ArtifactTemplate } from '../artifacts/ArtifactTemplate';
+import { dependencyFromJson } from '../dependencies/Dependency';
 /* eslint-enable no-unused-vars */
 
 const boilerPlateFolder = 'boiler-plates';
@@ -30,23 +29,23 @@ const binaryFiles = [
     '.ttf'
 ];
 /**
- * @type {WeakMap<BoilerPlatesManager, ConfigManager>}
+ * @type {WeakMap<BoilerPlatesManager, import('../configuration/ConfigManager').ConfigManager>}
  */
 const _configManager = new WeakMap();
 /**
- * @type {WeakMap<BoilerPlatesManager, HttpWrapper>}
+ * @type {WeakMap<BoilerPlatesManager, import('../HttpWrapper').HttpWrapper>}
  */
 const _httpWrapper = new WeakMap();
 /**
- * @type {WeakMap<BoilerPlatesManager, Git>}
+ * @type {WeakMap<BoilerPlatesManager, import('simple-git/src/git')>}
  */
 const _git = new WeakMap();
 /**
- * @type {WeakMap<BoilerPlatesManager, Folders>}
+ * @type {WeakMap<BoilerPlatesManager, import('../Folders').Folders>}
  */
 const _folders = new WeakMap();
 /**
- * @type {WeakMap<BoilerPlatesManager, fs>}
+ * @type {WeakMap<BoilerPlatesManager, import('fs-extra')>}
  */
 const _fileSystem = new WeakMap();
 /**
@@ -54,7 +53,7 @@ const _fileSystem = new WeakMap();
  */
 const _hasBoilerPlates = new WeakMap();
 /**
- * @type {WeakMap<BoilerPlatesManager, BoilerPlate[]>}
+ * @type {WeakMap<BoilerPlatesManager, import('./BoilerPlate').BoilerPlate[]>}
  */
 const _boilerPlates = new WeakMap();
 
@@ -65,12 +64,12 @@ export class BoilerPlatesManager {
 
     /**
      * Initializes a new instance of {BoilerPlatesManager}
-     * @param {ConfigManager} configManager 
-     * @param {HttpWrapper} httpWrapper
-     * @param {Git} git
-     * @param {Folders} folders
-     * @param {fs} fileSystem
-     * @param {Logger} logger
+     * @param {import('../configuration/ConfigManager').ConfigManager} configManager 
+     * @param {HttpWrapimport('../HttpWrapper').HttpWrapperper} httpWrapper
+     * @param {import('simple-git/src/git')} git
+     * @param {import('../Folders').Folders} folders
+     * @param {import('fs-extra')} fileSystem
+     * @param {import('winston').Logger} logger
      */
     constructor(configManager, httpWrapper, git, folders, fileSystem, logger) {
         _configManager.set(this, configManager);
@@ -109,7 +108,12 @@ export class BoilerPlatesManager {
     get boilerPlates() {
         return _boilerPlates.get(this);
     }
-
+    /**
+     * Gets the filesystem
+     * 
+     * @readonly
+     * @memberof BoilerPlatesManager
+     */
     get fileSystem() {
         return _fileSystem.get(this);
     }
@@ -157,7 +161,7 @@ export class BoilerPlatesManager {
                     boilerPlateObject.name,
                     boilerPlateObject.description,
                     boilerPlateObject.type,
-                    boilerPlateObject.dependencies,
+                    boilerPlateObject.dependencies.map(dep => dependencyFromJson(dep)),
                     boilerPlateObject.location,
                     boilerPlateObject.pathsNeedingBinding || [],
                     boilerPlateObject.filesNeedingBinding || []
@@ -184,6 +188,7 @@ export class BoilerPlatesManager {
 
     /**
      * Get available boiler plates from GitHub
+     * @returns {Promise<string[]>}
      */
     async getAvailableBoilerPlates() {
         let uri = 'https://api.github.com/orgs/dolittle-boilerplates/repos';
@@ -219,6 +224,7 @@ export class BoilerPlatesManager {
     /**
      * Update boiler plates.
      * This will update any existing and download any new ones.
+     * @returns {Promise<void>}
      */
     async update() {
         this._logger.info('Updating all boiler plates');
@@ -325,7 +331,7 @@ export class BoilerPlatesManager {
 
     /**
      * Create an instance of {BoilerPlate} into a specific destination folder with a given context
-     * @param {BoilerPlate} boilerPlate 
+     * @param {import('./BoilerPlate').BoilerPlate} boilerPlate 
      * @param {string} destination 
      * @param {object} context 
      */
@@ -350,7 +356,7 @@ export class BoilerPlatesManager {
     }
     /**
      * Create an instance of {BoilerPlate} of an artifact into a specific destination folder with a given context
-     * @param {ArtifactTemplate} artifactTemplate
+     * @param {import('../artifacts/ArtifactTemplate').ArtifactTemplate} artifactTemplate
      * @param {string} destination 
      * @param {any} context 
      */

@@ -3,19 +3,16 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 /* eslint-disable no-unused-vars */
-import {ConfigParser} from './ConfigParser';
 import {Config} from './Config';
-import {Logger} from 'winston';
-import fs from 'fs-extra';
 import path from 'path';
 /* eslint-enable no-unused-vars */
 
 /**
- * @type {WeakMap<ConfigManager, fs>}
+ * @type {WeakMap<ConfigManager, import('fs-extra')>}
  */
 const _fileSystem = new WeakMap();
 /**
- * @type {WeakMap<ConfigManager, ConfigParser>}
+ * @type {WeakMap<ConfigManager, import('./ConfigParser').ConfigParser>}
  */
 const _configParser = new WeakMap();
 /**
@@ -32,7 +29,7 @@ const configFile = 'config.json';
 
 /**
  * Expand the given filepaths possible reference to home folder
- * @param {*} filepath 
+ * @param {string} filepath 
  */
 function expandPath(filepath) {
     if (filepath[0] === '~') {
@@ -43,7 +40,7 @@ function expandPath(filepath) {
 
 /**
  * Make sure the central folder exists
- * @param {fs} fileSystem 
+ * @param {import('fs-extra')} fileSystem 
  */
 function makeSureCentralFolderExists(fileSystem) {
     if( !fileSystem.existsSync(this.centralFolderLocation)) {
@@ -73,14 +70,17 @@ function makeSureCentralFolderExists(fileSystem) {
 
 /**
  * Represents a manager for dealing with configurations
+ *
+ * @export
+ * @class ConfigManager
  */
 export class ConfigManager {
 
     /**
      * Initializes a new instance of {ConfigManager}
-     * @param {fs} fileSystem
-     * @param {ConfigParser} configParser
-     * @param {Logger} logger
+     * @param {import('fs-extra')} fileSystem
+     * @param {import('./ConfigParser').ConfigParser} configParser
+     * @param {import('winston').Logger} logger
      */
     constructor(fileSystem, configParser, logger) {
         _fileSystem.set(this, fileSystem);

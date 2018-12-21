@@ -2,14 +2,37 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
+/**
+ * @type {WeakMap<BoilerPlate, string>}
+ */
 const _language = new WeakMap();
+/**
+ * @type {WeakMap<BoilerPlate, string>}
+ */
 const _name = new WeakMap();
+/**
+ * @type {WeakMap<BoilerPlate, string>}
+ */
 const _description = new WeakMap();
+/**
+ * @type {WeakMap<BoilerPlate, string>}
+ */
 const _type = new WeakMap();
+/**
+ * @type {WeakMap<BoilerPlate, import('../dependencies/Dependency').Dependency[]>}
+ */
 const _dependencies = new WeakMap();
+/**
+ * @type {WeakMap<BoilerPlate, string>}
+ */
 const _location = new WeakMap();
+/**
+ * @type {WeakMap<BoilerPlate, string[]>}
+ */
 const _pathsNeedingBinding = new WeakMap();
+/**
+ * @type {WeakMap<BoilerPlate, string[]>}
+ */
 const _filesNeedingBinding = new WeakMap();
 
 /**
@@ -23,7 +46,7 @@ export class BoilerPlate {
      * @param {string} name 
      * @param {string} description 
      * @param {string} type
-     * @param {any[]} dependencies
+     * @param {import('../dependencies/Dependency').Dependency[]} dependencies
      * @param {string} location 
      * @param {string[]} [pathsNeedingBinding]
      * @param {string[]} [filesNeedingBinding]
@@ -64,7 +87,6 @@ export class BoilerPlate {
     get type() { return _type.get(this); }
     /**
      * Gets all the dependencies of the boilerplate
-     * @returns {any[]} List of dependencies
      */
     get dependencies() { return _dependencies.get(this); }
     /**
@@ -87,7 +109,7 @@ export class BoilerPlate {
 
     /**
      * Convert to a JSON object
-     * @returns {*} Object literal
+     * @returns Object literal
      */
     toJson() {
         return {

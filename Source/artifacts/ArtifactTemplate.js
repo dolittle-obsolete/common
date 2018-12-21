@@ -2,9 +2,17 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Dependency, dependencyFromJson } from '../dependencies/Dependency';
+import { dependencyFromJson } from '../dependencies/Dependency';
 import { areas } from '../helpers';
 
+/**
+ * Creates an {ArtifactTemplate} from json object
+ *
+ * @export
+ * @param {any} obj
+ * @param {string} location
+ * @returns The created {ArtifactTemplate}
+ */
 export function artifactTemplateFromJson(obj, location) {
     return new ArtifactTemplate(obj.name, obj.type, obj.area, obj.description, obj.language,
         obj.dependencies.map(depObj => dependencyFromJson(depObj)), obj.includedFiles, location);
@@ -35,11 +43,11 @@ const _description = new WeakMap();
  */
 const _language = new WeakMap();
 /**
- * @type {WeakMap<ArtifactTemplate, Dependency[]>}
+ * @type {WeakMap<ArtifactTemplate, import('../dependencies/Dependency').Dependency[]>}
  */
 const _dependencies = new WeakMap();
 /**
- * @type {WeakMap<ArtifactTemplate, string>}
+ * @type {WeakMap<ArtifactTemplate, string[]>}
  */
 const _includedFiles = new WeakMap();
 /**
@@ -59,7 +67,7 @@ export class ArtifactTemplate
      * @param {string} area
      * @param {string} description
      * @param {string} language
-     * @param {Dependency[]} dependencies
+     * @param {import('../dependencies/Dependency').Dependency[]} dependencies
      * @param {string[]} includedFiles
      * @param {string} location
      * @memberof ArtifactTemplate
@@ -78,12 +86,16 @@ export class ArtifactTemplate
     }
     /**
      * Gets the name of the artifact template
+     * @returns {string}
+     * @readonly
+     * @memberof ArtifactTemplate
      */
     get name() {
         return _name.get(this);
     }
     /**
      * Gets the type of the artifact template
+     * @returns {string}
      */
     get type() {
         return _type.get(this);
@@ -91,6 +103,7 @@ export class ArtifactTemplate
     /**
      * Gets the area of the artifact.
      *
+     * @returns {string}
      * @readonly
      * @memberof ArtifactTemplate
      */
@@ -99,30 +112,44 @@ export class ArtifactTemplate
     }
     /**
      * Gets the description of the artifact template
+     * @returns {string}
+     * @readonly
+     * @memberof ArtifactTemplate
      */
     get description() {
         return _description.get(this);
     }
     /**
      * Gets the programming language of the artifact this is a template for
+     * @returns {string}
+     * @readonly
+     * @memberof ArtifactTemplate
      */
     get language() {
         return _language.get(this);
     }
     /**
      * Gets the dependencies of the template
+     * @readonly
+     * @memberof ArtifactTemplate
      */
     get dependencies() {
         return _dependencies.get(this);
     }
     /**
      * Gets the list of files that needs to be templated
+     * @returns {string[]}
+     * @readonly
+     * @memberof ArtifactTemplate
      */
     get includedFiles() {
         return _includedFiles.get(this);
     }
     /**
      * Gets the file location of the template
+     * @returns {string}
+     * @readonly
+     * @memberof ArtifactTemplate
      */
     get location() {
         return _location.get(this);

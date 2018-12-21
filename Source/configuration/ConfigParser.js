@@ -6,13 +6,16 @@ import { Config } from './Config';
 import { Cluster } from './Cluster';
 
 /**
- * Represents a parser for {config}
+ * Represents a parser for {Config}
+ *
+ * @export
+ * @class ConfigParser
  */
 export class ConfigParser {
     /**
      * Parses a JSON from string into a {config} instance
      * @param {string | object} configuration String or object holding configuration
-     * @returns {Config}
+     * @returns {import('./Config').Config}
      */
     parse(configuration) {
         if (typeof configuration == 'undefined') configuration = {};

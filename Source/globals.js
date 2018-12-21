@@ -12,35 +12,34 @@ import { ConfigParser } from './configuration/ConfigParser';
 import { HttpWrapper } from './HttpWrapper';
 import { Folders } from './Folders';
 import { BoilerPlatesManager } from './boilerPlates/BoilerPlatesManager';
-import { ArtifactTemplate } from './artifacts/ArtifactTemplate';
 /* eslint-enable no-unused-vars */
 
 /**
- * @type {WeakMap<globals, ConfigManager>}
+ * @type {WeakMap<globals, import('./configuration/ConfigManager').ConfigManager>}
  */
 const _configManager = new WeakMap();
 /**
- * @type {WeakMap<globals, ConfigParser>}
+ * @type {WeakMap<globals, import('./configuration/ConfigParser').ConfigParser>}
  */
 const _configParser = new WeakMap();
 /**
- * @type {WeakMap<globals, BoilerPlatesManager>}
+ * @type {WeakMap<globals, import('./boilerPlates/BoilerPlatesManager').BoilerPlatesManager>}
  */
 const _boilerPlatesManager = new WeakMap();
 /**
- * @type {WeakMap<globals, Folders>}
+ * @type {WeakMap<globals, import('./Folders').Folders>}
  */
 const _folders = new WeakMap();
 /**
- * @type {WeakMap<globals, Git>}
+ * @type {WeakMap<globals, import('simple-git/src/git')>}
  */
 const _git = new WeakMap();
 /**
- * @type {WeakMap<globals, winston>}
+ * @type {WeakMap<globals, import('winston').Logger>}
  */
 const _logger = new WeakMap();
 /**
- * @type {WeakMap<globals, HttpWrapper>}
+ * @type {WeakMap<globals, import('./HttpWrapper').HttpWrapper>}
  */
 const _httpWrapper = new WeakMap();
 /**
@@ -88,14 +87,20 @@ class globals {
         _folders.set(this, new Folders(fs));
         _boilerPlatesManager.set(this, new BoilerPlatesManager(this.configManager, this.httpWrapper, git, this.folders, fs, this.logger));
     }
-
+    /**
+     * Gets the filesystem
+     *
+     * @returns {import('fs-extra')}
+     * @readonly
+     * @memberof globals
+     */
     get fileSystem() {
         return fs;
     }
 
     /**
      * Gets the {ConfigManager}
-     * @returns {ConfigManager}
+     * @returns {import('./configuration/ConfigManager').ConfigManager}
      */
     get configManager() {
         return _configManager.get(this);
@@ -104,7 +109,7 @@ class globals {
 
     /**
      * Gets the {ConfigParser}
-     * @returns {ConfigParser}
+     * @returns {import('./configuration/ConfigParser').ConfigParser}
      */
     get configParser() {
         return _configParser.get(this);
@@ -112,14 +117,14 @@ class globals {
 
     /**
      * Gets the {Folders}
-     * @returns {Folders}
+     * @returns {import('./Folders').Folders}
      */
     get folders() {
         return _folders.get(this);
     }
     /**
      * Gets the {BoilerPlatesManager}
-     * @returns {BoilerPlatesManager}
+     * @returns {import('./boilerPlates/BoilerPlatesManager').BoilerPlatesManager}
      */
     get boilerPlatesManager() {
         return _boilerPlatesManager.get(this);
@@ -127,7 +132,7 @@ class globals {
 
     /**
      * Gets the {Git} system
-     * @returns {Git}
+     * @returns {import('simple-git/src/git')}
      */
     get git() {
         return _git.get(this);
@@ -135,7 +140,7 @@ class globals {
 
     /**
      * Gets the {winston} logger
-     * @returns {winston}
+     * @returns {import('winston').Logger}
      */
     get logger() {
         return _logger.get(this);
@@ -143,7 +148,7 @@ class globals {
 
     /**
      * Gets the {HttpWrapper}
-     * @returns {HttpWrapper}
+     * @returns {import('./HttpWrapper').HttpWrapper}
      */
     get httpWrapper() {
         return _httpWrapper.get(this);

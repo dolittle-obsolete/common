@@ -10,6 +10,7 @@ import { Guid } from './Guid';
  *
  * @param {{name: string}} context The template context 
  * @param {string} destinationPath The absolute path of the destination of the application
+ * @returns {void}
  */
 export function createApplication(context, destinationPath) {
     globals.logger.info(`Creating application with name '${context.name}'`);

@@ -8,7 +8,22 @@
   */
 export class Cluster
 {
+    /**
+     *
+     * @type {string}
+     * @memberof Cluster
+     */
     name = '';
+    /**
+     *
+     * @type {number}
+     * @memberof Cluster
+     */
     url = 0;
-    token = "";
+    /**
+     *
+     * @type {string}
+     * @memberof Cluster
+     */
+    token = '';
 }

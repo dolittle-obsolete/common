@@ -2,11 +2,10 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import fs from 'fs-extra';
 import path from 'path';
 
 /**
- * @type {WeakMap<Folders, fs}
+ * @type {WeakMap<Folders, import('fs-extra')}
  */
 const _fileSystem = new WeakMap();
 
@@ -17,7 +16,7 @@ export class Folders
 {
     /**
      * Initializes a new instance of {folders}
-     * @param {fs} fileSystem 
+     * @param {import('fs-extra')} fileSystem 
      */
     constructor(fileSystem) {
         _fileSystem.set(this,fileSystem);
@@ -27,17 +26,21 @@ export class Folders
      * Copy one folder and its content recursively to a specified destination
      * @param {string} destination Destination path to copy to
      * @param {string} source Source path to copy from
+     * @returns {void}
+     * @memberof Folders
      */
     copy(destination, source)
     {
         destination = path.normalize(destination);
         source = path.normalize(source);
-        fs.copySync(source, destination);
+        _fileSystem.get(this).copySync(source, destination);
     }
 
     /**
      * Create a folder if it does not exist
      * @param {string} folderPath Name of the folder to make sure exists
+     * @returns {void}
+     * @memberof Folders
      */
     makeFolderIfNotExists(folderPath)
     {
@@ -61,6 +64,8 @@ export class Folders
     /**
      * Get top level folders in a given path
      * @param {string} path 
+     * @returns {string[]}
+     * @memberof Folders
      */
     getFoldersIn(folder) {
         folder = path.normalize(folder);
@@ -81,6 +86,7 @@ export class Folders
      * @param {string} folder path 
      * @param {RegExp} regularExp
      * @returns {string[]} folder paths
+     * @memberof Folders
      */
     getFoldersInRegex(folder, regularExp) {
         folder = path.normalize(folder);
@@ -101,6 +107,7 @@ export class Folders
      * Get all files within a specific folder recursively
      * @param {string} folder Path of the folder to get from
      * @returns {string[]} Array of files
+     * @memberof Folders
      */
     getFilesRecursivelyIn(folder) {
         folder = path.normalize(folder);
@@ -125,6 +132,7 @@ export class Folders
      * @param {string} folder Path of the folder to get from
      * @param {string[]} templateFileNames The template file names
      * @returns {string[]} Array of files
+     * @memberof Folders
      */
     getArtifactTemplateFilesRecursivelyIn(folder, templateFileNames) {
         folder = path.normalize(folder);
@@ -150,6 +158,7 @@ export class Folders
      * Get all folders and files within a specific folder recursively
      * @param {string} folder Path of the folder to get from
      * @returns {string[]} Array of files and folders
+     * @memberof Folders
      */
     getFoldersAndFilesRecursivelyIn(folder) {
         folder = path.normalize(folder);
@@ -171,6 +180,8 @@ export class Folders
      * Search for a specific file pattern within a folder
      * @param {string} folder Folder to search from
      * @param {string} pattern Pattern of files to look for
+     * @returns {string[]}
+     * @memberof Folders
      */
     searchFolder(folder, pattern) {
         folder = path.normalize(folder);
@@ -191,6 +202,8 @@ export class Folders
      * Search for a specific file pattern within a folder with regex
      * @param {string} folder Folder to search from
      * @param {RegExp} regularExp The regex pattern of files to look for
+     * @returns {string[]}
+     * @memberof Folders
      */
     searchFolderRegex(folder, regularExp) {
         folder = path.normalize(folder);
@@ -213,6 +226,7 @@ export class Folders
      * @param {string} folder Folder to search from
      * @param {string} pattern Pattern of files to look for
      * @returns {string[]} The paths of the matching files
+     * @memberof Folders
      */
     searchRecursive(folder, pattern) {
         folder = path.normalize(folder);
@@ -237,7 +251,8 @@ export class Folders
      * Search for a specific file with regular expression, recursively
      * @param {string} folder to search from
      * @param {string} regularExp Pattern of the files to look for
-     * @returns {string[]} the paths of the matching files 
+     * @returns {string[]} the paths of the matching files
+     * @memberof Folders
      */
     searchRecursiveRegex(folder, regularExp) {
         folder = path.normalize(folder);
@@ -263,6 +278,7 @@ export class Folders
      * @param {string} folder the start folder
      * @param {RegExp} regularExp
      * @returns {string[]} paths
+     * @memberof Folders
      */
     getNearestDirsSearchingUpwards(folder, regularExp) {
         folder = path.normalize(folder);
@@ -282,6 +298,7 @@ export class Folders
      * @param {string} folder the start folder
      * @param {RegExp} regularExp
      * @returns {string} path
+     * @memberof Folders
      */
     getNearestFileSearchingUpwards(folder, regularExp) {
         folder = path.normalize(folder);
@@ -294,7 +311,13 @@ export class Folders
         }
         return '';
     }
-
+    /**
+     * Whether or not the folder at path 'folder' is empty or not
+     *
+     * @param {string} folder
+     * @returns {boolean}
+     * @memberof Folders
+     */
     isNotEmptyFolder(folder) {
         return folder !== null && folder !== '' && folder !== path.sep; 
     }
