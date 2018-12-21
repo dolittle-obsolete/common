@@ -5,8 +5,8 @@
 
 export const globals = require('./globals').default;
 export const applications = require('./applications');
-export const artifacts = require('./artifacts');
+export const artifacts = require('./artifacts/artifacts');
 export const boundedContexts = require('./boundedContext');
-export const dependencies = require('./dependencies');
+export const dependencies = require('./dependencies/dependencies');
 export const helpers = require('./helpers');
 

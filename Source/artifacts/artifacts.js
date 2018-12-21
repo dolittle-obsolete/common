@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import globals from './globals';
-import { getFileDirPath } from './helpers';
-import { ArtifactTemplate, artifactTemplateFromJson } from './artifacts/ArtifactTemplate';
-import { BoilerPlate } from './boilerPlates/BoilerPlate';
+import globals from '../globals';
+import { getFileDirPath } from '../helpers';
+import { ArtifactTemplate, artifactTemplateFromJson } from './ArtifactTemplate';
+import { BoilerPlate } from '../boilerPlates/BoilerPlate';
 
 export const artifactsBoilerplateType = 'artifacts';
 

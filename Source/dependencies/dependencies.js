@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Dependency } from './dependencies/Dependency';
-import { boilerPlateByLanguage, templateByBoilerplate } from './artifacts';
-import globals from './globals';
-import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir } from './helpers';
+import { Dependency } from './Dependency';
+import { boilerPlateByLanguage, templateByBoilerplate } from '../artifacts/artifacts';
+import globals from '../globals';
+import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir } from '../helpers';
 
 /**
  * Gets all the dependencies of an artifact type of a given language

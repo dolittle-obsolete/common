@@ -1,11 +1,9 @@
-import { Dependency, dependencyFromJson } from '../dependencies/Dependency';
-import { areas } from '../helpers';
-
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
+import { Dependency, dependencyFromJson } from '../dependencies/Dependency';
+import { areas } from '../helpers';
 
 export function artifactTemplateFromJson(obj, location) {
     return new ArtifactTemplate(obj.name, obj.type, obj.area, obj.description, obj.language,

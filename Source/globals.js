@@ -86,7 +86,6 @@ class globals {
         }));
         _git.set(this, git);
         _folders.set(this, new Folders(fs));
-        new ArtifactTemplate('')
         _boilerPlatesManager.set(this, new BoilerPlatesManager(this.configManager, this.httpWrapper, git, this.folders, fs, this.logger));
     }
 
