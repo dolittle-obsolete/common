@@ -13,6 +13,6 @@ describe('when_creating_an_event_with_everything_correctly_setup', () => {
     })();
 
     it('should call the filesystem to get artifact template files with the correct arguments', 
-        () => context.folders.getArtifactTemplateFilesRecursivelyIn.should.be.calledWith(context.eventArtifactTemplate.location, context.eventArtifactTemplate.template.includedFiles)); 
+        () => context.folders.getArtifactTemplateFilesRecursivelyIn.should.be.calledWith(context.eventArtifactTemplate.location, context.eventArtifactTemplate.includedFiles)); 
     it('should call the filesystem to read from the correct path', () => context.fileSystem.readFileSync.should.be.calledWith(path.join(context.templateLocation, context.includedFiles[0])));
 });

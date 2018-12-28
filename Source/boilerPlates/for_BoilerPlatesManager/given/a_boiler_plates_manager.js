@@ -6,8 +6,6 @@
 import { BoilerPlatesManager } from '../../BoilerPlatesManager';
 
 export class a_boiler_plates_manager {
-
-    
     constructor() {
         this.configManager = {
             centralFolderLocation: ''
@@ -18,7 +16,7 @@ export class a_boiler_plates_manager {
         this.folders = {
             makeFolderIfNotExists: sinon.stub()
         };
-        this.fileSystem = {
+        this.fileSystem = { 
             existsSync: sinon.stub().returns(false)
         };
 

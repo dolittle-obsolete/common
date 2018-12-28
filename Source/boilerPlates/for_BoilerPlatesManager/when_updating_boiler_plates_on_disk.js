@@ -34,7 +34,7 @@ describe('when updating boiler plates on disk', () => {
                         exec: function (callback) {
                             callback();
                         }
-                    }
+                    };
                 }
             };
         };

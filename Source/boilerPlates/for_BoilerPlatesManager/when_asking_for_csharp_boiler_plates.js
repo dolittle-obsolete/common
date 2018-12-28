@@ -8,10 +8,7 @@ import { all_supported_boiler_plates } from './given/all_supported_boiler_plate
 describe('when asking for csharp boiler plates', () => {
     let context = new all_supported_boiler_plates();
     let result = null;
-    let expected = [
-        context.boilerPlates[0],
-        context.boilerPlates[1]
-    ];
+    let expected = context.boilerPlates.filter(_ => _.language === 'csharp');
 
     (beforeEach => {
         result = context.boilerPlatesManager.boilerPlatesByLanguage('csharp');
@@ -19,5 +16,6 @@ describe('when asking for csharp boiler plates', () => {
 
 
     it('should return exact number of boiler plates', () => result.length.should.equal(2));
-    it('should return the expected boiler plates', () => result.forEach((_, index) => _.should.deep.include(expected[index])));
+    it('should return the expected boiler plates', 
+        () => expected.forEach(_ => result.filter(i => _.equals(i)).length.should.equal(1)));
 });
