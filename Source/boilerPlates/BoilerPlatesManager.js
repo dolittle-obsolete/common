@@ -156,7 +156,9 @@ export class BoilerPlatesManager {
                     boilerPlateObject.name,
                     boilerPlateObject.description,
                     boilerPlateObject.type,
-                    boilerPlateObject.dependencies.map(dep => dependencyFromJson(dep)),
+                    boilerPlateObject.dependencies !== undefined? 
+                        boilerPlateObject.dependencies.map(dep => dependencyFromJson(dep))
+                        : [],
                     boilerPlateObject.location,
                     boilerPlateObject.pathsNeedingBinding || [],
                     boilerPlateObject.filesNeedingBinding || []
