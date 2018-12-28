@@ -303,4 +303,27 @@ export class Dependency {
     get fromArea() {
         return _fromArea.get(this);
     }
+
+    /**s
+     * Convert to a JSON object
+     * @returns Object literal
+     * @memberof Dependency
+     */
+    toJson() {
+        return {
+            description: this.description,
+            name: this.name,
+            type: this.type,
+            discoverType: this.discoverType,
+            userInputType: this.userInputType,
+            choices: this.choices,
+            promptMessage: this.promptMessage,
+            customInput: this.customInput,
+            withNamespace: this.withNamespace,
+            milestone: this.milestone.source,
+            fileMatch: this.fileMatch.source,
+            contentMatch: this.contentMatch.source,
+            fromArea: this.fromArea
+        };
+    }
 }
