@@ -1,11 +1,17 @@
 {
-  "plugins": [
-    ["@babel/plugin-proposal-decorators", {"legacy": true}],
+  "plugins": [     
     "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-private-methods",
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
+
     "@babel/plugin-transform-modules-commonjs",
-    "@babel/plugin-syntax-flow",
-    "@babel/plugin-transform-flow-comments",
-    ["@babel/plugin-transform-runtime",
+    [
+      "@babel/plugin-transform-runtime",
       {
         "corejs": false,
         "helpers": false,
