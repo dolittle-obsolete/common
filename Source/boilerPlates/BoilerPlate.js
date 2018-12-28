@@ -123,4 +123,16 @@ export class BoilerPlate {
             filesNeedingBinding: this.filesNeedingBinding
         };
     }
+    /**
+     * Check if this is equal to boilerPlate
+     *
+     * @param {BoilerPlate} boilerPlate
+     * @memberof BoilerPlate
+     */
+    equals(boilerPlate) {
+        return this.language === boilerPlate.language
+                && this.name === boilerPlate.name
+                && this.type === boilerPlate.type;
+         
+    }
 }
