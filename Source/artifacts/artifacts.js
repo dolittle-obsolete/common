@@ -8,6 +8,23 @@ import { getFileDirPath } from '../helpers';
 import { artifactTemplateFromJson } from './ArtifactTemplate';
 
 /**
+ * Gets all the dependencies of an artifact type of a given language
+ *
+ * @export
+ * @param {string} artifactType
+ * @param {string} language
+ * @returns {import('../../Source/dependencies/Dependency').Dependency[]}
+ */
+export function getDependencies(artifactType, language) {
+    let dependencies = [];
+    let boilerplate = boilerPlateByLanguage(language);
+    dependencies.push(...boilerplate.dependencies);
+    let template = templateByBoilerplate(boilerplate, artifactType);
+    dependencies.push(...template.dependencies);
+
+    return dependencies;
+}
+/**
  * Retrieves the boilerplate.json configuration for artifacts with the given language
  * @param {string} language 
  * @return {import('../boilerPlates/BoilerPlate').BoilerPlate} The Boilerplate with of the given language
@@ -64,6 +81,5 @@ export function createArtifact(context, language, artifactTemplate, destinationP
     globals.boilerPlatesManager.createArtifactInstance(artifactTemplate, destinationPath, context);
         
 }
-
 
 export const artifactsBoilerplateType = 'artifacts';

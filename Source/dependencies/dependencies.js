@@ -2,27 +2,8 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { boilerPlateByLanguage, templateByBoilerplate } from '../artifacts/artifacts';
 import globals from '../globals';
 import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir } from '../helpers';
-
-/**
- * Gets all the dependencies of an artifact type of a given language
- *
- * @export
- * @param {string} artifactType
- * @param {string} language
- * @returns {import('./Dependency').Dependency[]}
- */
-export function getDependencies(artifactType, language) {
-    let dependencies = [];
-    let boilerplate = boilerPlateByLanguage(language);
-    dependencies.push(...boilerplate.dependencies);
-    let template = templateByBoilerplate(boilerplate, artifactType);
-    dependencies.push(...template.dependencies);
-
-    return dependencies;
-}
 
 /**
  * 
