@@ -10,9 +10,7 @@ describe('when creating artifact without a feature', () => {
     let result = '';
     (beforeEach => {
         context = new path_with_no_feature();
-        console.log(context.cwd);
         result = determineDestination(context.area, context.language, context.name, context.cwd, context.boundedContextPath, context.dolittleConfig);
-        console.log(result);
     })();
     it('Should determine the correct destination', () => result.destination.should.equal(path.join(context.boundedContextRoot, context.dolittleConfig[context.language][context.area], '/')));
 });
