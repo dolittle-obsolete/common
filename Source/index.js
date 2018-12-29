@@ -17,7 +17,6 @@ export * from './configuration/ConfigParser';
 export const globals = require('./globals').default;
 export const applications = require('./applications');
 export const artifacts = require('./artifacts/artifacts');
-export const boundedContexts = require('./boundedContext');
+export const boundedContexts = require('./boundedContexts');
 export const dependencies = require('./dependencies/dependencies');
 export const helpers = require('./helpers');
-
