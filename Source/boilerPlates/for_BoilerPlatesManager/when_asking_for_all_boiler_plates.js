@@ -11,7 +11,6 @@ describe('when asking for all boiler plates', () => {
 
     (beforeEach => {
         result = context.boilerPlatesManager.boilerPlates;
-        console.log(result);
     })();
 
     it('should return same number of boiler plates', () => result.length.should.equal(context.boilerPlates.length));
