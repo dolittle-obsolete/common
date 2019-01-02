@@ -15,7 +15,9 @@ import { areas } from '../helpers';
  */
 export function artifactTemplateFromJson(obj, location) {
     return new ArtifactTemplate(obj.name, obj.type, obj.area, obj.description, obj.language,
-        obj.dependencies.map(depObj => dependencyFromJson(depObj)), obj.includedFiles, location);
+        obj.dependencies !== undefined? 
+            obj.dependencies.map(depObj => dependencyFromJson(depObj))
+            : [], obj.includedFiles, location);
 }
 
 function throwIfInvalidArea(area) {
@@ -54,8 +56,8 @@ export class ArtifactTemplate
         this.#area = area;
         this.#description = description;
         this.#language = language;
-        this.#dependencies = dependencies;
-        this.#includedFiles = includedFiles;
+        this.#dependencies = dependencies || [];
+        this.#includedFiles = includedFiles || [];
         this.#location = location;
 
         throwIfInvalidArea(area);
