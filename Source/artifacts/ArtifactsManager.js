@@ -74,7 +74,7 @@ export class ArtifactsManager {
         return boilerPlates[0];
     }
     /**
-     * Gets the artifact template alongside with the location of where it was found based on the language and type of the artifact
+     * Gets the artifact template based on the language and type of the artifact
      * @param {BoilerPlate} boilerPlate 
      * @param {string} artifactType
      * @returns {ArtifactTemplate}
@@ -85,7 +85,7 @@ export class ArtifactsManager {
         let templates = [];
         templateFiles.forEach(_ => {
             let location = getFileDirPath(_);
-            let template = artifactTemplateFromJson(JSON.parse(this.#fileSystem), location);
+            let template = artifactTemplateFromJson(JSON.parse(this.#fileSystem.readFileSync(_)), location);
             if (template.language === boilerPlate.language && template.type === artifactType)
                 templates.push(template);
         });
