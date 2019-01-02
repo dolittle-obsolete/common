@@ -86,7 +86,7 @@ export class ArtifactTemplate
      * @memberof ArtifactTemplate
      */
     get area() {
-        return this.#type;
+        return this.#area;
     }
     /**
      * Gets the description of the artifact template
