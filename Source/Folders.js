@@ -52,7 +52,7 @@ export class Folders
             } catch(err)
             {
                 this._logger.error('Could not create directory: ',folderPath);
-                throw 'Could not create directory';
+                throw new Error('Could not create directory');
             }
         }
     }

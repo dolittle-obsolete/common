@@ -20,7 +20,7 @@ export function artifactTemplateFromJson(obj, location) {
 
 function throwIfInvalidArea(area) {
     if (!areas.includes(area)) {
-        throw 'Invalid area';
+        throw new Error('Invalid area');
     }
 }
 /**

@@ -59,10 +59,10 @@ export function determineDestination(area, language, name, cwd, boundedContextPa
     const path = require('path');
     let config = dolittleConfig[language];
     if (config === undefined || config === null)
-        throw `No configuration for language ${language}`;
+        throw new Error(`No configuration for language ${language}`);
     const areaName = config[area];
     if (areaName === undefined || areaName === null)
-        throw `No configuration for area ${area} for language ${language}`;
+        throw new Error(`No configuration for area ${area} for language ${language}`);
     const boundedContextRoot = path.dirname(boundedContextPath);
     const regExp = new RegExp(
         `(${escapeRegex(boundedContextRoot)})` + // Match first part of path (root of bounded-context) 

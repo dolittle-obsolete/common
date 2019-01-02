@@ -72,7 +72,7 @@ function throwIfInvalidDependency(type, discoverType, userInputType, milestone, 
 }
 function throwIfInvalidArea(fromArea) {
     if (!areas.includes(fromArea)) {
-        throw 'Invalid area';
+        throw new Error('Invalid area');
     }
 }
 
