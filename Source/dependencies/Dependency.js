@@ -42,11 +42,11 @@ function throwIfInvalidDependency(type, discoverType, userInputType, milestone, 
         throwError = true;
         errors.push(`Invalid dependency type '${type}'`);
     }
-    if (!discoverTypes.includes(discoverType)) {
+    if (discoverType !== undefined && !discoverTypes.includes(discoverType)) {
         throwError = true;
         errors.push(`Invalid discover type '${discoverType}'`);
     }
-    if (!userInputTypes.includes(userInputType)) {
+    if (userInputType !== undefined && !userInputTypes.includes(userInputType)) {
         throwError = true;
         errors.push(`Invalid user input type '${userInputType}'`);
     }
@@ -71,8 +71,8 @@ function throwIfInvalidDependency(type, discoverType, userInputType, milestone, 
     }
 }
 function throwIfInvalidArea(fromArea) {
-    if (!areas.includes(fromArea)) {
-        throw new Error('Invalid area');
+    if (fromArea !== undefined && !areas.includes(fromArea)) {
+        throw new Error(`Invalid area ${fromArea}`);
     }
 }
 
