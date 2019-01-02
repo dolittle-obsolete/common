@@ -67,7 +67,7 @@ function throwIfInvalidDependency(type, discoverType, userInputType, milestone, 
     }
 
     if (throwError) {
-        throw 'Invalid dependency';
+        throw new Error(`Invalid dependency. Errors:\n\t${errors.join('\n\t')}`);
     }
 }
 function throwIfInvalidArea(fromArea) {
@@ -75,60 +75,21 @@ function throwIfInvalidArea(fromArea) {
         throw 'Invalid area';
     }
 }
-/**
- * @type {WeakMap<Dependency, string>}
- */
-const _description = new WeakMap();
-/**
- * @type {WeakMap<Dependency, string>}
- */
-const _name = new WeakMap();
-/**
- * @type {WeakMap<Dependency, string>}
- */
-const _type = new WeakMap();
-/**
- * @type {WeakMap<Dependency, string>}
- */
-const _discoverType = new WeakMap();
-/**
- * @type {WeakMap<Dependency, string>}
- */
-const _userInputType = new WeakMap();
-/**
- * @type {WeakMap<Dependency, any[]>}
- */
-const _choices = new WeakMap();
-/**
- * @type {WeakMap<Dependency, string>}
- */
-const _promptMessage = new WeakMap();
-/**
- * @type {WeakMap<Dependency, string>}
- */
-const _customInput = new WeakMap();
-/**
- * @type {WeakMap<Dependency, true>}
- */
-const _withNamespace = new WeakMap();
-/**
- * @type {WeakMap<Dependency, RegExp>}
- */
-const _milestone = new WeakMap();
-/**
- * @type {WeakMap<Dependency, RegExp>}
- */
-const _fileMatch = new WeakMap();
-/**
- * @type {WeakMap<Dependency, RegExp>}
- */
-const _contentMatch = new WeakMap();
-/**
- * @type {WeakMap<Dependency, string>}
- */
-const _fromArea = new WeakMap();
 
 export class Dependency {
+    #description;
+    #name;
+    #type;
+    #discoverType;
+    #userInputType;
+    #choices;
+    #promptMessage;
+    #customInput;
+    #withNamespace;
+    #milestone;
+    #fileMatch;
+    #contentMatch;
+    #fromArea;
     /**
      * Creates an instance of Dependency.
      * @param {string} description
@@ -147,19 +108,19 @@ export class Dependency {
      * @memberof Dependency
      */
     constructor (description, name, type, discoverType, userInputType, choices, promptMessage, customInput, withNamespace, milestone, fileMatch, contentMatch, fromArea ) {
-        _description.set(this, description);
-        _name.set(this, name);
-        _type.set(this, type);
-        _discoverType.set(this, discoverType);
-        _userInputType.set(this, userInputType);
-        _choices.set(this, choices);
-        _promptMessage.set(this, promptMessage);
-        _customInput.set(this, customInput);
-        _withNamespace.set(this, withNamespace);
-        _milestone.set(this, new RegExp(milestone));
-        _fileMatch.set(this, new RegExp(fileMatch));
-        _contentMatch.set(this, new RegExp(contentMatch));
-        _fromArea.set(this, fromArea);
+        this.#description = description;
+        this.#name = name;
+        this.#type = type;
+        this.#discoverType = discoverType;
+        this.#userInputType = userInputType;
+        this.#choices = choices;
+        this.#promptMessage = promptMessage;
+        this.#customInput = customInput;
+        this.#withNamespace = withNamespace;
+        this.#milestone = new RegExp(milestone);
+        this.#fileMatch = new RegExp(fileMatch);
+        this.#contentMatch = new RegExp(contentMatch);
+        this.#fromArea = fromArea;
 
         throwIfInvalidDependency(type, discoverType, userInputType, milestone, withNamespace);
         throwIfInvalidArea(fromArea);
@@ -171,7 +132,7 @@ export class Dependency {
      * @memberof Dependency
      */
     get description() {
-        return _description.get(this);
+        return this.#description;
     }
     /**
      * Gets the name of the dependency
@@ -180,7 +141,7 @@ export class Dependency {
      * @memberof Dependency
      */
     get name() {
-        return _name.get(this);
+        return this.#name;
     }
     /**
      * Gets the type of the dependency. Either 'discover' or 'userInput'
@@ -193,7 +154,7 @@ export class Dependency {
      * @memberof Dependency
      */
     get type() {
-        return _type.get(this);
+        return this.#type;
     }
     /**
      * Gets the discover type of the dependency, it dictates what should be discovered and how it will be discovered.
@@ -212,7 +173,7 @@ export class Dependency {
      * @memberof Dependency
      */
     get discoverType() {
-        return _discoverType.get(this);
+        return this.#discoverType;
     }
     /**
      * Gets the user input type of the dependency, it defines how the user should be prompted.
@@ -229,7 +190,7 @@ export class Dependency {
      * @memberof Dependency
      */
     get userInputType() {
-        return _userInputType.get(this);
+        return this.#userInputType;
     }
     /**
      * Gets the list of choices for a user input prompt
@@ -238,7 +199,7 @@ export class Dependency {
      * @memberof Dependency
      */
     get choices() {
-        return _choices.get(this);
+        return this.#choices;
     }
     /**
      * Gets the message that the user is prompted with
@@ -247,7 +208,7 @@ export class Dependency {
      * @memberof Dependency
      */
     get promptMessage() {
-        return _promptMessage.get(this);
+        return this.#promptMessage;
     }
     /**
      * Gets the custom input string that is the alternative string of a custom input when the user is prompted to choose between alternatives.
@@ -256,7 +217,7 @@ export class Dependency {
      * @memberof Dependency
      */
     get customInput() {
-        return _customInput.get(this);
+        return this.#customInput;
     }
     /**
      * Gets whether or not to generate namespaces for each file that's discovered. 
@@ -265,7 +226,7 @@ export class Dependency {
      * @memberof Dependency
      */
     get withNamespace() {
-        return _withNamespace.get(this);
+        return this.#withNamespace;
     }
     /**
      * Gets the regex that represents the filename of a milestone that's used to determine a namespace.
@@ -274,7 +235,7 @@ export class Dependency {
      * @memberof Dependency
      */
     get milestone() {
-        return _milestone.get(this);
+        return this.#milestone;
     }
     /**
      * Gets the regex that represents the filename pattern of the file to match
@@ -283,7 +244,7 @@ export class Dependency {
      * @memberof Dependency
      */
     get fileMatch() {
-        return _fileMatch.get(this);
+        return this.#fileMatch;
     }
     /**
      * Gets the regex that represents the content pattern of the file to match
@@ -292,7 +253,7 @@ export class Dependency {
      * @memberof Dependency
      */
     get contentMatch() {
-        return _contentMatch.get(this);
+        return this.#contentMatch;
     }
     /**
      * Gets the area a file discovery should start searching from.
@@ -301,7 +262,7 @@ export class Dependency {
      * @memberof Dependency
      */
     get fromArea() {
-        return _fromArea.get(this);
+        return this.#fromArea;
     }
 
     /**s

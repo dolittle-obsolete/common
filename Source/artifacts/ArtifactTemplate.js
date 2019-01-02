@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { dependencyFromJson } from '../dependencies/Dependency';
+import { dependencyFromJson, Dependency } from '../dependencies/Dependency';
 import { areas } from '../helpers';
 
 /**
@@ -17,49 +17,25 @@ export function artifactTemplateFromJson(obj, location) {
     return new ArtifactTemplate(obj.name, obj.type, obj.area, obj.description, obj.language,
         obj.dependencies.map(depObj => dependencyFromJson(depObj)), obj.includedFiles, location);
 }
+
 function throwIfInvalidArea(area) {
     if (!areas.includes(area)) {
         throw 'Invalid area';
     }
 }
 /**
- * @type {WeakMap<ArtifactTemplate, string>}
- */
-const _name = new WeakMap();
-/**
- * @type {WeakMap<ArtifactTemplate, string>}
- */
-const _type = new WeakMap(); 
-/**
- * @type {WeakMap<ArtifactTemplate, string>}
- */
-const _area = new WeakMap();
-/**
- * @type {WeakMap<ArtifactTemplate, string>}
- */
-const _description = new WeakMap();
-/**
- * @type {WeakMap<ArtifactTemplate, string>}
- */
-const _language = new WeakMap();
-/**
- * @type {WeakMap<ArtifactTemplate, import('../dependencies/Dependency').Dependency[]>}
- */
-const _dependencies = new WeakMap();
-/**
- * @type {WeakMap<ArtifactTemplate, string[]>}
- */
-const _includedFiles = new WeakMap();
-/**
- * @type {WeakMap<ArtifactTemplate, string>}
- */
-const _location = new WeakMap();
-
-/**
   * Represents an artifact template
   */
 export class ArtifactTemplate
 {
+    #name;
+    #type;
+    #area;
+    #description;
+    #language;
+    #dependencies;
+    #includedFiles;
+    #location;
     /**
      *Creates an instance of ArtifactTemplate.
      * @param {string} name
@@ -67,20 +43,20 @@ export class ArtifactTemplate
      * @param {string} area
      * @param {string} description
      * @param {string} language
-     * @param {import('../dependencies/Dependency').Dependency[]} dependencies
+     * @param {Dependency[]} dependencies
      * @param {string[]} includedFiles
      * @param {string} location
      * @memberof ArtifactTemplate
      */
     constructor (name, type, area, description, language, dependencies, includedFiles, location) {
-        _name.set(this, name);
-        _type.set(this, type);
-        _area.set(this, area);
-        _description.set(this, description);
-        _language.set(this, language);
-        _dependencies.set(this, dependencies);
-        _includedFiles.set(this, includedFiles);
-        _location.set(this, location);
+        this.#name = name;
+        this.#type = type;
+        this.#area = area;
+        this.#description = description;
+        this.#language = language;
+        this.#dependencies = dependencies;
+        this.#includedFiles = includedFiles;
+        this.#location = location;
 
         throwIfInvalidArea(area);
     }
@@ -91,14 +67,14 @@ export class ArtifactTemplate
      * @memberof ArtifactTemplate
      */
     get name() {
-        return _name.get(this);
+        return this.#name;
     }
     /**
      * Gets the type of the artifact template
      * @returns {string}
      */
     get type() {
-        return _type.get(this);
+        return this.#type;
     }
     /**
      * Gets the area of the artifact.
@@ -108,7 +84,7 @@ export class ArtifactTemplate
      * @memberof ArtifactTemplate
      */
     get area() {
-        return _type.get(this);
+        return this.#type;
     }
     /**
      * Gets the description of the artifact template
@@ -117,7 +93,7 @@ export class ArtifactTemplate
      * @memberof ArtifactTemplate
      */
     get description() {
-        return _description.get(this);
+        return this.#description;
     }
     /**
      * Gets the programming language of the artifact this is a template for
@@ -126,7 +102,7 @@ export class ArtifactTemplate
      * @memberof ArtifactTemplate
      */
     get language() {
-        return _language.get(this);
+        return this.#language;
     }
     /**
      * Gets the dependencies of the template
@@ -134,7 +110,7 @@ export class ArtifactTemplate
      * @memberof ArtifactTemplate
      */
     get dependencies() {
-        return _dependencies.get(this);
+        return this.#dependencies;
     }
     /**
      * Gets the list of files that needs to be templated
@@ -143,7 +119,7 @@ export class ArtifactTemplate
      * @memberof ArtifactTemplate
      */
     get includedFiles() {
-        return _includedFiles.get(this);
+        return this.#includedFiles;
     }
     /**
      * Gets the file location of the template
@@ -152,6 +128,6 @@ export class ArtifactTemplate
      * @memberof ArtifactTemplate
      */
     get location() {
-        return _location.get(this);
+        return this.#location;
     }
 }

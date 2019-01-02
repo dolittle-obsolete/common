@@ -1,39 +1,9 @@
+import { Dependency } from '../dependencies/Dependency';
+
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-/**
- * @type {WeakMap<BoilerPlate, string>}
- */
-const _language = new WeakMap();
-/**
- * @type {WeakMap<BoilerPlate, string>}
- */
-const _name = new WeakMap();
-/**
- * @type {WeakMap<BoilerPlate, string>}
- */
-const _description = new WeakMap();
-/**
- * @type {WeakMap<BoilerPlate, string>}
- */
-const _type = new WeakMap();
-/**
- * @type {WeakMap<BoilerPlate, import('../dependencies/Dependency').Dependency[]>}
- */
-const _dependencies = new WeakMap();
-/**
- * @type {WeakMap<BoilerPlate, string>}
- */
-const _location = new WeakMap();
-/**
- * @type {WeakMap<BoilerPlate, string[]>}
- */
-const _pathsNeedingBinding = new WeakMap();
-/**
- * @type {WeakMap<BoilerPlate, string[]>}
- */
-const _filesNeedingBinding = new WeakMap();
 
 /**
  * Represents a boiler plate
@@ -41,71 +11,83 @@ const _filesNeedingBinding = new WeakMap();
 export class BoilerPlate {
 
     /**
+     * @type {string}
+     */
+    #language;
+    #name;
+    #description;
+    #type;
+    #dependencies;
+    #location;
+    #pathsNeedingBinding;
+    #filesNeedingBinding;
+    /**
      * Initializes a new instance of {BoilerPlate}
      * @param {string} programming language 
      * @param {string} name 
      * @param {string} description 
      * @param {string} type
-     * @param {import('../dependencies/Dependency').Dependency[]} dependencies
+     * @param {Dependency[]} dependencies
      * @param {string} location 
      * @param {string[]} [pathsNeedingBinding]
      * @param {string[]} [filesNeedingBinding]
      */
     constructor(language, name, description, type, dependencies, location, pathsNeedingBinding, filesNeedingBinding) {
-        _language.set(this, language);
-        _name.set(this, name);
-        _description.set(this, description);
-        _type.set(this, type);
-        _dependencies.set(this, dependencies);
-        _location.set(this, location);
-        _pathsNeedingBinding.set(this, pathsNeedingBinding || []);
-        _filesNeedingBinding.set(this, filesNeedingBinding || []);
+        this.#language = language;
+        this.#name = name;
+        this.#description = description;
+        this.#type = type;
+        this.#dependencies = dependencies;
+        this.#location = location;
+        this.#pathsNeedingBinding = pathsNeedingBinding || [];
+        this.#filesNeedingBinding = filesNeedingBinding || [];
     }
 
     /**
      * Get the name of the {BoilerPlate}
      * @returns {string} Name of {BoilerPlate}
      */
-    get name() { return _name.get(this); }
+    get name() { return this.#name; }
 
     /**
      * Get the language of the {BoilerPlate}
      * @returns {string} Language of the {BoilerPlate}
      */
-    get language() { return _language.get(this); }
+    get language() { return this.#language; }
 
     /**
      * Get the description of the {BoilerPlate}
      * @returns {string} Description of the {BoilerPlate}
      */
-    get description() { return _description.get(this); }
+    get description() { return this.#description; }
 
     /**
      * Get the type of {BoilerPlate}
      * @returns {string} Type of {BoilerPlate}
      */
-    get type() { return _type.get(this); }
+    get type() { return this.#type; }
     /**
      * Gets all the dependencies of the boilerplate
+     * @returns {Dependency[]}
      */
-    get dependencies() { return _dependencies.get(this); }
+    get dependencies() { return this.#dependencies; }
     /**
      * Get the location of the {BoilerPlate}
      * @returns {string} Location of {BoilerPlate}
      */
-    get location() { return _location.get(this); }
+    get location() { return this.#location; }
 
     /**
      * Get the paths that need binding - relative within the content of the location of the {BoilerPlate}
      * @returns {string[]} Paths
      */
-    get pathsNeedingBinding() {return _pathsNeedingBinding.get(this); }
+    get pathsNeedingBinding() {return this.#pathsNeedingBinding; }
 
     /**
      * Gets the files that need binding - relative within the content of the location of the {BoilerPlate}
      * @returns {string[]} Files
      */
-    get filesNeedingBinding() {return _filesNeedingBinding.get(this); }
+    get filesNeedingBinding() {return this.#filesNeedingBinding; }
 
     /**
      * Convert to a JSON object

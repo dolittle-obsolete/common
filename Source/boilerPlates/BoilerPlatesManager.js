@@ -3,14 +3,16 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-/* eslint-disable no-unused-vars */
 import path from 'path';
 import { BoilerPlate } from './BoilerPlate';
 import Handlebars from 'handlebars';
 import { Guid } from '../Guid';
 import { getFileNameAndExtension } from '../helpers';
 import { dependencyFromJson } from '../dependencies/Dependency';
-/* eslint-enable no-unused-vars */
+import { HttpWrapper } from '../HttpWrapper';
+import { Folders } from '../Folders';
+import { ConfigManager } from '../configuration/ConfigManager';
+import { ArtifactTemplate } from '../artifacts/ArtifactTemplate';
 
 const boilerPlateFolder = 'boiler-plates';
 
@@ -23,59 +25,37 @@ const binaryFiles = [
     '.exe',
     '.ttf'
 ];
-/**
- * @type {WeakMap<BoilerPlatesManager, import('../configuration/ConfigManager').ConfigManager>}
- */
-const _configManager = new WeakMap();
-/**
- * @type {WeakMap<BoilerPlatesManager, import('../HttpWrapper').HttpWrapper>}
- */
-const _httpWrapper = new WeakMap();
-/**
- * @type {WeakMap<BoilerPlatesManager, import('simple-git/src/git')>}
- */
-const _git = new WeakMap();
-/**
- * @type {WeakMap<BoilerPlatesManager, import('../Folders').Folders>}
- */
-const _folders = new WeakMap();
-/**
- * @type {WeakMap<BoilerPlatesManager, import('fs-extra')>}
- */
-const _fileSystem = new WeakMap();
-/**
- * @type {WeakMap<BoilerPlatesManager, boolean>}
- */
-const _hasBoilerPlates = new WeakMap();
-/**
- * @type {WeakMap<BoilerPlatesManager, import('./BoilerPlate').BoilerPlate[]>}
- */
-const _boilerPlates = new WeakMap();
 
 /**
  * Represents the manager of boiler plates
  */
 export class BoilerPlatesManager {
-
+    #boilerPlates;
+    #configManager;
+    #httpWrapper;
+    #folders;
+    #fileSystem;
+    #git;
+    #logger;
     /**
      * Initializes a new instance of {BoilerPlatesManager}
-     * @param {import('../configuration/ConfigManager').ConfigManager} configManager 
-     * @param {HttpWrapimport('../HttpWrapper').HttpWrapperper} httpWrapper
+     * @param {ConfigManager} configManager 
+     * @param {HttpWrapper} httpWrapper
      * @param {import('simple-git/src/git')} git
-     * @param {import('../Folders').Folders} folders
+     * @param {Folders} folders
      * @param {import('fs-extra')} fileSystem
      * @param {import('winston').Logger} logger
      */
     constructor(configManager, httpWrapper, git, folders, fileSystem, logger) {
-        _configManager.set(this, configManager);
-        _httpWrapper.set(this, httpWrapper);
-        _folders.set(this, folders);
-        _fileSystem.set(this, fileSystem);
-        _git.set(this, git);
+        this.#configManager = configManager;
+        this.#httpWrapper = httpWrapper;
+        this.#folders = folders;
+        this.#fileSystem = fileSystem;
+        this.#git = git;
 
-        folders.makeFolderIfNotExists(this.boilerPlateLocation);
+        this.#folders.makeFolderIfNotExists(this.boilerPlateLocation);
 
-        this._logger = logger;
+        this.#logger = logger;
         this.readBoilerPlates();
         this.setupHandlebars();
     }
@@ -85,7 +65,7 @@ export class BoilerPlatesManager {
      * @returns {string} Base path of boiler plates
      */
     get boilerPlateLocation() {
-        return path.join(_configManager.get(this).centralFolderLocation, boilerPlateFolder);
+        return path.join(this.#configManager.centralFolderLocation, boilerPlateFolder);
     }
 
     /**
@@ -93,52 +73,50 @@ export class BoilerPlatesManager {
      * @returns {string} Path to the config file
      */
     get boilerPlateConfigFile() {
-        return path.join(_configManager.get(this).centralFolderLocation, 'boiler-plates.json');
+        return path.join(this.#configManager.centralFolderLocation, 'boiler-plates.json');
     }
 
     /**
      * Get all available boiler plates
-     * @returns {BoilerPlate[]} Avaiable boiler plates
+     * @returns {BoilerPlate[]} Available boiler plates
      */
     get boilerPlates() {
-        return _boilerPlates.get(this);
+        return this.#boilerPlates;
     }
     /**
      * Gets the filesystem
-     * 
-     * @readonly
-     * @memberof BoilerPlatesManager
+     * @returns {import('fs-extra')}
      */
     get fileSystem() {
-        return _fileSystem.get(this);
+        return this.#fileSystem;
     }
 
     /**
      * Get all available boiler plates for a specific language
      * @param {string} language
-     * @returns {BoilerPlate[]} Avaiable boiler plates for the language
+     * @returns {BoilerPlate[]} Available boiler plates for the language
      */
     boilerPlatesByLanguage(language) {
-        return _boilerPlates.get(this).filter(boilerPlate => boilerPlate.language == language);
+        return this.#boilerPlates.filter(boilerPlate => boilerPlate.language == language);
     }
 
     /**
      * Get all available boiler plates for a specific type
      * @param {string} type
-     * @returns {BoilerPlate[]} Avaiable boiler plates for the type
+     * @returns {BoilerPlate[]} Available boiler plates for the type
      */
     boilerPlatesByType(type) {
-        return _boilerPlates.get(this).filter(boilerPlate => boilerPlate.type == type);
+        return this.#boilerPlates.filter(boilerPlate => boilerPlate.type == type);
     }
 
     /**
      * Get all available boiler plates for a specific language
      * @param {string} language
      * @param {string} type
-     * @returns {BoilerPlate[]} Avaiable boiler plates for the language
+     * @returns {BoilerPlate[]} Available boiler plates for the language
      */
     boilerPlatesByLanguageAndType(language, type) {
-        return _boilerPlates.get(this).filter(boilerPlate => boilerPlate.language == language && boilerPlate.type == type);
+        return this.#boilerPlates.filter(boilerPlate => boilerPlate.language == language && boilerPlate.type == type);
     }
 
     /**
@@ -166,13 +144,11 @@ export class BoilerPlatesManager {
                 boilerPlates.push(boilerPlate);
             });
 
-            _boilerPlates.set(this, boilerPlates);
+            this.#boilerPlates = boilerPlates;
         } else {
 
-            _boilerPlates.set(this, []);
+            this.#boilerPlates = [];
         }
-
-        _hasBoilerPlates.set(this, _boilerPlates.get(this).length == 0 ? false: true);
     }
     /**
      * Sets up the handlebars system with custom helpers
@@ -190,7 +166,7 @@ export class BoilerPlatesManager {
     async getAvailableBoilerPlates() {
         let uri = 'https://api.github.com/orgs/dolittle-boilerplates/repos';
         return new Promise(resolve => {
-            _httpWrapper.get(this).getJson(uri).then(json => {
+            this.#httpWrapper.getJson(uri).then(json => {
                 let result = JSON.parse(json);
                 let urls = [];
                 result.forEach(item => urls.push(item.name));
@@ -205,13 +181,13 @@ export class BoilerPlatesManager {
      */
     async updateBoilerPlatesOnDisk() {
         return new Promise(async resolve => {
-            let folders = _folders.get(this).getFoldersIn(this.boilerPlateLocation);
+            let folders = this.#folders.getFoldersIn(this.boilerPlateLocation);
             let updateCount = folders.length;
 
             if (updateCount === 0) resolve(0);
             folders.forEach(folder => {
-                this._logger.info(`Update boiler plate in '${folder}'`);
-                _git.get(this).forFolder(folder).pull().exec(() => {
+                this.#logger.info(`Update boiler plate in '${folder}'`);
+                this.#git.forFolder(folder).pull().exec(() => {
                     if (--updateCount === 0) resolve(folders.length);
                 });
             });
@@ -224,7 +200,7 @@ export class BoilerPlatesManager {
      * @returns {Promise<void>}
      */
     async update() {
-        this._logger.info('Updating all boiler plates');
+        this.#logger.info('Updating all boiler plates');
         let promise = new Promise(async resolve => {
             let clonedNewRepos = false;
             const updatedCount = await this.updateBoilerPlatesOnDisk();
@@ -237,12 +213,11 @@ export class BoilerPlatesManager {
                 if (!this.fileSystem.existsSync(folderName)) {
                     clonedNewRepos = true;
                     let url = `https://github.com/dolittle-boilerplates/${name}.git`;
-                    this._logger.info(`Getting boilerplate not on disk from '${url}'`);
+                    this.#logger.info(`Getting boilerplate not on disk from '${url}'`);
                     
                     cloneCount++;
-
                     
-                    _git.get(this)
+                    this.#git
                         .silent(false)
                         .clone(url, folderName, { '--recursive': null })
                         .exec(() => {
@@ -266,18 +241,18 @@ export class BoilerPlatesManager {
      * Update configuration file on disk
      */
     async updateConfiguration() {
-        this._logger.info(`Updating the ${this.boilerPlateConfigFile} configuration`);
+        this.#logger.info(`Updating the ${this.boilerPlateConfigFile} configuration`);
         let self = this;
-        let folders = _folders.get(this).getFoldersIn(this.boilerPlateLocation);
+        let folders = this.#folders.getFoldersIn(this.boilerPlateLocation);
         let boilerPlates = [];
         folders.forEach(folder => {
-            let boilerPlatesPaths = _folders.get(this).searchRecursive(folder, 'boilerplate.json');
+            let boilerPlatesPaths = this.#folders.searchRecursive(folder, 'boilerplate.json');
             let contentFolder = path.join(folder, 'Content');
             
             boilerPlatesPaths.forEach(boilerPlatePath => {
                 let boilerPlateObject = JSON.parse(this.fileSystem.readFileSync(boilerPlatePath, 'utf8'));
                 if (boilerPlateObject.type != 'artifacts') {
-                    let paths = _folders.get(this).getFoldersAndFilesRecursivelyIn(contentFolder);
+                    let paths = this.#folders.getFoldersAndFilesRecursivelyIn(contentFolder);
                     paths = paths.filter(_ => {
                         let include = true;
                         binaryFiles.forEach(b => {
@@ -289,9 +264,9 @@ export class BoilerPlatesManager {
 
                     let filesNeedingBinding = [];
                     paths.forEach(_ => {
-                        let stat = _fileSystem.get(self).statSync(_);
+                        let stat = this.#fileSystem.statSync(_);
                         if (!stat.isDirectory()) {
-                            let file = _fileSystem.get(self).readFileSync(_);
+                            let file = this.#fileSystem.readFileSync(_);
                             if (file.indexOf('{{') >= 0) {
                                 filesNeedingBinding.push(_.substr(contentFolder.length + 1));
                             }
@@ -328,13 +303,13 @@ export class BoilerPlatesManager {
 
     /**
      * Create an instance of {BoilerPlate} into a specific destination folder with a given context
-     * @param {import('./BoilerPlate').BoilerPlate} boilerPlate 
+     * @param {BoilerPlate} boilerPlate 
      * @param {string} destination 
      * @param {object} context 
      */
     createInstance(boilerPlate, destination, context) {
-        _folders.get(this).makeFolderIfNotExists(destination);
-        _folders.get(this).copy(destination, boilerPlate.location);
+        this.#folders.makeFolderIfNotExists(destination);
+        this.#folders.copy(destination, boilerPlate.location);
         boilerPlate.pathsNeedingBinding.forEach(_ => {
             let pathToRename = path.join(destination, _);
             let segments = [];
@@ -353,13 +328,13 @@ export class BoilerPlatesManager {
     }
     /**
      * Create an instance of {BoilerPlate} of an artifact into a specific destination folder with a given context
-     * @param {import('../artifacts/ArtifactTemplate').ArtifactTemplate} artifactTemplate
+     * @param {ArtifactTemplate} artifactTemplate
      * @param {string} destination 
      * @param {any} context 
      */
     createArtifactInstance(artifactTemplate, destination, context) {
-        _folders.get(this).makeFolderIfNotExists(destination);
-        let filesToCreate = _folders.get(this).getArtifactTemplateFilesRecursivelyIn(artifactTemplate.location, artifactTemplate.includedFiles);
+        this.#folders.makeFolderIfNotExists(destination);
+        let filesToCreate = this.#folders.getArtifactTemplateFilesRecursivelyIn(artifactTemplate.location, artifactTemplate.includedFiles);
         
         filesToCreate.forEach( filePath => {
             const filename = getFileNameAndExtension(filePath);
@@ -380,6 +355,6 @@ export class BoilerPlatesManager {
      * @returns {boolean} True if there are, false if not
      */
     get hasBoilerPlates() {
-        return _hasBoilerPlates.get(this);
+        return this.#boilerPlates.length > 0;
     }
 }

@@ -5,21 +5,17 @@
 import path from 'path';
 
 /**
- * @type {WeakMap<Folders, import('fs-extra')}
- */
-const _fileSystem = new WeakMap();
-
-/**
  * Represents helpers for working with folders
  */
 export class Folders
 {
+    #fileSystem;
     /**
      * Initializes a new instance of {folders}
      * @param {import('fs-extra')} fileSystem 
      */
     constructor(fileSystem) {
-        _fileSystem.set(this,fileSystem);
+        this.#fileSystem = fileSystem;
     }
 
     /**
@@ -33,7 +29,7 @@ export class Folders
     {
         destination = path.normalize(destination);
         source = path.normalize(source);
-        _fileSystem.get(this).copySync(source, destination);
+        this.#fileSystem.copySync(source, destination);
     }
 
     /**
@@ -46,7 +42,7 @@ export class Folders
     {
         folderPath = path.normalize(folderPath);
         try {
-            _fileSystem.get(this).ensureDirSync(folderPath);
+            this.#fileSystem.ensureDirSync(folderPath);
         } catch(err)
         {
             try {
@@ -71,9 +67,9 @@ export class Folders
         folder = path.normalize(folder);
         let self = this;
         var results = [];
-        _fileSystem.get(this).readdirSync(folder).forEach(function (dirInner) {
+        this.#fileSystem.readdirSync(folder).forEach(function (dirInner) {
             let actualPath = path.resolve(folder, dirInner);
-            let stat = _fileSystem.get(self).statSync(actualPath);
+            let stat = self.#fileSystem.statSync(actualPath);
             if (stat.isDirectory()) {
                 results.push(actualPath);
             }
@@ -92,9 +88,9 @@ export class Folders
         folder = path.normalize(folder);
         let self = this;
         var results = [];
-        _fileSystem.get(this).readdirSync(folder).forEach(function (dirInner) {
+        this.#fileSystem.readdirSync(folder).forEach(function (dirInner) {
             let actualPath = path.resolve(folder, dirInner);
-            let stat = _fileSystem.get(self).statSync(actualPath);
+            let stat = self.#fileSystem.statSync(actualPath);
             let regexMatch = path.parse(actualPath).name.match(regularExp);
             if (stat.isDirectory() && regexMatch && regexMatch.length > 0) {
                 results.push(actualPath);
@@ -113,9 +109,9 @@ export class Folders
         folder = path.normalize(folder);
         let self = this;
         let results = [];
-        _fileSystem.get(this).readdirSync(folder).forEach(function (dirInner) {
+        this.#fileSystem.readdirSync(folder).forEach(function (dirInner) {
             let actualPath = path.resolve(folder, dirInner);
-            let stat = _fileSystem.get(self).statSync(actualPath);
+            let stat = self.#fileSystem.statSync(actualPath);
 
             if (stat.isDirectory()) {
                 results = results.concat(self.getFoldersAndFilesRecursivelyIn(actualPath));
@@ -138,9 +134,9 @@ export class Folders
         folder = path.normalize(folder);
         let self = this;
         let results = [];
-        _fileSystem.get(this).readdirSync(folder).forEach(function (dirInner) {
+        this.#fileSystem.readdirSync(folder).forEach(function (dirInner) {
             let actualPath = path.resolve(folder, dirInner);
-            let stat = _fileSystem.get(self).statSync(actualPath);
+            let stat = self.#fileSystem.statSync(actualPath);
             if (stat.isDirectory()) {
                 results = results.concat(self.getFoldersAndFilesRecursivelyIn(actualPath));
             }
@@ -164,9 +160,9 @@ export class Folders
         folder = path.normalize(folder);
         let self = this;
         let results = [];
-        _fileSystem.get(this).readdirSync(folder).forEach(function (dirInner) {
+        this.#fileSystem.readdirSync(folder).forEach(function (dirInner) {
             let actualPath = path.resolve(folder, dirInner);
-            let stat = _fileSystem.get(self).statSync(actualPath);
+            let stat = self.#fileSystem.statSync(actualPath);
             
             if (stat.isDirectory()) {
                 results = results.concat(self.getFoldersAndFilesRecursivelyIn(actualPath));
@@ -188,9 +184,9 @@ export class Folders
         let self = this;
         var results = [];
 
-        _fileSystem.get(this).readdirSync(folder).forEach(function (dirInner) {
+        this.#fileSystem.readdirSync(folder).forEach(function (dirInner) {
             dirInner = path.resolve(folder, dirInner);
-            var stat = _fileSystem.get(self).statSync(dirInner);
+            var stat = self.#fileSystem.statSync(dirInner);
             if (stat.isFile() && dirInner.endsWith(pattern)) {
                 results.push(dirInner);
             }
@@ -210,10 +206,10 @@ export class Folders
         let self = this;
         var results = [];
 
-        _fileSystem.get(this).readdirSync(folder).forEach(function (dirInner) {
+        this.#fileSystem.readdirSync(folder).forEach(function (dirInner) {
             dirInner = path.resolve(folder, dirInner);
             let regexMatch = dirInner.match(regularExp);
-            var stat = _fileSystem.get(self).statSync(dirInner);
+            var stat = self.#fileSystem.statSync(dirInner);
             if (stat.isFile() && regexMatch && regexMatch.length > 0) {
                 results.push(dirInner);
             }
@@ -233,9 +229,9 @@ export class Folders
         let self = this;
         var results = [];
 
-        _fileSystem.get(this).readdirSync(folder).forEach(function (dirInner) {
+        this.#fileSystem.readdirSync(folder).forEach(function (dirInner) {
             dirInner = path.resolve(folder, dirInner);
-            var stat = _fileSystem.get(self).statSync(dirInner);
+            var stat = self.#fileSystem.statSync(dirInner);
             if (stat.isDirectory()) {
                 results = results.concat(self.searchRecursive(dirInner, pattern));
             }
@@ -259,9 +255,9 @@ export class Folders
         let self = this;
         var results = [];
 
-        _fileSystem.get(this).readdirSync(folder).forEach(function (dirInner) {
+        this.#fileSystem.readdirSync(folder).forEach(function (dirInner) {
             dirInner = path.resolve(folder, dirInner);
-            var stat = _fileSystem.get(self).statSync(dirInner);
+            var stat = self.#fileSystem.statSync(dirInner);
             if (stat.isDirectory()) {
                 results = results.concat(self.searchRecursiveRegex(dirInner, regularExp));
             }

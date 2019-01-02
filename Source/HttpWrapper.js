@@ -10,12 +10,11 @@ import * as streams from 'stream';
  * Represents a wrapper for working with HTTP calls
  */
 export class HttpWrapper {
-
     /**
      * Get from a specific source with a specific mimetype and output into a stream
-     * @param {string} source 
-     * @param {string} mimeType 
-     * @param {streams.PassThrough} stream 
+     * @param {string} source
+     * @param {string} mimeType
+     * @param {streams.PassThrough} stream
      * @returns {Promise<void>} A promise that can be continued
      */
     get(source, mimeType, stream) {
