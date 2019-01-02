@@ -42,7 +42,6 @@ export class DependenciesManager {
         if (dependency.discoverType === 'namespace') {
             return createNamespace(dependency, location);
         }
-        if (dependency.discoverType === )
         else if (dependency.discoverType === 'multipleFiles') {
             return discoverMultipleFiles(dependency, location, language);
         }
