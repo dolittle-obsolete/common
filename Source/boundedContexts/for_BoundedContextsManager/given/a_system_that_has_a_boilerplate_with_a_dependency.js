@@ -16,12 +16,12 @@ export class a_system_that_has_a_boilerplate_with_a_dependency extends a_bounded
         this.dependencies = [
             new Dependency('description', 'name', 'userInput', undefined, 'input', undefined, 'message')
         ];
-        this.boiler_plate_location = path.resolve('path', 'to', 'boilerplate');
+        this.boiler_plate_path = path.resolve('path', 'to', 'boilerplate.json');
 
        
         this.boiler_plates_manager.boilerPlatesByLanguageAndType.returns([
             new BoilerPlate(this.language, 'some_artifact', 'some description', 'artifact', this.dependencies, 
-                this.boiler_plate_location, [], [])
+                this.boiler_plate_path, [], [])
         ]
         );
         

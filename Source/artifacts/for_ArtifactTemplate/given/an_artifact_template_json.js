@@ -5,7 +5,7 @@
 
  export class an_artifact_template_json{
     constructor() {
-        this.location = 'some location'; 
+        this.path = 'some path'; 
         this.artifact_template_json = {
             name: 'Aggregate Root template', 
             type: 'aggregateRoot', 

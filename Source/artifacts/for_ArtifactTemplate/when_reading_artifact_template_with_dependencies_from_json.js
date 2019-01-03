@@ -12,7 +12,7 @@ import { an_artifact_template_json_with_dependencies } from "./given/an_artifact
     /**
      * @type {ArtifactTemplate}
      */
-    let result = artifactTemplateFromJson(context.artifact_template_json, context.location);
+    let result = artifactTemplateFromJson(context.artifact_template_json, context.path);
     
     
     it('should have the correct name', () => result.name.should.equal(context.artifact_template_json.name));

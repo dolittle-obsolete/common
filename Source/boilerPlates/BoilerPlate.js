@@ -18,7 +18,7 @@ export class BoilerPlate {
     #description;
     #type;
     #dependencies;
-    #location;
+    #path;
     #pathsNeedingBinding;
     #filesNeedingBinding;
     /**
@@ -28,17 +28,17 @@ export class BoilerPlate {
      * @param {string} description 
      * @param {string} type
      * @param {Dependency[]} dependencies
-     * @param {string} location 
+     * @param {string} path 
      * @param {string[]} [pathsNeedingBinding]
      * @param {string[]} [filesNeedingBinding]
      */
-    constructor(language, name, description, type, dependencies, location, pathsNeedingBinding, filesNeedingBinding) {
+    constructor(language, name, description, type, dependencies, path, pathsNeedingBinding, filesNeedingBinding) {
         this.#language = language;
         this.#name = name;
         this.#description = description;
         this.#type = type;
         this.#dependencies = dependencies;
-        this.#location = location;
+        this.#path = path;
         this.#pathsNeedingBinding = pathsNeedingBinding || [];
         this.#filesNeedingBinding = filesNeedingBinding || [];
     }
@@ -72,10 +72,10 @@ export class BoilerPlate {
      */
     get dependencies() { return this.#dependencies; }
     /**
-     * Get the location of the {BoilerPlate}
-     * @returns {string} Location of {BoilerPlate}
+     * Get the file path of the {BoilerPlate} configuration file
+     * @returns {string}
      */
-    get location() { return this.#location; }
+    get path() { return this.#path; }
 
     /**
      * Get the paths that need binding - relative within the content of the location of the {BoilerPlate}
@@ -95,14 +95,14 @@ export class BoilerPlate {
      */
     toJson() {
         return {
-            name: this.name,
-            language: this.language,
-            description: this.description,
-            type: this.type,
-            dependencies: this.dependencies,
-            location: this.location,
-            pathsNeedingBinding: this.pathsNeedingBinding,
-            filesNeedingBinding: this.filesNeedingBinding
+            name: this.#name,
+            language: this.#language,
+            description: this.#description,
+            type: this.#type,
+            dependencies: this.#dependencies,
+            path: this.#path,
+            pathsNeedingBinding: this.#pathsNeedingBinding,
+            filesNeedingBinding: this.#filesNeedingBinding
         };
     }
     /**
@@ -112,9 +112,9 @@ export class BoilerPlate {
      * @memberof BoilerPlate
      */
     equals(boilerPlate) {
-        return this.language === boilerPlate.language
-                && this.name === boilerPlate.name
-                && this.type === boilerPlate.type;
+        return this.#language === boilerPlate.language
+                && this.#name === boilerPlate.name
+                && this.#type === boilerPlate.type;
          
     }
 }

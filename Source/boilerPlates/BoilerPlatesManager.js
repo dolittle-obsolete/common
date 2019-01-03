@@ -137,7 +137,7 @@ export class BoilerPlatesManager {
                     boilerPlateObject.dependencies !== undefined? 
                         boilerPlateObject.dependencies.map(dep => dependencyFromJson(dep))
                         : [],
-                    boilerPlateObject.location,
+                    boilerPlateObject.path,
                     boilerPlateObject.pathsNeedingBinding || [],
                     boilerPlateObject.filesNeedingBinding || []
                 );
@@ -273,12 +273,12 @@ export class BoilerPlatesManager {
                         }
                     });
 
-                    boilerPlateObject.location = contentFolder;
+                    boilerPlateObject.path = boilerPlatePath;
                     boilerPlateObject.pathsNeedingBinding = pathsNeedingBinding;
                     boilerPlateObject.filesNeedingBinding = filesNeedingBinding;
                 }
                 else {
-                    boilerPlateObject.location = path.dirname(boilerPlatePath);
+                    boilerPlateObject.path = boilerPlatePath;
                     boilerPlateObject.pathsNeedingBinding = [];
                     boilerPlateObject.filesNeedingBinding = [];
                 }
@@ -289,8 +289,8 @@ export class BoilerPlatesManager {
                     boilerPlateObject.description,
                     boilerPlateObject.type,
                     boilerPlateObject.dependencies,
-                    boilerPlateObject.location,
-                    boilerPlateObject.pathsNeedingBinding,
+                    boilerPlateObject.path,
+                    boilerPlateObject.pathsNeedingBinding ,
                     boilerPlateObject.filesNeedingBinding
                 );
                 boilerPlates.push(boilerPlate);
@@ -309,7 +309,7 @@ export class BoilerPlatesManager {
      */
     createInstance(boilerPlate, destination, context) {
         this.#folders.makeFolderIfNotExists(destination);
-        this.#folders.copy(destination, boilerPlate.location);
+        this.#folders.copy(destination, boilerPlate.path);
         boilerPlate.pathsNeedingBinding.forEach(_ => {
             let pathToRename = path.join(destination, _);
             let segments = [];
@@ -334,7 +334,7 @@ export class BoilerPlatesManager {
      */
     createArtifactInstance(artifactTemplate, destination, context) {
         this.#folders.makeFolderIfNotExists(destination);
-        let filesToCreate = this.#folders.getArtifactTemplateFilesRecursivelyIn(artifactTemplate.location, artifactTemplate.includedFiles);
+        let filesToCreate = this.#folders.getArtifactTemplateFilesRecursivelyIn(artifactTemplate.path, artifactTemplate.includedFiles);
         
         filesToCreate.forEach( filePath => {
             const filename = getFileNameAndExtension(filePath);

@@ -11,7 +11,7 @@ import { artifactTemplateFromJson, ArtifactTemplate } from "../ArtifactTemplate"
     /**
      * @type {ArtifactTemplate}
      */
-    let result = artifactTemplateFromJson(context.artifact_template_json, context.location);
+    let result = artifactTemplateFromJson(context.artifact_template_json, context.path);
     
     
     it('should have the correct name', () => result.name.should.equal(context.artifact_template_json.name));

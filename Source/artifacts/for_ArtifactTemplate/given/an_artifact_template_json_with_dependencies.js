@@ -5,7 +5,7 @@
 
  export class an_artifact_template_json_with_dependencies{
     constructor() {
-        this.location = 'some location';
+        this.path = 'some path';
         this.dependency_object = {
             description: 'The type of the Concept',
             name: 'conceptType',

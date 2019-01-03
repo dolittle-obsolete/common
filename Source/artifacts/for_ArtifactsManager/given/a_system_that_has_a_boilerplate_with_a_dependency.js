@@ -18,9 +18,9 @@ export class a_system_that_has_a_boilerplate_with_a_dependency extends an_artifa
         this.dependencies = [
             new Dependency('description', 'name', 'userInput', undefined, 'input', undefined, 'message')
         ];
-        this.boiler_plate_location = path.resolve('path', 'to', 'boilerplate');
+        this.boiler_plate_path = path.resolve('path', 'to', 'boilerplate.json');
 
-        this.template_path = path.resolve('path', 'to', 'boilerplate', 'template','template.json'); 
+        this.template_path = path.resolve('path', 'to', 'template','template.json'); 
         this.artifact_template = {
             name: 'name',
             type: this.artifact_type,
@@ -29,11 +29,11 @@ export class a_system_that_has_a_boilerplate_with_a_dependency extends an_artifa
             language: this.language,
             dependencies: [],
             includedFiles: [],
-            location: this.template_path
+            path: this.template_path
         };
         this.boiler_plates_manager.boilerPlatesByLanguageAndType.returns([
             new BoilerPlate(this.language, 'some_artifact', 'some description', 'artifact', this.dependencies, 
-                this.boiler_plate_location, [], [])
+                this.boiler_plate_path, [], [])
         ]
         );
         this.folders.searchRecursive.returns([

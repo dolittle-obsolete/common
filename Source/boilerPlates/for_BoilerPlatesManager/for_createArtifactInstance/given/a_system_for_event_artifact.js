@@ -13,13 +13,13 @@ const oldFileContent = 'some content';
 export class a_system_for_event_artifact extends a_boiler_plates_manager {
     constructor() {
         super();
-        this.templateLocation = 'somelocation';
+        this.templatePath = 'somePath';
         this.includedFiles = [
             '{{name}}.cs'
         ];
-        this.eventArtifactTemplate = new ArtifactTemplate('Event template', 'event', 'events', 'Creates an event', 'csharp', [], this.includedFiles, this.templateLocation);  
+        this.eventArtifactTemplate = new ArtifactTemplate('Event template', 'event', 'events', 'Creates an event', 'csharp', [], this.includedFiles, this.templatePath);  
         
-        this.folders.getArtifactTemplateFilesRecursivelyIn = sinon.stub().returns(this.includedFiles.map((file, _) => path.join(this.templateLocation, file)));
+        this.folders.getArtifactTemplateFilesRecursivelyIn = sinon.stub().returns(this.includedFiles.map((file, _) => path.join(this.templatePath, file)));
         
         this.fileSystem.readFileSync = sinon.stub().returns(oldFileContent);
         this.fileSystem.writeFileSync = sinon.stub();

@@ -81,7 +81,7 @@ export class ArtifactsManager {
      */
     templateByBoilerplate(boilerPlate, artifactType)
     {
-        let templateFiles = this.#folders.searchRecursive(getFileDirPath(boilerPlate.location), 'template.json');
+        let templateFiles = this.#folders.searchRecursive(getFileDirPath(boilerPlate.path), 'template.json');
         let templates = [];
         templateFiles.forEach(_ => {
             let template = artifactTemplateFromJson(JSON.parse(this.#fileSystem.readFileSync(_)), _);
