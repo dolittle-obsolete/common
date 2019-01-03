@@ -6,10 +6,12 @@
 import { BoilerPlate } from "../boilerPlates/BoilerPlate";
 import { Dependency } from "../dependencies/Dependency";
 import { BoilerPlatesManager } from "../boilerPlates/BoilerPlatesManager";
-import { Guid } from "../Guid";
+import { Application, applicationFromJson } from "./Application";
 
+const path = require('path');
 export const applicationBoilerplateType = 'application';
 
+export const applicationFilename = 'application.json';
 /**
  * 
  *
@@ -18,18 +20,43 @@ export const applicationBoilerplateType = 'application';
  */
 export class ApplicationsManager {
     #boilerPlatesManager;
+    #fileSystem;
     #logger;
 
     /**
      *Creates an instance of ApplicationsManager.
      * @param {BoilerPlatesManager} boilerPlatesManager
+     * @param {import('fs-extra')} fileSystem
      * @param {import('winston').Logger} logger
      * @memberof ApplicationsManager
      */
-    constructor(boilerPlatesManager, logger) {
+    constructor(boilerPlatesManager, fileSystem, logger) {
         this.#boilerPlatesManager = boilerPlatesManager;
+        this.#fileSystem = fileSystem;
         this.#logger = logger;
     }
+
+    /**
+     * Gets the application configuration from the given folder
+     * @param {string} folder path 
+     * @param {Application | null} application config or null if not found
+     */
+    getApplicationFrom(folder) {
+        if (! this.hasApplication(folder)) 
+            return null;
+        const filePath = path.join(folder, applicationFilename);
+        return applicationFromJson(JSON.parse(this.#fileSystem.readFileSync(filePath, 'utf8')), filePath);
+    }
+    /**
+     * Check if an application has been setup in the given folder.
+     * @param {string} folder path
+     * @returns {boolean} whether or not the application configuration is set up
+     */
+    hasApplication(folder) {
+        const filePath = path.join(folder, applicationFilename);
+        return this.#fileSystem.existsSync(filePath);
+    }
+
     /**
      * Gets all the dependencies for an application of a given language
      *
