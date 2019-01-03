@@ -1,5 +1,6 @@
 import { a_system_that_has_an_application_and_a_boilerplate_with_a_dependency } from "./given/a_system_that_has_an_application_and_a_boilerplate_with_a_dependency";
-import { Dependency } from "../../dependencies/Dependency";
+
+import { Application } from "../Application";
 
 
 /*---------------------------------------------------------------------------------------------
@@ -7,15 +8,12 @@ import { Dependency } from "../../dependencies/Dependency";
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
- describe('when getting dependencies and boilerplate has one dependency', () => {
+ describe('when getting application from an application manager that has an application', () => {
     let context = new a_system_that_has_an_application_and_a_boilerplate_with_a_dependency();
     /**
-     * @type {Dependency[]}
+     * @type {Application}
      */
     let result = null;
-    beforeEach(() => {
-        result = context.applications_manager.getDependencies(context.artifact_type, context.language);
-    });
-    
-    it('should return a single dependency', () => result.length.should.equal(1));
+    it('should have an application', () => expect(context.applications_manager.hasApplication('some/folder')).to.be.true);
+    it('should not return null', () => expect(context.applications_manager.getApplicationFrom('some/folder')).to.not.be.null);
  });

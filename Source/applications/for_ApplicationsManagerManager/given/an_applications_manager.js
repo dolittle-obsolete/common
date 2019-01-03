@@ -5,13 +5,17 @@ import { ApplicationsManager } from "../../ApplicationsManager";
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-export class a_bounded_contexts_manager {
+export class an_applications_manager {
     constructor() {
         this.boiler_plates_manager = {
             boilerPlatesByLanguageAndType: sinon.stub(),
             createInstance: sinon.stub()
         };
+        this.file_system = {
+            readFileSync: sinon.stub(),
+            existsSync: sinon.stub()  
+        };
 
-        this.applications_manager = new ApplicationsManager(this.boiler_plates_manager, logger);
+        this.applications_manager = new ApplicationsManager(this.boiler_plates_manager, this.file_system, logger);
     }
  }

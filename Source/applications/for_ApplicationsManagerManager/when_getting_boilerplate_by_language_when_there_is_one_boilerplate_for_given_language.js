@@ -1,4 +1,4 @@
-import { a_system_that_has_a_boilerplate_with_a_dependency } from "./given/a_system_that_has_a_boilerplate_with_a_dependency";
+import { a_system_that_has_an_application_and_a_boilerplate_with_a_dependency } from "./given/a_system_that_has_an_application_and_a_boilerplate_with_a_dependency";
 import { BoilerPlate } from "../../boilerPlates/BoilerPlate";
 
 /*---------------------------------------------------------------------------------------------
@@ -7,7 +7,7 @@ import { BoilerPlate } from "../../boilerPlates/BoilerPlate";
  *--------------------------------------------------------------------------------------------*/
 
  describe('when getting boilerplate by language when there is one boilerplate for given language', () => {
-    let context = new a_system_that_has_a_boilerplate_with_a_dependency();
+    let context = new a_system_that_has_an_application_and_a_boilerplate_with_a_dependency();
     /**
      * @type {BoilerPlate}
      */
