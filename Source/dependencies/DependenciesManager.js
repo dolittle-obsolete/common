@@ -34,9 +34,9 @@ export class DependenciesManager {
 
     /**
      * Discovers a dependency
-     * @param {Dependency} dependency 
-     * @param {string} location 
-     * @param {string} language
+     * @param {Dependency} dependency The dependency 
+     * @param {string} location The path to start searching from
+     * @param {string} language The core language
      */
     discover(dependency, location, language) {
         if (dependency.discoverType === 'namespace') {
@@ -51,10 +51,10 @@ export class DependenciesManager {
 
     /**
      * Discovers multiple files
-     * @param {Dependency} dependency
-     * @param {string} location
-     * @param {string} language
-     * @returns {string[] | {value: string, namespace: string}[]} 
+     * @param {Dependency} dependency The dependency
+     * @param {string} location The path to start searching from
+     * @param {string} language The core language
+     * @returns {string[] | {value: string, namespace: string}[]} returns a list of 
      */
     #discoverMultipleFiles(dependency, location, language) {
     
@@ -68,7 +68,15 @@ export class DependenciesManager {
         }
         let results = [];
         if (dependency.contentMatch === undefined) { 
-            results = filePaths;
+            filePaths.forEach(filePath => {
+                let namespace = '';
+                    if (dependency.withNamespace)
+                        namespace = createNamespace(dependency, getFileDirPath(filePath));
+
+                    let item = dependency.withNamespace?  {value: filePath, namespace: namespace}
+                        : filePath;
+                    results.push(item);
+            });
         }
         else {
             filePaths.forEach(filePath => {
@@ -79,9 +87,9 @@ export class DependenciesManager {
                     if (dependency.withNamespace)
                         namespace = createNamespace(dependency, getFileDirPath(filePath));
 
-                    let choice = dependency.withNamespace?  {value: theMatch[1], namespace: namespace}
+                    let item = dependency.withNamespace?  {value: theMatch[1], namespace: namespace}
                         : theMatch[1];
-                    results.push(choice);
+                    results.push(item);
                 }
             });
         }
