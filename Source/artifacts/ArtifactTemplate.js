@@ -9,15 +9,15 @@ import { areas } from '../helpers';
  * Creates an {ArtifactTemplate} from json object
  *
  * @export
- * @param {any} obj
- * @param {string} location
+ * @param {any} obj The template json object
+ * @param {string} path The path of the template file
  * @returns The created {ArtifactTemplate}
  */
-export function artifactTemplateFromJson(obj, location) {
+export function artifactTemplateFromJson(obj, path) {
     return new ArtifactTemplate(obj.name, obj.type, obj.area, obj.description, obj.language,
         obj.dependencies !== undefined? 
             obj.dependencies.map(depObj => dependencyFromJson(depObj))
-            : [], obj.includedFiles, location);
+            : [], obj.includedFiles, path);
 }
 
 function throwIfInvalidArea(area) {
@@ -37,7 +37,7 @@ export class ArtifactTemplate
     #language;
     #dependencies;
     #includedFiles;
-    #location;
+    #path;
     /**
      *Creates an instance of ArtifactTemplate.
      * @param {string} name
@@ -47,10 +47,10 @@ export class ArtifactTemplate
      * @param {string} language
      * @param {Dependency[]} dependencies
      * @param {string[]} includedFiles
-     * @param {string} location
+     * @param {string} path
      * @memberof ArtifactTemplate
      */
-    constructor (name, type, area, description, language, dependencies, includedFiles, location) {
+    constructor (name, type, area, description, language, dependencies, includedFiles, path) {
         this.#name = name;
         this.#type = type;
         this.#area = area;
@@ -58,7 +58,7 @@ export class ArtifactTemplate
         this.#language = language;
         this.#dependencies = dependencies || [];
         this.#includedFiles = includedFiles || [];
-        this.#location = location;
+        this.#path = path;
 
         throwIfInvalidArea(area);
     }
@@ -124,12 +124,12 @@ export class ArtifactTemplate
         return this.#includedFiles;
     }
     /**
-     * Gets the file location of the template
+     * Gets the path of the template file
      * @returns {string}
      * @readonly
      * @memberof ArtifactTemplate
      */
-    get location() {
-        return this.#location;
+    get path() {
+        return this.#path;
     }
 }

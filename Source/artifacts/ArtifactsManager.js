@@ -81,11 +81,10 @@ export class ArtifactsManager {
      */
     templateByBoilerplate(boilerPlate, artifactType)
     {
-        let templateFiles = this.#folders.searchRecursive(boilerPlate.location, 'template.json');
+        let templateFiles = this.#folders.searchRecursive(getFileDirPath(boilerPlate.location), 'template.json');
         let templates = [];
         templateFiles.forEach(_ => {
-            let location = getFileDirPath(_);
-            let template = artifactTemplateFromJson(JSON.parse(this.#fileSystem.readFileSync(_)), location);
+            let template = artifactTemplateFromJson(JSON.parse(this.#fileSystem.readFileSync(_)), _);
             if (template.language === boilerPlate.language && template.type === artifactType)
                 templates.push(template);
         });
