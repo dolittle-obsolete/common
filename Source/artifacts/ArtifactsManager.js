@@ -76,8 +76,8 @@ export class ArtifactsManager {
     /**
      * Gets the artifact template based on the core language and the type of the artifact
      *
-     * @param {*} language
-     * @param {*} artifactType
+     * @param {string} language
+     * @param {string} artifactType
      * @returns {ArtifactTemplate | null}
      * @memberof ArtifactsManager
      */
