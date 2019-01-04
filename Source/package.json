@@ -12,11 +12,11 @@
   "main": "./dist/index.js",
   "module": "./Source/index.js",
   "scripts": {
-    "build": "gulp build --root ./Source",
+    "build": "gulp build --root ./",
     "prepublish": "yarn build"
   },
   "devDependencies": {
-    "@dolittle/build": "^4.1.2"
+    "@dolittle/build": "^4.2.0"
   },
   "dependencies": {
     "fs-extra": "^7.0.0",

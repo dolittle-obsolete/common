@@ -7,16 +7,16 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dolittle-tools/cli.git"
+    "url": "https://github.com/dolittle-tools/common.git"
   },
-  "main": "./dist/index.js",
-  "module": "./Source/index.js",
+  "main": "./Source/dist/commonjs/index.js",
+  "module": "./Source/dist/esmodule/index.js",
   "scripts": {
     "build": "gulp build --root ./Source",
     "prepublish": "yarn build"
   },
   "devDependencies": {
-    "@dolittle/build": "^4.1.2"
+    "@dolittle/build": "^4.2.0"
   },
   "dependencies": {
     "fs-extra": "^7.0.0",
