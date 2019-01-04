@@ -40,10 +40,10 @@ export class DependenciesManager {
      */
     discover(dependency, location, language) {
         if (dependency.discoverType === 'namespace') {
-            return createNamespace(dependency, location);
+            return this.#createNamespace(dependency, location);
         }
         else if (dependency.discoverType === 'multipleFiles') {
-            return discoverMultipleFiles(dependency, location, language);
+            return this.#discoverMultipleFiles(dependency, location, language);
         }
 
         throw new Error(`Cannot handle discoveryType '${dependency.discoverType}'`);
@@ -71,7 +71,7 @@ export class DependenciesManager {
             filePaths.forEach(filePath => {
                 let namespace = '';
                     if (dependency.withNamespace)
-                        namespace = createNamespace(dependency, getFileDirPath(filePath));
+                        namespace = this.#createNamespace(dependency, getFileDirPath(filePath));
 
                     let item = dependency.withNamespace?  {value: filePath, namespace: namespace}
                         : filePath;
@@ -85,7 +85,7 @@ export class DependenciesManager {
                 if (theMatch !== null && theMatch.length > 0) {
                     let namespace = '';
                     if (dependency.withNamespace)
-                        namespace = createNamespace(dependency, getFileDirPath(filePath));
+                        namespace = this.#createNamespace(dependency, getFileDirPath(filePath));
 
                     let item = dependency.withNamespace?  {value: theMatch[1], namespace: namespace}
                         : theMatch[1];
