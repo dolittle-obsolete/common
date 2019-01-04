@@ -59,6 +59,12 @@ git.forFolder = (folder) => {
 };
 
 export const dolittleConfig = require('rc')('dolittle', {
+    any: {
+        concepts: 'Concepts',
+        domain: 'Domain',
+        events: 'Events',
+        read: 'Read'
+    },
     csharp: {
         concepts: 'Concepts',
         domain: 'Domain',
