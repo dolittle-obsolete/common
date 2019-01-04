@@ -71,7 +71,7 @@ export const folders = new Folders(filesystem);
 export const boilerPlatesManager = new BoilerPlatesManager(configManager, httpWrapper, git, folders, filesystem, logger);
 export const applicationsManager = new ApplicationsManager(boilerPlatesManager, filesystem, logger);
 export const artifactsManager = new ArtifactsManager(boilerPlatesManager, folders, filesystem, logger);
-export const boundedContextManager = new BoundedContextsManager(boilerPlatesManager, folders, filesystem, logger);
+export const boundedContextsManager = new BoundedContextsManager(boilerPlatesManager, folders, filesystem, logger);
 export const dependenciesManager = new DependenciesManager(folders, filesystem, dolittleConfig, logger);
 
 export const helpers = require('./helpers');
