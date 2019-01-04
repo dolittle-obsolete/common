@@ -49,7 +49,7 @@ export class BoundedContextsManager {
         let regex =  new RegExp('\\b'+boundedContextFileName+'\\b');
         const boundedContextConfigPath = this.#folders.getNearestFileSearchingUpwards(startPath, regex);
         if (boundedContextConfigPath === '') {
-            this.#logger.error(`${boundedContextFileName} was not found. Cannot create artifacts. Run dolittle create boundedcontext to create a new bounded context from scratch`);
+            this.#logger.error(`${boundedContextFileName} was not found. Cannot create artifacts.`);
             throw new Error('Bounded context configuration not found');
         }
         this.#logger.info(`Found bounded context configuration at path '${boundedContextConfigPath}'`);
