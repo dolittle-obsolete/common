@@ -7,7 +7,7 @@ import path from 'path';
 import { BoilerPlate } from './BoilerPlate';
 import Handlebars from 'handlebars';
 import { Guid } from '../Guid';
-import { getFileNameAndExtension } from '../helpers';
+import { getFileNameAndExtension, getFileDirPath } from '../helpers';
 import { dependencyFromJson } from '../dependencies/Dependency';
 import { HttpWrapper } from '../HttpWrapper';
 import { Folders } from '../Folders';
@@ -309,7 +309,7 @@ export class BoilerPlatesManager {
      */
     createInstance(boilerPlate, destination, context) {
         this.#folders.makeFolderIfNotExists(destination);
-        this.#folders.copy(destination, boilerPlate.path);
+        this.#folders.copy(destination, boilerPlate.contentDirectory);
         boilerPlate.pathsNeedingBinding.forEach(_ => {
             let pathToRename = path.join(destination, _);
             let segments = [];
@@ -334,7 +334,7 @@ export class BoilerPlatesManager {
      */
     createArtifactInstance(artifactTemplate, destination, context) {
         this.#folders.makeFolderIfNotExists(destination);
-        let filesToCreate = this.#folders.getArtifactTemplateFilesRecursivelyIn(artifactTemplate.path, artifactTemplate.includedFiles);
+        let filesToCreate = artifactTemplate.getFilesToCreate();
         
         filesToCreate.forEach( filePath => {
             const filename = getFileNameAndExtension(filePath);

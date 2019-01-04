@@ -3,8 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { dependencyFromJson, Dependency } from '../dependencies/Dependency';
-import { areas } from '../helpers';
+import { areas, getFileDirPath } from '../helpers';
 
+const _path = require('path');
 /**
  * Creates an {ArtifactTemplate} from json object
  *
@@ -131,5 +132,15 @@ export class ArtifactTemplate
      */
     get path() {
         return this.#path;
+    }
+    /**
+     * Gets a list of the files that needs to be created
+     *
+     * @returns {string[]}
+     * @memberof ArtifactTemplate
+     */
+    getFilesToCreate() {
+        const dir = getFileDirPath(this.#path); 
+        return this#includedFiles.map(_ => _path.join(dir, _));
     }
 }
