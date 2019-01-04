@@ -1,5 +1,6 @@
 import { Dependency } from '../dependencies/Dependency';
-
+import { getFileDirPath } from '../helpers';
+const _path = require('path');
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
@@ -21,6 +22,7 @@ export class BoilerPlate {
     #path;
     #pathsNeedingBinding;
     #filesNeedingBinding;
+    #contentDirectory;
     /**
      * Initializes a new instance of {BoilerPlate}
      * @param {string} programming language 
@@ -41,6 +43,10 @@ export class BoilerPlate {
         this.#path = path;
         this.#pathsNeedingBinding = pathsNeedingBinding || [];
         this.#filesNeedingBinding = filesNeedingBinding || [];
+        let dir = getFileDirPath(this.#path);
+        this.#contentDirectory = this.#type !== 'artifacts'?
+            _path.join(dir, 'Content')
+            : dir;
     }
 
     /**
@@ -88,6 +94,17 @@ export class BoilerPlate {
      * @returns {string[]} Files
      */
     get filesNeedingBinding() {return this.#filesNeedingBinding; }
+
+    /**
+     * Gets the path of the directory of the boilerplate files 
+     *
+     * @returns {string}
+     * @readonly
+     * @memberof BoilerPlate
+     */
+    get contentDirectory() {
+        return this.#contentDirectory;
+    }
 
     /**
      * Convert to a JSON object
