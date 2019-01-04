@@ -5,6 +5,7 @@
 
 import { Dependency } from "./Dependency";
 import { Folders } from "../Folders";
+import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir } from "../helpers";
 
 /**
  * Manages the dependencies
