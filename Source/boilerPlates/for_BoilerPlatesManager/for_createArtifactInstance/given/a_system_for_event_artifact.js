@@ -13,7 +13,7 @@ const oldFileContent = 'some content';
 export class a_system_for_event_artifact extends a_boiler_plates_manager {
     constructor() {
         super();
-        this.templatePath = 'somePath';
+        this.templatePath = path.join('somePath', 'template.json');
         this.includedFiles = [
             '{{name}}.cs'
         ];
