@@ -141,6 +141,6 @@ export class ArtifactTemplate
      */
     getFilesToCreate() {
         const dir = getFileDirPath(this.#path); 
-        return this#includedFiles.map(_ => _path.join(dir, _));
+        return this.#includedFiles.map(_ => _path.join(dir, _));
     }
 }
