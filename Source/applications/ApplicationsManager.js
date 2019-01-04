@@ -66,7 +66,7 @@ export class ApplicationsManager {
      */
     getDependencies(language) {
         let boilerplate = this.boilerPlateByLanguage(language);
-        return boilerplate.dependencies;
+        return boilerplate? boilerplate.dependencies : [];
     }
     /**
      * Retrieves the boilerplate.json configuration for application with the given language
@@ -77,31 +77,29 @@ export class ApplicationsManager {
         let boilerPlates = this.#boilerPlatesManager.boilerPlatesByLanguageAndType(language, applicationBoilerplateType);
         if (boilerPlates === null || boilerPlates.length === 0) {
             this.#logger.error(`Could not find a boilerplate.json configuration for language: ${language} and type: ${applicationBoilerplateType}`);
-            throw new Error('Could not find boilerplate for given language and type');
+            return null;
         }
         if (boilerPlates.length > 1) {
             this.#logger.error(`Found more than one boilerplate.json configuration for language: ${language} and type: ${applicationBoilerplateType}`);
-            throw new Error('Found multiple boilerplates');
+            return null;
         }
         return boilerPlates[0];
     }
     /**
-     * Creates a dolittle application based on the boilerplates provided in your .dolittle folder in your user's root directory
+     * Creates a dolittle application based
      *
      * @param {any} context The template context 
      * @param {string} destinationPath The absolute path of the destination of the application
-     * @returns {void}
+     * @returns {boolean} Whether or not the application was created successfully
      */
     createApplication(context, destinationPath) {
         let boilerPlate = this.#boilerPlatesManager.boilerPlatesByType(applicationBoilerplateType)[0];
 
-        if (boilerPlate === undefined) {
-            this.#logger.error(`No boilerplate found with type '${applicationBoilerplateType}'`);
-            throw new Error('Missing boilerplate');
-        }
+        if (!boilerPlate) return false;
 
         this.#boilerPlatesManager.createInstance(boilerPlate, destinationPath, context);
-}
+        return true;
+    }
 
 
 }

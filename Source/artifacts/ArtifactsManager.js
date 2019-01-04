@@ -50,38 +50,51 @@ export class ArtifactsManager {
     getDependencies(artifactType, language) {
         let dependencies = [];
         let boilerplate = this.boilerPlateByLanguage(language);
-        dependencies.push(...boilerplate.dependencies);
+        dependencies.push(...boilerplate? boilerplate.dependencies : []);
         let template = this.templateByBoilerplate(boilerplate, artifactType);
-        dependencies.push(...template.dependencies);
+        dependencies.push(...template? template.dependencies : []);
 
         return dependencies;
     }
     /**
      * Retrieves the boilerplate.json configuration for artifacts with the given language
      * @param {string} language 
-     * @return {BoilerPlate} The Boilerplate with of the given language
+     * @return {BoilerPlate | null} The Boilerplate with of the given language
      */
     boilerPlateByLanguage(language) {
         let boilerPlates = this.#boilerPlatesManager.boilerPlatesByLanguageAndType(language, artifactsBoilerplateType);
         if (boilerPlates === null || boilerPlates.length === 0) {
             this.#logger.error(`Could not find a boilerplate.json configuration for language: ${language} and type: ${artifactsBoilerplateType}`);
-            throw new Error('Could not find boilerplate for given language and type');
+            return null;
         }
         if (boilerPlates.length > 1) {
             this.#logger.error(`Found more than one boilerplate.json configuration for language: ${language} and type: ${artifactsBoilerplateType}`);
-            throw new Error('Found multiple boilerplates');
+            return null;
         }
         return boilerPlates[0];
     }
     /**
-     * Gets the artifact template based on the language and type of the artifact
+     * Gets the artifact template based on the core language and the type of the artifact
+     *
+     * @param {*} language
+     * @param {*} artifactType
+     * @returns {ArtifactTemplate | null}
+     * @memberof ArtifactsManager
+     */
+    getArtifactTemplate(language, artifactType) {
+        let boilerPlate = this.boilerPlateByLanguage(language);
+        if (!boilerPlate) return null;
+        return this.templateByBoilerplate(boilerPlate, artifactType);
+    }
+    /**
+     * Gets the artifact template based on the {BoilerPlate} and type of the artifact
      * @param {BoilerPlate} boilerPlate 
      * @param {string} artifactType
-     * @returns {ArtifactTemplate}
+     * @returns {ArtifactTemplate | null}
      */
     templateByBoilerplate(boilerPlate, artifactType)
     {
-        let templateFiles = this.#folders.searchRecursive(getFileDirPath(boilerPlate.path), 'template.json');
+        let templateFiles = this.#folders.searchRecursive(boilerPlate.contentDirectory, 'template.json');
         let templates = [];
         templateFiles.forEach(_ => {
             let template = artifactTemplateFromJson(JSON.parse(this.#fileSystem.readFileSync(_)), _);
@@ -91,11 +104,11 @@ export class ArtifactsManager {
 
         if (templates.length === 0) {
             this.#logger.error(`Could not find any artifact templates with artifact type '${artifactType}' and language '${boilerPlate.language}'`);
-            throw new Error('Artifact template not found');
+            return null;
         }
         if (templates.length > 1) {
             this.#logger.error(`Found multiple artifact templates with artifact type '${artifactType}' and language '${boilerPlate.language}'`);
-            throw new Error('Multiple artifact templates found');
+            return null;
         }
         return templates[0];
     }
@@ -105,12 +118,13 @@ export class ArtifactsManager {
      * @param {string} language
      * @param {ArtifactTemplate} artifactTemplate
      * @param {string} destinationPath
+     * @returns {boolean} Whether or not the artifact was created successfully
      * 
      */
     createArtifact(context, language, artifactTemplate, destinationPath) {
         this.#logger.info(`Creating an artifact of type '${artifactTemplate.type}' and language '${language}'`);
         this.#boilerPlatesManager.createArtifactInstance(artifactTemplate, destinationPath, context);
-        
+        return true;
     }
 
 }

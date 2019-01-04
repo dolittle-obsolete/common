@@ -66,7 +66,7 @@ export class ConfigManager {
                 {
                     this.#logger.error('Could not create .dolittle folder at root: ', err);
                     this.#logger.info('Try creating this directory manually: ', this.#centralFolderLocation);
-                    throw new error('Could not create .dolittle directory');
+                    throw new Error('Could not create .dolittle directory');
                 }
             }
             let config = new Config();

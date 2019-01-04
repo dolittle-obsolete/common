@@ -43,21 +43,27 @@ export class BoundedContextsManager {
     /**
      * Searches the file hierarchy for bounded-context.json and returns the BoundedContext
      * @param {string} startPath to search from
-     * @returns {BoundedContext} the bounded context
+     * @returns {BoundedContext | null} the bounded context
      */
     getNearestBoundedContextConfig(startPath) {
         let regex =  new RegExp('\\b'+boundedContextFileName+'\\b');
         const boundedContextConfigPath = this.#folders.getNearestFileSearchingUpwards(startPath, regex);
-        if (boundedContextConfigPath === '') {
-            this.#logger.error(`${boundedContextFileName} was not found. Cannot create artifacts.`);
-            throw new Error('Bounded context configuration not found');
-        }
+        if (boundedContextConfigPath === undefined || boundedContextConfigPath === '') return null;
         this.#logger.info(`Found bounded context configuration at path '${boundedContextConfigPath}'`);
 
         let boundedContextObj = JSON.parse(this.#fileSystem.readFileSync(boundedContextConfigPath, 'utf8'));
         let boundedContext = boundedContextFromJson(boundedContextObj, boundedContextConfigPath);
         
         return boundedContext;
+    }
+    /**
+     * Check if a bounded context configuration can be found in the given directory.
+     * @param {string} folder The directory path to search
+     * @returns {boolean} Whether or not the bounded context configuration was found
+     */
+    hasBoundedContext(folder) {
+        const filePath = path.join(folder, boundedContextFileName);
+        return this.#fileSystem.existsSync(filePath);
     }
     /**
      * Gets all the dependencies for a bounded context of a given language
@@ -68,39 +74,40 @@ export class BoundedContextsManager {
      */
     getDependencies(language) {
         let boilerplate = this.boilerPlateByLanguage(language);
-        return boilerplate.dependencies;
+        return boilerplate? boilerplate.dependencies : [];
     }
     /**
      * Retrieves the boilerplate.json configuration for bounded context with the given language
      * @param {string} language 
-     * @return {BoilerPlate} The bounded context {Boilerplate} with of the given language
+     * @return {BoilerPlate | null} The bounded context {Boilerplate} with of the given language
      */
     boilerPlateByLanguage(language) {
         let boilerPlates = this.#boilerPlatesManager.boilerPlatesByLanguageAndType(language, boundedContextBoilerplateType);
         if (boilerPlates === null || boilerPlates.length === 0) {
             this.#logger.error(`Could not find a boilerplate.json configuration for language: ${language} and type: ${boundedContextBoilerplateType}`);
-            throw new Error('Could not find boilerplate for given language and type');
+            return null;
         }
         if (boilerPlates.length > 1) {
             this.#logger.error(`Found more than one boilerplate.json configuration for language: ${language} and type: ${boundedContextBoilerplateType}`);
-            throw new Error('Found multiple boilerplates');
+            return null;
         }
         return boilerPlates[0];
     }
     /**
-     * Creates a dolittle bounded context based on the boilerplates provided in your .dolittle folder in your user's root directory
+     * Creates a dolittle bounded context
      *
      * @param {any} context The template context
      * @param {string} language The core language of the bounded context
      * @param {string} destinationPath The absolute path of the destination of the bounded context
-     * @returns {void}
+     * @returns {boolean} Whether or not the bounded context was created successfully
      */
     createBoundedContext(context, language, destinationPath) {
         let boilerPlate = this.boilerPlateByLanguage(language);
-        
+        if (!boilerPlate) return false;
         const boundedContextPath = path.join(destinationPath, context.name);
         
         this.#boilerPlatesManager.createInstance(boilerPlate, boundedContextPath, context);
+        return true;
     }
     
 }
