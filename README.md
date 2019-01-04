@@ -1,2 +1,2 @@
 # common
-Holds common funtionality used by tools
+Holds common functionality used by tools
