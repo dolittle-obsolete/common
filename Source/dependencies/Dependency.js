@@ -1,9 +1,8 @@
-import { areas } from '../helpers';
-
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+import { areas } from '../helpers';
 
 /**
  * Creates a new {Dependency} object based on the given json obj

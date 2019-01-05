@@ -1,11 +1,11 @@
-import { a_system_that_has_a_boilerplate_with_a_dependency } from "./given/a_system_that_has_a_boilerplate_with_a_dependency";
-import { BoilerPlate } from "../../boilerPlates/BoilerPlate";
-import { ArtifactTemplate } from "../ArtifactTemplate";
-
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+import { a_system_that_has_a_boilerplate_with_a_dependency } from "./given/a_system_that_has_a_boilerplate_with_a_dependency";
+import { BoilerPlate } from "../../boilerPlates/BoilerPlate";
+import { ArtifactTemplate } from "../ArtifactTemplate";
+
 
  describe('when getting template hen there exists a template that matches boilerplate language', () => {
     let context = new a_system_that_has_a_boilerplate_with_a_dependency();

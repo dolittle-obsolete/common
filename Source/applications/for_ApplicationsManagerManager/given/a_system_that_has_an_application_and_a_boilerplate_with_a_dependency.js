@@ -1,3 +1,8 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Dolittle. All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
 import { a_bounded_contexts_manager, an_applications_manager } from "./an_applications_manager";
 import { BoilerPlate } from "../../../boilerPlates/BoilerPlate";
 import { Dependency } from "../../../dependencies/Dependency";

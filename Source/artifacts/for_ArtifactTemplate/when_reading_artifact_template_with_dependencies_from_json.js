@@ -1,11 +1,12 @@
 
-import { artifactTemplateFromJson, ArtifactTemplate } from "../ArtifactTemplate";
-import { an_artifact_template_json_with_dependencies } from "./given/an_artifact_template_json_with_dependencies";
-
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+
+import { artifactTemplateFromJson, ArtifactTemplate } from "../ArtifactTemplate";
+import { an_artifact_template_json_with_dependencies } from "./given/an_artifact_template_json_with_dependencies";
+
 
  describe('when reading artifact template with dependencies from json', () => {
     let context = new an_artifact_template_json_with_dependencies();

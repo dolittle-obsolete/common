@@ -1,9 +1,9 @@
-import { a_standard_dolittle_config } from './a_standard_dolittle_config';
-
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+import { a_standard_dolittle_config } from './a_standard_dolittle_config';
+
 export class all_dependencies extends a_standard_dolittle_config {
     constructor() {
         super();

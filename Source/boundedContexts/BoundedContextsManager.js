@@ -1,13 +1,13 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Dolittle. All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
 import { Dependency } from '../dependencies/Dependency';
 import { BoilerPlate } from '../boilerPlates/BoilerPlate';
 import { BoilerPlatesManager } from '../boilerPlates/BoilerPlatesManager';
 import { Folders } from '../Folders';
 import { boundedContextFromJson } from './BoundedContext';
 
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
 
 const path = require('path');
 

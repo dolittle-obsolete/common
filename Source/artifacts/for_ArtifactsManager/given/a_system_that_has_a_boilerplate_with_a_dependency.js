@@ -1,13 +1,14 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Dolittle. All rights reserved.
+ *  Licensed under the MIT License. See LICENSE in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
 import { ArtifactsManager } from "../../ArtifactsManager";
 import { an_artifacts_manager } from "./an_artifacts_manager";
 import { BoilerPlate } from "../../../boilerPlates/BoilerPlate";
 import { Dependency } from "../../../dependencies/Dependency";
 import { ArtifactTemplate } from "../../ArtifactTemplate";
 const path = require('path');
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
 
 export class a_system_that_has_a_boilerplate_with_a_dependency extends an_artifacts_manager{
     constructor() {

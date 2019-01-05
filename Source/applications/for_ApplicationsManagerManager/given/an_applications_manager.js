@@ -1,9 +1,9 @@
-import { ApplicationsManager } from "../../ApplicationsManager";
-
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+import { ApplicationsManager } from "../../ApplicationsManager";
+
 
 export class an_applications_manager {
     constructor() {
