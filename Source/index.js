@@ -3,6 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 export const filesystem = require('fs-extra');
+const rc = require('rc');
 import winston from 'winston';
 import simpleGit from 'simple-git';
 
@@ -37,6 +38,20 @@ export {Folders} from './Folders';
 export {Guid} from './Guid';
 export {HttpWrapper} from './HttpWrapper';
 
+export const dolittleConfigDefault = {
+    any: {
+        concepts: 'Concepts',
+        domain: 'Domain',
+        events: 'Events',
+        read: 'Read'
+    },
+    csharp: {
+        concepts: 'Concepts',
+        domain: 'Domain',
+        events: 'Events',
+        read: 'Read'
+    }
+};
 
 export const logger = winston.createLogger({
     level: 'info',
@@ -58,20 +73,9 @@ git.forFolder = (folder) => {
     return simpleGit(folder);
 };
 
-export const dolittleConfig = require('rc')('dolittle', {
-    any: {
-        concepts: 'Concepts',
-        domain: 'Domain',
-        events: 'Events',
-        read: 'Read'
-    },
-    csharp: {
-        concepts: 'Concepts',
-        domain: 'Domain',
-        events: 'Events',
-        read: 'Read'
-    }
-});
+export const dolittleConfig = rc('dolittle', dolittleConfigDefault);
+
+export const getDolittleConfig = () => rc('dolittle', dolittleConfigDefault);
 
 export const folders = new Folders(filesystem);
 export const boilerPlatesManager = new BoilerPlatesManager(configManager, httpWrapper, git, folders, filesystem, logger);
