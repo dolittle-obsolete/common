@@ -2,10 +2,12 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-export const filesystem = require('fs-extra');
 const rc = require('rc');
+export const filesystem = require('fs-extra');
+
 import winston from 'winston';
 import simpleGit from 'simple-git';
+import Handlebars from 'handlebars';
 
 import { ApplicationsManager } from './applications/ApplicationsManager';
 import { ArtifactsManager } from './artifacts/ArtifactsManager';
@@ -16,7 +18,21 @@ import { ConfigParser } from './configuration/ConfigParser';
 import { DependenciesManager } from './dependencies/DependenciesManager';
 import { Folders } from './Folders';
 import { HttpWrapper } from './HttpWrapper';
+import {Guid} from './Guid';
 
+/**
+ * Sets up the handlebars system with custom helpers
+ */
+function setupHandlebars() {
+    Handlebars.registerHelper('createGuid', () => {
+        return Guid.create();
+    });
+    Handlebars.registerHelper('dolittleConfigDefault', () => {
+        let config = dolittleConfigDefault;
+        if (config['_']) config['_'] = undefined;
+        return JSON.stringify(config, null, 4).normalize();
+    })
+}
 
 export {Application} from './applications/Application';
 export {ApplicationsManager} from './applications/ApplicationsManager';
@@ -78,7 +94,8 @@ export const dolittleConfig = rc('dolittle', dolittleConfigDefault);
 export const getDolittleConfig = () => rc('dolittle', dolittleConfigDefault);
 
 export const folders = new Folders(filesystem);
-export const boilerPlatesManager = new BoilerPlatesManager(configManager, httpWrapper, git, folders, filesystem, logger);
+setupHandlebars();
+export const boilerPlatesManager = new BoilerPlatesManager(configManager, httpWrapper, git, folders, filesystem, logger, Handlebars);
 export const applicationsManager = new ApplicationsManager(boilerPlatesManager, filesystem, logger);
 export const artifactsManager = new ArtifactsManager(boilerPlatesManager, folders, filesystem, logger);
 export const boundedContextsManager = new BoundedContextsManager(boilerPlatesManager, folders, filesystem, logger);

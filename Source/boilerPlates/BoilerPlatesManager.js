@@ -5,8 +5,6 @@
 
 import path from 'path';
 import { BoilerPlate } from './BoilerPlate';
-import Handlebars from 'handlebars';
-import { Guid } from '../Guid';
 import { getFileNameAndExtension, getFileDirPath } from '../helpers';
 import { dependencyFromJson } from '../dependencies/Dependency';
 import { HttpWrapper } from '../HttpWrapper';
@@ -37,6 +35,7 @@ export class BoilerPlatesManager {
     #fileSystem;
     #git;
     #logger;
+    #handlebars;
     /**
      * Initializes a new instance of {BoilerPlatesManager}
      * @param {ConfigManager} configManager 
@@ -45,8 +44,9 @@ export class BoilerPlatesManager {
      * @param {Folders} folders
      * @param {import('fs-extra')} fileSystem
      * @param {import('winston').Logger} logger
+     * @param {import('handlebars')} handlebars
      */
-    constructor(configManager, httpWrapper, git, folders, fileSystem, logger) {
+    constructor(configManager, httpWrapper, git, folders, fileSystem, logger, handlebars) {
         this.#configManager = configManager;
         this.#httpWrapper = httpWrapper;
         this.#folders = folders;
@@ -56,8 +56,8 @@ export class BoilerPlatesManager {
         this.#folders.makeFolderIfNotExists(this.boilerPlateLocation);
 
         this.#logger = logger;
+        this.#handlebars = handlebars;
         this.readBoilerPlates();
-        this.setupHandlebars();
     }
 
     /**
@@ -149,14 +149,6 @@ export class BoilerPlatesManager {
 
             this.#boilerPlates = [];
         }
-    }
-    /**
-     * Sets up the handlebars system with custom helpers
-     */
-    setupHandlebars() {
-        Handlebars.registerHelper('createGuid', () => {
-            return Guid.create();
-        });
     }
 
     /**
@@ -313,7 +305,7 @@ export class BoilerPlatesManager {
         boilerPlate.pathsNeedingBinding.forEach(_ => {
             let pathToRename = path.join(destination, _);
             let segments = [];
-            pathToRename.split(/(\\|\/)/).forEach(segment => segments.push(Handlebars.compile(segment)(context)));
+            pathToRename.split(/(\\|\/)/).forEach(segment => segments.push(this.#handlebars.compile(segment)(context)));
             let result = segments.join('');
             this.fileSystem.renameSync(pathToRename, result);
         });
@@ -321,7 +313,7 @@ export class BoilerPlatesManager {
         boilerPlate.filesNeedingBinding.forEach(_ => {
             let file = path.join(destination, _);
             let content = this.fileSystem.readFileSync(file, 'utf8');
-            let template = Handlebars.compile(content);
+            let template = this.#handlebars.compile(content);
             let result = template(context);
             this.fileSystem.writeFileSync(file, result);
         });
@@ -341,10 +333,10 @@ export class BoilerPlatesManager {
             const oldContent = this.fileSystem.readFileSync(filePath, 'utf8');
             let segments = [];
 
-            path.join(destination, filename).split(/(\\|\/)/).forEach(segment => segments.push(Handlebars.compile(segment)(context)));
+            path.join(destination, filename).split(/(\\|\/)/).forEach(segment => segments.push(this.#handlebars.compile(segment)(context)));
             let newFilePath = segments.join('');
            
-            let template = Handlebars.compile(oldContent);
+            let template = this.#handlebars.compile(oldContent);
             let newContent = template(context);
             this.fileSystem.writeFileSync(newFilePath, newContent);
         });
