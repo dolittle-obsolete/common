@@ -22,7 +22,7 @@ export class DependenciesManager {
      *Creates an instance of DependenciesManager.
      * @param {Folders} folders
      * @param {import('fs-extra')} fileSystem
-     * @param {*} dolittleConfig
+     * @param {*} dolittleConfig Pre-loaded dolittle configuration file
      * @param {import('winston').Logger} logger
      * @memberof DependenciesManager
      */
@@ -38,13 +38,14 @@ export class DependenciesManager {
      * @param {Dependency} dependency The dependency 
      * @param {string} location The path to start searching from
      * @param {string} language The core language
+     * @param {*} dolittleConfig
      */
-    discover(dependency, location, language) {
+    discover(dependency, location, language, dolittleConfig = this.#dolittleConfig ) {
         if (dependency.discoverType === 'namespace') {
-            return this.#createNamespace(dependency, location);
+            return this.#createNamespace(dependency, location, dolittleConfig);
         }
         else if (dependency.discoverType === 'multipleFiles') {
-            return this.#discoverMultipleFiles(dependency, location, language);
+            return this.#discoverMultipleFiles(dependency, location, language, dolittleConfig);
         }
 
         throw new Error(`Cannot handle discoveryType '${dependency.discoverType}'`);
@@ -55,16 +56,17 @@ export class DependenciesManager {
      * @param {Dependency} dependency The dependency
      * @param {string} location The path to start searching from
      * @param {string} language The core language
+     * @param {*} dolittleConfig 
      * @returns {string[] | {value: string, namespace: string}[]} returns a list of 
      */
-    #discoverMultipleFiles(dependency, location, language) {
+    #discoverMultipleFiles(dependency, location, language, dolittleConfig) {
     
         let filePaths = [];
         if (dependency.fromArea === undefined) {
             filePaths = this.#folders.searchRecursiveRegex(location, dependency.fileMatch);
         }
         else {
-            const folders = this.#folders.getNearestDirsSearchingUpwards(location, new RegExp(this.#dolittleConfig[language][dependency.fromArea]));
+            const folders = this.#folders.getNearestDirsSearchingUpwards(location, new RegExp(dolittleConfig[language][dependency.fromArea]));
             folders.forEach(folder => filePaths.push(...this.#folders.searchRecursiveRegex(folder, dependency.fileMatch)));
         }
         let results = [];
