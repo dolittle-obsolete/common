@@ -16,7 +16,7 @@
     "prepublish": "yarn build"
   },
   "devDependencies": {
-    "@dolittle/build": "^4.2.0"
+    "@dolittle/build": "^4.3.0"
   },
   "dependencies": {
     "fs-extra": "^7.0.0",
