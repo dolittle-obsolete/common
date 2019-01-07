@@ -2,6 +2,9 @@
   "name": "@dolittle/tooling.common",
   "version": "3.0.4",
   "description": "Common tools for dolittle tooling",
+  "publishConfig": {
+    "access": "public"
+  },
   "homepage": "https://dolittle.io",
   "author": "Dolittle",
   "license": "MIT",
@@ -9,14 +12,31 @@
     "type": "git",
     "url": "https://github.com/dolittle-tools/common.git"
   },
-  "main": "./Source/dist/commonjs/index.js",
-  "module": "./Source/dist/esmodule/index.js",
+  "bugs": {
+    "url": "https://github.com/dolittle-tools/common/issues"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/commonjs/index.js",
+  "module": "dist/esmodule/index.js",
+  "jspm": {
+    "registry": "npm",
+    "jspmPackage": true,
+    "format": "amd",
+    "main": "index",
+    "directories": {
+      "dist": "dist/systemjs"
+    },
+    "dependencies": {
+    }
+  },
   "scripts": {
-    "build": "gulp build --root ./Source",
+    "build": "gulp build && find ./dist/* -type 'f' -maxdepth 1| xargs rm -f && for dir in ./dist/*; do mv \"$dir\"/Source/* \"$dir\"/ && rm -rf \"$dir\"/Source; done",
     "prepublish": "yarn build"
   },
   "devDependencies": {
-    "@dolittle/build": "^6.1.0"
+    "@dolittle/build": "6.1.0"
   },
   "dependencies": {
     "fs-extra": "^7.0.0",
