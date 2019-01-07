@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common",
-  "version": "3.0.2",
+  "version": "3.0.4",
   "description": "Common tools for dolittle tooling",
   "homepage": "https://dolittle.io",
   "author": "Dolittle",
@@ -16,7 +16,7 @@
     "prepublish": "yarn build"
   },
   "devDependencies": {
-    "@dolittle/build": "^4.3.0"
+    "@dolittle/build": "^6.1.0"
   },
   "dependencies": {
     "fs-extra": "^7.0.0",
