@@ -3,6 +3,8 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import path from 'path';
+import { BoundedContext } from './boundedContexts/BoundedContext';
+import { areas, determineDestination } from './helpers';
 
 /**
  * Represents helpers for working with folders
@@ -16,6 +18,18 @@ export class Folders
      */
     constructor(fileSystem) {
         this.#fileSystem = fileSystem;
+    }
+    /**
+     * Creates a feature from the current working directory. 
+     *
+     * @param {string} cwd To create feature from
+     * @param {string} feature The feature to create. The string can be '.' separated to signify sub features (parentFeature.subFeature.subSubFeature)
+     * @param {BoundedContext} boundedContext 
+     * @param {*} dolittleConfig
+     * @memberof Folders
+     */
+    createFeature(cwd, feature, boundedContext, dolittleConfig) {
+        areas.forEach(area => folders.makeFolderIfNotExists(determineDestination(area, 'csharp', feature + '.', cwd, boundedContext.path, dolittleConfig).destination));
     }
 
     /**
