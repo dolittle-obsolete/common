@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "Common tools for dolittle tooling",
   "publishConfig": {
     "access": "public"
