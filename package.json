@@ -35,9 +35,10 @@
     "prepublish": "yarn build"
   },
   "devDependencies": {
-    "@dolittle/build": "~6.2.0"
+    "@dolittle/build": "~6.1.0"
   },
   "dependencies": {
+    "@babel/runtime": "^7.2.0",
     "fs-extra": "^7.0.0",
     "handlebars": "^4.0.12",
     "rc": "^1.2.8",

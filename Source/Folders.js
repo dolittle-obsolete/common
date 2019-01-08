@@ -29,7 +29,7 @@ export class Folders
      * @memberof Folders
      */
     createFeature(cwd, feature, boundedContext, dolittleConfig) {
-        areas.forEach(area => folders.makeFolderIfNotExists(determineDestination(area, 'csharp', feature + '.', cwd, boundedContext.path, dolittleConfig).destination));
+        areas.forEach(area => this.makeFolderIfNotExists(determineDestination(area, 'csharp', feature + '.', cwd, boundedContext.path, dolittleConfig).destination));
     }
 
     /**
