@@ -43,6 +43,7 @@
     "@dolittle/boilerplates.bounded-context.csharp": "^1.0.0",
     "fs-extra": "^7.0.0",
     "handlebars": "^4.0.12",
+    "npm": "^6.5.0",
     "rc": "^1.2.8",
     "shelljs": "^0.8.2",
     "simple-git": "^1.96.0",
