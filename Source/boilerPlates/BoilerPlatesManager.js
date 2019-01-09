@@ -3,6 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+import npm from 'npm';
 import path from 'path';
 import { BoilerPlate } from './BoilerPlate';
 import { getFileNameAndExtension, getFileDirPath } from '../helpers';
@@ -120,15 +121,28 @@ export class BoilerPlatesManager {
     }
 
     /**
-     * Read all boiler plates from disk
+     * Read all boiler
      */
     readBoilerPlates() {
+        this.#boilerPlates = [];
+        this.#boilerPlates.push(this.#readLocalBoilerPlates());
+        this.#boilerPlates.push(getBoilerPlatesFromDependencies());
+
+        
+    }
+    /**
+     * Reads all the local boilerplates found at
+     */
+    #readLocalBoilerPlates() {
         let configFile = this.boilerPlateConfigFile;
+        
+        let boilerPlates = [];
         if (this.fileSystem.existsSync(configFile)) {
             let json = this.fileSystem.readFileSync(configFile);
             let boilerPlatesAsObjects = JSON.parse(json);
-            let boilerPlates = [];
             boilerPlatesAsObjects.forEach(boilerPlateObject => {
+                if (typeof(boilerPlateObject) === 'string' || boilerPlateObject instanceof String)
+                    boilerPlates.push(this.#readLocalBoilerPlateReference(boilerPlateObject));
                 let boilerPlate = new BoilerPlate(
                     boilerPlateObject.language,
                     boilerPlateObject.name,
@@ -143,27 +157,19 @@ export class BoilerPlatesManager {
                 );
                 boilerPlates.push(boilerPlate);
             });
-
-            this.#boilerPlates = boilerPlates;
-        } else {
-
-            this.#boilerPlates = [];
         }
+        return boilerPlates;
     }
-
+    #readLocalBoilerPlateReference(name) {
+        this.#logger.info(`Boilerplate reference: ${name}`);
+    }
     /**
      * Get available boiler plates from GitHub
      * @returns {Promise<string[]>}
      */
     async getAvailableBoilerPlates() {
-        let uri = 'https://api.github.com/orgs/dolittle-boilerplates/repos';
         return new Promise(resolve => {
-            this.#httpWrapper.getJson(uri).then(json => {
-                let result = JSON.parse(json);
-                let urls = [];
-                result.forEach(item => urls.push(item.name));
-                resolve(urls);
-            });
+            resolve([]);
         });
     }
 
