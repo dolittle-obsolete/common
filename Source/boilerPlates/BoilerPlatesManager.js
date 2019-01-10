@@ -162,7 +162,7 @@ export class BoilerPlatesManager {
         
         boilerPlatesPaths.forEach(boilerPlatePath => {
             let boilerPlateObject = JSON.parse(this.#fileSystem.readFileSync(boilerPlatePath, 'utf8'));
-            boilerPlates.push(this.parseBoilerPlate(boilerPlateObject, boilerPlatePath));
+            boilerPlates.push(this.#parseBoilerPlate(boilerPlateObject, boilerPlatePath));
         });
         return boilerPlates;
     }
