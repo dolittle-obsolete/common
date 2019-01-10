@@ -41,6 +41,7 @@
     "@dolittle/boilerplates.application": "^1.0.0",
     "@dolittle/boilerplates.artifact-templates": "^1.0.0",
     "@dolittle/boilerplates.bounded-context.csharp": "^1.0.0",
+    "@dolittle/boilerplates.bounded-context.veracity.csharp": "^1.0.0",
     "fs-extra": "^7.0.0",
     "handlebars": "^4.0.12",
     "npm": "^6.5.0",
