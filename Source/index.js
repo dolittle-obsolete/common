@@ -55,6 +55,7 @@ export {Guid} from './Guid';
 export {HttpWrapper} from './HttpWrapper';
 
 export const dolittleConfigDefault = {
+    externalBoilerplates: [],
     any: {
         concepts: 'Concepts',
         domain: 'Domain',
@@ -68,6 +69,7 @@ export const dolittleConfigDefault = {
         read: 'Read'
     }
 };
+
 
 export const logger = winston.createLogger({
     level: 'info',
