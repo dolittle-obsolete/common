@@ -25,6 +25,13 @@ const binaryFiles = [
     '.ttf'
 ];
 
+const dolittleBoilerplateFolders = [
+    path.dirname(require.resolve('@dolittle/boilerplates.application/package.json')),
+    path.dirname(require.resolve('@dolittle/boilerplates.artifact-templates/package.json')),
+    path.dirname(require.resolve('@dolittle/boilerplates.bounded-context.csharp/package.json')),
+    path.dirname(require.resolve('@dolittle/boilerplates.bounded-context.veracity.csharp/package.json'))
+]; 
+
 /**
  * Represents the manager of boiler plates
  */
@@ -54,7 +61,7 @@ export class BoilerPlatesManager {
         this.#fileSystem = fileSystem;
         this.#git = git;
 
-        this.#folders.makeFolderIfNotExists(this.boilerPlateLocation);
+        this.#folders.makeFolderIfNotExists(this.localBoilerPlateLocation);
 
         this.#logger = logger;
         this.#handlebars = handlebars;
@@ -65,16 +72,8 @@ export class BoilerPlatesManager {
      * Gets base path for boiler plates
      * @returns {string} Base path of boiler plates
      */
-    get boilerPlateLocation() {
+    get localBoilerPlateLocation() {
         return path.join(this.#configManager.centralFolderLocation, boilerPlateFolder);
-    }
-
-    /**
-     * Gets path to the boiler plates config file
-     * @returns {string} Path to the config file
-     */
-    get boilerPlateConfigFile() {
-        return path.join(this.#configManager.centralFolderLocation, 'boiler-plates.json');
     }
 
     /**
@@ -121,182 +120,76 @@ export class BoilerPlatesManager {
     }
 
     /**
-     * Read all boiler
+     * Reads all boiler and sets the boilerPlates property
      */
     readBoilerPlates() {
         this.#boilerPlates = [];
-        this.#boilerPlates.push(this.#readLocalBoilerPlates());
-        this.#boilerPlates.push(getBoilerPlatesFromDependencies());
-
-        
+        this.#boilerPlates.push(...this.readLocalBoilerPlates());
+        this.#boilerPlates.push(...this.getBoilerPlatesFromDependencies());
     }
     /**
-     * Reads all the local boilerplates found at
+     * Reads all the local boilerplates found at ~/.dolittle/boilerplates
      */
-    #readLocalBoilerPlates() {
-        let configFile = this.boilerPlateConfigFile;
-        
-        let boilerPlates = [];
-        if (this.fileSystem.existsSync(configFile)) {
-            let json = this.fileSystem.readFileSync(configFile);
-            let boilerPlatesAsObjects = JSON.parse(json);
-            boilerPlatesAsObjects.forEach(boilerPlateObject => {
-                if (typeof(boilerPlateObject) === 'string' || boilerPlateObject instanceof String)
-                    boilerPlates.push(this.#readLocalBoilerPlateReference(boilerPlateObject));
-                let boilerPlate = new BoilerPlate(
-                    boilerPlateObject.language,
-                    boilerPlateObject.name,
-                    boilerPlateObject.description,
-                    boilerPlateObject.type,
-                    boilerPlateObject.dependencies !== undefined? 
-                        boilerPlateObject.dependencies.map(dep => dependencyFromJson(dep))
-                        : [],
-                    boilerPlateObject.path,
-                    boilerPlateObject.pathsNeedingBinding || [],
-                    boilerPlateObject.filesNeedingBinding || []
-                );
-                boilerPlates.push(boilerPlate);
-            });
+    readLocalBoilerPlates() {
+        if (this.fileSystem.existsSync(this.localBoilerPlateLocation)) {
+            return this.readBoilerplateFromFolder(this.localBoilerPlateLocation);
         }
+        return [];
+    }
+    /**
+     * Reads and gets all the boilerplates from the installed dependencies
+     *
+     * @returns {BoilerPlate[]}
+     * @memberof BoilerPlatesManager
+     */
+    getBoilerPlatesFromDependencies() {
+        let boilerPlates = [];
+        let folders = this.getBoilerPlateDependencies();
+        folders.forEach(folder => {
+            boilerPlates.push(...this.readBoilerplateFromFolder(folder));
+        });
         return boilerPlates;
     }
-    #readLocalBoilerPlateReference(name) {
-        this.#logger.info(`Boilerplate reference: ${name}`);
-    }
     /**
-     * Get available boiler plates from GitHub
-     * @returns {Promise<string[]>}
+     * Reads the contents of a folder and discovers boilerplates. Returns a list of boilerplates
+     *
+     * @param {string} folder The folder to search for boilerplates
+     * @returns {BoilerPlate[]} A list of boilerplates
+     * @memberof BoilerPlatesManager
      */
-    async getAvailableBoilerPlates() {
-        return new Promise(resolve => {
-            resolve([]);
-        });
-    }
-
-    /**
-     * Update any existing boiler plates on disk
-     * @returns {Promise<number>} number of updated folders
-     */
-    async updateBoilerPlatesOnDisk() {
-        return new Promise(async resolve => {
-            let folders = this.#folders.getFoldersIn(this.boilerPlateLocation);
-            let updateCount = folders.length;
-
-            if (updateCount === 0) resolve(0);
-            folders.forEach(folder => {
-                this.#logger.info(`Update boiler plate in '${folder}'`);
-                this.#git.forFolder(folder).pull().exec(() => {
-                    if (--updateCount === 0) resolve(folders.length);
-                });
-            });
-        });
-    }
-
-    /**
-     * Update boiler plates.
-     * This will update any existing and download any new ones.
-     * @returns {Promise<void>}
-     */
-    async update() {
-        this.#logger.info('Updating all boiler plates');
-        let promise = new Promise(async resolve => {
-            let clonedNewRepos = false;
-            const updatedCount = await this.updateBoilerPlatesOnDisk();
-            let names = await this.getAvailableBoilerPlates();
-            
-            let cloneCount = 0;
-            names.forEach(name => {
-                let folderName = path.join(this.boilerPlateLocation, name);
-                
-                if (!this.fileSystem.existsSync(folderName)) {
-                    clonedNewRepos = true;
-                    let url = `https://github.com/dolittle-boilerplates/${name}.git`;
-                    this.#logger.info(`Getting boilerplate not on disk from '${url}'`);
-                    
-                    cloneCount++;
-                    
-                    this.#git
-                        .silent(false)
-                        .clone(url, folderName, { '--recursive': null })
-                        .exec(() => {
-                            
-                            if (--cloneCount == 0) {
-                                this.updateConfiguration();
-                                resolve();
-                            }
-                        });
-                }
-            });
-            if (!clonedNewRepos && updatedCount > 0) {
-                this.updateConfiguration();
-                resolve();
-            }
-        });
-        return promise;
-    }
-
-    /**
-     * Update configuration file on disk
-     */
-    async updateConfiguration() {
-        this.#logger.info(`Updating the ${this.boilerPlateConfigFile} configuration`);
-        let self = this;
-        let folders = this.#folders.getFoldersIn(this.boilerPlateLocation);
+    readBoilerplateFromFolder(folder) {
         let boilerPlates = [];
-        folders.forEach(folder => {
-            let boilerPlatesPaths = this.#folders.searchRecursive(folder, 'boilerplate.json');
-            let contentFolder = path.join(folder, 'Content');
-            
-            boilerPlatesPaths.forEach(boilerPlatePath => {
-                let boilerPlateObject = JSON.parse(this.fileSystem.readFileSync(boilerPlatePath, 'utf8'));
-                if (boilerPlateObject.type != 'artifacts') {
-                    let paths = this.#folders.getFoldersAndFilesRecursivelyIn(contentFolder);
-                    paths = paths.filter(_ => {
-                        let include = true;
-                        binaryFiles.forEach(b => {
-                            if (_.toLowerCase().indexOf(b) > 0) include = false;
-                        });
-                        return include;
-                    });
-                    let pathsNeedingBinding = paths.filter(_ => _.indexOf('{{') > 0).map(_ => _.substr(contentFolder.length + 1));
-
-                    let filesNeedingBinding = [];
-                    paths.forEach(_ => {
-                        let stat = this.#fileSystem.statSync(_);
-                        if (!stat.isDirectory()) {
-                            let file = this.#fileSystem.readFileSync(_);
-                            if (file.indexOf('{{') >= 0) {
-                                filesNeedingBinding.push(_.substr(contentFolder.length + 1));
-                            }
-                        }
-                    });
-
-                    boilerPlateObject.path = boilerPlatePath;
-                    boilerPlateObject.pathsNeedingBinding = pathsNeedingBinding;
-                    boilerPlateObject.filesNeedingBinding = filesNeedingBinding;
-                }
-                else {
-                    boilerPlateObject.path = boilerPlatePath;
-                    boilerPlateObject.pathsNeedingBinding = [];
-                    boilerPlateObject.filesNeedingBinding = [];
-                }
-
-                let boilerPlate = new BoilerPlate(
-                    boilerPlateObject.language || 'any',
-                    boilerPlateObject.name,
-                    boilerPlateObject.description,
-                    boilerPlateObject.type,
-                    boilerPlateObject.dependencies,
-                    boilerPlateObject.path,
-                    boilerPlateObject.pathsNeedingBinding ,
-                    boilerPlateObject.filesNeedingBinding
-                );
-                boilerPlates.push(boilerPlate);
-            });
+        let boilerPlatesPaths = this.#folders.searchRecursive(folder, 'boilerplate.json');
+        
+        boilerPlatesPaths.forEach(boilerPlatePath => {
+            let boilerPlateObject = JSON.parse(this.#fileSystem.readFileSync(boilerPlatePath, 'utf8'));
+            boilerPlates.push(this.parseBoilerPlate(boilerPlateObject, boilerPlatePath));
         });
-        let boilerPlatesAsObjects = boilerPlates.map(_ => _.toJson());
-        let boilerPlatesAsJson = JSON.stringify(boilerPlatesAsObjects, null, 4);
-        this.fileSystem.writeFileSync(this.boilerPlateConfigFile, boilerPlatesAsJson);
+        return boilerPlates;
+    }
+    /**
+     * Gets the path of the folders of the dependencies containing boilerplates
+     *
+     * @returns {string[]} Paths to folders with boilerplates
+     * @memberof BoilerPlatesManager
+     */
+    getBoilerPlateDependencies() {
+        let folders = dolittleBoilerplateFolders;
+        //TODO: Find folders containing boilerplates that are not from dolittle, but installed from npm
+        // let modulesDir = path.resolve(folders[0], '..', '..');
+
+        return folders;
+    }
+    /**
+     * Installs the npm package with given packagename 
+     *
+     * @param string packageName
+     * @memberof BoilerPlatesManager
+     */
+    installBoilerplatePackage(packageName) {
+        this.#logger.info(`Attempts to install a boilerplate package from npm '${packageName}'`);
+        this.#logger.error('Not yet implemented');
+        
     }
 
     /**
@@ -354,5 +247,60 @@ export class BoilerPlatesManager {
      */
     get hasBoilerPlates() {
         return this.#boilerPlates.length > 0;
+    }
+    /**
+     * Parses a boilerplate read from a boilerplate package correctly
+     * 
+     * @param {*} boilerPlateObject
+     * @param {string} boilerPlatePath The path of the boilerplate.json file
+     */
+    #parseBoilerPlate(boilerPlateObject, boilerPlatePath) {
+        boilerPlateObject.path = boilerPlatePath;
+        let pathsNeedingBinding = boilerPlateObject.pathsNeedingBinding || [];
+        let filesNeedingBinding = boilerPlateObject.filesNeedingBinding || [];
+        
+        if (boilerPlateObject.type != 'artifacts') {
+            const contentFolder = path.join(path.dirname(boilerPlatePath), 'Content');
+            if (! this.fileSystem.existsSync(contentFolder)) {
+                throw new Error(`Missing Content Folder when parsing boilerplate at path ${boilerPlatePath}`);
+            }
+            
+            if (! boilerPlateObject.pathsNeedingBinding || ! boilerPlateObject.filesNeedingBinding) {
+                let paths = this.#folders.getFoldersAndFilesRecursivelyIn(contentFolder);
+                paths = paths.filter(_ => {
+                    let include = true;
+                    binaryFiles.forEach(b => {
+                        if (_.toLowerCase().indexOf(b) > 0) include = false;
+                    });
+                    return include;
+                });
+                pathsNeedingBinding = paths.filter(_ => _.indexOf('{{') > 0).map(_ => _.substr(contentFolder.length + 1));
+                filesNeedingBinding = [];
+                paths.forEach(_ => {
+                    let stat = this.#fileSystem.statSync(_);
+                    if (!stat.isDirectory()) {
+                        let file = this.#fileSystem.readFileSync(_);
+                        if (file.indexOf('{{') >= 0) {
+                            filesNeedingBinding.push(_.substr(contentFolder.length + 1));
+                        }
+                    }
+                });
+            }
+        }
+        boilerPlateObject.pathsNeedingBinding = pathsNeedingBinding;
+        boilerPlateObject.filesNeedingBinding = filesNeedingBinding;
+
+        return new BoilerPlate(
+            boilerPlateObject.language || 'any',
+            boilerPlateObject.name,
+            boilerPlateObject.description,
+            boilerPlateObject.type,
+            boilerPlateObject.dependencies !== undefined? 
+                boilerPlateObject.dependencies.map(dep => dependencyFromJson(dep))
+                : [],
+            boilerPlateObject.path,
+            boilerPlateObject.pathsNeedingBinding ,
+            boilerPlateObject.filesNeedingBinding
+        );
     }
 }

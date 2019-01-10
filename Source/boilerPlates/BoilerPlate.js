@@ -116,7 +116,7 @@ export class BoilerPlate {
             language: this.#language,
             description: this.#description,
             type: this.#type,
-            dependencies: this.#dependencies,
+            dependencies: this.#dependencies.map(_ => _.toJson()) || [],
             path: this.#path,
             pathsNeedingBinding: this.#pathsNeedingBinding,
             filesNeedingBinding: this.#filesNeedingBinding
