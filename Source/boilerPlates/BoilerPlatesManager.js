@@ -61,13 +61,12 @@ export class BoilerPlatesManager {
         this.#fileSystem = fileSystem;
         this.#git = git;
 
-        this.#folders.makeFolderIfNotExists(this.localBoilerPlateLocation);
+        this.#createLocalBoilerPlatesFolder();
 
         this.#logger = logger;
         this.#handlebars = handlebars;
         this.readBoilerPlates();
     }
-
     /**
      * Gets base path for boiler plates
      * @returns {string} Base path of boiler plates
@@ -301,6 +300,17 @@ export class BoilerPlatesManager {
             boilerPlateObject.path,
             boilerPlateObject.pathsNeedingBinding ,
             boilerPlateObject.filesNeedingBinding
+        );
+    }
+    /**
+     * Creates the local boilerplates folder in ~/.dolittle if not exists
+     */
+    #createLocalBoilerPlatesFolder() {
+        this.#folders.makeFolderIfNotExists(this.localBoilerPlateLocation);
+        require('fs-extra').writeFileSync(path.join(this.localBoilerPlateLocation, 'README'), 
+`This is a folder where you can have your own boilerplates.
+
+To be documented...`
         );
     }
 }
