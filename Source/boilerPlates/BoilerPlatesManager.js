@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import npm from 'npm';
 import path from 'path';
 import { BoilerPlate } from './BoilerPlate';
 import { getFileNameAndExtension, getFileDirPath } from '../helpers';
@@ -193,7 +192,7 @@ Please delete the file ${filePath} and all the boilerplates in ${this.localBoile
         return folders;
     }
     /**
-     * Installs the npm package with given packagename 
+     * Installs the npm package with given package name 
      *
      * @param string packageName
      * @memberof BoilerPlatesManager
