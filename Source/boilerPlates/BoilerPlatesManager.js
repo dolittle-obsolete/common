@@ -65,6 +65,19 @@ export class BoilerPlatesManager {
 
         this.#boilerPlates = undefined;
         this.#createLocalBoilerPlatesFolder();
+        
+        this.#warnIfUsingOldSystem();
+    }
+    #warnIfUsingOldSystem() {
+        const filePath = path.join(this.#configManager.centralFolderLocation, 'boiler-plates.json');
+        if (this.#fileSystem.existsSync(filePath)) {
+            throw new Error(
+`I see that there has been a long time since you've updated the dolittle tooling.
+
+Please delete the file ${filePath} and all the boilerplates in ${this.localBoilerPlateLocation} that is not your own custom boilerplate.
+`
+            );
+        }
     }
     /**
      * Gets base path for boiler plates
