@@ -60,12 +60,11 @@ export class BoilerPlatesManager {
         this.#folders = folders;
         this.#fileSystem = fileSystem;
         this.#git = git;
-
-        this.#createLocalBoilerPlatesFolder();
-
-        this.#logger = logger;
         this.#handlebars = handlebars;
-        this.readBoilerPlates();
+        this.#logger = logger;
+
+        this.#boilerPlates = undefined;
+        this.#createLocalBoilerPlatesFolder();
     }
     /**
      * Gets base path for boiler plates
@@ -80,6 +79,7 @@ export class BoilerPlatesManager {
      * @returns {BoilerPlate[]} Available boiler plates
      */
     get boilerPlates() {
+        if (!this.#boilerPlates) this.readBoilerPlates();
         return this.#boilerPlates;
     }
     /**
@@ -96,7 +96,7 @@ export class BoilerPlatesManager {
      * @returns {BoilerPlate[]} Available boiler plates for the language
      */
     boilerPlatesByLanguage(language) {
-        return this.#boilerPlates.filter(boilerPlate => boilerPlate.language == language);
+        return this.boilerPlates.filter(boilerPlate => boilerPlate.language == language);
     }
 
     /**
@@ -105,7 +105,7 @@ export class BoilerPlatesManager {
      * @returns {BoilerPlate[]} Available boiler plates for the type
      */
     boilerPlatesByType(type) {
-        return this.#boilerPlates.filter(boilerPlate => boilerPlate.type == type);
+        return this.boilerPlates.filter(boilerPlate => boilerPlate.type == type);
     }
 
     /**
@@ -115,7 +115,7 @@ export class BoilerPlatesManager {
      * @returns {BoilerPlate[]} Available boiler plates for the language
      */
     boilerPlatesByLanguageAndType(language, type) {
-        return this.#boilerPlates.filter(boilerPlate => boilerPlate.language == language && boilerPlate.type == type);
+        return this.boilerPlates.filter(boilerPlate => boilerPlate.language == language && boilerPlate.type == type);
     }
 
     /**
@@ -245,7 +245,7 @@ export class BoilerPlatesManager {
      * @returns {boolean} True if there are, false if not
      */
     get hasBoilerPlates() {
-        return this.#boilerPlates.length > 0;
+        return this.#boilerPlates && this.#boilerPlates.length > 0;
     }
     /**
      * Parses a boilerplate read from a boilerplate package correctly
