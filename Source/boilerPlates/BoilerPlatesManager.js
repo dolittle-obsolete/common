@@ -12,7 +12,7 @@ import { Folders } from '../Folders';
 import { ConfigManager } from '../configuration/ConfigManager';
 import { ArtifactTemplate } from '../artifacts/ArtifactTemplate';
 
-const boilerPlateFolder = 'boiler-plates';
+const boilerPlateFolder = 'boilerplates';
 
 const binaryFiles = [
     '.jpg',
@@ -66,17 +66,6 @@ export class BoilerPlatesManager {
         this.#createLocalBoilerPlatesFolder();
         
         this.#warnIfUsingOldSystem();
-    }
-    #warnIfUsingOldSystem() {
-        const filePath = path.join(this.#configManager.centralFolderLocation, 'boiler-plates.json');
-        if (this.#fileSystem.existsSync(filePath)) {
-            throw new Error(
-`I see that there has been a long time since you've updated the dolittle tooling.
-
-Please delete the file ${filePath} and all the boilerplates in ${this.localBoilerPlateLocation} that is not your own custom boilerplate.
-`
-            );
-        }
     }
     /**
      * Gets base path for boiler plates
@@ -258,6 +247,18 @@ Please delete the file ${filePath} and all the boilerplates in ${this.localBoile
      */
     get hasBoilerPlates() {
         return this.#boilerPlates && this.#boilerPlates.length > 0;
+    }
+
+    #warnIfUsingOldSystem() {
+        const filePath = path.join(this.#configManager.centralFolderLocation, 'boiler-plates.json');
+        if (this.#fileSystem.existsSync(filePath)) {
+            throw new Error(
+`I see that there has been a long time since you've updated the dolittle tooling.
+
+Please delete the file ${filePath} and all the boilerplates in ${this.localBoilerPlateLocation} that is not your own custom boilerplate.
+`
+            );
+        }
     }
     /**
      * Parses a boilerplate read from a boilerplate package correctly
