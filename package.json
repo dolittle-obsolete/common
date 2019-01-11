@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common",
-  "version": "3.1.1",
+  "version": "4.0.0",
   "description": "Common tools for dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -38,6 +38,10 @@
     "@dolittle/build": "~6.2.1"
   },
   "dependencies": {
+    "@dolittle/boilerplates.application": "^1.0.0",
+    "@dolittle/boilerplates.artifact-templates": "^1.0.0",
+    "@dolittle/boilerplates.bounded-context.csharp": "^1.0.0",
+    "@dolittle/boilerplates.bounded-context.veracity.csharp": "^1.0.0",
     "fs-extra": "^7.0.0",
     "handlebars": "^4.0.12",
     "rc": "^1.2.8",
