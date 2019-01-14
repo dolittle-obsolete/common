@@ -31,7 +31,10 @@ function setupHandlebars() {
         let config = dolittleConfigDefault;
         if (config['_']) config['_'] = undefined;
         return JSON.stringify(config, null, 4).normalize();
-    })
+    });
+    Handlebars.registerHelper('addUniqueCSharpNamespace', objects => {
+        return objects.map(_ => _.namespace).filter((v, i, a) => a.indexOf(v) === i).map(_ => `using ${_};`).join('\n');
+    });
 }
 
 export {Application} from './applications/Application';
