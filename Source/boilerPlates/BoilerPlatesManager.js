@@ -24,10 +24,13 @@ const binaryFiles = [
     '.ttf'
 ];
 
+//TODO: This must be improved upon...
 const dolittleBoilerplateFolders = [
     path.dirname(require.resolve('@dolittle/boilerplates.application/package.json')),
     path.dirname(require.resolve('@dolittle/boilerplates.artifact-templates/package.json')),
     path.dirname(require.resolve('@dolittle/boilerplates.bounded-context.csharp/package.json')),
+    path.dirname(require.resolve('@dolittle/boilerplates.bounded-context.csharp.interaction.aurelia/package.json')),
+    path.dirname(require.resolve('@dolittle/boilerplates.bounded-context.csharp.interaction.react/package.json')),
     path.dirname(require.resolve('@dolittle/boilerplates.bounded-context.veracity.csharp/package.json'))
 ]; 
 
@@ -63,6 +66,7 @@ export class BoilerPlatesManager {
         this.#logger = logger;
 
         this.#boilerPlates = undefined;
+        this.init();
     }
     init() {
         this.#createLocalBoilerPlatesFolder();
