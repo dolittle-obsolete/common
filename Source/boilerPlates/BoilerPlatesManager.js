@@ -63,8 +63,9 @@ export class BoilerPlatesManager {
         this.#logger = logger;
 
         this.#boilerPlates = undefined;
+    }
+    init() {
         this.#createLocalBoilerPlatesFolder();
-        
         this.#warnIfUsingOldSystem();
     }
     /**
