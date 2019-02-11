@@ -12,6 +12,7 @@ import { Folders } from '../Folders';
 import { ConfigManager } from '../configuration/ConfigManager';
 import { ArtifactTemplate } from '../artifacts/ArtifactTemplate';
 
+const npmInstallPackage = require('npm-install-package');
 const boilerplatesDiscoverer = require('@dolittle/boilerplates-discoverer');
 const boilerplatesFolder = 'boilerplates';
 const boilerPlateConfigurationName = 'boilerplates.json';
@@ -39,6 +40,7 @@ export class BoilerPlatesManager {
     #git;
     #logger;
     #handlebars;
+
     /**
      * Initializes a new instance of {BoilerPlatesManager}
      * @param {ConfigManager} configManager 
@@ -210,18 +212,6 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
             boilerPlates.push(this.#parseBoilerPlate(boilerPlateObject, boilerPlatePath));
         });
         return boilerPlates;
-    }
-    /**
-     * Installs the npm package with given package name 
-     *
-     * @param string packageName
-     * @memberof BoilerPlatesManager
-     */
-    installBoilerplatePackage(packageName) {
-        this.#logger.info(`Attempts to install a boilerplate package from npm '${packageName}'`);
-        this.#logger.error('Not yet implemented');
-        //TODO: Install boilerplate, check if package is a Dolittle boilerplate
-        
     }
 
     /**
