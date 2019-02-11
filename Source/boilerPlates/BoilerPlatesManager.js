@@ -12,7 +12,8 @@ import { Folders } from '../Folders';
 import { ConfigManager } from '../configuration/ConfigManager';
 import { ArtifactTemplate } from '../artifacts/ArtifactTemplate';
 
-const boilerPlateFolder = 'boilerplates';
+const boilerplatesDiscoverer = require('@dolittle/boilerplates-discoverer');
+const boilerPlateConfigurationName = 'boilerplates.json';
 
 const binaryFiles = [
     '.jpg',
@@ -23,16 +24,6 @@ const binaryFiles = [
     '.exe',
     '.ttf'
 ];
-
-//TODO: This must be improved upon...
-const dolittleBoilerplateFolders = [
-    path.dirname(require.resolve('@dolittle/boilerplates.application/package.json')),
-    path.dirname(require.resolve('@dolittle/boilerplates.artifact-templates/package.json')),
-    path.dirname(require.resolve('@dolittle/boilerplates.bounded-context.csharp/package.json')),
-    path.dirname(require.resolve('@dolittle/boilerplates.bounded-context.csharp.interaction.aurelia/package.json')),
-    path.dirname(require.resolve('@dolittle/boilerplates.bounded-context.csharp.interaction.react/package.json')),
-    path.dirname(require.resolve('@dolittle/boilerplates.bounded-context.veracity.csharp/package.json'))
-]; 
 
 /**
  * Represents the manager of boiler plates
@@ -64,20 +55,19 @@ export class BoilerPlatesManager {
         this.#git = git;
         this.#handlebars = handlebars;
         this.#logger = logger;
-
         this.#boilerPlates = undefined;
-        this.init();
     }
+
     init() {
-        this.#createLocalBoilerPlatesFolder();
+        if (! this.fileSystem.existsSync(this.boilerPlatesConfigurationLocation)) this.fileSystem.writeJsonSync(this.boilerPlatesConfigurationLocation, {_localBoilerplates: [{}]}, {encoding: 'utf8', spaces: 4});
         this.#warnIfUsingOldSystem();
     }
     /**
-     * Gets base path for boiler plates
+     * Gets path of the Dolittle boilerplates configuration. This is a file containing both boilerplates that are not published and installed as packages and paths to Dolittle boilerplate folders
      * @returns {string} Base path of boiler plates
      */
-    get localBoilerPlateLocation() {
-        return path.join(this.#configManager.centralFolderLocation, boilerPlateFolder);
+    get boilerPlatesConfigurationLocation() {
+        return path.join(this.#configManager.centralFolderLocation, boilerPlateConfigurationName);
     }
 
     /**
@@ -94,6 +84,29 @@ export class BoilerPlatesManager {
      */
     get fileSystem() {
         return this.#fileSystem;
+    }
+    /**
+     * Gets the paths of the locally globally installed Dolittle boilerplates
+     *
+     * @readonly
+     * @memberof BoilerPlatesManager
+     * @returns {string[]} Filesystem paths of the Dolittle boilerplates installed on the system
+     */
+    get installedBoilerplatePaths() {
+        return boilerplatesDiscoverer.local([], 10);
+    }
+    /**
+     * Discovers the globally installed boilerplates and adds the path to the folder to the boilerplates configuration using the name of package as the key 
+     *
+     * @memberof BoilerPlatesManager
+     */
+    discoverInstalledBoilerplates() {
+        let boilerplatesConfig = this.fileSystem.readJsonSync(this.boilerPlatesConfigurationLocation);
+        this.installedBoilerplatePaths.forEach(folderPath => {
+            let packageJson = this.fileSystem.readJsonSync(path.join(folderPath, 'package.json'));
+            boilerplatesConfig[packageJson.name] = folderPath;
+        });
+        this.fileSystem.writeJsonSync(this.boilerPlatesConfigurationLocation, boilerplatesConfig, {encoding: 'utf8', spaces: 4});
     }
 
     /**
@@ -136,24 +149,11 @@ export class BoilerPlatesManager {
      * Reads all the local boilerplates found at ~/.dolittle/boilerplates
      */
     readLocalBoilerPlates() {
-        if (this.fileSystem.existsSync(this.localBoilerPlateLocation)) {
-            return this.readBoilerplateFromFolder(this.localBoilerPlateLocation);
+        if (this.fileSystem.existsSync(this.boilerPlatesConfigurationLocation)) {
+            // return this.readBoilerplateFromFolder(this.localBoilerPlateLocation);
+            
         }
         return [];
-    }
-    /**
-     * Reads and gets all the boilerplates from the installed dependencies
-     *
-     * @returns {BoilerPlate[]}
-     * @memberof BoilerPlatesManager
-     */
-    getBoilerPlatesFromDependencies() {
-        let boilerPlates = [];
-        let folders = this.getBoilerPlateDependencies();
-        folders.forEach(folder => {
-            boilerPlates.push(...this.readBoilerplateFromFolder(folder));
-        });
-        return boilerPlates;
     }
     /**
      * Reads the contents of a folder and discovers boilerplates. Returns a list of boilerplates
@@ -173,19 +173,6 @@ export class BoilerPlatesManager {
         return boilerPlates;
     }
     /**
-     * Gets the path of the folders of the dependencies containing boilerplates
-     *
-     * @returns {string[]} Paths to folders with boilerplates
-     * @memberof BoilerPlatesManager
-     */
-    getBoilerPlateDependencies() {
-        let folders = dolittleBoilerplateFolders;
-        //TODO: Find folders containing boilerplates that are not from dolittle, but installed from npm
-        // let modulesDir = path.resolve(folders[0], '..', '..');
-
-        return folders;
-    }
-    /**
      * Installs the npm package with given package name 
      *
      * @param string packageName
@@ -194,6 +181,7 @@ export class BoilerPlatesManager {
     installBoilerplatePackage(packageName) {
         this.#logger.info(`Attempts to install a boilerplate package from npm '${packageName}'`);
         this.#logger.error('Not yet implemented');
+        //TODO: Install boilerplate, check if package is a Dolittle boilerplate
         
     }
 
@@ -260,7 +248,7 @@ export class BoilerPlatesManager {
             throw new Error(
 `I see that there has been a long time since you've updated the dolittle tooling.
 
-Please delete the file ${filePath} and all the boilerplates in ${this.localBoilerPlateLocation} that is not your own custom boilerplate.
+Please delete the file ${filePath} and all the boilerplates in ${this.boilerPlatesConfigurationLocation} that is not your own custom boilerplate.
 `
             );
         }
@@ -318,17 +306,6 @@ Please delete the file ${filePath} and all the boilerplates in ${this.localBoile
             boilerPlateObject.path,
             boilerPlateObject.pathsNeedingBinding ,
             boilerPlateObject.filesNeedingBinding
-        );
-    }
-    /**
-     * Creates the local boilerplates folder in ~/.dolittle if not exists
-     */
-    #createLocalBoilerPlatesFolder() {
-        this.#folders.makeFolderIfNotExists(this.localBoilerPlateLocation);
-        require('fs-extra').writeFileSync(path.join(this.localBoilerPlateLocation, 'README'), 
-`This is a folder where you can have your own boilerplates.
-
-To be documented...`
         );
     }
 }

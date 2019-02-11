@@ -38,10 +38,7 @@
     "@dolittle/build": "~6.2.1"
   },
   "dependencies": {
-    "@dolittle/boilerplates.application": "1.0.2",
-    "@dolittle/boilerplates.artifact-templates": "1.1.0",
-    "@dolittle/boilerplates.bounded-context.csharp": "1.1.1",
-    "@dolittle/boilerplates.bounded-context.veracity.csharp": "1.0.0",
+    "@dolittle/boilerplates-discoverer": "^1.0.3",
     "fs-extra": "^7.0.0",
     "handlebars": "^4.0.12",
     "rc": "^1.2.8",
