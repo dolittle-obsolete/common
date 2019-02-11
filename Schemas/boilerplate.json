@@ -1,0 +1,142 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "dolittle.io/schemas/dolittle-tools/common/boilerplate.json",
+    "title": "Tooling Boilerplate Configuration",
+    "description": "The boilerplate configuration",
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "The name of the boilerplate, should together with type and language be unique",
+            "type": "string"
+        },
+        "description": {
+            "description": "Description of the boilerplate",
+            "type": "string"
+        },
+        "language": {
+            "description": "The language of the actual boilerplate",
+            "type": "string",
+            "enum": ["any", "csharp", "javascript", "typescript"]
+        },
+        "type": {
+            "description": "The type of the boilerplate",
+            "type": "string",
+            "enum": ["application", "artifacts", "boundedContext", "interaction", "boundedContext-adornment"]
+        },
+        "target": {
+            "description": "The interaction layer target",
+            "type": "string",
+            "enum": ["web"]
+        },
+        "framework": {
+            "description": "The framework of the interaction layer. Used if applicable",
+            "type": "string",
+            "enum": ["aurelia", "react"]
+        },
+        "parent": {
+            "description": "Describes the boilerplate of the parent you wish to apply this adornment on",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "The name of the boilerplate, should together with type and language be unique",
+                    "type": "string"
+                },
+                "language": {
+                    "description": "The language of the actual boilerplate",
+                    "type": "string",
+                    "enum": ["any", "csharp", "javascript", "typescript"]
+                },
+                "type": {
+                    "description": "The type of the boilerplate",
+                    "type": "string",
+                    "enum": ["application", "artifacts", "boundedContext", "interaction", "boundedContext-adornment"]
+                }
+            },
+            
+            "required": ["type"]
+        },
+
+        "tags": {
+            "description": "Keywords marking the boilerplate",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "dependencies": {
+            "$ref": "#/definitions/dependencies"
+        }
+    },
+    "required": [
+       "name", "description", "language", "type"
+    ],
+    "definitions": {
+        "dependencies": {
+            "description": "The dependencies configuration",
+            "type": "object",
+            "additionalProperties": {
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "description": "Description of the dependency",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "The type of the dependency, e.g wether it is injected by user input or by a discovery mechanism",
+                        "type": "string",
+                        "enum": ["discover", "userInput"]
+                    },
+                    "discoverType": {
+                        "description": "The discovery type of the dependency, it dictates what should be discovered and how it will be discovered",
+                        "type": "string",
+                        "enum": ["namespace", "file", "fileContent", "multipleFiles", "multipleFileContents"]
+                    },
+                    "userInputType": {
+                        "description": "The user input type of the dependency, it defines how the user should be prompted.",
+                        "type": "string",
+                        "enum": ["argument", "input", "chooseOne", "chooseMultiple"]
+                    },
+                    "choices": {
+                        "description": "The list of choices for a user input prompt",
+                        "type": "array"
+                    },
+                    "promptMessage": {
+                        "description": "The message the the user is prompted with",
+                        "type": "string"
+                    },
+                    "customInput": {
+                        "description": "The custom input string that is the message the user is prompted with if user wants to give a custom input. When set the list of choices will include this custom input choice.",
+                        "type": "string"
+                    },
+                    "withNamespace": {
+                        "description": "Whether or not to generate namespaces for each file that's discovered. NB. this does not apply to all languages. It applies to, for example, csharp.",
+                        "type": "boolean"
+                    },
+                    "milestone": {
+                        "description": "The regex that represents the milestone used for determining the namespace. For C# application this would be '.*\\.csproj$', meaning any file that ends with .csproj",
+                        "type": "string",
+                        "format": "regex"
+                    },
+                    "fileMatch": {
+                        "description": "The regex that represents the filename pattern of the file to match. Used when discovering files.",
+                        "type": "string",
+                        "format": "regex"
+                    },
+                    "contentMatch": {
+                        "description": "The regex that represents the content pattern of the file to match.",
+                        "type": "string",
+                        "format": "regex"
+                    },
+                    "fromArea": {
+                        "description": "The area a file discovery should search from",
+                        "type": "string",
+                        "enum": ["concepts", "domain", "events", "read"]
+                    }
+                },
+                "required": [
+                    "description", "type"
+                ]
+            }
+        }
+    }
+}
