@@ -113,7 +113,7 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
      * @returns {string[]} Filesystem paths of the Dolittle boilerplates installed on the system
      */
     get installedBoilerplatePaths() {
-        return boilerplatesDiscoverer.local([], 10);
+        return boilerplatesDiscoverer.local([], 15);
     }
     /**
      * Discovers the globally installed boilerplates and adds the path to the folder to the boilerplates configuration using the name of package as the key 
@@ -129,6 +129,28 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
         });
         this.fileSystem.writeJsonSync(this.boilerPlatesConfigurationLocation, boilerplatesConfig, {encoding: 'utf8', spaces: 4});
         this.hasDiscovered = true;
+    }
+    /**
+     * Discovers boilerplates packages on npm. 
+     *
+     * @param {string[]} keywords Additional keywords used in search
+     * @param {number} limit 
+     * @memberof BoilerPlatesManager
+     * @returns {Promise<{name: string, description: string}>}
+     */
+    async discoverOnlineBoilerplates(keywords = [], limit = 250) {
+       let boilerplatePackageNames = await boilerplatesDiscoverer(keywords, limit);
+       return boilerplatePackageNames;
+    }
+    /**
+     * Discovers Dolittle boilerplates made by Dolittle on npm
+     *
+     * @returns {*} A list of packages
+     * @memberof BoilerPlatesManager
+     */
+    async discoverOnlineDolittleBoilerplates() {
+        let boilerplatePackages = await boilerplatesDiscoverer.dolittle();
+        return boilerplatePackages;
     }
 
     /**
