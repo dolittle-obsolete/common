@@ -11,8 +11,8 @@ import { areas } from '../helpers';
  * @param {any} obj
  * @returns {Dependency}
  */
-export function dependencyFromJson(obj) {
-    return new Dependency(obj.description, obj.name, obj.type, obj.discoverType, obj.userInputType, obj.choices,
+export function dependencyFromJson(obj, name) {
+    return new Dependency(obj.description, name, obj.type, obj.discoverType, obj.userInputType, obj.choices,
         obj.promptMessage, obj.customInput, obj.withNamespace, obj.milestone, obj.fileMatch, obj.contentMatch, obj.fromArea);
 }
 
@@ -262,28 +262,5 @@ export class Dependency {
      */
     get fromArea() {
         return this.#fromArea;
-    }
-
-    /**s
-     * Convert to a JSON object
-     * @returns Object literal
-     * @memberof Dependency
-     */
-    toJson() {
-        return {
-            description: this.description,
-            name: this.name,
-            type: this.type,
-            discoverType: this.discoverType,
-            userInputType: this.userInputType,
-            choices: this.choices,
-            promptMessage: this.promptMessage,
-            customInput: this.customInput,
-            withNamespace: this.withNamespace,
-            milestone: this.milestone.source,
-            fileMatch: this.fileMatch.source,
-            contentMatch: this.contentMatch.source,
-            fromArea: this.fromArea
-        };
     }
 }

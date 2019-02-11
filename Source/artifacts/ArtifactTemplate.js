@@ -17,7 +17,7 @@ const _path = require('path');
 export function artifactTemplateFromJson(obj, path) {
     return new ArtifactTemplate(obj.name, obj.type, obj.area, obj.description, obj.language,
         obj.dependencies !== undefined? 
-            obj.dependencies.map(depObj => dependencyFromJson(depObj))
+            Object.keys(obj.dependencies).map(key => dependencyFromJson(obj.dependencies[key], key))
             : [], obj.includedFiles, path);
 }
 

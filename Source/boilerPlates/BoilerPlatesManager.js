@@ -95,7 +95,7 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
      * @returns {BoilerPlate[]} Available boiler plates
      */
     get boilerPlates() {
-        if (!this.#boilerPlates) this.readBoilerPlates();
+        if (!this.#boilerPlates) this.loadBoilerplates();
         return this.#boilerPlates;
     }
     /**
@@ -160,23 +160,18 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
     }
 
     /**
-     * Reads all boiler and sets the boilerPlates property
+     * Loads all boilerplates and sets the boilerPlates property
      */
-    readBoilerPlates() {
+    loadBoilerplates() {
         this.#boilerPlates = [];
-        this.#boilerPlates.push(...this.readLocalBoilerPlates());
-        this.#boilerPlates.push(...this.getBoilerPlatesFromDependencies());
+        let boilerPlatesConfig = this.fileSystem.readJsonSync(this.boilerPlatesConfigurationLocation);
+        Object.keys(boilerPlatesConfig).forEach(key => {
+            let folderPath = path.resolve(boilerPlatesConfig[key]);
+            console.log(key, ' ', boilerPlatesConfig[key]);
+            this.#boilerPlates.concat(this.readBoilerplatesFromFolder(folderPath));
+        });
     }
-    /**
-     * Reads all the local boilerplates found at ~/.dolittle/boilerplates
-     */
-    readLocalBoilerPlates() {
-        if (this.fileSystem.existsSync(this.boilerPlatesConfigurationLocation)) {
-            // return this.readBoilerplateFromFolder(this.localBoilerPlateLocation);
-            
-        }
-        return [];
-    }
+    
     /**
      * Reads the contents of a folder and discovers boilerplates. Returns a list of boilerplates
      *
@@ -184,7 +179,7 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
      * @returns {BoilerPlate[]} A list of boilerplates
      * @memberof BoilerPlatesManager
      */
-    readBoilerplateFromFolder(folder) {
+    readBoilerplatesFromFolder(folder) {
         let boilerPlates = [];
         let boilerPlatesPaths = this.#folders.searchRecursive(folder, 'boilerplate.json');
         
@@ -316,14 +311,15 @@ Please delete the file ${filePath} and all the boilerplates in ${this.boilerPlat
         }
         boilerPlateObject.pathsNeedingBinding = pathsNeedingBinding;
         boilerPlateObject.filesNeedingBinding = filesNeedingBinding;
-
+        
+        console.log(boilerPlateObject);
         return new BoilerPlate(
             boilerPlateObject.language || 'any',
             boilerPlateObject.name,
             boilerPlateObject.description,
             boilerPlateObject.type,
             boilerPlateObject.dependencies !== undefined? 
-                boilerPlateObject.dependencies.map(dep => dependencyFromJson(dep))
+                Object.keys(boilerPlateObject.dependencies).map(key => dependencyFromJson(boilerPlateObject.dependencies[key], key))
                 : [],
             boilerPlateObject.path,
             boilerPlateObject.pathsNeedingBinding ,

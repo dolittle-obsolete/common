@@ -44,9 +44,7 @@ export class BoilerPlate {
         this.#pathsNeedingBinding = pathsNeedingBinding || [];
         this.#filesNeedingBinding = filesNeedingBinding || [];
         let dir = getFileDirPath(this.#path);
-        this.#contentDirectory = this.#type !== 'artifacts'?
-            _path.join(dir, 'Content')
-            : dir;
+        this.#contentDirectory = _path.join(dir, 'Content');
     }
 
     /**
@@ -106,22 +104,6 @@ export class BoilerPlate {
         return this.#contentDirectory;
     }
 
-    /**
-     * Convert to a JSON object
-     * @returns Object literal
-     */
-    toJson() {
-        return {
-            name: this.#name,
-            language: this.#language,
-            description: this.#description,
-            type: this.#type,
-            dependencies: this.#dependencies.map(_ => _.toJson()) || [],
-            path: this.#path,
-            pathsNeedingBinding: this.#pathsNeedingBinding,
-            filesNeedingBinding: this.#filesNeedingBinding
-        };
-    }
     /**
      * Check if this is equal to boilerPlate
      *
