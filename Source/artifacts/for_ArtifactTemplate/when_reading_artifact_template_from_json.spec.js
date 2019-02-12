@@ -12,14 +12,14 @@ import { artifactTemplateFromJson, ArtifactTemplate } from "../ArtifactTemplate"
     /**
      * @type {ArtifactTemplate}
      */
-    let result = artifactTemplateFromJson(context.artifact_template_json, context.path);
+    let result = artifactTemplateFromJson(context.artifact_template_json, context.path, context.included_files, context.boilerplate);
     
     
     it('should have the correct name', () => result.name.should.equal(context.artifact_template_json.name));
     it('should have the correct type', () => result.type.should.equal(context.artifact_template_json.type));
     it('should have the correct area', () => result.area.should.equal(context.artifact_template_json.area));
     it('should have the correct description', () => result.description.should.equal(context.artifact_template_json.description));
-    it('should have the correct language', () => result.language.should.equal(context.artifact_template_json.language));
-    it('should have the correct includedFiles', () => result.includedFiles.should.equal(context.artifact_template_json.includedFiles));
+    it('should have the correct language', () => result.boilerplate.language.should.equal(context.boilerplate.language));
+    it('should have the correct includedFiles', () => result.includedFiles.should.equal(context.included_files));
     it('should have the correct dependencies', () => result.dependencies.should.deep.equal([]));
  });
