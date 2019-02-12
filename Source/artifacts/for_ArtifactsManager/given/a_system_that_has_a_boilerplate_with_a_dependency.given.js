@@ -6,18 +6,18 @@
 import { ArtifactsManager } from "../../ArtifactsManager";
 import { BoilerPlate } from "../../../boilerPlates/BoilerPlate";
 import { Dependency } from "../../../dependencies/Dependency";
-import { ArtifactTemplate } from "../../ArtifactTemplate";
+
 const path = require('path');
 
 export class a_system_that_has_a_boilerplate_with_a_dependency {
     constructor() {
-
         this.boiler_plates_manager = {
             boilerPlatesByLanguageAndType: sinon.stub(),
             createArtifactInstance: sinon.stub()
         };
         this.folders = {
-            searchRecursive: sinon.stub()
+            searchRecursive: sinon.stub(),
+            searchFolderRegex: sinon.stub()
         };
         this.file_system = {
             readFileSync: sinon.stub()
@@ -39,10 +39,7 @@ export class a_system_that_has_a_boilerplate_with_a_dependency {
             type: this.artifact_type,
             area: 'read',
             description: 'some description',
-            language: this.language,
-            dependencies: [],
-            includedFiles: [],
-            path: this.template_path
+            dependencies: {}
         };
         this.boiler_plates_manager.boilerPlatesByLanguageAndType.returns([
             new BoilerPlate(this.language, 'some_artifact', 'some description', 'artifact', this.dependencies, 'target', 'frameWork', {},
@@ -52,6 +49,7 @@ export class a_system_that_has_a_boilerplate_with_a_dependency {
         this.folders.searchRecursive.returns([
             this.template_path
         ]);
+        this.folders.searchFolderRegex.returns([]);
         this.file_system.readFileSync.returns(JSON.stringify(this.artifact_template));
         
         this.artifacts_manager = new ArtifactsManager(this.boiler_plates_manager, this.folders, this.file_system, logger);
