@@ -97,10 +97,9 @@ export class ArtifactsManager {
         templateFiles.forEach(_ => {
             let includedFiles = this.#getIncludedFiles(getFileDirPath(_));
             let template = artifactTemplateFromJson(JSON.parse(this.#fileSystem.readFileSync(_)), _, includedFiles, boilerPlate);
-            if (template.language === boilerPlate.language && template.type === artifactType)
+            if (template.type === artifactType)
                 templates.push(template);
         });
-
         if (templates.length === 0) {
             this.#logger.error(`Could not find any artifact templates with artifact type '${artifactType}' and language '${boilerPlate.language}'`);
             return null;
