@@ -5,8 +5,7 @@
 import { a_system_that_has_a_boilerplate_with_a_dependency } from "./given/a_system_that_has_a_boilerplate_with_a_dependency.given";
 import { Dependency } from "../../dependencies/Dependency";
 
-
- describe('when getting dependencies and boilerplate has one dependency', () => {
+describe('when getting dependencies and boilerplate has one dependency', () => {
     let context = new a_system_that_has_a_boilerplate_with_a_dependency();
     /**
      * @type {Dependency[]}
@@ -17,4 +16,4 @@ import { Dependency } from "../../dependencies/Dependency";
     });
     
     it('should return a single dependency', () => result.length.should.equal(1));
- });
+});

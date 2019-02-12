@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import {determineDestination} from '../../../helpers';
 import { a_configuration_for_cwd_at_root } from './given/a_configuration_for_cwd_at_root.given';
+
 describe('when creating artifact with multiple features', () => {
     const path = require('path');
     let context = null;

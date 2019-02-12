@@ -11,8 +11,8 @@ import { HttpWrapper } from '../HttpWrapper';
 import { Folders } from '../Folders';
 import { ConfigManager } from '../configuration/ConfigManager';
 import { ArtifactTemplate } from '../artifacts/ArtifactTemplate';
+import boilerplatesDiscoverer from '@dolittle/boilerplates-discoverer';
 
-const boilerplatesDiscoverer = require('@dolittle/boilerplates-discoverer');
 const boilerplatesFolder = 'boilerplates';
 const boilerPlateConfigurationName = 'boilerplates.json';
 

@@ -3,10 +3,8 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { dependencyFromJson, Dependency } from '../dependencies/Dependency';
-import {BoilerPlate} from '../boilerPlates/BoilerPlate';
 import { areas, getFileDirPath } from '../helpers';
-
-const _path = require('path');
+import _path from 'path';
 /**
  * Creates an {ArtifactTemplate} from json object
  *

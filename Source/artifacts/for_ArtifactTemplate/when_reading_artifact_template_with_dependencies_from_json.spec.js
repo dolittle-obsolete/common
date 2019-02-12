@@ -1,4 +1,3 @@
-
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
@@ -7,8 +6,7 @@
 import { artifactTemplateFromJson, ArtifactTemplate } from "../ArtifactTemplate";
 import { an_artifact_template_json_with_dependencies } from "./given/an_artifact_template_json_with_dependencies.given";
 
-
- describe('when reading artifact template with dependencies from json', () => {
+describe('when reading artifact template with dependencies from json', () => {
     let context = new an_artifact_template_json_with_dependencies();
     /**
      * @type {ArtifactTemplate}
@@ -22,4 +20,4 @@ import { an_artifact_template_json_with_dependencies } from "./given/an_artifact
     it('should have the correct includedFiles', () => result.includedFiles.should.equal(context.included_files));
     it('should have the correct number of dependencies', () => result.dependencies.length.should.equal(1));
 
- });
+});

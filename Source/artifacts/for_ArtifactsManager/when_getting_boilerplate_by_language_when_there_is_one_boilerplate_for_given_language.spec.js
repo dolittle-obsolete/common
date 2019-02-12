@@ -5,8 +5,7 @@
 import { a_system_that_has_a_boilerplate_with_a_dependency } from "./given/a_system_that_has_a_boilerplate_with_a_dependency.given";
 import { BoilerPlate } from "../../boilerPlates/BoilerPlate";
 
-
- describe('when getting boilerplate by language when there is one boilerplate for given language', () => {
+describe('when getting boilerplate by language when there is one boilerplate for given language', () => {
     let context = new a_system_that_has_a_boilerplate_with_a_dependency();
     /**
      * @type {BoilerPlate}
@@ -16,6 +15,6 @@ import { BoilerPlate } from "../../boilerPlates/BoilerPlate";
         result = context.artifacts_manager.boilerPlateByLanguage(context.language);
         
     });
-    
+
     it('should return a boilerplate', () => expect(result).to.not.be.null);
- });
+});

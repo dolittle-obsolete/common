@@ -6,8 +6,7 @@
 import { an_artifact_template_json } from "./given/an_artifact_template_json.given";
 import { artifactTemplateFromJson, ArtifactTemplate } from "../ArtifactTemplate";
 
-
- describe('when reading artifact template from json', () => {
+describe('when reading artifact template from json', () => {
     let context = new an_artifact_template_json();
     /**
      * @type {ArtifactTemplate}
@@ -21,4 +20,4 @@ import { artifactTemplateFromJson, ArtifactTemplate } from "../ArtifactTemplate"
     it('should have the correct description', () => result.description.should.equal(context.artifact_template_json.description));
     it('should have the correct includedFiles', () => result.includedFiles.should.equal(context.included_files));
     it('should have the correct dependencies', () => result.dependencies.should.deep.equal([]));
- });
+});

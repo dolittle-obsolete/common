@@ -7,10 +7,9 @@ import { BoilerPlate } from "../boilerPlates/BoilerPlate";
 import { Dependency } from "../dependencies/Dependency";
 import { BoilerPlatesManager } from "../boilerPlates/BoilerPlatesManager";
 import { Application, applicationFromJson } from "./Application";
+import path from 'path';
 
-const path = require('path');
 export const applicationBoilerplateType = 'application';
-
 export const applicationFilename = 'application.json';
 /**
  * 

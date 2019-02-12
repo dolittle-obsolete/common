@@ -4,8 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { BoilerPlate } from "../../../boilerPlates/BoilerPlate";
 
-
- export class an_artifact_template_json{
+export class an_artifact_template_json{
     constructor() {
         
         this.included_files = ['{{name}}.cs']
@@ -18,4 +17,4 @@ import { BoilerPlate } from "../../../boilerPlates/BoilerPlate";
             description: 'Creates an Aggregate Root', 
         }; 
     }
- }
+}

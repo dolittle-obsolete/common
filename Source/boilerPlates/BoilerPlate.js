@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { Dependency } from '../dependencies/Dependency';
 import { getFileDirPath } from '../helpers';
-const _path = require('path');
+import _path from 'path';
 
 /**
  * Represents a boiler plate

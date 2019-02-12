@@ -19,8 +19,6 @@ function expandPath(filepath) {
     return filepath;
 }
 
-
-
 /**
  * Represents a manager for dealing with configurations
  *

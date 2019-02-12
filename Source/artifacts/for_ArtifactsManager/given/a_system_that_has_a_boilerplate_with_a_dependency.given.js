@@ -6,8 +6,7 @@
 import { ArtifactsManager } from "../../ArtifactsManager";
 import { BoilerPlate } from "../../../boilerPlates/BoilerPlate";
 import { Dependency } from "../../../dependencies/Dependency";
-
-const path = require('path');
+import path from 'path';
 
 export class a_system_that_has_a_boilerplate_with_a_dependency {
     constructor() {

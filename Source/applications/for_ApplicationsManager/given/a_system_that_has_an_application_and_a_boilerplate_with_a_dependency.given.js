@@ -7,8 +7,8 @@ import { BoilerPlate } from "../../../boilerPlates/BoilerPlate";
 import { Dependency } from "../../../dependencies/Dependency";
 import { ApplicationsManager } from "../../ApplicationsManager";
 import { Guid } from "../../../Guid";
+import path from 'path';
 
-const path = require('path');
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.

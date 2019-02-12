@@ -5,7 +5,7 @@
 
 import { BoilerPlate } from "../../../boilerPlates/BoilerPlate";
 
- export class an_artifact_template_json_with_dependencies{
+export class an_artifact_template_json_with_dependencies{
     constructor() {
         this.included_files = ['{{name}}.cs']
         this.path = 'some path';
@@ -27,4 +27,4 @@ import { BoilerPlate } from "../../../boilerPlates/BoilerPlate";
             
         }; 
     }
- }
+}
