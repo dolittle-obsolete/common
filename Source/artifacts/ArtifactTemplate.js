@@ -3,6 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { dependencyFromJson, Dependency } from '../dependencies/Dependency';
+import {BoilerPlate} from '../boilerPlates/BoilerPlate';
 import { areas, getFileDirPath } from '../helpers';
 
 const _path = require('path');
@@ -12,13 +13,15 @@ const _path = require('path');
  * @export
  * @param {any} obj The template json object
  * @param {string} path The path of the template file
+ * @param {string[]} path The files that needs to be created by the template
+ * @param {BoilerPlate} boilerplate The boilerplate that is parent to this template
  * @returns The created {ArtifactTemplate}
  */
-export function artifactTemplateFromJson(obj, path) {
-    return new ArtifactTemplate(obj.name, obj.type, obj.area, obj.description, obj.language,
+export function artifactTemplateFromJson(obj, path, includedFiles, boilerplate) {
+    return new ArtifactTemplate(boilerplate, obj.name, obj.type, obj.area, obj.description,
         obj.dependencies !== undefined? 
             Object.keys(obj.dependencies).map(key => dependencyFromJson(obj.dependencies[key], key))
-            : [], obj.includedFiles, path);
+            : [], includedFiles, path);
 }
 
 function throwIfInvalidArea(area) {
@@ -31,37 +34,40 @@ function throwIfInvalidArea(area) {
   */
 export class ArtifactTemplate
 {
+    #boilerplate;
     #name;
     #type;
     #area;
     #description;
-    #language;
     #dependencies;
     #includedFiles;
     #path;
     /**
      *Creates an instance of ArtifactTemplate.
+     * @param {BoilerPlate} boilerplate
      * @param {string} name
      * @param {string} type
      * @param {string} area
      * @param {string} description
-     * @param {string} language
      * @param {Dependency[]} dependencies
      * @param {string[]} includedFiles
      * @param {string} path
      * @memberof ArtifactTemplate
      */
-    constructor (name, type, area, description, language, dependencies, includedFiles, path) {
+    constructor (boilerplate, name, type, area, description, dependencies, includedFiles, path) {
+        this.#boilerplate = boilerplate;
         this.#name = name;
         this.#type = type;
         this.#area = area;
         this.#description = description;
-        this.#language = language;
         this.#dependencies = dependencies || [];
         this.#includedFiles = includedFiles || [];
         this.#path = path;
 
         throwIfInvalidArea(area);
+    }
+    get boilerplate() {
+        return this.#boilerplate;
     }
     /**
      * Gets the name of the artifact template
@@ -97,15 +103,6 @@ export class ArtifactTemplate
      */
     get description() {
         return this.#description;
-    }
-    /**
-     * Gets the programming language of the artifact this is a template for
-     * @returns {string}
-     * @readonly
-     * @memberof ArtifactTemplate
-     */
-    get language() {
-        return this.#language;
     }
     /**
      * Gets the dependencies of the template

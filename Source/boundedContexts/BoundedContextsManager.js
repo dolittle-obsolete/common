@@ -8,9 +8,7 @@ import { BoilerPlatesManager } from '../boilerPlates/BoilerPlatesManager';
 import { Folders } from '../Folders';
 import { boundedContextFromJson } from './BoundedContext';
 
-
 const path = require('path');
-
 
 export const boundedContextBoilerplateType = 'boundedContext';
 export const boundedContextFileName = 'bounded-context.json';

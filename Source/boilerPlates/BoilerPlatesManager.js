@@ -12,7 +12,6 @@ import { Folders } from '../Folders';
 import { ConfigManager } from '../configuration/ConfigManager';
 import { ArtifactTemplate } from '../artifacts/ArtifactTemplate';
 
-const npmInstallPackage = require('npm-install-package');
 const boilerplatesDiscoverer = require('@dolittle/boilerplates-discoverer');
 const boilerplatesFolder = 'boilerplates';
 const boilerPlateConfigurationName = 'boilerplates.json';

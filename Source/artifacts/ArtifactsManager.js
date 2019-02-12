@@ -3,13 +3,12 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { getFileDirPath } from "../helpers";
+import { getFileDirPath, getFileNameAndExtension } from "../helpers";
 import { artifactTemplateFromJson, ArtifactTemplate } from "./ArtifactTemplate";
 import { BoilerPlate } from "../boilerPlates/BoilerPlate";
 import { Dependency } from "../dependencies/Dependency";
 import { BoilerPlatesManager } from "../boilerPlates/BoilerPlatesManager";
 import { Folders } from "../Folders";
-
 
 export const artifactsBoilerplateType = 'artifacts';
 
@@ -92,12 +91,12 @@ export class ArtifactsManager {
      * @param {string} artifactType
      * @returns {ArtifactTemplate | null}
      */
-    templateByBoilerplate(boilerPlate, artifactType)
-    {
+    templateByBoilerplate(boilerPlate, artifactType) {
         let templateFiles = this.#folders.searchRecursive(boilerPlate.contentDirectory, 'template.json');
         let templates = [];
         templateFiles.forEach(_ => {
-            let template = artifactTemplateFromJson(JSON.parse(this.#fileSystem.readFileSync(_)), _);
+            let includedFiles = this.#getIncludedFiles(getFileDirPath(_));
+            let template = artifactTemplateFromJson(JSON.parse(this.#fileSystem.readFileSync(_)), _, includedFiles, boilerPlate);
             if (template.language === boilerPlate.language && template.type === artifactType)
                 templates.push(template);
         });
@@ -127,4 +126,7 @@ export class ArtifactsManager {
         return true;
     }
 
+    #getIncludedFiles(folderPath) {
+        return this.#folders.searchFolderRegex(folderPath, /.*/).map(filePath => getFileNameAndExtension(filePath)).filter(file => file === 'template.json');
+    }
 }
