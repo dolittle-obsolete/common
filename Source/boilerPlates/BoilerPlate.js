@@ -16,7 +16,7 @@ export class BoilerPlate {
     #type;
     #dependencies;
     #target;
-    #frameWork;
+    #framework;
     #parent;
     #path;
     #pathsNeedingBinding;
@@ -30,20 +30,20 @@ export class BoilerPlate {
      * @param {string} type
      * @param {Dependency[]} dependencies
      * @param {string} target
-     * @param {string} frameWork
+     * @param {string} framework
      * @param {{name: string, type: string, language: string}} parent
      * @param {string} path 
      * @param {string[]} [pathsNeedingBinding]
      * @param {string[]} [filesNeedingBinding]
      */
-    constructor(language, name, description, type, dependencies, target, frameWork, parent, path, pathsNeedingBinding, filesNeedingBinding) {
+    constructor(language, name, description, type, dependencies, target, framework, parent, path, pathsNeedingBinding, filesNeedingBinding) {
         this.#language = language;
         this.#name = name;
         this.#description = description;
         this.#type = type;
         this.#dependencies = dependencies;
         this.#target = target;
-        this.#frameWork = frameWork;
+        this.#framework = framework;
         this.#parent = parent;
         this.#path = path;
         this.#pathsNeedingBinding = pathsNeedingBinding || [];
@@ -91,7 +91,7 @@ export class BoilerPlate {
      * Get the framework of {BoilerPlate}
      * @returns {string} Type of {BoilerPlate}
      */
-    get frameWork() { return this.#frameWork; }
+    get framework() { return this.#framework; }
 
     /**
      * Get the parent boilerplate that this is an adornment boilerplate of

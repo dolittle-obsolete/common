@@ -331,7 +331,7 @@ Please delete the file ${filePath} and all the boilerplates in ${this.boilerPlat
                 Object.keys(boilerPlateObject.dependencies).map(key => dependencyFromJson(boilerPlateObject.dependencies[key], key))
                 : [],
             boilerPlateObject.target,
-            boilerPlateObject.frameWork,
+            boilerPlateObject.framework,
             boilerPlateObject.parent,
             boilerPlateObject.path,
             boilerPlateObject.pathsNeedingBinding ,
