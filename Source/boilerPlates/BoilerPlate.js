@@ -10,15 +10,14 @@ const _path = require('path');
  * Represents a boiler plate
  */
 export class BoilerPlate {
-
-    /**
-     * @type {string}
-     */
     #language;
     #name;
     #description;
     #type;
     #dependencies;
+    #target;
+    #frameWork;
+    #parent;
     #path;
     #pathsNeedingBinding;
     #filesNeedingBinding;
@@ -30,16 +29,22 @@ export class BoilerPlate {
      * @param {string} description 
      * @param {string} type
      * @param {Dependency[]} dependencies
+     * @param {string} target
+     * @param {string} frameWork
+     * @param {{name: string, type: string, language: string}} parent
      * @param {string} path 
      * @param {string[]} [pathsNeedingBinding]
      * @param {string[]} [filesNeedingBinding]
      */
-    constructor(language, name, description, type, dependencies, path, pathsNeedingBinding, filesNeedingBinding) {
+    constructor(language, name, description, type, dependencies, target, frameWork, parent, path, pathsNeedingBinding, filesNeedingBinding) {
         this.#language = language;
         this.#name = name;
         this.#description = description;
         this.#type = type;
         this.#dependencies = dependencies;
+        this.#target = target;
+        this.#frameWork = frameWork;
+        this.#parent = parent;
         this.#path = path;
         this.#pathsNeedingBinding = pathsNeedingBinding || [];
         this.#filesNeedingBinding = filesNeedingBinding || [];
@@ -75,6 +80,24 @@ export class BoilerPlate {
      * @returns {Dependency[]}
      */
     get dependencies() { return this.#dependencies; }
+
+    /**
+     * Get the target of {BoilerPlate}.
+     * @returns {string} Type of {BoilerPlate}
+     */
+    get target() { return this.#target; }
+
+    /**
+     * Get the framework of {BoilerPlate}
+     * @returns {string} Type of {BoilerPlate}
+     */
+    get frameWork() { return this.#frameWork; }
+
+    /**
+     * Get the parent boilerplate that this is an adornment boilerplate of
+     * @returns {string} Type of {BoilerPlate}
+     */
+    get parent() { return this.#parent; }
     /**
      * Get the file path of the {BoilerPlate} configuration file
      * @returns {string}
@@ -103,6 +126,15 @@ export class BoilerPlate {
     get contentDirectory() {
         return this.#contentDirectory;
     }
+    /**
+     * Whether or not this boilerplate is the boilerplate of an interaction layer
+     *
+     * @returns {boolean} 
+     * @memberof BoilerPlate
+     */
+    isInteractionLayer() {
+        return this.#type === 'interaction';
+    }   
 
     /**
      * Check if this is equal to boilerPlate
