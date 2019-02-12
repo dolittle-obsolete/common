@@ -191,6 +191,22 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
     }
 
     /**
+     * Gets the adornment boilerplates that has a parent with the given fields
+     *
+     * @param {string} parentType
+     * @param {string} [parentLanguage=undefined]
+     * @param {string} [parentName=undefined]
+     * @returns {BoilerPlate[]}
+     * @memberof BoilerPlatesManager
+     */
+    getAdornments(parentType, parentLanguage = undefined, parentName = undefined) {
+        let boilerplates = this.boilerplates.filter(boilerplate => boilerplate.parent && boilerplate.parent.type === parentType);
+        if (parentLanguage) boilerplates = boilerplates.filter(boilerplate => boilerplate.parent && boilerplate.parent.language === parentLanguage);
+        if (parentName) boilerplates = boilerplates.filter(boilerplate => boilerplate.parent && boilerplate.parent.name === parentName);
+        
+        return boilerplates;
+    }
+    /**
      * Loads all boilerplates and sets the boilerPlates property
      */
     loadBoilerplates() {
@@ -327,7 +343,7 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
             boilerPlateObject.filesNeedingBinding
         );
     }
-    
+
     #warnIfUsingOldSystem() {
         const filePath = path.join(this.#configManager.centralFolderLocation, 'boiler-plates.json');
         if (this.#fileSystem.existsSync(filePath)) {
