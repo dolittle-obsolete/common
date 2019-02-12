@@ -19,7 +19,6 @@ import { artifactTemplateFromJson, ArtifactTemplate } from "../ArtifactTemplate"
     it('should have the correct type', () => result.type.should.equal(context.artifact_template_json.type));
     it('should have the correct area', () => result.area.should.equal(context.artifact_template_json.area));
     it('should have the correct description', () => result.description.should.equal(context.artifact_template_json.description));
-    it('should have the correct language', () => result.boilerplate.language.should.equal(context.boilerplate.language));
     it('should have the correct includedFiles', () => result.includedFiles.should.equal(context.included_files));
     it('should have the correct dependencies', () => result.dependencies.should.deep.equal([]));
  });
