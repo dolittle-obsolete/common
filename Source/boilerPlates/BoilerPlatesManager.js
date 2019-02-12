@@ -210,6 +210,9 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
      * Loads all boilerplates and sets the boilerPlates property
      */
     loadBoilerplates() {
+        if (! this.fileSystem.existsSync(this.boilerPlatesConfigurationLocation)) {
+            throw new Error(`Could not find local boilerplates configuration at path ${this.boilerPlatesConfigurationLocation}. This means that tooling hasn't been initialized.`);
+        }
         this.#boilerPlates = [];
         let boilerPlatesConfig = this.fileSystem.readJsonSync(this.boilerPlatesConfigurationLocation);
         Object.keys(boilerPlatesConfig).forEach(key => {

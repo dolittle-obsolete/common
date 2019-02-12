@@ -81,11 +81,11 @@ export class BoundedContextsManager {
     boilerPlateByLanguage(language) {
         let boilerPlates = this.#boilerPlatesManager.boilerPlatesByLanguageAndType(language, boundedContextBoilerplateType);
         if (boilerPlates === null || boilerPlates.length === 0) {
-            this.#logger.error(`Could not find a boilerplate.json configuration for language: ${language} and type: ${boundedContextBoilerplateType}`);
+            this.#logger.error(`Could not find a boilerplate configuration for language: ${language} and type: ${boundedContextBoilerplateType}`);
             return null;
         }
         if (boilerPlates.length > 1) {
-            this.#logger.error(`Found more than one boilerplate.json configuration for language: ${language} and type: ${boundedContextBoilerplateType}`);
+            this.#logger.error(`Found more than one boilerplate configuration for language: ${language} and type: ${boundedContextBoilerplateType}`);
             return null;
         }
         return boilerPlates[0];

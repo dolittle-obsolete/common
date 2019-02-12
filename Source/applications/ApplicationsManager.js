@@ -75,11 +75,11 @@ export class ApplicationsManager {
     boilerPlateByLanguage(language) {
         let boilerPlates = this.#boilerPlatesManager.boilerPlatesByLanguageAndType(language, applicationBoilerplateType);
         if (boilerPlates === null || boilerPlates.length === 0) {
-            this.#logger.error(`Could not find a boilerplate.json configuration for language: ${language} and type: ${applicationBoilerplateType}`);
+            this.#logger.error(`Could not find a boilerplate for language: ${language} and type: ${applicationBoilerplateType}`);
             return null;
         }
         if (boilerPlates.length > 1) {
-            this.#logger.error(`Found more than one boilerplate.json configuration for language: ${language} and type: ${applicationBoilerplateType}`);
+            this.#logger.error(`Found more than one boilerplates for language: ${language} and type: ${applicationBoilerplateType}`);
             return null;
         }
         return boilerPlates[0];

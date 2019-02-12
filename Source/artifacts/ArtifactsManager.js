@@ -63,11 +63,11 @@ export class ArtifactsManager {
     boilerPlateByLanguage(language) {
         let boilerPlates = this.#boilerPlatesManager.boilerPlatesByLanguageAndType(language, artifactsBoilerplateType);
         if (boilerPlates === null || boilerPlates.length === 0) {
-            this.#logger.error(`Could not find a boilerplate.json configuration for language: ${language} and type: ${artifactsBoilerplateType}`);
+            this.#logger.error(`Could not find a boilerplate for language: ${language} and type: ${artifactsBoilerplateType}`);
             return null;
         }
         if (boilerPlates.length > 1) {
-            this.#logger.error(`Found more than one boilerplate.json configuration for language: ${language} and type: ${artifactsBoilerplateType}`);
+            this.#logger.error(`Found more than one boilerplate configuration for language: ${language} and type: ${artifactsBoilerplateType}`);
             return null;
         }
         return boilerPlates[0];
