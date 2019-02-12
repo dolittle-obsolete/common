@@ -191,7 +191,6 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
         let boilerPlatesConfig = this.fileSystem.readJsonSync(this.boilerPlatesConfigurationLocation);
         Object.keys(boilerPlatesConfig).forEach(key => {
             let folderPath = path.resolve(boilerPlatesConfig[key]);
-            console.log(key, ' ', boilerPlatesConfig[key]);
             this.#boilerPlates.concat(this.readBoilerplatesFromFolder(folderPath));
         });
     }
@@ -324,7 +323,6 @@ Please delete the file ${filePath} and all the boilerplates in ${this.boilerPlat
         boilerPlateObject.pathsNeedingBinding = pathsNeedingBinding;
         boilerPlateObject.filesNeedingBinding = filesNeedingBinding;
         
-        console.log(boilerPlateObject);
         return new BoilerPlate(
             boilerPlateObject.language || 'any',
             boilerPlateObject.name,
@@ -333,6 +331,9 @@ Please delete the file ${filePath} and all the boilerplates in ${this.boilerPlat
             boilerPlateObject.dependencies !== undefined? 
                 Object.keys(boilerPlateObject.dependencies).map(key => dependencyFromJson(boilerPlateObject.dependencies[key], key))
                 : [],
+            boilerPlateObject.target,
+            boilerPlateObject.frameWork,
+            boilerPlateObject.parent,
             boilerPlateObject.path,
             boilerPlateObject.pathsNeedingBinding ,
             boilerPlateObject.filesNeedingBinding
