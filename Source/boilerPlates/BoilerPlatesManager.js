@@ -100,6 +100,14 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
         return this.#boilerPlates;
     }
     /**
+     * Gets whether or not there are boiler plates installed
+     * @returns {boolean} True if there are, false if not
+     */
+    get hasBoilerPlates() {
+        return this.#boilerPlates && this.#boilerPlates.length > 0;
+    }
+
+    /**
      * Gets the filesystem
      * @returns {import('fs-extra')}
      */
@@ -190,26 +198,8 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
         let boilerPlatesConfig = this.fileSystem.readJsonSync(this.boilerPlatesConfigurationLocation);
         Object.keys(boilerPlatesConfig).forEach(key => {
             let folderPath = path.resolve(boilerPlatesConfig[key]);
-            this.#boilerPlates.concat(this.readBoilerplatesFromFolder(folderPath));
+            this.#boilerPlates.concat(this.#readBoilerplatesFromFolder(folderPath));
         });
-    }
-    
-    /**
-     * Reads the contents of a folder and discovers boilerplates. Returns a list of boilerplates
-     *
-     * @param {string} folder The folder to search for boilerplates
-     * @returns {BoilerPlate[]} A list of boilerplates
-     * @memberof BoilerPlatesManager
-     */
-    readBoilerplatesFromFolder(folder) {
-        let boilerPlates = [];
-        let boilerPlatesPaths = this.#folders.searchRecursive(folder, 'boilerplate.json');
-        
-        boilerPlatesPaths.forEach(boilerPlatePath => {
-            let boilerPlateObject = JSON.parse(this.#fileSystem.readFileSync(boilerPlatePath, 'utf8'));
-            boilerPlates.push(this.#parseBoilerPlate(boilerPlateObject, boilerPlatePath));
-        });
-        return boilerPlates;
     }
 
     /**
@@ -262,24 +252,23 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
     }
     
     /**
-     * Gets whether or not there are boiler plates installed
-     * @returns {boolean} True if there are, false if not
+     * Reads the contents of a folder and discovers boilerplates. Returns a list of boilerplates
+     *
+     * @param {string} folder The folder to search for boilerplates
+     * @returns {BoilerPlate[]} A list of boilerplates
+     * @memberof BoilerPlatesManager
      */
-    get hasBoilerPlates() {
-        return this.#boilerPlates && this.#boilerPlates.length > 0;
+    #readBoilerplatesFromFolder(folder) {
+        let boilerPlates = [];
+        let boilerPlatesPaths = this.#folders.searchRecursive(folder, 'boilerplate.json');
+        
+        boilerPlatesPaths.forEach(boilerPlatePath => {
+            let boilerPlateObject = JSON.parse(this.#fileSystem.readFileSync(boilerPlatePath, 'utf8'));
+            boilerPlates.push(this.#parseBoilerPlate(boilerPlateObject, boilerPlatePath));
+        });
+        return boilerPlates;
     }
 
-    #warnIfUsingOldSystem() {
-        const filePath = path.join(this.#configManager.centralFolderLocation, 'boiler-plates.json');
-        if (this.#fileSystem.existsSync(filePath)) {
-            throw new Error(
-`I see that there has been a long time since you've updated the dolittle tooling.
-
-Please delete the file ${filePath} and all the boilerplates in ${this.boilerPlatesConfigurationLocation} that is not your own custom boilerplate.
-`
-            );
-        }
-    }
     /**
      * Parses a boilerplate read from a boilerplate package correctly
      * 
@@ -337,5 +326,17 @@ Please delete the file ${filePath} and all the boilerplates in ${this.boilerPlat
             boilerPlateObject.pathsNeedingBinding ,
             boilerPlateObject.filesNeedingBinding
         );
+    }
+    
+    #warnIfUsingOldSystem() {
+        const filePath = path.join(this.#configManager.centralFolderLocation, 'boiler-plates.json');
+        if (this.#fileSystem.existsSync(filePath)) {
+            throw new Error(
+`I see that there has been a long time since you've updated the dolittle tooling.
+
+Please delete the file ${filePath} and all the boilerplates in ${this.boilerPlatesConfigurationLocation} that is not your own custom boilerplate.
+`
+            );
+        }
     }
 }
