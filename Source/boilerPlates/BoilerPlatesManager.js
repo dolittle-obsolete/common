@@ -217,7 +217,7 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
         let boilerPlatesConfig = this.fileSystem.readJsonSync(this.boilerPlatesConfigurationLocation);
         Object.keys(boilerPlatesConfig).forEach(key => {
             let folderPath = path.resolve(boilerPlatesConfig[key]);
-            this.#boilerPlates.concat(this.#readBoilerplatesFromFolder(folderPath));
+            this.#boilerPlates.push(...this.#readBoilerplatesFromFolder(folderPath));
         });
     }
 
