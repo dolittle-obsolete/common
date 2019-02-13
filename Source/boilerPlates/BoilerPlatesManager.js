@@ -30,7 +30,7 @@ const binaryFiles = [
  * Represents the manager of boiler plates
  */
 export class BoilerPlatesManager {
-    hasDiscovered = false;
+    needsReload = true;
     #boilerPlates;
     #configManager;
     #httpWrapper;
@@ -96,7 +96,7 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
      * @returns {BoilerPlate[]} Available boiler plates
      */
     get boilerPlates() {
-        if (!this.#boilerPlates) this.loadBoilerplates();
+        if (!this.#boilerPlates || this.needsReload) this.loadBoilerplates();
         return this.#boilerPlates;
     }
     /**
@@ -134,10 +134,10 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
         let boilerplatesConfig = this.fileSystem.readJsonSync(this.boilerPlatesConfigurationLocation);
         this.installedBoilerplatePaths.forEach(folderPath => {
             let packageJson = this.fileSystem.readJsonSync(path.join(folderPath, 'package.json'));
+            if (!boilerplatesConfig[packageJson.name] || boilerplatesConfig[packageJson] !== folderPath) this.needsReload = true;
             boilerplatesConfig[packageJson.name] = folderPath;
         });
         this.fileSystem.writeJsonSync(this.boilerPlatesConfigurationLocation, boilerplatesConfig, {encoding: 'utf8', spaces: 4});
-        this.hasDiscovered = true;
     }
     /**
      * Discovers boilerplates packages on npm. 
@@ -219,6 +219,7 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
             let folderPath = path.resolve(boilerPlatesConfig[key]);
             this.#boilerPlates.push(...this.#readBoilerplatesFromFolder(folderPath));
         });
+        this.needsReload = false;
     }
 
     /**
