@@ -11,7 +11,7 @@ import { HttpWrapper } from '../HttpWrapper';
 import { Folders } from '../Folders';
 import { ConfigManager } from '../configuration/ConfigManager';
 import { ArtifactTemplate } from '../artifacts/ArtifactTemplate';
-import boilerplatesDiscoverer from '@dolittle/boilerplates-discoverer';
+const boilerplatesDiscoverer = require('@dolittle/boilerplates-discoverer');
 
 const boilerplatesFolder = 'boilerplates';
 const boilerPlateConfigurationName = 'boilerplates.json';
@@ -161,7 +161,30 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
         let boilerplatePackages = await boilerplatesDiscoverer.dolittle();
         return boilerplatePackages;
     }
-
+    /**
+     * Gets boilerplate packages from npm 
+     *
+     * @memberof BoilerPlatesManager
+     */
+    async getOnlineBoilerplates(...packageNames) {
+        let packages = [];
+        for (let name of packageNames) {
+            packages.push(await boilerplatesDiscoverer.boilerplatePackage(name));
+        }
+        return packages;
+    }
+    
+    /**
+     * Gets the latest versions of boilerplate packages from npm
+     *
+     * @param {string[]} packageNames
+     * @returns {string[]} The latest version of each boilerplate 
+     * @memberof BoilerPlatesManager
+     */
+    async getLatestBoilerplateVersion(...packageNames) {
+        let packages = await this.getOnlineBoilerplates(...packageNames);
+        return packages.map(pkg => pkg.version);
+    }
     /**
      * Get all available boiler plates for a specific language
      * @param {string} language
