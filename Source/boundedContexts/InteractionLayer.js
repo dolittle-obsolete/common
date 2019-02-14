@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 export function interactionLayerFromJson(obj) {
-    return new Core(obj.language, obj.entryPoint);
+    return new InteractionLayer(obj.type, obj.language, obj.framework, obj.entryPoint);
 }
 /**
   * Represents one of the Bounded Context's interaction layers

@@ -11,6 +11,7 @@ import path from 'path';
 import { groupBy } from '../helpers';
 import { coreFromJson } from './Core';
 import { InteractionLayer } from './InteractionLayer';
+import { resourcesFromJson } from './Resources';
 
 export const boundedContextBoilerplateType = 'boundedContext';
 export const boundedContextFileName = 'bounded-context.json';
@@ -96,9 +97,8 @@ export class BoundedContextsManager {
                 'userInput',
                 undefined,
                 'chooseOne',
-                interactionLayers.map(_ => _.name),
-                `Choose ${target} interaction layer`,
-                'None'
+                interactionLayers.map(_ => _.name).concat('None'),
+                `Choose ${target} interaction layer`
             ));
     }
     /**
@@ -159,7 +159,7 @@ export class BoundedContextsManager {
             });
         }
         let boundedContext = new BoundedContext(boundedContextJson.application, boundedContextJson.boundedContext, boundedContextJson.boundedContextName, 
-            coreFromJson(boundedContextJson.core), interactionLayers, boundedContextPath);
+            resourcesFromJson(boundedContextJson.resources), coreFromJson(boundedContextJson.core), interactionLayers, boundedContextPath);
         this.#fileSystem.writeJsonSync(boundedContextConfigPath, boundedContext.toJson(), {spaces: 4, });
         return true;
     }
