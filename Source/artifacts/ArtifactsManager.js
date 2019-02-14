@@ -126,6 +126,6 @@ export class ArtifactsManager {
     }
 
     #getIncludedFiles(folderPath) {
-        return this.#folders.searchFolderRegex(folderPath, /.*/).map(filePath => getFileNameAndExtension(filePath)).filter(file => file === 'template.json');
+        return this.#folders.searchFolderRegex(folderPath, /.*/).map(filePath => getFileNameAndExtension(filePath)).filter(file => file !== 'template.json');
     }
 }

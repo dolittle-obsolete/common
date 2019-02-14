@@ -5,6 +5,7 @@
 import { dependencyFromJson, Dependency } from '../dependencies/Dependency';
 import { areas, getFileDirPath } from '../helpers';
 import _path from 'path';
+import { BoilerPlate } from '../boilerPlates/BoilerPlate';
 /**
  * Creates an {ArtifactTemplate} from json object
  *
@@ -14,8 +15,8 @@ import _path from 'path';
  * @param {string[]} path The files that needs to be created by the template
  * @returns The created {ArtifactTemplate}
  */
-export function artifactTemplateFromJson(obj, path, includedFiles) {
-    return new ArtifactTemplate(obj.name, obj.type, obj.area, obj.description,
+export function artifactTemplateFromJson(obj, path, includedFiles, boilerplate) { 
+    return new ArtifactTemplate(boilerplate, obj.name, obj.type, obj.area, obj.description,
         obj.dependencies !== undefined? 
             Object.keys(obj.dependencies).map(key => dependencyFromJson(obj.dependencies[key], key))
             : [], includedFiles, path);
@@ -31,6 +32,7 @@ function throwIfInvalidArea(area) {
   */
 export class ArtifactTemplate
 {
+    #boilerplate;
     #name;
     #type;
     #area;
@@ -40,6 +42,7 @@ export class ArtifactTemplate
     #path;
     /**
      *Creates an instance of ArtifactTemplate.
+     * @param {BoilerPlate} boilerplate
      * @param {string} name
      * @param {string} type
      * @param {string} area
@@ -49,7 +52,8 @@ export class ArtifactTemplate
      * @param {string} path
      * @memberof ArtifactTemplate
      */
-    constructor (name, type, area, description, dependencies, includedFiles, path) {
+    constructor (boilerplate, name, type, area, description, dependencies, includedFiles, path) {
+        this.#boilerplate = boilerplate;
         this.#name = name;
         this.#type = type;
         this.#area = area;
@@ -59,6 +63,9 @@ export class ArtifactTemplate
         this.#path = path;
 
         throwIfInvalidArea(area);
+    }
+    get boilerplate() {
+        return this.#boilerplate;
     }
     /**
      * Gets the name of the artifact template
