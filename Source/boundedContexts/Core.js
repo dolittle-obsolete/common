@@ -41,9 +41,9 @@ export class Core
     }
 
     toJson() {
-        return JSON.stringify({
+        return {
             language: this.#language,
             entryPoint: this.#entryPoint
-        });
+        };
     }
 }

@@ -224,9 +224,14 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
      */
     getAdornments(parentType, parentLanguage = undefined, parentName = undefined) {
         let boilerplates = this.boilerPlates.filter(boilerplate => boilerplate.parent && boilerplate.parent.type === parentType);
-        if (parentLanguage) boilerplates = boilerplates.filter(boilerplate => boilerplate.parent && boilerplate.parent.language === parentLanguage);
-        if (parentName) boilerplates = boilerplates.filter(boilerplate => boilerplate.parent && boilerplate.parent.name === parentName);
-        
+        if (parentLanguage) boilerplates = boilerplates.filter(boilerplate => {
+                if (boilerplate.parent.language) return boilerplate.parent.language === parentLanguage;
+                return true;
+            });
+        if (parentName) boilerplates = boilerplates.filter(boilerplate => {
+            if (boilerplate.parent.name) return boilerplate.parent.name === parentName;
+            return true;
+        });
         return boilerplates;
     }
     /**

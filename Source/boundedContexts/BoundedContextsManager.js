@@ -6,9 +6,11 @@ import { Dependency } from '../dependencies/Dependency';
 import { BoilerPlate } from '../boilerPlates/BoilerPlate';
 import { BoilerPlatesManager } from '../boilerPlates/BoilerPlatesManager';
 import { Folders } from '../Folders';
-import { boundedContextFromJson } from './BoundedContext';
+import { boundedContextFromJson, BoundedContext } from './BoundedContext';
 import path from 'path';
 import { groupBy } from '../helpers';
+import { coreFromJson } from './Core';
+import { InteractionLayer } from './InteractionLayer';
 
 export const boundedContextBoilerplateType = 'boundedContext';
 export const boundedContextFileName = 'bounded-context.json';
@@ -23,6 +25,8 @@ export class BoundedContextsManager {
     #folders;
     #fileSystem;
     #logger;
+
+    #boundedContexts;
     /**
      *Creates an instance of BoundedContextsManager.
      * @param {BoilerPlatesManager} boilerPlatesManager
@@ -36,6 +40,7 @@ export class BoundedContextsManager {
         this.#folders = folders;
         this.#fileSystem = fileSystem;
         this.#logger = logger;
+        this.#boundedContexts = [];
     }
 
     /**
@@ -82,7 +87,8 @@ export class BoundedContextsManager {
      * @memberof BoundedContextsManager
      */
     createInteractionDependencies(language = undefined, boilerplateName = undefined) {
-        let interactionLayerTypes = groupBy('target')(this.getInteractionLayers(language, boilerplateName));
+        let interactionLayers = this.getInteractionLayers(language, boilerplateName);
+        let interactionLayerTypes = groupBy('target')(interactionLayers);
         return Object.keys(interactionLayerTypes)
             .map(target => new Dependency(
                 `Choose ${target} interaction layer`,
@@ -136,6 +142,25 @@ export class BoundedContextsManager {
         const boundedContextPath = path.join(destinationPath, context.name);
         
         this.#boilerPlatesManager.createInstance(boilerPlate, boundedContextPath, context);
+        const boundedContextConfigPath = path.join(boundedContextPath, boundedContextFileName);
+        let boundedContextJson = this.#fileSystem.readJsonSync(boundedContextConfigPath);
+        let interactionLayers = [];
+        if (Object.keys(context).filter(_ => _.startsWith('interaction')).length > 0) {
+            let interactionLayerNames = Object.keys(context).filter(_ => _.startsWith('interaction')).map(prop => context[prop]);
+            let interactionLayerBoilerplates = this.getInteractionLayers(language, boilerPlate.name);
+            interactionLayerBoilerplates = interactionLayerBoilerplates.filter(boilerplate => interactionLayerNames.includes(boilerplate.name));
+            interactionLayerBoilerplates.forEach(boilerplate => {
+                let entryPoint = `${boilerplate.target[0].toUpperCase()}${boilerplate.target.slice(1)}`;
+                interactionLayers.push(
+                    new InteractionLayer(boilerplate.type, boilerplate.language, boilerplate.language, 
+                    entryPoint)
+                );
+                this.#boilerPlatesManager.createInstance(boilerplate, boundedContextPath, context);
+            });
+        }
+        let boundedContext = new BoundedContext(boundedContextJson.application, boundedContextJson.boundedContext, boundedContextJson.boundedContextName, 
+            coreFromJson(boundedContextJson.core), interactionLayers, boundedContextPath);
+        this.#fileSystem.writeJsonSync(boundedContextConfigPath, boundedContext.toJson(), {spaces: 4, });
         return true;
     }
     

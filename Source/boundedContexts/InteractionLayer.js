@@ -66,11 +66,11 @@ export class InteractionLayer
 
 
     toJson() {
-        return JSON.stringify({
+        return {
             type: this.#type,
             language: this.#language,
             framework: this.#framework,
             entryPoint: this.#entryPoint
-        });
+        };
     }
 }

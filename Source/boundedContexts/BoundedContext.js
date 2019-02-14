@@ -85,12 +85,12 @@ export class BoundedContext
     }
 
     toJson() {
-        return JSON.stringify({
+        return {
             application: this.#application,
             boundedContext: this.#boundedContext,
             boundedContextName: this.#boundedContextName,
             core: this.#core? this.#core.toJson() : undefined,
             interaction: this.#interactionLayers.map(interaction => interaction.toJson())
-        });
+        };
     }
 }
