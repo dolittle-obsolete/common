@@ -96,7 +96,15 @@ export class BoundedContext
     get path() {
         return this.#path;
     }
-
+    /**
+     * Adds an interaction layer 
+     *
+     * @param {InteractionLayer} interactionLayer
+     * @memberof BoundedContext
+     */
+    addInteractionLayer(interactionLayer) {
+        this.#interactionLayers.push(interactionLayer);
+    }
     toJson() {
         return {
             application: this.#application,

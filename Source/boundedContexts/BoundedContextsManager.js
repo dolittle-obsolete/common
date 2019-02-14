@@ -163,5 +163,13 @@ export class BoundedContextsManager {
         this.#fileSystem.writeJsonSync(boundedContextConfigPath, boundedContext.toJson(), {spaces: 4, });
         return true;
     }
+
+    addInteractionLayer(context, boilerplate, boundedContextFolder, entryPoint) {
+        let boundedContext = this.getNearestBoundedContextConfig(boundedContextFolder);
+        if (!boundedContext) throw new Error('Could not discover the bounded context');
+        this.#boilerPlatesManager.createInstance(boilerplate, path.join(boundedContext, entryPoint), context);
+        boundedContext.addInteractionLayer(new InteractionLayer(boilerplate.type, boilerplate.language, boilerplate.framework, entryPoint));
+        this.#fileSystem.writeJsonSync(boundedContextConfigPath, boundedContext.toJson(), {spaces: 4, });
+    }
     
 }
