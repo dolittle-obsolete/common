@@ -38,7 +38,7 @@
     "@dolittle/build": "~6.2.1"
   },
   "dependencies": {
-    "@dolittle/boilerplates-discoverer": "^1.0.3",
+    "@dolittle/boilerplates-discoverer": "^1.1.0",
     "ajv": "^6.9.1",
     "fs-extra": "^7.0.0",
     "handlebars": "^4.0.12",
