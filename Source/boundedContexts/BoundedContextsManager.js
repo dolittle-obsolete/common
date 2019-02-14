@@ -152,10 +152,10 @@ export class BoundedContextsManager {
             interactionLayerBoilerplates.forEach(boilerplate => {
                 let entryPoint = `${boilerplate.target[0].toUpperCase()}${boilerplate.target.slice(1)}`;
                 interactionLayers.push(
-                    new InteractionLayer(boilerplate.type, boilerplate.language, boilerplate.language, 
+                    new InteractionLayer(boilerplate.type, boilerplate.language, boilerplate.framework, 
                     entryPoint)
                 );
-                this.#boilerPlatesManager.createInstance(boilerplate, boundedContextPath, context);
+                this.#boilerPlatesManager.createInstance(boilerplate, path.join(boundedContextPath, entryPoint), context);
             });
         }
         let boundedContext = new BoundedContext(boundedContextJson.application, boundedContextJson.boundedContext, boundedContextJson.boundedContextName, 
