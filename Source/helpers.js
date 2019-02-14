@@ -4,6 +4,16 @@
  *--------------------------------------------------------------------------------------------*/
 
 /**
+ * Stolen from https://gist.github.com/JamieMason/0566f8412af9fe6a1d470aa1e089a752
+ * Returns a function that returns a function that groups an array of object by a property name, key 
+ */
+export const groupBy = key => array =>
+    array.reduce((objectsByKeyValue, obj) => {
+        const value = obj[key];
+        objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
+        return objectsByKeyValue;
+    }, {});
+/**
  * Gets the full directory path
  * @param {string} filePath
  * @returns {string} directory path

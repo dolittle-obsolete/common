@@ -8,6 +8,7 @@ import { BoilerPlatesManager } from '../boilerPlates/BoilerPlatesManager';
 import { Folders } from '../Folders';
 import { boundedContextFromJson } from './BoundedContext';
 import path from 'path';
+import { groupBy } from '../helpers';
 
 export const boundedContextBoilerplateType = 'boundedContext';
 export const boundedContextFileName = 'bounded-context.json';
@@ -72,6 +73,37 @@ export class BoundedContextsManager {
     getDependencies(language) {
         let boilerplate = this.boilerPlateByLanguage(language);
         return boilerplate? boilerplate.dependencies : [];
+    }
+    /**
+     * Create interaction layer dependencies used for prompting the user for interaction layers
+     *
+     * @param {string} [language=undefined] The language of the bounded context boilerplate
+     * @param {string} [boilerplateName=undefined] The name of the boilerplate
+     * @memberof BoundedContextsManager
+     */
+    createInteractionDependencies(language = undefined, boilerplateName = undefined) {
+        let interactionLayerTypes = groupBy('target')(this.getInteractionLayers(language, boilerplateName));
+        return Object.keys(interactionLayerTypes)
+            .map(target => new Dependency(
+                `Choose ${target} interaction layer`,
+                `interaction${target}`,
+                'userInput',
+                undefined,
+                'chooseOne',
+                interactionLayers.map(_ => _.name),
+                `Choose ${target} interaction layer`,
+                'None'
+            ));
+    }
+    /**
+     * Gets the interaction adornment boilerplates for a bounded context based on language and boilerplate name
+     *
+     * @param {string} [language=undefined] The language of the bounded context boilerplate
+     * @param {string} [boilerplateName=undefined] The name of the boilerplate
+     * @memberof BoundedContextsManager
+     */
+    getInteractionLayers(language = undefined, boilerplateName = undefined) {
+        return this.#boilerPlatesManager.getAdornments(boundedContextBoilerplateType, language, boilerplateName).filter(_ => _.type === 'interaction');
     }
     /**
      * Retrieves the boilerplate.json configuration for bounded context with the given language
