@@ -49,9 +49,11 @@ export class ArtifactsManager {
     getDependencies(artifactType, language) {
         let dependencies = [];
         let boilerplate = this.boilerPlateByLanguage(language);
-        dependencies.push(...boilerplate? boilerplate.dependencies : []);
+        if (!boilerplate) throw new Error(`Could not find boilerplate with type ${artifactsBoilerplateType} and language ${language}`);
+        dependencies.push(...boilerplate.dependencies);
         let template = this.templateByBoilerplate(boilerplate, artifactType);
-        dependencies.push(...template? template.dependencies : []);
+        if (!template) throw new Error(`Could not find template with type ${artifactType}`);
+        dependencies.push(...template.dependencies);
 
         return dependencies;
     }
@@ -63,11 +65,9 @@ export class ArtifactsManager {
     boilerPlateByLanguage(language) {
         let boilerPlates = this.#boilerPlatesManager.boilerPlatesByLanguageAndType(language, artifactsBoilerplateType);
         if (boilerPlates === null || boilerPlates.length === 0) {
-            this.#logger.error(`Could not find a boilerplate for language: ${language} and type: ${artifactsBoilerplateType}`);
             return null;
         }
         if (boilerPlates.length > 1) {
-            this.#logger.error(`Found more than one boilerplate configuration for language: ${language} and type: ${artifactsBoilerplateType}`);
             return null;
         }
         return boilerPlates[0];

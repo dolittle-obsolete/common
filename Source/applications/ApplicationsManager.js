@@ -41,8 +41,7 @@ export class ApplicationsManager {
      * @param {Application | null} application config or null if not found
      */
     getApplicationFrom(folder) {
-        if (! this.hasApplication(folder)) 
-            return null;
+        if (! this.hasApplication(folder)) return null;
         const filePath = path.join(folder, applicationFilename);
         return applicationFromJson(JSON.parse(this.#fileSystem.readFileSync(filePath, 'utf8')), filePath);
     }
@@ -65,7 +64,8 @@ export class ApplicationsManager {
      */
     getDependencies(language) {
         let boilerplate = this.boilerPlateByLanguage(language);
-        return boilerplate? boilerplate.dependencies : [];
+        if (!boilerplate) throw new Error(`Could not find boilerplate with type ${applicationBoilerplateType} and language ${language}`);
+        return boilerplate.dependencies;
     }
     /**
      * Retrieves the boilerplate.json configuration for application with the given language
@@ -75,11 +75,9 @@ export class ApplicationsManager {
     boilerPlateByLanguage(language) {
         let boilerPlates = this.#boilerPlatesManager.boilerPlatesByLanguageAndType(language, applicationBoilerplateType);
         if (boilerPlates === null || boilerPlates.length === 0) {
-            this.#logger.error(`Could not find a boilerplate for language: ${language} and type: ${applicationBoilerplateType}`);
             return null;
         }
         if (boilerPlates.length > 1) {
-            this.#logger.error(`Found more than one boilerplates for language: ${language} and type: ${applicationBoilerplateType}`);
             return null;
         }
         return boilerPlates[0];
@@ -93,9 +91,7 @@ export class ApplicationsManager {
      */
     createApplication(context, destinationPath) {
         let boilerPlate = this.#boilerPlatesManager.boilerPlatesByType(applicationBoilerplateType)[0];
-
         if (!boilerPlate) return false;
-
         this.#boilerPlatesManager.createInstance(boilerPlate, destinationPath, context);
         return true;
     }
