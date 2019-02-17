@@ -5,9 +5,9 @@
 
 import { getFileDirPath, getFileNameAndExtension } from "../helpers";
 import { artifactTemplateFromJson, ArtifactTemplate } from "./ArtifactTemplate";
-import { BoilerPlate } from "../boilerPlates/BoilerPlate";
+import { Boilerplate } from "../boilerplates/Boilerplate";
 import { Dependency } from "../dependencies/Dependency";
-import { BoilerPlatesManager } from "../boilerPlates/BoilerPlatesManager";
+import { BoilerplatesManager } from "../boilerplates/BoilerplatesManager";
 import { Folders } from "../Folders";
 
 export const artifactsBoilerplateType = 'artifacts';
@@ -19,21 +19,21 @@ export const artifactsBoilerplateType = 'artifacts';
  * @class ArtifactsManager
  */
 export class ArtifactsManager {
-    #boilerPlatesManager;
+    #boilerplatesManager;
     #folders;
     #fileSystem;
     #logger;
     
     /**
      * Creates an instance of ArtifactsManager.
-     * @param {BoilerPlatesManager} boilerPlatesManager
+     * @param {BoilerplatesManager} boilerplatesManager
      * @param {Folders} folders
      * @param {import('fs-extra')} fileSystem
      * @param {import('winston').Logger} logger
      * @memberof ArtifactsManager
      */
-    constructor(boilerPlatesManager, folders, fileSystem, logger) {
-        this.#boilerPlatesManager = boilerPlatesManager;
+    constructor(boilerplatesManager, folders, fileSystem, logger) {
+        this.#boilerplatesManager = boilerplatesManager;
         this.#folders = folders;
         this.#fileSystem = fileSystem;
         this.#logger = logger;
@@ -48,7 +48,7 @@ export class ArtifactsManager {
      */
     getDependencies(artifactType, language) {
         let dependencies = [];
-        let boilerplate = this.boilerPlateByLanguage(language);
+        let boilerplate = this.boilerplateByLanguage(language);
         if (!boilerplate) throw new Error(`Could not find boilerplate with type ${artifactsBoilerplateType} and language ${language}`);
         dependencies.push(...boilerplate.dependencies);
         let template = this.templateByBoilerplate(boilerplate, artifactType);
@@ -60,17 +60,17 @@ export class ArtifactsManager {
     /**
      * Retrieves the boilerplate.json configuration for artifacts with the given language
      * @param {string} language 
-     * @return {BoilerPlate | null} The Boilerplate with of the given language
+     * @return {Boilerplate | null} The Boilerplate with of the given language
      */
-    boilerPlateByLanguage(language) {
-        let boilerPlates = this.#boilerPlatesManager.boilerPlatesByLanguageAndType(language, artifactsBoilerplateType);
-        if (boilerPlates === null || boilerPlates.length === 0) {
+    boilerplateByLanguage(language) {
+        let boilerplates = this.#boilerplatesManager.boilerplatesByLanguageAndType(language, artifactsBoilerplateType);
+        if (boilerplates === null || boilerplates.length === 0) {
             return null;
         }
-        if (boilerPlates.length > 1) {
+        if (boilerplates.length > 1) {
             return null;
         }
-        return boilerPlates[0];
+        return boilerplates[0];
     }
     /**
      * Gets the artifact template based on the core language and the type of the artifact
@@ -81,31 +81,31 @@ export class ArtifactsManager {
      * @memberof ArtifactsManager
      */
     getArtifactTemplate(language, artifactType) {
-        let boilerPlate = this.boilerPlateByLanguage(language);
-        if (!boilerPlate) return null;
-        return this.templateByBoilerplate(boilerPlate, artifactType);
+        let boilerplate = this.boilerplateByLanguage(language);
+        if (!boilerplate) return null;
+        return this.templateByBoilerplate(boilerplate, artifactType);
     }
     /**
-     * Gets the artifact template based on the {BoilerPlate} and type of the artifact
-     * @param {BoilerPlate} boilerPlate 
+     * Gets the artifact template based on the {Boilerplate} and type of the artifact
+     * @param {Boilerplate} boilerplate 
      * @param {string} artifactType
      * @returns {ArtifactTemplate | null}
      */
-    templateByBoilerplate(boilerPlate, artifactType) {
-        let templateFiles = this.#folders.searchRecursive(boilerPlate.contentDirectory, 'template.json');
+    templateByBoilerplate(boilerplate, artifactType) {
+        let templateFiles = this.#folders.searchRecursive(boilerplate.contentDirectory, 'template.json');
         let templates = [];
         templateFiles.forEach(_ => {
             let includedFiles = this.#getIncludedFiles(getFileDirPath(_));
-            let template = artifactTemplateFromJson(JSON.parse(this.#fileSystem.readFileSync(_)), _, includedFiles, boilerPlate);
+            let template = artifactTemplateFromJson(JSON.parse(this.#fileSystem.readFileSync(_)), _, includedFiles, boilerplate);
             if (template.type === artifactType)
                 templates.push(template);
         });
         if (templates.length === 0) {
-            this.#logger.error(`Could not find any artifact templates with artifact type '${artifactType}' and language '${boilerPlate.language}'`);
+            this.#logger.error(`Could not find any artifact templates with artifact type '${artifactType}' and language '${boilerplate.language}'`);
             return null;
         }
         if (templates.length > 1) {
-            this.#logger.error(`Found multiple artifact templates with artifact type '${artifactType}' and language '${boilerPlate.language}'`);
+            this.#logger.error(`Found multiple artifact templates with artifact type '${artifactType}' and language '${boilerplate.language}'`);
             return null;
         }
         return templates[0];
@@ -121,7 +121,7 @@ export class ArtifactsManager {
      */
     createArtifact(context, language, artifactTemplate, destinationPath) {
         this.#logger.info(`Creating an artifact of type '${artifactTemplate.type}' and language '${language}'`);
-        this.#boilerPlatesManager.createArtifactInstance(artifactTemplate, destinationPath, context);
+        this.#boilerplatesManager.createArtifactInstance(artifactTemplate, destinationPath, context);
         return true;
     }
 

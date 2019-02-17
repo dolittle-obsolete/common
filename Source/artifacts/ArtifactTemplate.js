@@ -5,7 +5,7 @@
 import { dependencyFromJson, Dependency } from '../dependencies/Dependency';
 import { areas, getFileDirPath } from '../helpers';
 import _path from 'path';
-import { BoilerPlate } from '../boilerPlates/BoilerPlate';
+import { Boilerplate } from '../boilerplates/Boilerplate';
 /**
  * Creates an {ArtifactTemplate} from json object
  *
@@ -42,7 +42,7 @@ export class ArtifactTemplate
     #path;
     /**
      *Creates an instance of ArtifactTemplate.
-     * @param {BoilerPlate} boilerplate
+     * @param {Boilerplate} boilerplate
      * @param {string} name
      * @param {string} type
      * @param {string} area

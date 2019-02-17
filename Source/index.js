@@ -11,7 +11,7 @@ import Handlebars from 'handlebars';
 
 import { ApplicationsManager } from './applications/ApplicationsManager';
 import { ArtifactsManager } from './artifacts/ArtifactsManager';
-import { BoilerPlatesManager } from './boilerPlates/BoilerPlatesManager';
+import { BoilerplatesManager } from './boilerplates/BoilerplatesManager';
 import { BoundedContextsManager } from './boundedContexts/BoundedContextsManager';
 import { ConfigManager } from './configuration/ConfigManager';
 import { ConfigParser } from './configuration/ConfigParser';
@@ -41,8 +41,8 @@ export {Application} from './applications/Application';
 export {ApplicationsManager} from './applications/ApplicationsManager';
 export { ArtifactsManager } from './artifacts/ArtifactsManager';
 export {ArtifactTemplate} from './artifacts/ArtifactTemplate';
-export {BoilerPlate} from './boilerPlates/BoilerPlate';
-export {BoilerPlatesManager} from './boilerPlates/BoilerPlatesManager';
+export {Boilerplate as Boilerplate} from './boilerplates/Boilerplate';
+export {BoilerplatesManager as BoilerplatesManager} from './boilerplates/BoilerplatesManager';
 export {BoundedContext} from './boundedContexts/BoundedContext';
 export {BoundedContextsManager} from './boundedContexts/BoundedContextsManager';
 export {Core} from './boundedContexts/Core'
@@ -103,7 +103,7 @@ setupHandlebars();
 
 let isInitialized = false;
 
-let boilerPlatesManager;
+let boilerplatesManager;
 let applicationsManager;
 let artifactsManager;
 let boundedContextsManager;
@@ -115,14 +115,14 @@ let dependenciesManager;
 export function getManagers() {
     if (!isInitialized) {
         isInitialized = true;
-        boilerPlatesManager = new BoilerPlatesManager(configManager, httpWrapper, git, folders, filesystem, logger, Handlebars);
-        applicationsManager = new ApplicationsManager(boilerPlatesManager, filesystem, logger);
-        artifactsManager = new ArtifactsManager(boilerPlatesManager, folders, filesystem, logger);
-        boundedContextsManager = new BoundedContextsManager(boilerPlatesManager, folders, filesystem, logger);
+        boilerplatesManager = new BoilerplatesManager(configManager, httpWrapper, git, folders, filesystem, logger, Handlebars);
+        applicationsManager = new ApplicationsManager(boilerplatesManager, filesystem, logger);
+        artifactsManager = new ArtifactsManager(boilerplatesManager, folders, filesystem, logger);
+        boundedContextsManager = new BoundedContextsManager(boilerplatesManager, folders, filesystem, logger);
         dependenciesManager = new DependenciesManager(folders, filesystem, dolittleConfig, logger);
     }
     return {
-        boilerPlatesManager,
+        boilerplatesManager,
         applicationsManager,
         artifactsManager,
         boundedContextsManager,

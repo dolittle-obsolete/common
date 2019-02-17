@@ -4,17 +4,17 @@
  *--------------------------------------------------------------------------------------------*/
 
 import path from 'path';
-import { BoilerPlate } from './BoilerPlate';
+import { Boilerplate } from './Boilerplate';
 import { getFileNameAndExtension, getFileDirPath } from '../helpers';
 import { dependencyFromJson } from '../dependencies/Dependency';
 import { HttpWrapper } from '../HttpWrapper';
 import { Folders } from '../Folders';
 import { ConfigManager } from '../configuration/ConfigManager';
 import { ArtifactTemplate } from '../artifacts/ArtifactTemplate';
-const boilerplatesDiscoverer = require('@dolittle/boilerplates-discoverer');
 
+const boilerplatesDiscoverer = require('@dolittle/boilerplates-discoverer');
 const boilerplatesFolder = 'boilerplates';
-const boilerPlateConfigurationName = 'boilerplates.json';
+const boilerplateConfigurationName = 'boilerplates.json';
 
 const binaryFiles = [
     '.jpg',
@@ -29,9 +29,9 @@ const binaryFiles = [
 /**
  * Represents the manager of boiler plates
  */
-export class BoilerPlatesManager {
+export class BoilerplatesManager {
     needsReload = true;
-    #boilerPlates;
+    #boilerplates;
     #configManager;
     #httpWrapper;
     #folders;
@@ -41,7 +41,7 @@ export class BoilerPlatesManager {
     #handlebars;
 
     /**
-     * Initializes a new instance of {BoilerPlatesManager}
+     * Initializes a new instance of {BoilerplatesManager}
      * @param {ConfigManager} configManager 
      * @param {HttpWrapper} httpWrapper
      * @param {import('simple-git/src/git')} git
@@ -58,15 +58,15 @@ export class BoilerPlatesManager {
         this.#git = git;
         this.#handlebars = handlebars;
         this.#logger = logger;
-        this.#boilerPlates = undefined;
+        this.#boilerplates = undefined;
     }
 
     init() {
-        this.#folders.makeFolderIfNotExists(this.boilerPlatesFolderLocation);
-        if (! this.fileSystem.existsSync(this.boilerPlatesConfigurationLocation)) {
-            this.fileSystem.writeJsonSync(this.boilerPlatesConfigurationLocation, {}, {encoding: 'utf8', spaces: 4});
-            this.fileSystem.writeFileSync(path.join(this.boilerPlatesFolderLocation, 'readme.md'), 
-`${boilerPlateConfigurationName} is a map where the key is the package name, unique identifier, of a boilerplate and the value is the absolute or relative path to the boilerplate folder.
+        this.#folders.makeFolderIfNotExists(this.boilerplatesFolderLocation);
+        if (! this.fileSystem.existsSync(this.boilerplatesConfigurationLocation)) {
+            this.fileSystem.writeJsonSync(this.boilerplatesConfigurationLocation, {}, {encoding: 'utf8', spaces: 4});
+            this.fileSystem.writeFileSync(path.join(this.boilerplatesFolderLocation, 'readme.md'), 
+`${boilerplateConfigurationName} is a map where the key is the package name, unique identifier, of a boilerplate and the value is the absolute or relative path to the boilerplate folder.
 You can easily create custom boilerplates that aren't npm packages by creating a folder, create a boilerplate.json and a Content folder. 
 
 You can see examples of how boilerplates are made at https://github.com/dolittle-boilerplates/`);
@@ -78,33 +78,33 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
      * Gets path of the Dolittle boilerplates folder
      * @returns {string} Base path of boiler plates
      */
-    get boilerPlatesFolderLocation() {
+    get boilerplatesFolderLocation() {
         return path.join(this.#configManager.centralFolderLocation, boilerplatesFolder);
     }
     /**
      * Gets path of the Dolittle boilerplates configuration. This is a file containing both boilerplates that are not published and installed as packages and paths to Dolittle boilerplate folders
      *
      * @readonly
-     * @memberof BoilerPlatesManager
+     * @memberof BoilerplatesManager
      */
-    get boilerPlatesConfigurationLocation() {
-        return path.join(this.boilerPlatesFolderLocation, boilerPlateConfigurationName);
+    get boilerplatesConfigurationLocation() {
+        return path.join(this.boilerplatesFolderLocation, boilerplateConfigurationName);
     }
 
     /**
      * Get all available boiler plates
-     * @returns {BoilerPlate[]} Available boiler plates
+     * @returns {Boilerplate[]} Available boiler plates
      */
-    get boilerPlates() {
-        if (!this.#boilerPlates || this.needsReload) this.loadBoilerplates();
-        return this.#boilerPlates;
+    get boilerplates() {
+        if (!this.#boilerplates || this.needsReload) this.loadBoilerplates();
+        return this.#boilerplates;
     }
     /**
      * Gets whether or not there are boiler plates installed
      * @returns {boolean} True if there are, false if not
      */
-    get hasBoilerPlates() {
-        return this.#boilerPlates && this.#boilerPlates.length > 0;
+    get hasBoilerplates() {
+        return this.#boilerplates && this.#boilerplates.length > 0;
     }
 
     /**
@@ -118,7 +118,7 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
      * Gets the paths of the locally globally installed Dolittle boilerplates
      *
      * @readonly
-     * @memberof BoilerPlatesManager
+     * @memberof BoilerplatesManager
      * @returns {string[]} Filesystem paths of the Dolittle boilerplates installed on the system
      */
     get installedBoilerplatePaths() {
@@ -127,24 +127,24 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
     /**
      * Discovers the globally installed boilerplates and adds the path to the folder to the boilerplates configuration using the name of package as the key 
      *
-     * @memberof BoilerPlatesManager
+     * @memberof BoilerplatesManager
      */
     discoverInstalledBoilerplates() {
-        if (! this.fileSystem.existsSync(this.boilerPlatesConfigurationLocation)) throw new Error(`Could not find boilerplate configuration at ${this.boilerPlatesConfigurationLocation}. You have to initialize the boilerplates system first`);
-        let boilerplatesConfig = this.fileSystem.readJsonSync(this.boilerPlatesConfigurationLocation);
+        if (! this.fileSystem.existsSync(this.boilerplatesConfigurationLocation)) throw new Error(`Could not find boilerplate configuration at ${this.boilerplatesConfigurationLocation}. You have to initialize the boilerplates system first`);
+        let boilerplatesConfig = this.fileSystem.readJsonSync(this.boilerplatesConfigurationLocation);
         this.installedBoilerplatePaths.forEach(folderPath => {
             let packageJson = this.fileSystem.readJsonSync(path.join(folderPath, 'package.json'));
             if (!boilerplatesConfig[packageJson.name] || boilerplatesConfig[packageJson] !== folderPath) this.needsReload = true;
             boilerplatesConfig[packageJson.name] = folderPath;
         });
-        this.fileSystem.writeJsonSync(this.boilerPlatesConfigurationLocation, boilerplatesConfig, {encoding: 'utf8', spaces: 4});
+        this.fileSystem.writeJsonSync(this.boilerplatesConfigurationLocation, boilerplatesConfig, {encoding: 'utf8', spaces: 4});
     }
     /**
      * Discovers boilerplates packages on npm. 
      *
      * @param {string[]} keywords Additional keywords used in search
      * @param {number} limit 
-     * @memberof BoilerPlatesManager
+     * @memberof BoilerplatesManager
      * @returns {Promise<{name: string, description: string}>}
      */
     async discoverOnlineBoilerplates(keywords = [], limit = 250) {
@@ -155,7 +155,7 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
      * Discovers Dolittle boilerplates made by Dolittle on npm
      *
      * @returns {*} A list of packages
-     * @memberof BoilerPlatesManager
+     * @memberof BoilerplatesManager
      */
     async discoverOnlineDolittleBoilerplates() {
         let boilerplatePackages = await boilerplatesDiscoverer.dolittle();
@@ -164,7 +164,7 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
     /**
      * Gets boilerplate packages from npm 
      *
-     * @memberof BoilerPlatesManager
+     * @memberof BoilerplatesManager
      */
     async getOnlineBoilerplates(...packageNames) {
         let packages = [];
@@ -179,7 +179,7 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
      *
      * @param {string[]} packageNames
      * @returns {string[]} The latest version of each boilerplate 
-     * @memberof BoilerPlatesManager
+     * @memberof BoilerplatesManager
      */
     async getLatestBoilerplateVersion(...packageNames) {
         let packages = await this.getOnlineBoilerplates(...packageNames);
@@ -188,29 +188,29 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
     /**
      * Get all available boiler plates for a specific language
      * @param {string} language
-     * @returns {BoilerPlate[]} Available boiler plates for the language
+     * @returns {Boilerplate[]} Available boiler plates for the language
      */
-    boilerPlatesByLanguage(language) {
-        return this.boilerPlates.filter(boilerPlate => boilerPlate.language == language);
+    boilerplatesByLanguage(language) {
+        return this.boilerplates.filter(boilerplate => boilerplate.language == language);
     }
 
     /**
      * Get all available boiler plates for a specific type
      * @param {string} type
-     * @returns {BoilerPlate[]} Available boiler plates for the type
+     * @returns {Boilerplate[]} Available boiler plates for the type
      */
-    boilerPlatesByType(type) {
-        return this.boilerPlates.filter(boilerPlate => boilerPlate.type == type);
+    boilerplatesByType(type) {
+        return this.boilerplates.filter(boilerplate => boilerplate.type == type);
     }
 
     /**
      * Get all available boiler plates for a specific language
      * @param {string} language
      * @param {string} type
-     * @returns {BoilerPlate[]} Available boiler plates for the language
+     * @returns {Boilerplate[]} Available boiler plates for the language
      */
-    boilerPlatesByLanguageAndType(language, type) {
-        return this.boilerPlates.filter(boilerPlate => boilerPlate.language == language && boilerPlate.type == type);
+    boilerplatesByLanguageAndType(language, type) {
+        return this.boilerplates.filter(boilerplate => boilerplate.language == language && boilerplate.type == type);
     }
 
     /**
@@ -219,11 +219,11 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
      * @param {string} parentType
      * @param {string} [parentLanguage=undefined]
      * @param {string} [parentName=undefined]
-     * @returns {BoilerPlate[]}
-     * @memberof BoilerPlatesManager
+     * @returns {Boilerplate[]}
+     * @memberof BoilerplatesManager
      */
     getAdornments(parentType, parentLanguage = undefined, parentName = undefined) {
-        let boilerplates = this.boilerPlates.filter(boilerplate => boilerplate.parent && boilerplate.parent.type === parentType);
+        let boilerplates = this.boilerplates.filter(boilerplate => boilerplate.parent && boilerplate.parent.type === parentType);
         if (parentLanguage) boilerplates = boilerplates.filter(boilerplate => {
                 if (boilerplate.parent.language) return boilerplate.parent.language === parentLanguage;
                 return true;
@@ -235,31 +235,31 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
         return boilerplates;
     }
     /**
-     * Loads all boilerplates and sets the boilerPlates property
+     * Loads all boilerplates and sets the boilerplates property
      */
     loadBoilerplates() {
-        if (! this.fileSystem.existsSync(this.boilerPlatesConfigurationLocation)) {
-            throw new Error(`Could not find local boilerplates configuration at path ${this.boilerPlatesConfigurationLocation}. This means that tooling hasn't been initialized.`);
+        if (! this.fileSystem.existsSync(this.boilerplatesConfigurationLocation)) {
+            throw new Error(`Could not find local boilerplates configuration at path ${this.boilerplatesConfigurationLocation}. This means that tooling hasn't been initialized.`);
         }
-        this.#boilerPlates = [];
-        let boilerPlatesConfig = this.fileSystem.readJsonSync(this.boilerPlatesConfigurationLocation);
-        Object.keys(boilerPlatesConfig).forEach(key => {
-            let folderPath = path.resolve(boilerPlatesConfig[key]);
-            this.#boilerPlates.push(...this.#readBoilerplatesFromFolder(folderPath));
+        this.#boilerplates = [];
+        let boilerplatesConfig = this.fileSystem.readJsonSync(this.boilerplatesConfigurationLocation);
+        Object.keys(boilerplatesConfig).forEach(key => {
+            let folderPath = path.resolve(boilerplatesConfig[key]);
+            this.#boilerplates.push(...this.#readBoilerplatesFromFolder(folderPath));
         });
         this.needsReload = false;
     }
 
     /**
-     * Create an instance of {BoilerPlate} into a specific destination folder with a given context
-     * @param {BoilerPlate} boilerPlate 
+     * Create an instance of {Boilerplate} into a specific destination folder with a given context
+     * @param {Boilerplate} boilerplate 
      * @param {string} destination 
      * @param {object} context 
      */
-    createInstance(boilerPlate, destination, context) {
+    createInstance(boilerplate, destination, context) {
         this.#folders.makeFolderIfNotExists(destination);
-        this.#folders.copy(destination, boilerPlate.contentDirectory);
-        boilerPlate.pathsNeedingBinding.forEach(_ => {
+        this.#folders.copy(destination, boilerplate.contentDirectory);
+        boilerplate.pathsNeedingBinding.forEach(_ => {
             let pathToRename = path.join(destination, _);
             let segments = [];
             pathToRename.split(/(\\|\/)/).forEach(segment => segments.push(this.#handlebars.compile(segment)(context)));
@@ -267,7 +267,7 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
             this.fileSystem.renameSync(pathToRename, result);
         });
         
-        boilerPlate.filesNeedingBinding.forEach(_ => {
+        boilerplate.filesNeedingBinding.forEach(_ => {
             let file = path.join(destination, _);
             let content = this.fileSystem.readFileSync(file, 'utf8');
             let template = this.#handlebars.compile(content);
@@ -276,7 +276,7 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
         });
     }
     /**
-     * Create an instance of {BoilerPlate} of an artifact into a specific destination folder with a given context
+     * Create an instance of {Boilerplate} of an artifact into a specific destination folder with a given context
      * @param {ArtifactTemplate} artifactTemplate
      * @param {string} destination 
      * @param {any} context 
@@ -303,38 +303,38 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
      * Reads the contents of a folder and discovers boilerplates. Returns a list of boilerplates
      *
      * @param {string} folder The folder to search for boilerplates
-     * @returns {BoilerPlate[]} A list of boilerplates
-     * @memberof BoilerPlatesManager
+     * @returns {Boilerplate[]} A list of boilerplates
+     * @memberof BoilerplatesManager
      */
     #readBoilerplatesFromFolder(folder) {
-        let boilerPlates = [];
-        let boilerPlatesPaths = this.#folders.searchRecursive(folder, 'boilerplate.json');
+        let boilerplates = [];
+        let boilerplatesPaths = this.#folders.searchRecursive(folder, 'boilerplate.json');
         
-        boilerPlatesPaths.forEach(boilerPlatePath => {
-            let boilerPlateObject = JSON.parse(this.#fileSystem.readFileSync(boilerPlatePath, 'utf8'));
-            boilerPlates.push(this.#parseBoilerPlate(boilerPlateObject, boilerPlatePath));
+        boilerplatesPaths.forEach(boilerplatePath => {
+            let boilerplateObject = JSON.parse(this.#fileSystem.readFileSync(boilerplatePath, 'utf8'));
+            boilerplates.push(this.#parseBoilerplate(boilerplateObject, boilerplatePath));
         });
-        return boilerPlates;
+        return boilerplates;
     }
 
     /**
      * Parses a boilerplate read from a boilerplate package correctly
      * 
-     * @param {*} boilerPlateObject
-     * @param {string} boilerPlatePath The path of the boilerplate.json file
+     * @param {*} boilerplateObject
+     * @param {string} boilerplatePath The path of the boilerplate.json file
      */
-    #parseBoilerPlate(boilerPlateObject, boilerPlatePath) {
-        boilerPlateObject.path = boilerPlatePath;
-        let pathsNeedingBinding = boilerPlateObject.pathsNeedingBinding || [];
-        let filesNeedingBinding = boilerPlateObject.filesNeedingBinding || [];
+    #parseBoilerplate(boilerplateObject, boilerplatePath) {
+        boilerplateObject.path = boilerplatePath;
+        let pathsNeedingBinding = boilerplateObject.pathsNeedingBinding || [];
+        let filesNeedingBinding = boilerplateObject.filesNeedingBinding || [];
         
-        if (boilerPlateObject.type != 'artifacts') {
-            const contentFolder = path.join(path.dirname(boilerPlatePath), 'Content');
+        if (boilerplateObject.type != 'artifacts') {
+            const contentFolder = path.join(path.dirname(boilerplatePath), 'Content');
             if (! this.fileSystem.existsSync(contentFolder)) {
-                throw new Error(`Missing Content Folder when parsing boilerplate at path ${boilerPlatePath}`);
+                throw new Error(`Missing Content Folder when parsing boilerplate at path ${boilerplatePath}`);
             }
             
-            if (! boilerPlateObject.pathsNeedingBinding || ! boilerPlateObject.filesNeedingBinding) {
+            if (! boilerplateObject.pathsNeedingBinding || ! boilerplateObject.filesNeedingBinding) {
                 let paths = this.#folders.getFoldersAndFilesRecursivelyIn(contentFolder);
                 paths = paths.filter(_ => {
                     let include = true;
@@ -356,23 +356,23 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
                 });
             }
         }
-        boilerPlateObject.pathsNeedingBinding = pathsNeedingBinding;
-        boilerPlateObject.filesNeedingBinding = filesNeedingBinding;
+        boilerplateObject.pathsNeedingBinding = pathsNeedingBinding;
+        boilerplateObject.filesNeedingBinding = filesNeedingBinding;
         
-        return new BoilerPlate(
-            boilerPlateObject.language || 'any',
-            boilerPlateObject.name,
-            boilerPlateObject.description,
-            boilerPlateObject.type,
-            boilerPlateObject.dependencies !== undefined? 
-                Object.keys(boilerPlateObject.dependencies).map(key => dependencyFromJson(boilerPlateObject.dependencies[key], key))
+        return new Boilerplate(
+            boilerplateObject.language || 'any',
+            boilerplateObject.name,
+            boilerplateObject.description,
+            boilerplateObject.type,
+            boilerplateObject.dependencies !== undefined? 
+                Object.keys(boilerplateObject.dependencies).map(key => dependencyFromJson(boilerplateObject.dependencies[key], key))
                 : [],
-            boilerPlateObject.target,
-            boilerPlateObject.framework,
-            boilerPlateObject.parent,
-            boilerPlateObject.path,
-            boilerPlateObject.pathsNeedingBinding ,
-            boilerPlateObject.filesNeedingBinding
+            boilerplateObject.target,
+            boilerplateObject.framework,
+            boilerplateObject.parent,
+            boilerplateObject.path,
+            boilerplateObject.pathsNeedingBinding ,
+            boilerplateObject.filesNeedingBinding
         );
     }
 
@@ -382,7 +382,7 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
             throw new Error(
 `I see that there has been a long time since you've updated the dolittle tooling.
 
-Please delete the file ${filePath} and all the boilerplates in ${this.boilerPlatesConfigurationLocation} that is not your own custom boilerplate.
+Please delete the file ${filePath} and all the boilerplates in ${this.boilerplatesConfigurationLocation} that is not your own custom boilerplate.
 `
             );
         }

@@ -4,14 +4,14 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { ArtifactsManager } from "../../ArtifactsManager";
-import { BoilerPlate } from "../../../boilerPlates/BoilerPlate";
+import { Boilerplate } from "../../../boilerplates/Boilerplate";
 import { Dependency } from "../../../dependencies/Dependency";
 import path from 'path';
 
 export class a_system_that_has_a_boilerplate_with_a_dependency {
     constructor() {
         this.boiler_plates_manager = {
-            boilerPlatesByLanguageAndType: sinon.stub(),
+            boilerplatesByLanguageAndType: sinon.stub(),
             createArtifactInstance: sinon.stub()
         };
         this.folders = {
@@ -40,8 +40,8 @@ export class a_system_that_has_a_boilerplate_with_a_dependency {
             description: 'some description',
             dependencies: {}
         };
-        this.boiler_plates_manager.boilerPlatesByLanguageAndType.returns([
-            new BoilerPlate(this.language, 'some_artifact', 'some description', 'artifact', this.dependencies, 'target', 'frameWork', {},
+        this.boiler_plates_manager.boilerplatesByLanguageAndType.returns([
+            new Boilerplate(this.language, 'some_artifact', 'some description', 'artifact', this.dependencies, 'target', 'frameWork', {},
                 this.boiler_plate_path, [], [])
         ]
         );

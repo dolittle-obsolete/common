@@ -3,13 +3,13 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { BoilerPlate } from "../../../boilerPlates/BoilerPlate";
+import { Boilerplate } from "../../../boilerplates/Boilerplate";
 
 export class an_artifact_template_json_with_dependencies{
     constructor() {
         this.included_files = ['{{name}}.cs']
         this.path = 'some path';
-        this.boilerplate = new BoilerPlate('language', 'name', 'desc', 'type', [], 'target', 'framework', {}, 'path', [], []);
+        this.boilerplate = new Boilerplate('language', 'name', 'desc', 'type', [], 'target', 'framework', {}, 'path', [], []);
         this.dependencies = {
             conceptType: {
                 description: 'The type of the Concept',

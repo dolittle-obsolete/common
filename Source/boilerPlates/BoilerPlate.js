@@ -9,7 +9,7 @@ import _path from 'path';
 /**
  * Represents a boiler plate
  */
-export class BoilerPlate {
+export class Boilerplate {
     #language;
     #name;
     #description;
@@ -23,7 +23,7 @@ export class BoilerPlate {
     #filesNeedingBinding;
     #contentDirectory;
     /**
-     * Initializes a new instance of {BoilerPlate}
+     * Initializes a new instance of {Boilerplate}
      * @param {string} programming language 
      * @param {string} name 
      * @param {string} description 
@@ -53,26 +53,26 @@ export class BoilerPlate {
     }
 
     /**
-     * Get the name of the {BoilerPlate}
-     * @returns {string} Name of {BoilerPlate}
+     * Get the name of the {Boilerplate}
+     * @returns {string} Name of {Boilerplate}
      */
     get name() { return this.#name; }
 
     /**
-     * Get the language of the {BoilerPlate}
-     * @returns {string} Language of the {BoilerPlate}
+     * Get the language of the {Boilerplate}
+     * @returns {string} Language of the {Boilerplate}
      */
     get language() { return this.#language; }
 
     /**
-     * Get the description of the {BoilerPlate}
-     * @returns {string} Description of the {BoilerPlate}
+     * Get the description of the {Boilerplate}
+     * @returns {string} Description of the {Boilerplate}
      */
     get description() { return this.#description; }
 
     /**
-     * Get the type of {BoilerPlate}
-     * @returns {string} Type of {BoilerPlate}
+     * Get the type of {Boilerplate}
+     * @returns {string} Type of {Boilerplate}
      */
     get type() { return this.#type; }
     /**
@@ -82,36 +82,36 @@ export class BoilerPlate {
     get dependencies() { return this.#dependencies; }
 
     /**
-     * Get the target of {BoilerPlate}.
-     * @returns {string} Type of {BoilerPlate}
+     * Get the target of {Boilerplate}.
+     * @returns {string} Type of {Boilerplate}
      */
     get target() { return this.#target; }
 
     /**
-     * Get the framework of {BoilerPlate}
-     * @returns {string} Type of {BoilerPlate}
+     * Get the framework of {Boilerplate}
+     * @returns {string} Type of {Boilerplate}
      */
     get framework() { return this.#framework; }
 
     /**
      * Get the parent boilerplate that this is an adornment boilerplate of
-     * @returns {string} Type of {BoilerPlate}
+     * @returns {string} Type of {Boilerplate}
      */
     get parent() { return this.#parent; }
     /**
-     * Get the file path of the {BoilerPlate} configuration file
+     * Get the file path of the {Boilerplate} configuration file
      * @returns {string}
      */
     get path() { return this.#path; }
 
     /**
-     * Get the paths that need binding - relative within the content of the location of the {BoilerPlate}
+     * Get the paths that need binding - relative within the content of the location of the {Boilerplate}
      * @returns {string[]} Paths
      */
     get pathsNeedingBinding() {return this.#pathsNeedingBinding; }
 
     /**
-     * Gets the files that need binding - relative within the content of the location of the {BoilerPlate}
+     * Gets the files that need binding - relative within the content of the location of the {Boilerplate}
      * @returns {string[]} Files
      */
     get filesNeedingBinding() {return this.#filesNeedingBinding; }
@@ -121,7 +121,7 @@ export class BoilerPlate {
      *
      * @returns {string}
      * @readonly
-     * @memberof BoilerPlate
+     * @memberof Boilerplate
      */
     get contentDirectory() {
         return this.#contentDirectory;
@@ -130,22 +130,22 @@ export class BoilerPlate {
      * Whether or not this boilerplate is the boilerplate of an interaction layer
      *
      * @returns {boolean} 
-     * @memberof BoilerPlate
+     * @memberof Boilerplate
      */
     isInteractionLayer() {
         return this.#type === 'interaction';
     }   
 
     /**
-     * Check if this is equal to boilerPlate
+     * Check if this is equal to boilerplate
      *
-     * @param {BoilerPlate} boilerPlate
-     * @memberof BoilerPlate
+     * @param {Boilerplate} boilerplate
+     * @memberof Boilerplate
      */
-    equals(boilerPlate) {
-        return this.#language === boilerPlate.language
-                && this.#name === boilerPlate.name
-                && this.#type === boilerPlate.type;
+    equals(boilerplate) {
+        return this.#language === boilerplate.language
+                && this.#name === boilerplate.name
+                && this.#type === boilerplate.type;
          
     }
 }

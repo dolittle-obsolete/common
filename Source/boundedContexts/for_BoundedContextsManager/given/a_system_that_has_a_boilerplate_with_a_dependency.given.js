@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { BoilerPlate } from "../../../boilerPlates/BoilerPlate";
+import { Boilerplate } from "../../../boilerplates/Boilerplate";
 import { Dependency } from "../../../dependencies/Dependency";
 import { BoundedContextsManager } from "../../BoundedContextsManager";
 import path from 'path';
@@ -10,7 +10,7 @@ import path from 'path';
 export class a_system_that_has_a_boilerplate_with_a_dependency{
     constructor() {
         this.boiler_plates_manager = {
-            boilerPlatesByLanguageAndType: sinon.stub(),
+            boilerplatesByLanguageAndType: sinon.stub(),
             createInstance: sinon.stub()
         };
         this.language = 'csharp';
@@ -21,8 +21,8 @@ export class a_system_that_has_a_boilerplate_with_a_dependency{
         this.boiler_plate_path = path.resolve('path', 'to', 'boilerplate.json');
 
        
-        this.boiler_plates_manager.boilerPlatesByLanguageAndType.returns([
-            new BoilerPlate(this.language, 'some_artifact', 'some description', 'artifact', this.dependencies, 'target', 'framework', {},
+        this.boiler_plates_manager.boilerplatesByLanguageAndType.returns([
+            new Boilerplate(this.language, 'some_artifact', 'some description', 'artifact', this.dependencies, 'target', 'framework', {},
                 this.boiler_plate_path, [], [])
         ]
         );

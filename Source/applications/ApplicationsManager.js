@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { BoilerPlate } from "../boilerPlates/BoilerPlate";
+import { Boilerplate } from "../boilerplates/Boilerplate";
 import { Dependency } from "../dependencies/Dependency";
-import { BoilerPlatesManager } from "../boilerPlates/BoilerPlatesManager";
+import { BoilerplatesManager } from "../boilerplates/BoilerplatesManager";
 import { Application, applicationFromJson } from "./Application";
 import path from 'path';
 
@@ -18,19 +18,19 @@ export const applicationFilename = 'application.json';
  * @class ArtifactsManager
  */
 export class ApplicationsManager {
-    #boilerPlatesManager;
+    #boilerplatesManager;
     #fileSystem;
     #logger;
 
     /**
      *Creates an instance of ApplicationsManager.
-     * @param {BoilerPlatesManager} boilerPlatesManager
+     * @param {BoilerplatesManager} boilerplatesManager
      * @param {import('fs-extra')} fileSystem
      * @param {import('winston').Logger} logger
      * @memberof ApplicationsManager
      */
-    constructor(boilerPlatesManager, fileSystem, logger) {
-        this.#boilerPlatesManager = boilerPlatesManager;
+    constructor(boilerplatesManager, fileSystem, logger) {
+        this.#boilerplatesManager = boilerplatesManager;
         this.#fileSystem = fileSystem;
         this.#logger = logger;
     }
@@ -63,24 +63,24 @@ export class ApplicationsManager {
      * @returns {Dependency[]}
      */
     getDependencies(language) {
-        let boilerplate = this.boilerPlateByLanguage(language);
+        let boilerplate = this.boilerplateByLanguage(language);
         if (!boilerplate) throw new Error(`Could not find boilerplate with type ${applicationBoilerplateType} and language ${language}`);
         return boilerplate.dependencies;
     }
     /**
      * Retrieves the boilerplate.json configuration for application with the given language
      * @param {string} language 
-     * @return {BoilerPlate} The application {Boilerplate} with of the given language
+     * @return {Boilerplate} The application {Boilerplate} with of the given language
      */
-    boilerPlateByLanguage(language) {
-        let boilerPlates = this.#boilerPlatesManager.boilerPlatesByLanguageAndType(language, applicationBoilerplateType);
-        if (boilerPlates === null || boilerPlates.length === 0) {
+    boilerplateByLanguage(language) {
+        let boilerplates = this.#boilerplatesManager.boilerplatesByLanguageAndType(language, applicationBoilerplateType);
+        if (boilerplates === null || boilerplates.length === 0) {
             return null;
         }
-        if (boilerPlates.length > 1) {
+        if (boilerplates.length > 1) {
             return null;
         }
-        return boilerPlates[0];
+        return boilerplates[0];
     }
     /**
      * Creates a dolittle application based
@@ -90,9 +90,9 @@ export class ApplicationsManager {
      * @returns {boolean} Whether or not the application was created successfully
      */
     createApplication(context, destinationPath) {
-        let boilerPlate = this.#boilerPlatesManager.boilerPlatesByType(applicationBoilerplateType)[0];
-        if (!boilerPlate) return false;
-        this.#boilerPlatesManager.createInstance(boilerPlate, destinationPath, context);
+        let boilerplate = this.#boilerplatesManager.boilerplatesByType(applicationBoilerplateType)[0];
+        if (!boilerplate) return false;
+        this.#boilerplatesManager.createInstance(boilerplate, destinationPath, context);
         return true;
     }
 

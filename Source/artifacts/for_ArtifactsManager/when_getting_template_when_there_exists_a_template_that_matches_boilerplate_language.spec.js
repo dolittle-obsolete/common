@@ -13,7 +13,7 @@ describe('when getting template hen there exists a template that matches boilerp
     let result = null;
     beforeEach(() => {
         
-        let boilerplate = context.artifacts_manager.boilerPlateByLanguage(context.language);
+        let boilerplate = context.artifacts_manager.boilerplateByLanguage(context.language);
         result = context.artifacts_manager.templateByBoilerplate(boilerplate, context.artifact_type);
     });
     
