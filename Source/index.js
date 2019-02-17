@@ -100,10 +100,34 @@ export const getDolittleConfig = () => rc('dolittle', dolittleConfigDefault);
 
 export const folders = new Folders(filesystem);
 setupHandlebars();
-export const boilerPlatesManager = new BoilerPlatesManager(configManager, httpWrapper, git, folders, filesystem, logger, Handlebars);
-export const applicationsManager = new ApplicationsManager(boilerPlatesManager, filesystem, logger);
-export const artifactsManager = new ArtifactsManager(boilerPlatesManager, folders, filesystem, logger);
-export const boundedContextsManager = new BoundedContextsManager(boilerPlatesManager, folders, filesystem, logger);
-export const dependenciesManager = new DependenciesManager(folders, filesystem, dolittleConfig, logger);
+
+let isInitialized = false;
+
+let boilerPlatesManager;
+let applicationsManager;
+let artifactsManager;
+let boundedContextsManager;
+let dependenciesManager;
+/**
+ * Initializes the tooling system and returns the managers
+ *
+ */
+export function getManagers() {
+    if (!isInitialized) {
+        isInitialized = true;
+        boilerPlatesManager = new BoilerPlatesManager(configManager, httpWrapper, git, folders, filesystem, logger, Handlebars);
+        applicationsManager = new ApplicationsManager(boilerPlatesManager, filesystem, logger);
+        artifactsManager = new ArtifactsManager(boilerPlatesManager, folders, filesystem, logger);
+        boundedContextsManager = new BoundedContextsManager(boilerPlatesManager, folders, filesystem, logger);
+        dependenciesManager = new DependenciesManager(folders, filesystem, dolittleConfig, logger);
+    }
+    return {
+        boilerPlatesManager,
+        applicationsManager,
+        artifactsManager,
+        boundedContextsManager,
+        dependenciesManager
+    }
+}
 
 export const helpers = require('./helpers');
