@@ -40,6 +40,7 @@
   "dependencies": {
     "@dolittle/boilerplates-discoverer": "^1.1.0",
     "ajv": "^6.9.1",
+    "conf": "^2.2.0",
     "fs-extra": "^7.0.0",
     "handlebars": "^4.0.12",
     "rc": "^1.2.8",
