@@ -5,18 +5,15 @@
 
  import { CacheConfig } from './CacheConfig';
 
-/**
- * Represents the cached project configuration file for the tooling
+ /**
+  * Represents the cached boilerplates configuration file for the tooling
  *
  * @export
- * @class ProjectConfig
+ * @class BoilerplatesConfig
  * @extends {CacheConfig}
  */
-export class ProjectConfig extends CacheConfig {
+export class BoilerplatesConfig extends CacheConfig {
     constructor() {
-        super('project', {
-            coreLanguage: 'csharp',
-            namespace: 'dolittle'
-        });
+        super('boilerplates', {});
     }
 }

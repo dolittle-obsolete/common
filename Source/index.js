@@ -19,6 +19,8 @@ import { DependenciesManager } from './dependencies/DependenciesManager';
 import { Folders } from './Folders';
 import { HttpWrapper } from './HttpWrapper';
 import {Guid} from './Guid';
+import { ProjectConfig } from './configuration/ProjectConfig';
+import { BoilerplatesConfig } from './configuration/BoilerplatesConfig';
 
 /**
  * Sets up the handlebars system with custom helpers
@@ -129,5 +131,6 @@ export function getManagers() {
         dependenciesManager
     }
 }
-
+export const projectConfig = new ProjectConfig();
+export const boilerplatesConfig = new BoilerplatesConfig(); 
 export const helpers = require('./helpers');
