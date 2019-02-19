@@ -27,7 +27,8 @@ export class CacheConfig extends Conf {
                 projectName: '.dolittle', 
                 configName,
                 cwd: path.resolve(__dirname,'..'),
-                defaults: defaultObj
+                defaults: defaultObj,
+                projectSuffix: ''
             });
     }
 }
