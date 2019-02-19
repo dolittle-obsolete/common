@@ -11,10 +11,8 @@ import { HttpWrapper } from '../HttpWrapper';
 import { Folders } from '../Folders';
 import { ConfigManager } from '../configuration/ConfigManager';
 import { ArtifactTemplate } from '../artifacts/ArtifactTemplate';
-
+import {boilerplatesConfig} from '../index';
 const boilerplatesDiscoverer = require('@dolittle/boilerplates-discoverer');
-const boilerplatesFolder = 'boilerplates';
-const boilerplateConfigurationName = 'boilerplates.json';
 
 const binaryFiles = [
     '.jpg',
@@ -61,36 +59,6 @@ export class BoilerplatesManager {
         this.#boilerplates = undefined;
     }
 
-    init() {
-        this.#folders.makeFolderIfNotExists(this.boilerplatesFolderLocation);
-        if (! this.fileSystem.existsSync(this.boilerplatesConfigurationLocation)) {
-            this.fileSystem.writeJsonSync(this.boilerplatesConfigurationLocation, {}, {encoding: 'utf8', spaces: 4});
-            this.fileSystem.writeFileSync(path.join(this.boilerplatesFolderLocation, 'readme.md'), 
-`${boilerplateConfigurationName} is a map where the key is the package name, unique identifier, of a boilerplate and the value is the absolute or relative path to the boilerplate folder.
-You can easily create custom boilerplates that aren't npm packages by creating a folder, create a boilerplate.json and a Content folder. 
-
-You can see examples of how boilerplates are made at https://github.com/dolittle-boilerplates/`);
-            this.discoverInstalledBoilerplates();
-        }
-        this.#warnIfUsingOldSystem();
-    }
-    /**
-     * Gets path of the Dolittle boilerplates folder
-     * @returns {string} Base path of boiler plates
-     */
-    get boilerplatesFolderLocation() {
-        return path.join(this.#configManager.centralFolderLocation, boilerplatesFolder);
-    }
-    /**
-     * Gets path of the Dolittle boilerplates configuration. This is a file containing both boilerplates that are not published and installed as packages and paths to Dolittle boilerplate folders
-     *
-     * @readonly
-     * @memberof BoilerplatesManager
-     */
-    get boilerplatesConfigurationLocation() {
-        return path.join(this.boilerplatesFolderLocation, boilerplateConfigurationName);
-    }
-
     /**
      * Get all available boiler plates
      * @returns {Boilerplate[]} Available boiler plates
@@ -122,7 +90,7 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
      * @returns {string[]} Filesystem paths of the Dolittle boilerplates installed on the system
      */
     get installedBoilerplatePaths() {
-        return boilerplatesDiscoverer.local([], 15);
+        return boilerplatesDiscoverer.local(path.join(__dirname, '..', '..'), [], 15);
     }
     /**
      * Discovers the globally installed boilerplates and adds the path to the folder to the boilerplates configuration using the name of package as the key 
@@ -130,14 +98,14 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
      * @memberof BoilerplatesManager
      */
     discoverInstalledBoilerplates() {
-        if (! this.fileSystem.existsSync(this.boilerplatesConfigurationLocation)) throw new Error(`Could not find boilerplate configuration at ${this.boilerplatesConfigurationLocation}. You have to initialize the boilerplates system first`);
-        let boilerplatesConfig = this.fileSystem.readJsonSync(this.boilerplatesConfigurationLocation);
+        if (! this.fileSystem.existsSync(boilerplatesConfig.path)) throw new Error(`Could not find boilerplate configuration at ${this.boilerplatesConfigurationLocation}. You have to initialize the boilerplates system first`);
+        let boilerplatesConfigObject = boilerplatesConfig.store;
         this.installedBoilerplatePaths.forEach(folderPath => {
             let packageJson = this.fileSystem.readJsonSync(path.join(folderPath, 'package.json'));
             if (!boilerplatesConfig[packageJson.name] || boilerplatesConfig[packageJson] !== folderPath) this.needsReload = true;
-            boilerplatesConfig[packageJson.name] = folderPath;
+            boilerplatesConfigObject[packageJson.name] = folderPath;
         });
-        this.fileSystem.writeJsonSync(this.boilerplatesConfigurationLocation, boilerplatesConfig, {encoding: 'utf8', spaces: 4});
+        boilerplatesConfig.store = boilerplatesConfigObject;
     }
     /**
      * Discovers boilerplates packages on npm. 
@@ -238,13 +206,13 @@ You can see examples of how boilerplates are made at https://github.com/dolittle
      * Loads all boilerplates and sets the boilerplates property
      */
     loadBoilerplates() {
-        if (! this.fileSystem.existsSync(this.boilerplatesConfigurationLocation)) {
+        if (! this.fileSystem.existsSync(boilerplatesConfig.path)) {
             throw new Error(`Could not find local boilerplates configuration at path ${this.boilerplatesConfigurationLocation}. This means that tooling hasn't been initialized.`);
         }
         this.#boilerplates = [];
-        let boilerplatesConfig = this.fileSystem.readJsonSync(this.boilerplatesConfigurationLocation);
-        Object.keys(boilerplatesConfig).forEach(key => {
-            let folderPath = path.resolve(boilerplatesConfig[key]);
+        let boilerplatesConfigObject = boilerplatesConfig.store;
+        Object.keys(boilerplatesConfigObject).forEach(key => {
+            let folderPath = path.resolve(boilerplatesConfigObject[key]);
             this.#boilerplates.push(...this.#readBoilerplatesFromFolder(folderPath));
         });
         this.needsReload = false;

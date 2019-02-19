@@ -26,7 +26,7 @@ export class CacheConfig extends Conf {
         super({
                 projectName: '.dolittle', 
                 configName,
-                cwd: path.resolve(__dirname, '..'),
+                cwd: path.join(__dirname, '..'),
                 defaults: defaultObj,
                 projectSuffix: ''
             });
