@@ -15,23 +15,16 @@
   "bugs": {
     "url": "https://github.com/dolittle-tools/common/issues"
   },
+  "engines": {
+    "node": ">=8.0.0"
+  },
   "files": [
     "dist"
   ],
-  "main": "dist/commonjs/index.js",
-  "module": "dist/esmodule/index.js",
-  "jspm": {
-    "registry": "npm",
-    "jspmPackage": true,
-    "format": "amd",
-    "main": "index",
-    "directories": {
-      "dist": "dist/systemjs"
-    },
-    "dependencies": {}
-  },
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "scripts": {
-    "build": "gulp build && find ./dist/* -type 'f' -maxdepth 1| xargs rm -f && for dir in ./dist/*; do mv \"$dir\"/Source/* \"$dir\"/ && rm -rf \"$dir\"/Source; done",
+    "build": "rm -rf dist && npx babel Source -d dist --ignore Source/**/*.spec.js,Source/**/*.given.js --source-maps inline",
     "prepublish": "yarn build"
   },
   "devDependencies": {
@@ -40,6 +33,7 @@
   "dependencies": {
     "@dolittle/boilerplates-discoverer": "^2.0.0-alpha.1",
     "ajv": "^6.9.1",
+    "app-root-path": "^2.1.0",
     "conf": "^2.2.0",
     "fs-extra": "^7.0.0",
     "handlebars": "^4.0.12",
