@@ -91,7 +91,7 @@ export class BoilerplatesManager {
      * @returns {string[]} Filesystem paths of the Dolittle boilerplates installed on the system
      */
     get installedBoilerplatePaths() {
-        return boilerplatesDiscoverer.local(path.join(boilerplatesConfig.path, '..'), [], 15);
+        return boilerplatesDiscoverer.local(path.join(boilerplatesConfig.path, '..', '..'), [], 15);
     }
     /**
      * Discovers the globally installed boilerplates and adds the path to the folder to the boilerplates configuration using the name of package as the key 
