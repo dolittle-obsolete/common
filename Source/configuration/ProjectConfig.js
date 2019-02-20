@@ -14,9 +14,6 @@
  */
 export class ProjectConfig extends CacheConfig {
     constructor() {
-        super('project', {
-            coreLanguage: 'csharp',
-            namespace: 'dolittle'
-        });
+        super('project', {});
     }
 }
