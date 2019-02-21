@@ -129,17 +129,25 @@ export class BoilerplatesManager {
      */
     async discoverOnlineBoilerplates(keywords = [], limit = 250) {
        let boilerplatePackageNames = await boilerplatesDiscoverer(keywords, limit);
+
        return boilerplatePackageNames;
     }
     /**
      * Discovers Dolittle boilerplates made by Dolittle on npm
      *
-     * @returns {*} A list of packages
+     * @returns A list of packages
      * @memberof BoilerplatesManager
      */
     async discoverOnlineDolittleBoilerplates() {
-        let boilerplatePackages = await boilerplatesDiscoverer.dolittle();
-        return boilerplatePackages;
+        let boilerplates = [];
+        let dolittleBoilerplates = await boilerplatesDiscoverer.dolittle();
+
+        for (let name of dolittleBoilerplates.map(_ => _.name)) {
+            let compatibleBoilerplate = await boilerplatesDiscoverer.latestCompatible(name, pkgJson => pkgJson.dolittle.tooling === semver.major(toolingPkg.version))
+                                                .catch(_ => {});
+            if (compatibleBoilerplate) boilerplates.push(compatibleBoilerplate);
+        }
+        return boilerplates;
     }
     /**
      * Gets boilerplate packages from npm 
