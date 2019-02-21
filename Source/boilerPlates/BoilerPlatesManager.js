@@ -125,17 +125,23 @@ export class BoilerplatesManager {
      * @param {string[]} keywords Additional keywords used in search
      * @param {number} limit 
      * @memberof BoilerplatesManager
-     * @returns {Promise<{name: string, description: string}>}
+     * @returns A list of compatible boilerplate packages
      */
     async discoverOnlineBoilerplates(keywords = [], limit = 250) {
-       let boilerplatePackageNames = await boilerplatesDiscoverer(keywords, limit);
+        let boilerplates = [];  
+        let boilerplatePackageNames = await boilerplatesDiscoverer(keywords, limit);
 
-       return boilerplatePackageNames;
+        for (let name of boilerplatePackageNames.map(_ => _.name)) {
+            let compatibleBoilerplate = await boilerplatesDiscoverer.latestCompatible(name, pkgJson => pkgJson.dolittle.tooling === semver.major(toolingPkg.version))
+                                                .catch(_ => {});
+            if (compatibleBoilerplate) boilerplates.push(compatibleBoilerplate);
+        }
+        return boilerplates;
     }
     /**
      * Discovers Dolittle boilerplates made by Dolittle on npm
      *
-     * @returns A list of packages
+     * @returns A list of compatible packages
      * @memberof BoilerplatesManager
      */
     async discoverOnlineDolittleBoilerplates() {
@@ -148,30 +154,6 @@ export class BoilerplatesManager {
             if (compatibleBoilerplate) boilerplates.push(compatibleBoilerplate);
         }
         return boilerplates;
-    }
-    /**
-     * Gets boilerplate packages from npm 
-     *
-     * @memberof BoilerplatesManager
-     */
-    async getOnlineBoilerplates(...packageNames) {
-        let packages = [];
-        for (let name of packageNames) {
-            packages.push(await boilerplatesDiscoverer.boilerplatePackage(name));
-        }
-        return packages;
-    }
-    
-    /**
-     * Gets the latest versions of boilerplate packages from npm
-     *
-     * @param {string[]} packageNames
-     * @returns {string[]} The latest version of each boilerplate 
-     * @memberof BoilerplatesManager
-     */
-    async getLatestBoilerplateVersion(...packageNames) {
-        let packages = await this.getOnlineBoilerplates(...packageNames);
-        return packages.map(pkg => pkg.version);
     }
     /**
      * Get all available boiler plates for a specific language
