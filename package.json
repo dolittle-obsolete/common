@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common",
-  "version": "5.0.0-alpha.7",
+  "version": "5.0.0-alpha.9",
   "description": "Common tools for dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -31,7 +31,7 @@
     "@dolittle/build": "~6.2.1"
   },
   "dependencies": {
-    "@dolittle/boilerplates-discoverer": "^2.0.0-alpha.5",
+    "@dolittle/boilerplates-discoverer": "^2.0.0-alpha.6",
     "ajv": "^6.9.1",
     "app-root-path": "^2.1.0",
     "conf": "^2.2.0",
