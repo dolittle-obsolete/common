@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import path from 'path';
+import semver from 'semver';
 import { Boilerplate } from './Boilerplate';
 import { getFileNameAndExtension, getFileDirPath } from '../helpers';
 import { dependencyFromJson } from '../dependencies/Dependency';
@@ -12,6 +13,8 @@ import { Folders } from '../Folders';
 import { ConfigManager } from '../configuration/ConfigManager';
 import { ArtifactTemplate } from '../artifacts/ArtifactTemplate';
 import {boilerplatesConfig} from '../index';
+
+const toolingPkg = require('../../package.json');
 
 const boilerplatesDiscoverer = require('@dolittle/boilerplates-discoverer');
 
@@ -103,10 +106,18 @@ export class BoilerplatesManager {
         let boilerplatesConfigObject = boilerplatesConfig.store;
         this.installedBoilerplatePaths.forEach(folderPath => {
             let packageJson = this.fileSystem.readJsonSync(path.join(folderPath, 'package.json'));
-            if (!boilerplatesConfig[packageJson.name] || boilerplatesConfig[packageJson] !== folderPath) this.needsReload = true;
-            boilerplatesConfigObject[packageJson.name] = folderPath;
+            if (packageJson.dolittle.tooling !== semver.major(toolingPkg.version)) {
+                if (boilerplatesConfigObject[packageJson.name]) {
+                    this.needsReload = true;
+                    delete boilerplatesConfigObject[packageJson.name];
+                }
+            }
+            if (!boilerplatesConfigObject[packageJson.name] || boilerplatesConfigObject[packageJson] !== folderPath) {
+                this.needsReload = true;
+                boilerplatesConfigObject[packageJson.name] = folderPath;
+            }
         });
-        boilerplatesConfig.store = boilerplatesConfigObject;
+        if (this.needsReload) boilerplatesConfig.store = boilerplatesConfigObject;
     }
     /**
      * Discovers boilerplates packages on npm. 
