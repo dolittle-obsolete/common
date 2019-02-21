@@ -132,7 +132,7 @@ export class BoilerplatesManager {
         let boilerplatePackageNames = await boilerplatesDiscoverer(keywords, limit);
 
         for (let name of boilerplatePackageNames.map(_ => _.name)) {
-            let compatibleBoilerplate = await boilerplatesDiscoverer.latestCompatible(name, pkgJson => pkgJson.dolittle.tooling === semver.major(toolingPkg.version))
+            let compatibleBoilerplate = await boilerplatesDiscoverer.latestCompatible(name, pkgJson => pkgJson.dolittle.tooling === semver.major(toolingPkg.version).toString())
                                                 .catch(_ => {});
             if (compatibleBoilerplate) boilerplates.push(compatibleBoilerplate);
         }
@@ -149,7 +149,7 @@ export class BoilerplatesManager {
         let dolittleBoilerplates = await boilerplatesDiscoverer.dolittle();
 
         for (let name of dolittleBoilerplates.map(_ => _.name)) {
-            let compatibleBoilerplate = await boilerplatesDiscoverer.latestCompatible(name, pkgJson => pkgJson.dolittle.tooling === semver.major(toolingPkg.version))
+            let compatibleBoilerplate = await boilerplatesDiscoverer.latestCompatible(name, pkgJson => pkgJson.dolittle.tooling === semver.major(toolingPkg.version).toString())
                                                 .catch(_ => {});
             if (compatibleBoilerplate) boilerplates.push(compatibleBoilerplate);
         }
