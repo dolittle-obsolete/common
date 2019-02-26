@@ -120,7 +120,7 @@ export class BoilerplatesManager {
         if (this.needsReload) boilerplatesConfig.store = boilerplatesConfigObject;
     }
     /**
-     * Discovers boilerplates packages on npm. 
+     * Discovers boilerplates packages on npm. Returns the package.json' from the main registry of the latest versions of boilerplates compatible with the tooling major version.
      *
      * @param {string[]} keywords Additional keywords used in search
      * @param {number} limit 
@@ -139,7 +139,8 @@ export class BoilerplatesManager {
         return boilerplates;
     }
     /**
-     * Discovers Dolittle boilerplates made by Dolittle on npm
+     * Discovers Dolittle boilerplates made by Dolittle on npm. Returns the package.json' from the main registry of the latest versions of dolittle boilerplates compatible with the tooling major version.
+     * 
      *
      * @returns A list of compatible packages
      * @memberof BoilerplatesManager
@@ -209,7 +210,7 @@ export class BoilerplatesManager {
      */
     loadBoilerplates() {
         if (! this.fileSystem.existsSync(boilerplatesConfig.path)) {
-            throw new Error(`Could not find local boilerplates configuration at path ${this.boilerplatesConfigurationLocation}. This means that tooling hasn't been initialized.`);
+            throw new Error(`Could not find local boilerplates configuration at path ${boilerplatesConfig.path}. This means that tooling hasn't been initialized.`);
         }
         this.#boilerplates = [];
         let boilerplatesConfigObject = boilerplatesConfig.store;
@@ -352,8 +353,7 @@ export class BoilerplatesManager {
             throw new Error(
 `I see that there has been a long time since you've updated the dolittle tooling.
 
-Please delete the file ${filePath} and all the boilerplates in ${this.boilerplatesConfigurationLocation} that is not your own custom boilerplate.
-`
+Please delete the file ${filePath}`
             );
         }
     }
