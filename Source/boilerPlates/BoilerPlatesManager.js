@@ -139,6 +139,17 @@ export class BoilerplatesManager {
         return boilerplates;
     }
     /**
+     * Gets the package of the latest compatible boilerplate with the given package name 
+     *
+     * @param {string} boilerplatePackageName
+     * @returns The package of the boilerplate
+     * @memberof BoilerplatesManager
+     */
+    async latestCompatibleBoilerplate(boilerplatePackageName) {
+        let boilerplate = await boilerplatesDiscoverer.latestCompatible(boilerplatePackageName, pkgJson => pkgJson.dolittle.tooling === semver.major(toolingPkg.version).toString());
+        return boilerplate;
+    }
+    /**
      * Discovers Dolittle boilerplates made by Dolittle on npm. Returns the package.json' from the main registry of the latest versions of dolittle boilerplates compatible with the tooling major version.
      * 
      *
