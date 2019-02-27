@@ -134,7 +134,7 @@ export function getManagers() {
 let npmRootSpawn = require('cross-spawn').sync('npm', ['root', '-g']);
 if (npmRootSpawn.error) throw npmRootSpawn.error;
 
-export const nodeModulesPath = npmRootSpawn.stdout.toString();  
+export const nodeModulesPath = npmRootSpawn.stdout.toString().replace(/\n$/, '');  
 export const projectConfig = new ProjectConfig(nodeModulesPath);
 export const boilerplatesConfig = new BoilerplatesConfig(nodeModulesPath); 
 export const helpers = require('./helpers');
