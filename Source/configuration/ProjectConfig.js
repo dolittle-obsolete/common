@@ -13,7 +13,12 @@
  * @extends {CacheConfig}
  */
 export class ProjectConfig extends CacheConfig {
-    constructor() {
-        super('project', {});
+    /**
+     * Creates an instance of {ProjectConfig}.
+     * @param {string} nodeModulesFolder
+     * @memberof ProjectConfig
+     */
+    constructor(nodeModulesFolder) {
+        super('project', nodeModulesFolder, {});
     }
 }

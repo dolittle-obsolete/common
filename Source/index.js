@@ -131,6 +131,10 @@ export function getManagers() {
         dependenciesManager
     }
 }
-export const projectConfig = new ProjectConfig();
-export const boilerplatesConfig = new BoilerplatesConfig(); 
+let npmRootSpawn = require('cross-spawn').sync('npm', ['root', '-g']);
+if (npmRootSpawn.error) throw npmRootSpawn.error;
+
+export const nodeModulesPath = npmRootSpawn.stdout.toString();  
+export const projectConfig = new ProjectConfig(nodeModulesPath);
+export const boilerplatesConfig = new BoilerplatesConfig(nodeModulesPath); 
 export const helpers = require('./helpers');

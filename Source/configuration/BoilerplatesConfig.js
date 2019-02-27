@@ -13,7 +13,12 @@
  * @extends {CacheConfig}
  */
 export class BoilerplatesConfig extends CacheConfig {
-    constructor() {
-        super('boilerplates', {});
+    /**
+     * Creates an instance of {BoilerplatesConfig}.
+     * @param {string} nodeModulesFolder
+     * @memberof BoilerplatesConfig
+     */
+    constructor(nodeModulesFolder) {
+        super('boilerplates', nodeModulesFolder, {});
     }
 }

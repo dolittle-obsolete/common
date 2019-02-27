@@ -7,7 +7,6 @@ import Conf from 'conf';
 import path from 'path';
 
 
-const rootPath = require('app-root-path');
 
 /**
  * Represents a config file that's used as a cache storage for the tooling. 
@@ -25,11 +24,11 @@ export class CacheConfig extends Conf {
      * @param {{[key: string]: any}} defaultObj
      * @memberof CacheConfig
      */
-    constructor(configName, defaultObj) {
+    constructor(configName, nodeModulesFolder, defaultObj) {
         super({
                 projectName: '.dolittle', 
                 configName,
-                cwd: path.join(rootPath.path, '..', '.dolittle'),
+                cwd: path.join(nodeModulesFolder, '@dolittle', '.dolittle'),
                 defaults: defaultObj,
                 projectSuffix: ''
             });
