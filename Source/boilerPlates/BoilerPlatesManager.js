@@ -102,7 +102,7 @@ export class BoilerplatesManager {
      * @memberof BoilerplatesManager
      */
     discoverInstalledBoilerplates() {
-        if (! this.fileSystem.existsSync(boilerplatesConfig.path)) throw new Error(`Could not find boilerplate configuration at ${this.boilerplatesConfigurationLocation}. You have to initialize the boilerplates system first`);
+        if (! this.fileSystem.existsSync(boilerplatesConfig.path)) throw new Error(`Could not find boilerplate configuration at ${boilerplatesConfig.path}. You have to initialize the boilerplates system first`);
         let boilerplatesConfigObject = boilerplatesConfig.store;
         this.installedBoilerplatePaths.forEach(folderPath => {
             let packageJson = this.fileSystem.readJsonSync(path.join(folderPath, 'package.json'));
