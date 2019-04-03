@@ -61,6 +61,11 @@ export class BoilerplatesManager {
         this.#handlebars = handlebars;
         this.#logger = logger;
         this.#boilerplates = undefined;
+
+        if (! this.fileSystem.existsSync(boilerplatesConfig.path)) {
+            boilerplatesConfig.store = boilerplatesConfig.store;
+        }
+        
     }
 
     /**
@@ -102,7 +107,6 @@ export class BoilerplatesManager {
      * @memberof BoilerplatesManager
      */
     discoverInstalledBoilerplates() {
-        if (! this.fileSystem.existsSync(boilerplatesConfig.path)) throw new Error(`Could not find boilerplate configuration at ${boilerplatesConfig.path}. You have to initialize the boilerplates system first`);
         let boilerplatesConfigObject = boilerplatesConfig.store;
         this.installedBoilerplatePaths.forEach(folderPath => {
             let packageJson = this.fileSystem.readJsonSync(path.join(folderPath, 'package.json'));
@@ -220,9 +224,6 @@ export class BoilerplatesManager {
      * Loads all boilerplates and sets the boilerplates property
      */
     loadBoilerplates() {
-        if (! this.fileSystem.existsSync(boilerplatesConfig.path)) {
-            throw new Error(`Could not find local boilerplates configuration at path ${boilerplatesConfig.path}. This means that tooling hasn't been initialized.`);
-        }
         this.#boilerplates = [];
         let boilerplatesConfigObject = boilerplatesConfig.store;
         Object.keys(boilerplatesConfigObject).forEach(key => {
