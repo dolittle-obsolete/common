@@ -102,7 +102,7 @@ export class BoilerplatesManager {
         return boilerplatesDiscoverer.local(nodeModulesPath, [], 15);
     }
     /**
-     * Discovers the globally installed boilerplates and adds the path to the folder to the boilerplates configuration using the name of package as the key 
+     * Discovers the globally installed boilerplates and adds the path to the folder of the boilerplates configuration using the name of package as the key 
      *
      * @memberof BoilerplatesManager
      */
