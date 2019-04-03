@@ -6,8 +6,6 @@
 import Conf from 'conf';
 import path from 'path';
 
-
-
 /**
  * Represents a config file that's used as a cache storage for the tooling. 
  * 
@@ -21,6 +19,7 @@ export class CacheConfig extends Conf {
     /**
      * Creates an instance of {CacheConfig}.
      * @param {string} configName The name of the configuration. Becomes the filename
+     * @param {string} nodeModulesFolder The path of the global node_modules folder
      * @param {{[key: string]: any}} defaultObj
      * @memberof CacheConfig
      */
