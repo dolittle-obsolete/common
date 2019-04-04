@@ -82,45 +82,24 @@ export class ApplicationsManager {
     }
 
     /**
-     * Gets all the dependencies for an application of a given language
-     *
-     * @export
-     * @param {string} language
-     * @returns {Dependency[]}
-     */
-    getDependencies(language) {
-        let boilerplate = this.boilerplateByLanguage(language);
-        if (!boilerplate) throw new Error(`Could not find boilerplate with type ${applicationBoilerplateType} and language ${language}`);
-        return boilerplate.dependencies;
-    }
-    /**
-     * Retrieves the boilerplate.json configuration for application with the given language
+     * Retrieves the boilerplate configurations for application with the given language
      * @param {string} language 
-     * @return {Boilerplate} The application {Boilerplate} with of the given language
+     * @return {Boilerplate[]} The application {Boilerplate} with of the given language
      */
-    boilerplateByLanguage(language) {
+    boilerplatesByLanguage(language) {
         let boilerplates = this.boilerplatesManager.boilerplatesByLanguageAndType(language, applicationBoilerplateType);
-        if (boilerplates === null || boilerplates.length === 0) {
-            return null;
-        }
-        if (boilerplates.length > 1) {
-            return null;
-        }
-        return boilerplates[0];
+        return boilerplates;
     }
     /**
      * Creates a dolittle application based
      *
      * @param {any} context The template context 
      * @param {string} destinationPath The absolute path of the destination of the application
+     * @param {Boilerplate} boilerplate The boilerplate to create the application from
      * @returns {boolean} Whether or not the application was created successfully
      */
-    createApplication(context, destinationPath) {
-        let boilerplate = this.boilerplatesManager.boilerplatesByType(applicationBoilerplateType)[0];
-        if (!boilerplate) return false;
+    createApplication(context, destinationPath, boilerplate) {
         this.boilerplatesManager.createInstance(boilerplate, destinationPath, context);
         return true;
     }
-
-
 }
