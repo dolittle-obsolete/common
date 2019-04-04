@@ -83,7 +83,55 @@ export class BoilerplatesManager {
     get hasBoilerplates() {
         return this.#boilerplates && this.#boilerplates.length > 0;
     }
+    /**
+     * Get all available boiler plates for a specific language
+     * @param {string} language
+     * @returns {Boilerplate[]} Available boiler plates for the language
+     */
+    boilerplatesByLanguage(language) {
+        return this.boilerplates.filter(boilerplate => boilerplate.language == language);
+    }
 
+    /**
+     * Get all available boiler plates for a specific type
+     * @param {string} type
+     * @returns {Boilerplate[]} Available boiler plates for the type
+     */
+    boilerplatesByType(type) {
+        return this.boilerplates.filter(boilerplate => boilerplate.type == type);
+    }
+
+    /**
+     * Get all available boiler plates for a specific language
+     * @param {string} language
+     * @param {string} type
+     * @returns {Boilerplate[]} Available boiler plates for the language
+     */
+    boilerplatesByLanguageAndType(language, type) {
+        return this.boilerplates.filter(boilerplate => boilerplate.language == language && boilerplate.type == type);
+    }
+
+    /**
+     * Gets the adornment boilerplates that has a parent with the given fields
+     *
+     * @param {string} parentType
+     * @param {string} [parentLanguage=undefined]
+     * @param {string} [parentName=undefined]
+     * @returns {Boilerplate[]}
+     * @memberof BoilerplatesManager
+     */
+    getAdornments(parentType, parentLanguage = undefined, parentName = undefined) {
+        let boilerplates = this.boilerplates.filter(boilerplate => boilerplate.parent && boilerplate.parent.type === parentType);
+        if (parentLanguage) boilerplates = boilerplates.filter(boilerplate => {
+                if (boilerplate.parent.language) return boilerplate.parent.language === parentLanguage;
+                return true;
+            });
+        if (parentName) boilerplates = boilerplates.filter(boilerplate => {
+            if (boilerplate.parent.name) return boilerplate.parent.name === parentName;
+            return true;
+        });
+        return boilerplates;
+    }
     /**
      * Gets the filesystem
      * @returns {import('fs-extra')}
@@ -169,55 +217,6 @@ export class BoilerplatesManager {
                                                 .catch(_ => {});
             if (compatibleBoilerplate) boilerplates.push(compatibleBoilerplate);
         }
-        return boilerplates;
-    }
-    /**
-     * Get all available boiler plates for a specific language
-     * @param {string} language
-     * @returns {Boilerplate[]} Available boiler plates for the language
-     */
-    boilerplatesByLanguage(language) {
-        return this.boilerplates.filter(boilerplate => boilerplate.language == language);
-    }
-
-    /**
-     * Get all available boiler plates for a specific type
-     * @param {string} type
-     * @returns {Boilerplate[]} Available boiler plates for the type
-     */
-    boilerplatesByType(type) {
-        return this.boilerplates.filter(boilerplate => boilerplate.type == type);
-    }
-
-    /**
-     * Get all available boiler plates for a specific language
-     * @param {string} language
-     * @param {string} type
-     * @returns {Boilerplate[]} Available boiler plates for the language
-     */
-    boilerplatesByLanguageAndType(language, type) {
-        return this.boilerplates.filter(boilerplate => boilerplate.language == language && boilerplate.type == type);
-    }
-
-    /**
-     * Gets the adornment boilerplates that has a parent with the given fields
-     *
-     * @param {string} parentType
-     * @param {string} [parentLanguage=undefined]
-     * @param {string} [parentName=undefined]
-     * @returns {Boilerplate[]}
-     * @memberof BoilerplatesManager
-     */
-    getAdornments(parentType, parentLanguage = undefined, parentName = undefined) {
-        let boilerplates = this.boilerplates.filter(boilerplate => boilerplate.parent && boilerplate.parent.type === parentType);
-        if (parentLanguage) boilerplates = boilerplates.filter(boilerplate => {
-                if (boilerplate.parent.language) return boilerplate.parent.language === parentLanguage;
-                return true;
-            });
-        if (parentName) boilerplates = boilerplates.filter(boilerplate => {
-            if (boilerplate.parent.name) return boilerplate.parent.name === parentName;
-            return true;
-        });
         return boilerplates;
     }
     /**
