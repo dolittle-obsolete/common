@@ -5,7 +5,7 @@
 
 import path from 'path';
 import semver from 'semver';
-import { Boilerplate } from './Boilerplate';
+import { Boilerplate, boilerplateContentFolderName } from './Boilerplate';
 import { getFileNameAndExtension, getFileDirPath } from '../helpers';
 import { dependencyFromJson } from '../dependencies/Dependency';
 import { HttpWrapper } from '../HttpWrapper';
@@ -14,6 +14,8 @@ import { ConfigManager } from '../configuration/ConfigManager';
 import { ArtifactTemplate } from '../artifacts/ArtifactTemplate';
 import {boilerplatesConfig, nodeModulesPath} from '../index';
 import artifactsBoilerplateType from '../artifacts/ArtifactsManager';
+import { BaseBoilerplate } from './BaseBoilerplate';
+import { ArtifactsBoilerplate } from './ArtifactsBoilerplate';
 
 const toolingPkg = require('../../package.json');
 
@@ -120,7 +122,7 @@ export class BoilerplatesManager {
     }
     /**
      * Get all available boiler plates
-     * @returns {Boilerplate[]} Available boiler plates
+     * @returns {BaseBoilerplate[]} Available boiler plates
      */
     get boilerplates() {
         if (!this.#_boilerplates || this.needsReload) this.loadBoilerplates();
@@ -347,58 +349,74 @@ export class BoilerplatesManager {
      * @param {string} boilerplatePath The path of the boilerplate.json file
      */
     #_parseBoilerplate(boilerplateObject, boilerplatePath) {
-        boilerplateObject.path = boilerplatePath;
-        let pathsNeedingBinding = boilerplateObject.pathsNeedingBinding || [];
-        let filesNeedingBinding = boilerplateObject.filesNeedingBinding || [];
-        
-        if (boilerplateObject.type != artifactsBoilerplateType) {
-            const contentFolder = path.join(path.dirname(boilerplatePath), 'Content');
-            if (! this.fileSystem.existsSync(contentFolder)) {
-                throw new Error(`Missing Content Folder when parsing boilerplate at path ${boilerplatePath}`);
-            }
-            
-            if (! boilerplateObject.pathsNeedingBinding || ! boilerplateObject.filesNeedingBinding) {
-                let paths = this.folders.getFoldersAndFilesRecursivelyIn(contentFolder);
-                paths = paths.filter(_ => {
-                    let include = true;
-                    binaryFiles.forEach(b => {
-                        if (_.toLowerCase().indexOf(b) > 0) include = false;
-                    });
-                    return include;
-                });
-                pathsNeedingBinding = paths.filter(_ => _.indexOf('{{') > 0).map(_ => _.substr(contentFolder.length + 1));
-                filesNeedingBinding = [];
-                paths.forEach(_ => {
-                    let stat = this.fileSystem.statSync(_);
-                    if (!stat.isDirectory()) {
-                        let file = this.fileSystem.readFileSync(_);
-                        if (file.indexOf('{{') >= 0) {
-                            filesNeedingBinding.push(_.substr(contentFolder.length + 1));
-                        }
-                    }
-                });
-            }
+        if (boilerplateObject.type === artifactsBoilerplateType) {
+            return new ArtifactsBoilerplate(
+                boilerplateObject.language || 'any',
+                boilerplateObject.name,
+                boilerplateObject.description,
+                boilerplateObject.type,
+                boilerplateObject.dependencies !== undefined? 
+                    Object.keys(boilerplateObject.dependencies).map(key => dependencyFromJson(boilerplateObject.dependencies[key], key))
+                    : [],
+                boilerplatePath);
         }
-        boilerplateObject.pathsNeedingBinding = pathsNeedingBinding;
-        boilerplateObject.filesNeedingBinding = filesNeedingBinding;
-        
-        return new Boilerplate(
-            boilerplateObject.language || 'any',
-            boilerplateObject.name,
-            boilerplateObject.description,
-            boilerplateObject.type,
-            boilerplateObject.dependencies !== undefined? 
-                Object.keys(boilerplateObject.dependencies).map(key => dependencyFromJson(boilerplateObject.dependencies[key], key))
-                : [],
-            boilerplateObject.target,
-            boilerplateObject.framework,
-            boilerplateObject.parent,
-            boilerplateObject.path,
-            boilerplateObject.pathsNeedingBinding ,
-            boilerplateObject.filesNeedingBinding
-        );
+        else {
+            let bindings = this.#_getBoilerplateBindings(boilerplatePath);
+            return new Boilerplate(
+                boilerplateObject.language || 'any',
+                boilerplateObject.name,
+                boilerplateObject.description,
+                boilerplateObject.type,
+                boilerplateObject.dependencies !== undefined? 
+                    Object.keys(boilerplateObject.dependencies).map(key => dependencyFromJson(boilerplateObject.dependencies[key], key))
+                    : [],
+                boilerplateObject.target,
+                boilerplateObject.framework,
+                boilerplateObject.parent,
+                boilerplatePath,
+                bindings.pathsNeedingBinding ,
+                bindings.filesNeedingBinding
+        }
     }
-
+    /**
+     * Gets the path and file bindings for a boilerplate
+     * 
+     * @param {string} boilerplatePath The path to the boilerplate.json file
+     * @returns {{pathsNeedingBinding: string[], filesNeedingBinding: string[]}} 
+     */
+    #_getBoilerplateBindings(boilerplatePath) {
+        let pathsNeedingBinding = [];
+        let filesNeedingBinding = [];
+        const contentFolder = path.join(path.dirname(boilerplatePath), boilerplateContentFolderName);
+        if (! this.fileSystem.existsSync(contentFolder)) {
+            throw new Error(`Missing folder with name ${boilerplateContentFolderName} at root level when parsing boilerplate at path ${boilerplatePath}`);
+        }
+        
+        let paths = this.folders.getFoldersAndFilesRecursivelyIn(contentFolder);
+        paths = paths.filter(_ => {
+            let include = true;
+            binaryFiles.forEach(b => {
+                if (_.toLowerCase().indexOf(b) > 0) include = false;
+            });
+            return include;
+        });
+        pathsNeedingBinding = paths.filter(_ => _.indexOf('{{') > 0).map(_ => _.substr(contentFolder.length + 1));
+        paths.forEach(_ => {
+            let stat = this.fileSystem.statSync(_);
+            if (!stat.isDirectory()) {
+                let file = this.fileSystem.readFileSync(_);
+                if (file.indexOf('{{') >= 0) {
+                    filesNeedingBinding.push(_.substr(contentFolder.length + 1));
+                }
+            }
+        });
+        let ret = {
+            pathsNeedingBinding,
+            filesNeedingBinding
+        };
+        return ret;
+        
+    }
     #_warnIfUsingOldSystem() {
         const filePath = path.join(this.configManager.centralFolderLocation, 'boiler-plates.json');
         if (this.fileSystem.existsSync(filePath)) {
