@@ -62,10 +62,9 @@ export class BoilerplatesManager {
         this.#logger = logger;
         this.#boilerplates = undefined;
 
-        if (! this.fileSystem.existsSync(boilerplatesConfig.path)) {
+        if (! fileSystem.existsSync(boilerplatesConfig.path)) {
             boilerplatesConfig.store = boilerplatesConfig.store;
         }
-        
     }
 
     /**
@@ -82,6 +81,23 @@ export class BoilerplatesManager {
      */
     get hasBoilerplates() {
         return this.#boilerplates && this.#boilerplates.length > 0;
+    }
+    /**
+     * Gets the filesystem
+     * @returns {import('fs-extra')}
+     */
+    get fileSystem() {
+        return this.#fileSystem;
+    }
+    /**
+     * Gets the paths of the locally globally installed Dolittle boilerplates
+     *
+     * @readonly
+     * @memberof BoilerplatesManager
+     * @returns {string[]} Filesystem paths of the Dolittle boilerplates installed on the system
+     */
+    get installedBoilerplatePaths() {
+        return boilerplatesDiscoverer.local(nodeModulesPath, [], 15);
     }
     /**
      * Get all available boiler plates for a specific language
@@ -132,25 +148,9 @@ export class BoilerplatesManager {
         });
         return boilerplates;
     }
+    
     /**
-     * Gets the filesystem
-     * @returns {import('fs-extra')}
-     */
-    get fileSystem() {
-        return this.#fileSystem;
-    }
-    /**
-     * Gets the paths of the locally globally installed Dolittle boilerplates
-     *
-     * @readonly
-     * @memberof BoilerplatesManager
-     * @returns {string[]} Filesystem paths of the Dolittle boilerplates installed on the system
-     */
-    get installedBoilerplatePaths() {
-        return boilerplatesDiscoverer.local(nodeModulesPath, [], 15);
-    }
-    /**
-     * Discovers the globally installed boilerplates and adds the path to the folder of the boilerplates configuration using the name of package as the key 
+     * Discovers the globally installed boilerplates and adds the path to the folder of the boilerplate to the configuration using the name of package as the key 
      *
      * @memberof BoilerplatesManager
      */
@@ -225,7 +225,7 @@ export class BoilerplatesManager {
         let boilerplatesConfigObject = boilerplatesConfig.store;
         Object.keys(boilerplatesConfigObject).forEach(key => {
             let folderPath = path.resolve(boilerplatesConfigObject[key]);
-            this.#boilerplates.push(...this.#readBoilerplatesFromFolder(folderPath));
+            this.#boilerplates.push(this.#readBoilerplateFromFolder(folderPath));
         });
         this.needsReload = false;
     }
@@ -280,21 +280,20 @@ export class BoilerplatesManager {
     }
     
     /**
-     * Reads the contents of a folder and discovers boilerplates. Returns a list of boilerplates
+     * Reads the contents of a folder and returns the in-memory representation of the boilerplate.
      *
-     * @param {string} folder The folder to search for boilerplates
-     * @returns {Boilerplate[]} A list of boilerplates
+     * @param {string} folder The folder of a boilerplate
+     * @returns {Boilerplate}
      * @memberof BoilerplatesManager
      */
-    #readBoilerplatesFromFolder(folder) {
-        let boilerplates = [];
-        let boilerplatesPaths = this.#folders.searchRecursive(folder, 'boilerplate.json');
+    #readBoilerplateFromFolder(folder) {
+        let boilerplatePath = path.join(folder, 'boilerplate.json');
         
-        boilerplatesPaths.forEach(boilerplatePath => {
-            let boilerplateObject = JSON.parse(this.#fileSystem.readFileSync(boilerplatePath, 'utf8'));
-            boilerplates.push(this.#parseBoilerplate(boilerplateObject, boilerplatePath));
-        });
-        return boilerplates;
+        if (!this.#fileSystem.existsSync(boilerplatePath)) throw new Error(`Could not find boilerplate configuration in '${folder}'`);
+
+        let boilerplateObject = JSON.parse(this.#fileSystem.readFileSync(boilerplatePath, 'utf8'));
+
+        return this.#parseBoilerplate(boilerplateObject, boilerplatePath);
     }
 
     /**
