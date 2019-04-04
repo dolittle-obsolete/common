@@ -18,9 +18,9 @@ export const applicationFilename = 'application.json';
  * @class ArtifactsManager
  */
 export class ApplicationsManager {
-    #boilerplatesManager;
-    #fileSystem;
-    #logger;
+    #_boilerplatesManager;
+    #_fileSystem;
+    #_logger;
 
     /**
      *Creates an instance of ApplicationsManager.
@@ -30,11 +30,37 @@ export class ApplicationsManager {
      * @memberof ApplicationsManager
      */
     constructor(boilerplatesManager, fileSystem, logger) {
-        this.#boilerplatesManager = boilerplatesManager;
-        this.#fileSystem = fileSystem;
-        this.#logger = logger;
+        this.#_boilerplatesManager = boilerplatesManager;
+        this.#_fileSystem = fileSystem;
+        this.#_logger = logger;
     }
-
+    /**
+     * 
+     * @type {BoilerplatesManager}
+     * @readonly
+     * @memberof ApplicationsManager
+     */
+    get boilerplatesManager() {
+        return this.#_boilerplatesManager;
+    }
+    /**
+     *
+     * @type {import('fs-extra')}
+     * @readonly
+     * @memberof ApplicationsManager
+     */
+    get fileSystem() {
+        return this.#_fileSystem;
+    }
+    /**
+     *
+     * @type {import('winston').Logger}
+     * @readonly
+     * @memberof ApplicationsManager
+     */
+    get logger() {
+        return this.#_logger;
+    }
     /**
      * Gets the application configuration from the given folder
      * @param {string} folder path 
@@ -43,7 +69,7 @@ export class ApplicationsManager {
     getApplicationFrom(folder) {
         if (! this.hasApplication(folder)) return null;
         const filePath = path.join(folder, applicationFilename);
-        return applicationFromJson(JSON.parse(this.#fileSystem.readFileSync(filePath, 'utf8')), filePath);
+        return applicationFromJson(JSON.parse(this.fileSystem.readFileSync(filePath, 'utf8')), filePath);
     }
     /**
      * Check if an application has been setup in the given folder.
@@ -52,7 +78,7 @@ export class ApplicationsManager {
      */
     hasApplication(folder) {
         const filePath = path.join(folder, applicationFilename);
-        return this.#fileSystem.existsSync(filePath);
+        return this.fileSystem.existsSync(filePath);
     }
 
     /**
@@ -73,7 +99,7 @@ export class ApplicationsManager {
      * @return {Boilerplate} The application {Boilerplate} with of the given language
      */
     boilerplateByLanguage(language) {
-        let boilerplates = this.#boilerplatesManager.boilerplatesByLanguageAndType(language, applicationBoilerplateType);
+        let boilerplates = this.boilerplatesManager.boilerplatesByLanguageAndType(language, applicationBoilerplateType);
         if (boilerplates === null || boilerplates.length === 0) {
             return null;
         }
@@ -90,9 +116,9 @@ export class ApplicationsManager {
      * @returns {boolean} Whether or not the application was created successfully
      */
     createApplication(context, destinationPath) {
-        let boilerplate = this.#boilerplatesManager.boilerplatesByType(applicationBoilerplateType)[0];
+        let boilerplate = this.boilerplatesManager.boilerplatesByType(applicationBoilerplateType)[0];
         if (!boilerplate) return false;
-        this.#boilerplatesManager.createInstance(boilerplate, destinationPath, context);
+        this.boilerplatesManager.createInstance(boilerplate, destinationPath, context);
         return true;
     }
 

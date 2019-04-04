@@ -14,10 +14,10 @@ import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir } from
  * @class DependenciesManager
  */
 export class DependenciesManager {
-    #folders;
-    #fileSystem;
-    #dolittleConfig;
-    #logger;
+    #_folders;
+    #_fileSystem;
+    #_logger;
+    #_dolittleConfig;
     /**
      *Creates an instance of DependenciesManager.
      * @param {Folders} folders
@@ -27,12 +27,39 @@ export class DependenciesManager {
      * @memberof DependenciesManager
      */
     constructor(folders, fileSystem, dolittleConfig, logger) {
-        this.#folders = folders;
-        this.#fileSystem = fileSystem;
-        this.#dolittleConfig = dolittleConfig;
-        this.#logger = logger;
+        this.#_folders = folders;
+        this.#_fileSystem = fileSystem;
+        this.#_dolittleConfig = dolittleConfig;
+        this.#_logger = logger;
     }
 
+    /**
+     * 
+     * @type {Folders}
+     * @readonly
+     * @memberof DependenciesManager
+     */
+    get folders() {
+        return this.#_folders;
+    }
+    /**
+     * 
+     * @type {import('fs-extra')}
+     * @readonly
+     * @memberof DependenciesManager
+     */
+    get fileSystem() {
+        return this.#_fileSystem;
+    }
+    /**
+     * 
+     * @type {import('winston').Logger}
+     * @readonly
+     * @memberof DependenciesManager
+     */
+    get logger() {
+        return this.#_logger;
+    }
     /**
      * Discovers a dependency
      * @param {Dependency} dependency The dependency 
@@ -40,12 +67,12 @@ export class DependenciesManager {
      * @param {string} language The core language
      * @param {*} dolittleConfig
      */
-    discover(dependency, location, language, dolittleConfig = this.#dolittleConfig ) {
+    discover(dependency, location, language, dolittleConfig = this.dolittleConfig ) {
         if (dependency.discoverType === 'namespace') {
-            return this.#createNamespace(dependency, location, dolittleConfig);
+            return this.#_createNamespace(dependency, location, dolittleConfig);
         }
         else if (dependency.discoverType === 'multipleFiles') {
-            return this.#discoverMultipleFiles(dependency, location, language, dolittleConfig);
+            return this.#_discoverMultipleFiles(dependency, location, language, dolittleConfig);
         }
 
         throw new Error(`Cannot handle discoveryType '${dependency.discoverType}'`);
@@ -59,22 +86,21 @@ export class DependenciesManager {
      * @param {*} dolittleConfig 
      * @returns {string[] | {value: string, namespace: string}[]} returns a list of 
      */
-    #discoverMultipleFiles(dependency, location, language, dolittleConfig) {
-    
+    #_discoverMultipleFiles(dependency, location, language, dolittleConfig) {
         let filePaths = [];
         if (dependency.fromArea === undefined) {
-            filePaths = this.#folders.searchRecursiveRegex(location, dependency.fileMatch);
+            filePaths = this.folders.searchRecursiveRegex(location, dependency.fileMatch);
         }
         else {
-            const folders = this.#folders.getNearestDirsSearchingUpwards(location, new RegExp(dolittleConfig[language][dependency.fromArea]));
-            folders.forEach(folder => filePaths.push(...this.#folders.searchRecursiveRegex(folder, dependency.fileMatch)));
+            const folders = this.folders.getNearestDirsSearchingUpwards(location, new RegExp(dolittleConfig[language][dependency.fromArea]));
+            folders.forEach(folder => filePaths.push(...this.folders.searchRecursiveRegex(folder, dependency.fileMatch)));
         }
         let results = [];
         if (dependency.contentMatch === undefined) { 
             filePaths.forEach(filePath => {
                 let namespace = '';
                     if (dependency.withNamespace)
-                        namespace = this.#createNamespace(dependency, getFileDirPath(filePath));
+                        namespace = this.#_createNamespace(dependency, getFileDirPath(filePath));
 
                     let item = dependency.withNamespace?  {value: filePath, namespace: namespace}
                         : filePath;
@@ -83,12 +109,12 @@ export class DependenciesManager {
         }
         else {
             filePaths.forEach(filePath => {
-                let content = this.#fileSystem.readFileSync(filePath, 'utf8');
+                let content = this.fileSystem.readFileSync(filePath, 'utf8');
                 let theMatch = content.match(dependency.contentMatch);
                 if (theMatch !== null && theMatch.length > 0) {
                     let namespace = '';
                     if (dependency.withNamespace)
-                        namespace = this.#createNamespace(dependency, getFileDirPath(filePath));
+                        namespace = this.#_createNamespace(dependency, getFileDirPath(filePath));
 
                     let item = dependency.withNamespace?  {value: theMatch[1], namespace: namespace}
                         : theMatch[1];
@@ -105,11 +131,11 @@ export class DependenciesManager {
      * @param {string} location
      * @returns {string} 
      */
-    #createNamespace(dependency, location) {
+    #_createNamespace(dependency, location) {
         let milestoneRegexp = dependency.milestone;
-        const milestonePath = this.#folders.getNearestFileSearchingUpwards(location, milestoneRegexp);
+        const milestonePath = this.folders.getNearestFileSearchingUpwards(location, milestoneRegexp);
         if (milestonePath === null || milestonePath === '') {
-            this.#logger.warn('Could not discover the namespace');
+            this.logger.warn('Could not discover the namespace');
             return '';
         }
         const milestoneFileName = getFileName(milestonePath);
@@ -118,7 +144,7 @@ export class DependenciesManager {
         let segmentPath = location;
         let segment = getFileNameAndExtension(segmentPath);
         
-        while (this.#folders.searchFolderRegex(segmentPath, milestoneRegexp).length === 0) {
+        while (this.folders.searchFolderRegex(segmentPath, milestoneRegexp).length === 0) {
             namespaceSegments.push(segment);
             segmentPath = getFileDir(segmentPath);
             segment = getFileName(segmentPath);

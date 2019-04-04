@@ -32,14 +32,14 @@ function throwIfInvalidArea(area) {
   */
 export class ArtifactTemplate
 {
-    #boilerplate;
-    #name;
-    #type;
-    #area;
-    #description;
-    #dependencies;
-    #includedFiles;
-    #path;
+    #_boilerplate;
+    #_name;
+    #_type;
+    #_area;
+    #_description;
+    #_dependencies;
+    #_includedFiles;
+    #_path;
     /**
      *Creates an instance of ArtifactTemplate.
      * @param {Boilerplate} boilerplate
@@ -53,19 +53,25 @@ export class ArtifactTemplate
      * @memberof ArtifactTemplate
      */
     constructor (boilerplate, name, type, area, description, dependencies, includedFiles, path) {
-        this.#boilerplate = boilerplate;
-        this.#name = name;
-        this.#type = type;
-        this.#area = area;
-        this.#description = description;
-        this.#dependencies = dependencies || [];
-        this.#includedFiles = includedFiles || [];
-        this.#path = path;
+        this.#_boilerplate = boilerplate;
+        this.#_name = name;
+        this.#_type = type;
+        this.#_area = area;
+        this.#_description = description;
+        this.#_dependencies = dependencies || [];
+        this.#_includedFiles = includedFiles || [];
+        this.#_path = path;
 
         throwIfInvalidArea(area);
     }
+    /**
+     * Gets the parent boilerplate object of the artifact template
+     * @type {Boilerplate}
+     * @readonly
+     * @memberof ArtifactTemplate
+     */
     get boilerplate() {
-        return this.#boilerplate;
+        return this.#_boilerplate;
     }
     /**
      * Gets the name of the artifact template
@@ -74,14 +80,14 @@ export class ArtifactTemplate
      * @memberof ArtifactTemplate
      */
     get name() {
-        return this.#name;
+        return this.#_name;
     }
     /**
      * Gets the type of the artifact template
      * @returns {string}
      */
     get type() {
-        return this.#type;
+        return this.#_type;
     }
     /**
      * Gets the area of the artifact.
@@ -91,7 +97,7 @@ export class ArtifactTemplate
      * @memberof ArtifactTemplate
      */
     get area() {
-        return this.#area;
+        return this.#_area;
     }
     /**
      * Gets the description of the artifact template
@@ -100,7 +106,7 @@ export class ArtifactTemplate
      * @memberof ArtifactTemplate
      */
     get description() {
-        return this.#description;
+        return this.#_description;
     }
     /**
      * Gets the dependencies of the template
@@ -108,7 +114,7 @@ export class ArtifactTemplate
      * @memberof ArtifactTemplate
      */
     get dependencies() {
-        return this.#dependencies;
+        return this.#_dependencies;
     }
     /**
      * Gets the list of files that needs to be templated
@@ -117,7 +123,7 @@ export class ArtifactTemplate
      * @memberof ArtifactTemplate
      */
     get includedFiles() {
-        return this.#includedFiles;
+        return this.#_includedFiles;
     }
     /**
      * Gets the path of the template file
@@ -126,7 +132,7 @@ export class ArtifactTemplate
      * @memberof ArtifactTemplate
      */
     get path() {
-        return this.#path;
+        return this.#_path;
     }
     /**
      * Gets a list of the files that needs to be created
@@ -135,7 +141,7 @@ export class ArtifactTemplate
      * @memberof ArtifactTemplate
      */
     getFilesToCreate() {
-        const dir = getFileDirPath(this.#path); 
-        return this.#includedFiles.map(_ => _path.join(dir, _));
+        const dir = getFileDirPath(path); 
+        return includedFiles.map(_ => _path.join(dir, _));
     }
 }

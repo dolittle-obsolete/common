@@ -26,11 +26,11 @@ function expandPath(filepath) {
  * @class ConfigManager
  */
 export class ConfigManager {
-    #fileSystem;
-    #configParser;
-    #logger;
-    #centralFolderLocation;
-    #isFirstRun = false;
+    #_fileSystem;
+    #_configParser;
+    #_logger;
+    #_centralFolderLocation;
+    #_isFirstRun = false;
     /**
      * Initializes a new instance of {ConfigManager}
      * @param {import('fs-extra')} fileSystem
@@ -38,48 +38,37 @@ export class ConfigManager {
      * @param {import('winston').Logger} logger
      */
     constructor(fileSystem, configParser, logger) {
-        this.#fileSystem = fileSystem;
-        this.#configParser = configParser;
-        this.#logger = logger;  
+        this.#_fileSystem = fileSystem;
+        this.#_configParser = configParser;
+        this.#_logger = logger;  
         
-        this.#centralFolderLocation = expandPath(centralFolder);
-        this.#makeSureFolderExists();
+        this.#_centralFolderLocation = expandPath(centralFolder);
+        this.#_makeSureFolderExists();
     }
     /**
-     * Make sure the central folder exists
+     * 
+     * @type {import('fs-extra')}
+     * @readonly
+     * @memberof ConfigManager
      */
-    #makeSureFolderExists() {
-        if( !this.#fileSystem.existsSync(this.#centralFolderLocation)) {
-            this.#isFirstRun = true;
-            this.#logger.info('Central Dolittle folder does not exist - creating it and setting up default configuration');
-            try {
-                this.#fileSystem.ensureDirSync(this.#centralFolderLocation);
-            } catch(err)
-            {
-                try {
-                    let shell = require('shelljs');
-                    shell.mkdir('-p', this.#centralFolderLocation);
-        
-                } catch(err)
-                {
-                    this.#logger.error('Could not create .dolittle folder at root: ', err);
-                    this.#logger.info('Try creating this directory manually: ', this.#centralFolderLocation);
-                    throw new Error('Could not create .dolittle directory');
-                }
-            }
-            let config = new Config();
-            this.#fileSystem.writeFile(this.configFileLocation, JSON.stringify(config));
-        } else {
-            this.#isFirstRun = false;
-        }
+    get fileSystem() {
+        return this.#_fileSystem;
     }
-
+    /**
+     * 
+     * @type {import('winston').Logger}
+     * @readonly
+     * @memberof ConfigManager
+     */
+    get logger() {
+        return this.#_logger;
+    }
     /**
      * Gets the central folder location
      * @returns {string} The path to the central folder
      */
     get centralFolderLocation() {
-        return this.#centralFolderLocation;
+        return this.#_centralFolderLocation;
     }
 
     /**
@@ -87,7 +76,7 @@ export class ConfigManager {
      * @returns {string} The path to the config file
      */
     get configFileLocation() {
-        return path.join(this.#centralFolderLocation, configFile);
+        return path.join(this.centralFolderLocation, configFile);
     }
 
     /**
@@ -95,6 +84,35 @@ export class ConfigManager {
      * @returns {boolean} True if it is, false if not
      */
     get isFirstRun() {
-        return this.#isFirstRun;
+        return this.#_isFirstRun;
+    }
+
+    /**
+     * Make sure the central folder exists
+     */
+    #_makeSureFolderExists() {
+        if( !this.fileSystem.existsSync(this.centralFolderLocation)) {
+            this.isFirstRun = true;
+            this.logger.info('Central Dolittle folder does not exist - creating it and setting up default configuration');
+            try {
+                this.fileSystem.ensureDirSync(this.centralFolderLocation);
+            } catch(err)
+            {
+                try {
+                    let shell = require('shelljs');
+                    shell.mkdir('-p', this.centralFolderLocation);
+        
+                } catch(err)
+                {
+                    this.logger.error('Could not create .dolittle folder at root: ', err);
+                    this.logger.info('Try creating this directory manually: ', this.centralFolderLocation);
+                    throw new Error('Could not create .dolittle directory');
+                }
+            }
+            let config = new Config();
+            this.fileSystem.writeFile(this.configFileLocation, JSON.stringify(config));
+        } else {
+            this.isFirstRun = false;
+        }
     }
 }

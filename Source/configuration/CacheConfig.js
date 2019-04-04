@@ -25,11 +25,11 @@ export class CacheConfig extends Conf {
      */
     constructor(configName, nodeModulesFolder, defaultObj) {
         super({
-                projectName: '.dolittle', 
-                configName,
-                cwd: path.join(nodeModulesFolder, '@dolittle', '.dolittle'),
-                defaults: defaultObj,
-                projectSuffix: ''
-            });
+            projectName: '.dolittle', 
+            configName,
+            cwd: path.join(nodeModulesFolder, '@dolittle', '.dolittle'),
+            defaults: defaultObj,
+            projectSuffix: ''
+        });
     }
 }

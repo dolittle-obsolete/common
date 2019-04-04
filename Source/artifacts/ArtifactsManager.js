@@ -19,10 +19,10 @@ export const artifactsBoilerplateType = 'artifacts';
  * @class ArtifactsManager
  */
 export class ArtifactsManager {
-    #boilerplatesManager;
-    #folders;
-    #fileSystem;
-    #logger;
+    #_boilerplatesManager;
+    #_folders;
+    #_fileSystem;
+    #_logger;
     
     /**
      * Creates an instance of ArtifactsManager.
@@ -33,10 +33,46 @@ export class ArtifactsManager {
      * @memberof ArtifactsManager
      */
     constructor(boilerplatesManager, folders, fileSystem, logger) {
-        this.#boilerplatesManager = boilerplatesManager;
-        this.#folders = folders;
-        this.#fileSystem = fileSystem;
-        this.#logger = logger;
+        this.#_boilerplatesManager = boilerplatesManager;
+        this.#_folders = folders;
+        this.#_fileSystem = fileSystem;
+        this.#_logger = logger;
+    }
+    /**
+     * 
+     * @type {BoilerplatesManager}
+     * @readonly
+     * @memberof ArtifactsManager
+     */
+    get boilerplatesManager() {
+        return this.#_boilerplatesManager;
+    }
+    /**
+     * 
+     * @type {Folders}
+     * @readonly
+     * @memberof ArtifactsManager
+     */
+    get folders() {
+        return this.#_folders;
+    }
+    /**
+     *
+     * @type {import('fs-extra')}
+     * @readonly
+     * @memberof ArtifactsManager
+     */
+    get fileSystem() {
+        return this.#_fileSystem;
+    }
+    /**
+     *
+     * @type {import('winston').Logger}
+     * @readonly
+     * @memberof ArtifactsManager
+     */
+    get logger() {
+        return this.#_logger;
     }
     /**
      * Gets all the dependencies of an artifact type of a given language
@@ -63,7 +99,7 @@ export class ArtifactsManager {
      * @return {Boilerplate | null} The Boilerplate with of the given language
      */
     boilerplateByLanguage(language) {
-        let boilerplates = this.#boilerplatesManager.boilerplatesByLanguageAndType(language, artifactsBoilerplateType);
+        let boilerplates = this.boilerplatesManager.boilerplatesByLanguageAndType(language, artifactsBoilerplateType);
         if (boilerplates === null || boilerplates.length === 0) {
             return null;
         }
@@ -92,20 +128,20 @@ export class ArtifactsManager {
      * @returns {ArtifactTemplate | null}
      */
     templateByBoilerplate(boilerplate, artifactType) {
-        let templateFiles = this.#folders.searchRecursive(boilerplate.contentDirectory, 'template.json');
+        let templateFiles = this.folders.searchRecursive(boilerplate.contentDirectory, 'template.json');
         let templates = [];
         templateFiles.forEach(_ => {
-            let includedFiles = this.#getIncludedFiles(getFileDirPath(_));
-            let template = artifactTemplateFromJson(JSON.parse(this.#fileSystem.readFileSync(_)), _, includedFiles, boilerplate);
+            let includedFiles = this.#_getIncludedFiles(getFileDirPath(_));
+            let template = artifactTemplateFromJson(JSON.parse(this.fileSystem.readFileSync(_)), _, includedFiles, boilerplate);
             if (template.type === artifactType)
                 templates.push(template);
         });
         if (templates.length === 0) {
-            this.#logger.error(`Could not find any artifact templates with artifact type '${artifactType}' and language '${boilerplate.language}'`);
+            this.logger.error(`Could not find any artifact templates with artifact type '${artifactType}' and language '${boilerplate.language}'`);
             return null;
         }
         if (templates.length > 1) {
-            this.#logger.error(`Found multiple artifact templates with artifact type '${artifactType}' and language '${boilerplate.language}'`);
+            this.logger.error(`Found multiple artifact templates with artifact type '${artifactType}' and language '${boilerplate.language}'`);
             return null;
         }
         return templates[0];
@@ -120,12 +156,12 @@ export class ArtifactsManager {
      * 
      */
     createArtifact(context, language, artifactTemplate, destinationPath) {
-        this.#logger.info(`Creating an artifact of type '${artifactTemplate.type}' and language '${language}'`);
-        this.#boilerplatesManager.createArtifactInstance(artifactTemplate, destinationPath, context);
+        this.logger.info(`Creating an artifact of type '${artifactTemplate.type}' and language '${language}'`);
+        this.boilerplatesManager.createArtifactInstance(artifactTemplate, destinationPath, context);
         return true;
     }
 
-    #getIncludedFiles(folderPath) {
-        return this.#folders.searchFolderRegex(folderPath, /.*/).map(filePath => getFileNameAndExtension(filePath)).filter(file => file !== 'template.json');
+    #_getIncludedFiles(folderPath) {
+        return this.folders.searchFolderRegex(folderPath, /.*/).map(filePath => getFileNameAndExtension(filePath)).filter(file => file !== 'template.json');
     }
 }

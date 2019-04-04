@@ -13,8 +13,8 @@ export function resourcesFromJson(obj) {
   */
 export class Resources
 {
-    #readModels;
-    #eventStore;
+    #_readModels;
+    #_eventStore;
     
     /**
       * Instantiates an instance of {Resources}
@@ -22,33 +22,35 @@ export class Resources
       * @param {ResourceTypeImplementation} eventStore
       */
     constructor (readModels, eventStore) {
-        this.#readModels = readModels;
-        this.#eventStore = eventStore;
+        this.#_readModels = readModels;
+        this.#_eventStore = eventStore;
         
     }
     /**
      * Gets the resource type implementations for read models
      * 
+     * @type {ResourceTypeImplementation}
      * @readonly
      * @memberof Core
      */
     get readModels() {
-        return this.#readModels;
+        return this.#_readModels;
     }
     /**
      * The entry point of the bounded context's Core.  A relative path to the folder
      *
+     * @type {ResourceTypeImplementation}
      * @readonly
      * @memberof Core
      */
     get eventStore() {
-        return this.#eventStore;
+        return this.#_eventStore;
     }
 
     toJson() {
         return {
-            readModels: this.#readModels.toJson(),
-            eventStore: this.#eventStore.toJson()
+            readModels: this.readModels.toJson(),
+            eventStore: this.eventStore.toJson()
         };
     }
 }

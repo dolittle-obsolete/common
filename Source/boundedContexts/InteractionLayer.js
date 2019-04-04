@@ -11,10 +11,10 @@ export function interactionLayerFromJson(obj) {
   */
 export class InteractionLayer
 {
-    #type;
-    #language;
-    #framework;
-    #entryPoint;
+    #_type;
+    #_language;
+    #_framework;
+    #_entryPoint;
     /**
       * Instantiates an instance of {InteractionLayer}
       * @param {string} type
@@ -23,10 +23,10 @@ export class InteractionLayer
       * @param {string} entryPoint
       */
     constructor (type, language, framework, entryPoint) {
-        this.#type = type;
-        this.#language = language;
-        this.#framework = framework;
-        this.#entryPoint = entryPoint;
+        this.#_type = type;
+        this.#_language = language;
+        this.#_framework = framework;
+        this.#_entryPoint = entryPoint;
         
     }
     /**
@@ -36,14 +36,14 @@ export class InteractionLayer
      * @memberof InteractionLayer
      */
     get type() {
-        return this.#type;
+        return this.#_type;
     }
     /**
       * Gets the programming language
       * @returns {string} The string representing the programming language
       */
     get language() {
-        return this.#language;
+        return this.#_language;
     }
     /**
      * Gets the framework of this interaction layer
@@ -52,7 +52,7 @@ export class InteractionLayer
      * @memberof InteractionLayer
      */
     get framework() {
-        return this.#framework;
+        return this.#_framework;
     }
     /**
      * The entry point of this specific interaction layer.  A relative path to the folder
@@ -61,16 +61,16 @@ export class InteractionLayer
      * @memberof Core
      */
     get entryPoint() {
-        return this.#entryPoint;
+        return this.#_entryPoint;
     }
 
 
     toJson() {
         return {
-            type: this.#type,
-            language: this.#language,
-            framework: this.#framework,
-            entryPoint: this.#entryPoint
+            type: this.type,
+            language: this.language,
+            framework: this.framework,
+            entryPoint: this.entryPoint
         };
     }
 }

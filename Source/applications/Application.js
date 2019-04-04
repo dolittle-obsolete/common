@@ -10,9 +10,9 @@ export function applicationFromJson(obj, path) {
  * Represents the definition of an application
  */
 export class Application {
-    #id;
-    #name;
-    #path;
+    #_id;
+    #_name;
+    #_path;
     /**
      * Initializes a new instance of {Application}
      * @param {string} id Unique identifier for application
@@ -20,9 +20,9 @@ export class Application {
      * @param {string} path Path of application configuration file
      */
     constructor(id, name, path) {
-        this.#id = id;
-        this.#name = name;
-        this.#path = path;
+        this.#_id = id;
+        this.#_name = name;
+        this.#_path = path;
     }
 
     /**
@@ -30,7 +30,7 @@ export class Application {
      * @returns {string} Global unique identifier
      */
     get id() {
-        return this.#id;
+        return this.#_id;
     }
 
     /**
@@ -38,13 +38,13 @@ export class Application {
      * @returns {string} Name of the application
      */
     get name() {
-        return this.#name;
+        return this.#_name;
     }
     /**
       * Gets the path of the application configuration file
       * @returns {string}
       */
      get path() {
-        return this.#path;
+        return this.#_path;
     }
 }

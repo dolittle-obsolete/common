@@ -11,41 +11,43 @@ export function resourceTypeImplementationFromJson(obj) {
   */
 export class ResourceTypeImplementation
 {
-    #development;
-    #production;
+    #_development;
+    #_production;
     /**
       * Instantiates an instance of {ResourceTypeImplementation}
       * @param {string} development 
       * @param {string} production
       */
     constructor (development, production) {
-        this.#development = development;
-        this.#production = production;
+        this.#_development = development;
+        this.#_production = production;
         
     }
     /**
      * Gets the resource type implementations for read models
      * 
+     * @type {string}
      * @readonly
      * @memberof Core
      */
     get development() {
-        return this.#development;
+        return this.#_development;
     }
     /**
      * The entry point of the bounded context's Core.  A relative path to the folder
      *
+     * @type {string}
      * @readonly
      * @memberof Core
      */
     get production() {
-        return this.#production;
+        return this.#_production;
     }
 
     toJson() {
         return {
-            development: this.#development,
-            production: this.#production
+            development: this.development,
+            production: this.production
         };
     }
 }

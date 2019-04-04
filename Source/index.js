@@ -6,7 +6,6 @@ const rc = require('rc');
 export const filesystem = require('fs-extra');
 
 import winston from 'winston';
-import simpleGit from 'simple-git';
 import Handlebars from 'handlebars';
 
 import { ApplicationsManager } from './applications/ApplicationsManager';
@@ -90,11 +89,7 @@ export const httpWrapper = new HttpWrapper();
 export const configParser = new ConfigParser();
 export const configManager = new ConfigManager(filesystem, configParser, logger);
 
-export var git = simpleGit(configManager.centralFolderLocation);
 
-git.forFolder = (folder) => {
-    return simpleGit(folder);
-};
 
 export const dolittleConfig = rc('dolittle', dolittleConfigDefault);
 
@@ -117,7 +112,7 @@ let dependenciesManager;
 export function getManagers() {
     if (!isInitialized) {
         isInitialized = true;
-        boilerplatesManager = new BoilerplatesManager(configManager, httpWrapper, git, folders, filesystem, logger, Handlebars);
+        boilerplatesManager = new BoilerplatesManager(configManager, httpWrapper, folders, filesystem, logger, Handlebars);
         applicationsManager = new ApplicationsManager(boilerplatesManager, filesystem, logger);
         artifactsManager = new ArtifactsManager(boilerplatesManager, folders, filesystem, logger);
         boundedContextsManager = new BoundedContextsManager(boilerplatesManager, folders, filesystem, logger);
@@ -129,7 +124,7 @@ export function getManagers() {
         artifactsManager,
         boundedContextsManager,
         dependenciesManager
-    }
+    };
 }
 let npmRootSpawn = require('cross-spawn').sync('npm', ['root', '-g']);
 if (npmRootSpawn.error) throw npmRootSpawn.error;

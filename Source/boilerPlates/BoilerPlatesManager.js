@@ -34,61 +34,104 @@ const binaryFiles = [
  */
 export class BoilerplatesManager {
     needsReload = true;
-    #boilerplates;
-    #configManager;
-    #httpWrapper;
-    #folders;
-    #fileSystem;
-    #git;
-    #logger;
-    #handlebars;
+    #_boilerplates;
+    #_configManager;
+    #_httpWrapper;
+    #_folders;
+    #_fileSystem;
+    #_logger;
+    #_handlebars;
 
     /**
      * Initializes a new instance of {BoilerplatesManager}
      * @param {ConfigManager} configManager 
      * @param {HttpWrapper} httpWrapper
-     * @param {import('simple-git/src/git')} git
      * @param {Folders} folders
      * @param {import('fs-extra')} fileSystem
      * @param {import('winston').Logger} logger
      * @param {import('handlebars')} handlebars
      */
-    constructor(configManager, httpWrapper, git, folders, fileSystem, logger, handlebars) {
-        this.#configManager = configManager;
-        this.#httpWrapper = httpWrapper;
-        this.#folders = folders;
-        this.#fileSystem = fileSystem;
-        this.#git = git;
-        this.#handlebars = handlebars;
-        this.#logger = logger;
-        this.#boilerplates = undefined;
+    constructor(configManager, httpWrapper, folders, fileSystem, logger, handlebars) {
+        this.#_configManager = configManager;
+        this.#_httpWrapper = httpWrapper;
+        this.#_folders = folders;
+        this.#_fileSystem = fileSystem;
+        this.#_handlebars = handlebars;
+        this.#_logger = logger;
+        this.#_boilerplates = undefined;
 
         if (! fileSystem.existsSync(boilerplatesConfig.path)) {
             boilerplatesConfig.store = boilerplatesConfig.store;
         }
     }
-
+    /**
+     * 
+     * @type {ConfigManager}
+     * @readonly
+     * @memberof BoilerplatesManager
+     */
+    get configManager() {
+        return this.#_configManager;
+    }
+    /**
+     * 
+     * @type {HttpWrapper}
+     * @readonly
+     * @memberof BoilerplatesManager
+     */
+    get httpWrapper() {
+        return this.#_httpWrapper;
+    }
+    /**
+     * 
+     * @type {Folders}
+     * @readonly
+     * @memberof BoilerplatesManager
+     */
+    get folders() {
+        return this.#_folders;
+    }
+    /**
+     * 
+     * @type {import('fs-extra')}
+     * @readonly
+     * @memberof BoilerplatesManager
+     */
+    get fileSystem() {
+        return this.#_fileSystem;
+    }
+    /**
+     * 
+     * @type {import('winston').Logger}
+     * @readonly
+     * @memberof BoilerplatesManager
+     */
+    get logger() {
+        return this.#_logger;
+    }
+    /**
+     * 
+     * @type {import('handlebars')}
+     * @readonly
+     * @memberof BoilerplatesManager
+     */
+    get handlebars() {
+        return this.#_handlebars;
+    }
     /**
      * Get all available boiler plates
      * @returns {Boilerplate[]} Available boiler plates
      */
     get boilerplates() {
-        if (!this.#boilerplates || this.needsReload) this.loadBoilerplates();
-        return this.#boilerplates;
+        if (!this.#_boilerplates || this.needsReload) this.loadBoilerplates();
+        return this.#_boilerplates;
     }
     /**
      * Gets whether or not there are boiler plates installed
      * @returns {boolean} True if there are, false if not
      */
     get hasBoilerplates() {
-        return this.#boilerplates && this.#boilerplates.length > 0;
-    }
-    /**
-     * Gets the filesystem
-     * @returns {import('fs-extra')}
-     */
-    get fileSystem() {
-        return this.#fileSystem;
+        return this.#_boilerplates && this.#_boilerplates.length > 0;
     }
     /**
      * Gets the paths of the locally globally installed Dolittle boilerplates
@@ -161,7 +204,7 @@ export class BoilerplatesManager {
             let packageJson = this.fileSystem.readJsonSync(path.join(folderPath, 'package.json'));
             if (packageJson.dolittle.tooling === semver.major(toolingPkg.version)) {
                 if (boilerplatesConfigObject[packageJson.name]) {
-                    this.#logger.warn(`Discovered a boilerplate with an already in-use name '${packageJson.name}'.`);
+                    this.logger.warn(`Discovered a boilerplate with an already in-use name '${packageJson.name}'.`);
                     throw new Error(`Found two boilerplates with the same package name targeting the same tooling version.`);
                 }
                 this.needsReload = true;
@@ -222,11 +265,11 @@ export class BoilerplatesManager {
      * Loads all boilerplates and sets the boilerplates property
      */
     loadBoilerplates() {
-        this.#boilerplates = [];
+        this.#_boilerplates = [];
         let boilerplatesConfigObject = boilerplatesConfig.store;
         Object.keys(boilerplatesConfigObject).forEach(key => {
             let folderPath = path.resolve(boilerplatesConfigObject[key]);
-            this.#boilerplates.push(this.#readBoilerplateFromFolder(folderPath));
+            this.#_boilerplates.push(this.#_readBoilerplateFromFolder(folderPath));
         });
         this.needsReload = false;
     }
@@ -238,12 +281,12 @@ export class BoilerplatesManager {
      * @param {object} context 
      */
     createInstance(boilerplate, destination, context) {
-        this.#folders.makeFolderIfNotExists(destination);
-        this.#folders.copy(destination, boilerplate.contentDirectory);
+        this.folders.makeFolderIfNotExists(destination);
+        this.folders.copy(destination, boilerplate.contentDirectory);
         boilerplate.pathsNeedingBinding.forEach(_ => {
             let pathToRename = path.join(destination, _);
             let segments = [];
-            pathToRename.split(/(\\|\/)/).forEach(segment => segments.push(this.#handlebars.compile(segment)(context)));
+            pathToRename.split(/(\\|\/)/).forEach(segment => segments.push(this.handlebars.compile(segment)(context)));
             let result = segments.join('');
             this.fileSystem.renameSync(pathToRename, result);
         });
@@ -251,7 +294,7 @@ export class BoilerplatesManager {
         boilerplate.filesNeedingBinding.forEach(_ => {
             let file = path.join(destination, _);
             let content = this.fileSystem.readFileSync(file, 'utf8');
-            let template = this.#handlebars.compile(content);
+            let template = this.handlebars.compile(content);
             let result = template(context);
             this.fileSystem.writeFileSync(file, result);
         });
@@ -263,7 +306,7 @@ export class BoilerplatesManager {
      * @param {any} context 
      */
     createArtifactInstance(artifactTemplate, destination, context) {
-        this.#folders.makeFolderIfNotExists(destination);
+        this.folders.makeFolderIfNotExists(destination);
         let filesToCreate = artifactTemplate.getFilesToCreate();
         
         filesToCreate.forEach( filePath => {
@@ -271,10 +314,10 @@ export class BoilerplatesManager {
             const oldContent = this.fileSystem.readFileSync(filePath, 'utf8');
             let segments = [];
 
-            path.join(destination, filename).split(/(\\|\/)/).forEach(segment => segments.push(this.#handlebars.compile(segment)(context)));
+            path.join(destination, filename).split(/(\\|\/)/).forEach(segment => segments.push(this.handlebars.compile(segment)(context)));
             let newFilePath = segments.join('');
            
-            let template = this.#handlebars.compile(oldContent);
+            let template = this.handlebars.compile(oldContent);
             let newContent = template(context);
             this.fileSystem.writeFileSync(newFilePath, newContent);
         });
@@ -287,14 +330,14 @@ export class BoilerplatesManager {
      * @returns {Boilerplate}
      * @memberof BoilerplatesManager
      */
-    #readBoilerplateFromFolder(folder) {
+    #_readBoilerplateFromFolder(folder) {
         let boilerplatePath = path.join(folder, 'boilerplate.json');
         
-        if (!this.#fileSystem.existsSync(boilerplatePath)) throw new Error(`Could not find boilerplate configuration in '${folder}'`);
+        if (!this.fileSystem.existsSync(boilerplatePath)) throw new Error(`Could not find boilerplate configuration in '${folder}'`);
 
-        let boilerplateObject = JSON.parse(this.#fileSystem.readFileSync(boilerplatePath, 'utf8'));
+        let boilerplateObject = JSON.parse(this.fileSystem.readFileSync(boilerplatePath, 'utf8'));
 
-        return this.#parseBoilerplate(boilerplateObject, boilerplatePath);
+        return this.#_parseBoilerplate(boilerplateObject, boilerplatePath);
     }
 
     /**
@@ -303,7 +346,7 @@ export class BoilerplatesManager {
      * @param {*} boilerplateObject
      * @param {string} boilerplatePath The path of the boilerplate.json file
      */
-    #parseBoilerplate(boilerplateObject, boilerplatePath) {
+    #_parseBoilerplate(boilerplateObject, boilerplatePath) {
         boilerplateObject.path = boilerplatePath;
         let pathsNeedingBinding = boilerplateObject.pathsNeedingBinding || [];
         let filesNeedingBinding = boilerplateObject.filesNeedingBinding || [];
@@ -315,7 +358,7 @@ export class BoilerplatesManager {
             }
             
             if (! boilerplateObject.pathsNeedingBinding || ! boilerplateObject.filesNeedingBinding) {
-                let paths = this.#folders.getFoldersAndFilesRecursivelyIn(contentFolder);
+                let paths = this.folders.getFoldersAndFilesRecursivelyIn(contentFolder);
                 paths = paths.filter(_ => {
                     let include = true;
                     binaryFiles.forEach(b => {
@@ -326,9 +369,9 @@ export class BoilerplatesManager {
                 pathsNeedingBinding = paths.filter(_ => _.indexOf('{{') > 0).map(_ => _.substr(contentFolder.length + 1));
                 filesNeedingBinding = [];
                 paths.forEach(_ => {
-                    let stat = this.#fileSystem.statSync(_);
+                    let stat = this.fileSystem.statSync(_);
                     if (!stat.isDirectory()) {
-                        let file = this.#fileSystem.readFileSync(_);
+                        let file = this.fileSystem.readFileSync(_);
                         if (file.indexOf('{{') >= 0) {
                             filesNeedingBinding.push(_.substr(contentFolder.length + 1));
                         }
@@ -356,9 +399,9 @@ export class BoilerplatesManager {
         );
     }
 
-    #warnIfUsingOldSystem() {
-        const filePath = path.join(this.#configManager.centralFolderLocation, 'boiler-plates.json');
-        if (this.#fileSystem.existsSync(filePath)) {
+    #_warnIfUsingOldSystem() {
+        const filePath = path.join(this.configManager.centralFolderLocation, 'boiler-plates.json');
+        if (this.fileSystem.existsSync(filePath)) {
             throw new Error(
 `I see that there has been a long time since you've updated the dolittle tooling.
 

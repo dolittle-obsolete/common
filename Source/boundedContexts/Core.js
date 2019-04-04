@@ -11,16 +11,16 @@ export function coreFromJson(obj) {
   */
 export class Core
 {
-    #language;
-    #entryPoint;
+    #_language;
+    #_entryPoint;
     /**
       * Instantiates an instance of Core
       * @param {string} language 
       * @param {string} entryPoint
       */
     constructor (language, entryPoint) {
-        this.#language = language;
-        this.#entryPoint = entryPoint;
+        this.#_language = language;
+        this.#_entryPoint = entryPoint;
         
     }
     /**
@@ -28,22 +28,23 @@ export class Core
       * @returns {string} The string representing the programming language
       */
     get language() {
-        return this.#language;
+        return this.#_language;
     }
     /**
      * The entry point of the bounded context's Core.  A relative path to the folder
      *
+     * @type {string}
      * @readonly
      * @memberof Core
      */
     get entryPoint() {
-        return this.#entryPoint;
+        return this.#_entryPoint;
     }
 
     toJson() {
         return {
-            language: this.#language,
-            entryPoint: this.#entryPoint
+            language: this.language,
+            entryPoint: this.entryPoint
         };
     }
 }
