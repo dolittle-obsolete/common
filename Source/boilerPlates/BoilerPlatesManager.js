@@ -13,6 +13,7 @@ import { Folders } from '../Folders';
 import { ConfigManager } from '../configuration/ConfigManager';
 import { ArtifactTemplate } from '../artifacts/ArtifactTemplate';
 import {boilerplatesConfig, nodeModulesPath} from '../index';
+import artifactsBoilerplateType from '../artifacts/ArtifactsManager';
 
 const toolingPkg = require('../../package.json');
 
@@ -307,7 +308,7 @@ export class BoilerplatesManager {
         let pathsNeedingBinding = boilerplateObject.pathsNeedingBinding || [];
         let filesNeedingBinding = boilerplateObject.filesNeedingBinding || [];
         
-        if (boilerplateObject.type != 'artifacts') {
+        if (boilerplateObject.type != artifactsBoilerplateType) {
             const contentFolder = path.join(path.dirname(boilerplatePath), 'Content');
             if (! this.fileSystem.existsSync(contentFolder)) {
                 throw new Error(`Missing Content Folder when parsing boilerplate at path ${boilerplatePath}`);

@@ -5,6 +5,7 @@
 import { Dependency } from '../dependencies/Dependency';
 import { getFileDirPath } from '../helpers';
 import _path from 'path';
+import artifactsBoilerplateType from '../artifacts/ArtifactsManager';
 
 /**
  * Represents a boiler plate
@@ -49,7 +50,7 @@ export class Boilerplate {
         this.#pathsNeedingBinding = pathsNeedingBinding || [];
         this.#filesNeedingBinding = filesNeedingBinding || [];
         let dir = getFileDirPath(this.#path);
-        this.#contentDirectory = _path.join(dir, 'Content');
+        this.#contentDirectory = _path.join(dir, type === artifactsBoilerplateType? 'Templates' : 'Content');
     }
 
     /**
