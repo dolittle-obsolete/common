@@ -5,14 +5,15 @@
 import { dependencyFromJson, Dependency } from '../dependencies/Dependency';
 import { areas, getFileDirPath } from '../helpers';
 import _path from 'path';
-import { Boilerplate } from '../boilerplates/Boilerplate';
+import { ArtifactsBoilerplate } from '../boilerPlates/ArtifactsBoilerplate';
 /**
  * Creates an {ArtifactTemplate} from json object
  *
  * @export
  * @param {any} obj The template json object
  * @param {string} path The path of the template file
- * @param {string[]} path The files that needs to be created by the template
+ * @param {string[]} includedFiles The files that needs to be created by the template
+ * @param {ArtifactsBoilerplate} boilerplate
  * @returns The created {ArtifactTemplate}
  */
 export function artifactTemplateFromJson(obj, path, includedFiles, boilerplate) { 
@@ -42,7 +43,7 @@ export class ArtifactTemplate
     #_path;
     /**
      *Creates an instance of ArtifactTemplate.
-     * @param {Boilerplate} boilerplate
+     * @param {ArtifactsBoilerplate} boilerplate
      * @param {string} name
      * @param {string} type
      * @param {string} area
@@ -66,7 +67,7 @@ export class ArtifactTemplate
     }
     /**
      * Gets the parent boilerplate object of the artifact template
-     * @type {Boilerplate}
+     * @type {ArtifactsBoilerplate}
      * @readonly
      * @memberof ArtifactTemplate
      */
@@ -135,13 +136,26 @@ export class ArtifactTemplate
         return this.#_path;
     }
     /**
+     * Gets all the dependencies needed to create this artifact
+     *
+     * @returns {Dependency[]}
+     * @memberof ArtifactTemplate
+     */
+    allDependencies() {
+        let dependencies = [];
+        dependencies.push(...this.boilerplate.dependencies);
+        dependencies.push(...this.dependencies);
+
+        return dependencies;
+    }
+    /**
      * Gets a list of the files that needs to be created
      *
      * @returns {string[]}
      * @memberof ArtifactTemplate
      */
     getFilesToCreate() {
-        const dir = getFileDirPath(path); 
+        const dir = getFileDirPath(this.path); 
         return includedFiles.map(_ => _path.join(dir, _));
     }
 }

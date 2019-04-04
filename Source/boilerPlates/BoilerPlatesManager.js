@@ -347,6 +347,7 @@ export class BoilerplatesManager {
      * 
      * @param {*} boilerplateObject
      * @param {string} boilerplatePath The path of the boilerplate.json file
+     * @returns {BaseBoilerplate}
      */
     #_parseBoilerplate(boilerplateObject, boilerplatePath) {
         if (boilerplateObject.type === artifactsBoilerplateType) {
@@ -358,7 +359,10 @@ export class BoilerplatesManager {
                 boilerplateObject.dependencies !== undefined? 
                     Object.keys(boilerplateObject.dependencies).map(key => dependencyFromJson(boilerplateObject.dependencies[key], key))
                     : [],
-                boilerplatePath);
+                boilerplatePath,
+                this.folders,
+                this.fileSystem
+            );
         }
         else {
             let bindings = this.#_getBoilerplateBindings(boilerplatePath);

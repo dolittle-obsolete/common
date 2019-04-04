@@ -22,7 +22,7 @@ export class a_system_that_has_a_boilerplate_with_a_dependency {
             readFileSync: sinon.stub()
         };
 
-        this.artifacts_manager = new ArtifactsManager(this.boiler_plates_manager, this.folders, this.file_system, logger);
+        this.artifacts_manager = new ArtifactsManager(this.boiler_plates_manager, logger);
 
         this.artifact_type = 'the_artifact_type';
         this.language = 'csharp';
@@ -51,6 +51,6 @@ export class a_system_that_has_a_boilerplate_with_a_dependency {
         this.folders.searchFolderRegex.returns([]);
         this.file_system.readFileSync.returns(JSON.stringify(this.artifact_template));
         
-        this.artifacts_manager = new ArtifactsManager(this.boiler_plates_manager, this.folders, this.file_system, logger);
+        this.artifacts_manager = new ArtifactsManager(this.boiler_plates_manager, logger);
     }
  }
