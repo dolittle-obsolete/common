@@ -5,6 +5,7 @@
 import { Dependency } from '../dependencies/Dependency';
 import { BaseBoilerplate } from './BaseBoilerplate';
 
+export const artifactsBoilerplateContentFolderName = 'Templates';
 /**
  * Represents a boilerplate for artifacts
  */

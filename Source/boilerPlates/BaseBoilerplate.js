@@ -6,6 +6,8 @@ import { Dependency } from '../dependencies/Dependency';
 import { getFileDirPath } from '../helpers';
 import _path from 'path';
 import artifactsBoilerplateType from '../artifacts/ArtifactsManager';
+import { artifactsBoilerplateContentFolderName } from './ArtifactsBoilerplate';
+import { boilerplateContentFolderName } from './Boilerplate';
 
 /**
  * Represents the base representation of a boilerplate
@@ -34,9 +36,11 @@ export class BaseBoilerplate {
         this.#_type = type;
         this.#_dependencies = dependencies;
         this.#_path = path;
-        this.#_contentDirectory = _path.join(getFileDirPath(path), type === artifactsBoilerplateType? 'Templates' : 'Content');
+        this.#_contentDirectory = _path.join(getFileDirPath(path), 
+            type === artifactsBoilerplateType? 
+                artifactsBoilerplateContentFolderName 
+                : boilerplateContentFolderName);
     }
-
     /**
      * Get the name of the {Boilerplate}
      * @returns {string} Name of {Boilerplate}

@@ -5,6 +5,7 @@
 import { Dependency } from '../dependencies/Dependency';
 import { BaseBoilerplate } from './BaseBoilerplate';
 
+export const boilerplateContentFolderName = 'Content';
 /**
  * Represents the standard boilerplate, meaning a non-artifacts boilerplate 
  */
