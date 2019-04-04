@@ -374,8 +374,8 @@ export class BoilerplatesManager {
                 boilerplateObject.framework,
                 boilerplateObject.parent,
                 boilerplatePath,
-                bindings.pathsNeedingBinding ,
-                bindings.filesNeedingBinding
+                bindings.pathsNeedingBinding,
+                bindings.filesNeedingBinding)
         }
     }
     /**
