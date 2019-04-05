@@ -99,6 +99,7 @@ export class ApplicationsManager {
      * @returns {boolean} Whether or not the application was created successfully
      */
     createApplication(context, destinationPath, boilerplate) {
+        this.logger.info(`Creating an application of language '${boilerplate.language}' at destination ${destinationPath}`);
         this.boilerplatesManager.createInstance(boilerplate, destinationPath, context);
         return true;
     }

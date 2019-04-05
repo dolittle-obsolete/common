@@ -66,7 +66,7 @@ export class ArtifactsManager {
      * 
      */
     createArtifact(context, language, artifactTemplate, destinationPath) {
-        this.logger.info(`Creating an artifact of type '${artifactTemplate.type}' and language '${language}'`);
+        this.logger.info(`Creating an artifact of type '${artifactTemplate.type}' and language '${language}' at destination ${destinationPath}`);
         this.boilerplatesManager.createArtifactInstance(artifactTemplate, destinationPath, context);
         return true;
     }
