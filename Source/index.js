@@ -38,26 +38,6 @@ function setupHandlebars() {
     });
 }
 
-export {Application} from './applications/Application';
-export {ApplicationsManager} from './applications/ApplicationsManager';
-export { ArtifactsManager } from './artifacts/ArtifactsManager';
-export {ArtifactTemplate} from './artifacts/ArtifactTemplate';
-export {Boilerplate as Boilerplate} from './boilerplates/Boilerplate';
-export {BoilerplatesManager as BoilerplatesManager} from './boilerplates/BoilerplatesManager';
-export {BoundedContext} from './boundedContexts/BoundedContext';
-export {BoundedContextsManager} from './boundedContexts/BoundedContextsManager';
-export {Core} from './boundedContexts/Core'
-export {Config} from './configuration/Config';
-export {Cluster} from './configuration/Cluster';
-export {ConfigManager} from './configuration/ConfigManager';
-export {ConfigParser} from './configuration/ConfigParser';
-export { DependenciesManager } from './dependencies/DependenciesManager';
-export {Dependency} from './dependencies/Dependency';
-
-export {Folders} from './Folders';
-export {Guid} from './Guid';
-export {HttpWrapper} from './HttpWrapper';
-
 export const dolittleConfigDefault = {
     externalBoilerplates: [],
     any: {
@@ -89,25 +69,38 @@ export const httpWrapper = new HttpWrapper();
 export const configParser = new ConfigParser();
 export const configManager = new ConfigManager(filesystem, configParser, logger);
 
-
-
 export const dolittleConfig = rc('dolittle', dolittleConfigDefault);
 
 export const getDolittleConfig = () => rc('dolittle', dolittleConfigDefault);
 
 export const folders = new Folders(filesystem);
+
 setupHandlebars();
 
 let isInitialized = false;
-
+/**
+ * @type {BoilerplatesManager}
+ */
 let boilerplatesManager;
+/**
+ * @type {ApplicationsManager}
+ */
 let applicationsManager;
+/**
+ * @type {ArtifactsManager}
+ */
 let artifactsManager;
+/**
+ * @type {BoundedContextsManager}
+ */
 let boundedContextsManager;
+/**
+ * @type {DependenciesManager}
+ */
 let dependenciesManager;
+
 /**
  * Initializes the tooling system and returns the managers
- *
  */
 export function getManagers() {
     if (!isInitialized) {
