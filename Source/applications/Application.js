@@ -27,7 +27,9 @@ export class Application {
 
     /**
      * Gets the unique identifier for the application
-     * @returns {string} Global unique identifier
+     * @type {string}
+     * @readonly
+     * @memberof Application
      */
     get id() {
         return this.#_id;
@@ -35,14 +37,18 @@ export class Application {
 
     /**
      * Gets the name of the application
-     * @returns {string} Name of the application
+     * @type {string}
+     * @readonly
+     * @memberof Application
      */
     get name() {
         return this.#_name;
     }
     /**
       * Gets the path of the application configuration file
-      * @returns {string}
+      * @type {string}
+      * @readonly
+      * @memberof Application
       */
      get path() {
         return this.#_path;

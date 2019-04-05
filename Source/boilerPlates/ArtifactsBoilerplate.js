@@ -66,10 +66,6 @@ export class ArtifactsBoilerplate extends BaseBoilerplate{
     artifactTemplatesByType(artifactType) {
         return this.artifactTemplates.filter(_ => _.type === artifactType);
     }
-    /**
-     * gets artifact templates belonging to this boilerplate
-     * @returns 
-     */
     #_loadArtifactTemplates() {
         let templateFiles = this.folders.searchRecursive(this.contentDirectory, 'template.json');
         this.#_artifactTemplates = [];

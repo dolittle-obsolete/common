@@ -64,7 +64,8 @@ export class ApplicationsManager {
     /**
      * Gets the application configuration from the given folder
      * @param {string} folder path 
-     * @param {Application | null} application config or null if not found
+     * @returns {Application | null} application config or null if not found
+     * 
      */
     getApplicationFrom(folder) {
         if (! this.hasApplication(folder)) return null;

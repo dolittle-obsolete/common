@@ -76,7 +76,7 @@ export class ArtifactTemplate
     }
     /**
      * Gets the name of the artifact template
-     * @returns {string}
+     * @type {string}
      * @readonly
      * @memberof ArtifactTemplate
      */
@@ -85,7 +85,9 @@ export class ArtifactTemplate
     }
     /**
      * Gets the type of the artifact template
-     * @returns {string}
+     * @type {string}
+     * @readonly
+     * @memberof ArtifactTemplate
      */
     get type() {
         return this.#_type;
@@ -93,7 +95,7 @@ export class ArtifactTemplate
     /**
      * Gets the area of the artifact.
      *
-     * @returns {string}
+     * @type {string}
      * @readonly
      * @memberof ArtifactTemplate
      */
@@ -102,7 +104,7 @@ export class ArtifactTemplate
     }
     /**
      * Gets the description of the artifact template
-     * @returns {string}
+     * @type {string}
      * @readonly
      * @memberof ArtifactTemplate
      */
@@ -111,6 +113,7 @@ export class ArtifactTemplate
     }
     /**
      * Gets the dependencies of the template
+     * @type {Dependency[]}
      * @readonly
      * @memberof ArtifactTemplate
      */
@@ -119,7 +122,7 @@ export class ArtifactTemplate
     }
     /**
      * Gets the list of files that needs to be templated
-     * @returns {string[]}
+     * @type {string[]}
      * @readonly
      * @memberof ArtifactTemplate
      */
@@ -128,7 +131,7 @@ export class ArtifactTemplate
     }
     /**
      * Gets the path of the template file
-     * @returns {string}
+     * @type {string}
      * @readonly
      * @memberof ArtifactTemplate
      */

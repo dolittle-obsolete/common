@@ -43,43 +43,55 @@ export class BaseBoilerplate {
     }
     /**
      * Get the name of the {Boilerplate}
-     * @returns {string} Name of {Boilerplate}
+     * @type {string}
+     * @readonly
+     * @memberof BaseBoilerplate
      */
     get name() { return this.#_name; }
 
     /**
      * Get the language of the {Boilerplate}
-     * @returns {string} Language of the {Boilerplate}
+     * @type {string}
+     * @readonly
+     * @memberof BaseBoilerplate
      */
     get language() { return this.#_language; }
 
     /**
      * Get the description of the {Boilerplate}
-     * @returns {string} Description of the {Boilerplate}
+     * @type {string}
+     * @readonly
+     * @memberof BaseBoilerplate
      */
     get description() { return this.#_description; }
 
     /**
      * Get the type of {Boilerplate}
-     * @returns {string} Type of {Boilerplate}
+     * @type {string}
+     * @readonly
+     * @memberof BaseBoilerplate
      */
     get type() { return this.#_type; }
     /**
      * Gets all the dependencies of the boilerplate
-     * @returns {Dependency[]}
+     * @type {Dependency[]}
+     * @readonly
+     * @memberof BaseBoilerplate
      */
     get dependencies() { return this.#_dependencies; }
 
     /**
      * Get the file path of the {Boilerplate} configuration file
-     * @returns {string}
+     * @type {string}
+     * @readonly
+     * @memberof BaseBoilerplate
      */
     get path() { return this.#_path; }
 
     /**
      * Gets the path of the directory of the boilerplate files 
      *
-     * @returns {string}
+     * @type {string}
      * @readonly
      * @memberof Boilerplate
      */
@@ -100,6 +112,7 @@ export class BaseBoilerplate {
      * Check if this is equal to boilerplate
      *
      * @param {Boilerplate} boilerplate
+     * @returns {boolean}
      * @memberof Boilerplate
      */
     equals(boilerplate) {

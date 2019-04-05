@@ -40,31 +40,41 @@ export class Boilerplate extends BaseBoilerplate {
 
     /**
      * Get the target of {Boilerplate}.
-     * @returns {string} Type of {Boilerplate}
+     * @type {string}
+     * @readonly
+     * @memberof Boilerplate
      */
     get target() { return this.#_target; }
 
     /**
      * Get the framework of {Boilerplate}
-     * @returns {string} Type of {Boilerplate}
+     * @type {string}
+     * @readonly
+     * @memberof Boilerplate
      */
     get framework() { return this.#_framework; }
 
     /**
      * Get the parent boilerplate that this is an adornment boilerplate of
-     * @returns {string} Type of {Boilerplate}
+     * @type {{name: string, type: string, language: string}}
+     * @readonly
+     * @memberof Boilerplate
      */
     get parent() { return this.#_parent; }
 
     /**
      * Get the paths that need binding - relative within the content of the location of the {Boilerplate}
-     * @returns {string[]} Paths
+     * @type {string[]}
+     * @readonly
+     * @memberof Boilerplate
      */
     get pathsNeedingBinding() {return this.#_pathsNeedingBinding; }
 
     /**
      * Gets the files that need binding - relative within the content of the location of the {Boilerplate}
-     * @returns {string[]} Files
+     * @type {string[]}
+     * @readonly
+     * @memberof Boilerplate
      */
     get filesNeedingBinding() {return this.#_filesNeedingBinding; }
 }

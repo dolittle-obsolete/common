@@ -8,7 +8,7 @@ import { BoilerplatesManager } from '../boilerplates/BoilerplatesManager';
 import { Folders } from '../Folders';
 import { boundedContextFromJson, BoundedContext } from './BoundedContext';
 import path from 'path';
-import { groupBy } from '../helpers';
+import { groupBy, getFileDirPath } from '../helpers';
 import { coreFromJson } from './Core';
 import { InteractionLayer } from './InteractionLayer';
 import { resourcesFromJson } from './Resources';
@@ -129,6 +129,7 @@ export class BoundedContextsManager {
      *
      * @param {string} [language=undefined] The language of the bounded context boilerplate
      * @param {string} [boilerplateName=undefined] The name of the boilerplate
+     * @returns {Boilerplate[]}
      * @memberof BoundedContextsManager
      */
     getAdornments(language = undefined, boilerplateName = undefined) {
@@ -139,6 +140,7 @@ export class BoundedContextsManager {
      *
      * @param {string} [language=undefined] The language of the bounded context boilerplate
      * @param {string} [boilerplateName=undefined] The name of the boilerplate
+     * @returns {InteractionLayer[]}
      * @memberof BoundedContextsManager
      */
     getInteractionLayers(language = undefined, boilerplateName = undefined) {
@@ -209,7 +211,9 @@ export class BoundedContextsManager {
         return true;
     }
     /**
-     * Creates an interaction layer and adds it to the bounded context
+     * Creates an interaction layer and adds it to the bounded context by finding it in the folder.
+     * 
+     * Use addInteractionLayerToBoundedContext if you need to add multiple interaction layers
      *
      * @param {*} context
      * @param {Boilerplate} boilerplate
@@ -220,9 +224,26 @@ export class BoundedContextsManager {
     addInteractionLayer(context, boilerplate, boundedContextFolder, entryPoint) {
         let boundedContext = this.getNearestBoundedContextConfig(boundedContextFolder);
         if (!boundedContext) throw new Error('Could not discover the bounded context');
-        this.boilerplatesManager.createInstance(boilerplate, path.join(boundedContext, entryPoint), context);
+        this.boilerplatesManager.createInstance(boilerplate, path.join(getFileDirPath(boundedContext.path), entryPoint), context);
         boundedContext.addInteractionLayer(new InteractionLayer(boilerplate.type, boilerplate.language, boilerplate.framework, entryPoint));
-        this.fileSystem.writeJsonSync(boundedContextConfigPath, boundedContext.toJson(), {spaces: 4, });
+        this.fileSystem.writeJsonSync(boundedContext.path, boundedContext.toJson(), {spaces: 4});
+    }
+    /**
+     * Creates an interaction layer, adds it to the bounded context and returns the bounded context object
+     *
+     * @param {*} context
+     * @param {Boilerplate} boilerplate
+     * @param {BoundedContext} boundedContext
+     * @param {string} entryPoint
+     * @returns {BoundedContext}
+     * @memberof BoundedContextsManager
+     */
+    addInteractionLayerToBoundedContext(context, boilerplate, boundedContext, entryPoint) {
+        this.boilerplatesManager.createInstance(boilerplate, path.join(getFileDirPath(boundedContext.path), entryPoint), context);
+        boundedContext.addInteractionLayer(new InteractionLayer(boilerplate.type, boilerplate.language, boilerplate.framework, entryPoint));
+        this.fileSystem.writeJsonSync(boundedContext.path, boundedContext.toJson(), {spaces: 4});
+
+        return boundedContext;
     }
     
 }
