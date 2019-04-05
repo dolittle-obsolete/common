@@ -63,7 +63,7 @@ export class ArtifactsBoilerplate extends BaseBoilerplate{
      * @returns {ArtifactTemplate[]} Artifact templates with given type 
      * @memberof ArtifactsBoilerplate
      */
-    artifactTemplateByType(artifactType) {
+    artifactTemplatesByType(artifactType) {
         return this.artifactTemplates.filter(_ => _.type === artifactType);
     }
     /**
