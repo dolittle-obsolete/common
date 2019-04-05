@@ -1,9 +1,9 @@
-import { resourceTypeImplementationFromJson, ResourceTypeImplementation } from "./ResourceTypeImplementation";
-
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+*  Copyright (c) Dolittle. All rights reserved.
+*  Licensed under the MIT License. See LICENSE in the project root for license information.
+*--------------------------------------------------------------------------------------------*/
+
+import { resourceTypeImplementationFromJson, ResourceTypeImplementation } from "./ResourceTypeImplementation";
 
 export function resourcesFromJson(obj) {
     return new Resources(resourceTypeImplementationFromJson(obj.readModels), resourceTypeImplementationFromJson(obj.eventStore));

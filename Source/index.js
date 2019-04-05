@@ -17,7 +17,7 @@ import { ConfigParser } from './configuration/ConfigParser';
 import { DependenciesManager } from './dependencies/DependenciesManager';
 import { Folders } from './Folders';
 import { HttpWrapper } from './HttpWrapper';
-import {Guid} from './Guid';
+import { Guid } from './Guid';
 import { ProjectConfig } from './configuration/ProjectConfig';
 import { BoilerplatesConfig } from './configuration/BoilerplatesConfig';
 

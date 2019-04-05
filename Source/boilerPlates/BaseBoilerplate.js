@@ -5,7 +5,7 @@
 import { Dependency } from '../dependencies/Dependency';
 import { getFileDirPath } from '../helpers';
 import _path from 'path';
-import artifactsBoilerplateType from '../artifacts/ArtifactsManager';
+import {artifactsBoilerplateType} from '../artifacts/ArtifactsManager';
 
 /**
  * Represents the base representation of a boilerplate

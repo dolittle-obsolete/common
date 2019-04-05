@@ -12,8 +12,8 @@ import { HttpWrapper } from '../HttpWrapper';
 import { Folders } from '../Folders';
 import { ConfigManager } from '../configuration/ConfigManager';
 import { ArtifactTemplate } from '../artifacts/ArtifactTemplate';
-import {boilerplatesConfig, nodeModulesPath} from '../index';
-import artifactsBoilerplateType from '../artifacts/ArtifactsManager';
+import { boilerplatesConfig, nodeModulesPath } from '../index';
+import { artifactsBoilerplateType } from '../artifacts/ArtifactsManager';
 import { BaseBoilerplate } from './BaseBoilerplate';
 import { ArtifactsBoilerplate } from './ArtifactsBoilerplate';
 

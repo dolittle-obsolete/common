@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { Core, coreFromJson } from './Core';
-import {Resources, resourcesFromJson} from './Resources';
+import { Resources, resourcesFromJson } from './Resources';
 import { InteractionLayer, interactionLayerFromJson } from './InteractionLayer';
 
 export function boundedContextFromJson(obj, path) {
