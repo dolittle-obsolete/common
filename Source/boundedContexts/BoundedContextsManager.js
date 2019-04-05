@@ -113,6 +113,26 @@ export class BoundedContextsManager {
         return boilerplates;
     }
     /**
+     * Gets the adornment boilerplates for a bounded context based on language and boilerplate name
+     *
+     * @param {string} [language=undefined] The language of the bounded context boilerplate
+     * @param {string} [boilerplateName=undefined] The name of the boilerplate
+     * @memberof BoundedContextsManager
+     */
+    getAdornments(language = undefined, boilerplateName = undefined) {
+        return this.boilerplatesManager.getAdornments(boundedContextBoilerplateType, language, boilerplateName).filter(_ => _.type === 'adornment');
+    }
+    /**
+     * Gets the interaction adornment boilerplates for a bounded context based on language and boilerplate name
+     *
+     * @param {string} [language=undefined] The language of the bounded context boilerplate
+     * @param {string} [boilerplateName=undefined] The name of the boilerplate
+     * @memberof BoundedContextsManager
+     */
+    getInteractionLayers(language = undefined, boilerplateName = undefined) {
+        return this.boilerplatesManager.getAdornments(boundedContextBoilerplateType, language, boilerplateName).filter(_ => _.type === 'interaction');
+    }
+    /**
      * Create dependencies used for prompting the user for interaction layers
      *
      * @param {string} [language=undefined] The language of the bounded context boilerplate
@@ -133,27 +153,6 @@ export class BoundedContextsManager {
                 interactionLayers.map(_ => _.name).concat('None'),
                 `Choose ${target} interaction layer`
             ));
-    }
-
-    /**
-     * Gets the adornment boilerplates for a bounded context based on language and boilerplate name
-     *
-     * @param {string} [language=undefined] The language of the bounded context boilerplate
-     * @param {string} [boilerplateName=undefined] The name of the boilerplate
-     * @memberof BoundedContextsManager
-     */
-    getAdornments(language = undefined, boilerplateName = undefined) {
-        return this.boilerplatesManager.getAdornments(boundedContextBoilerplateType, language, boilerplateName).filter(_ => _.type === 'adornment');
-    }
-    /**
-     * Gets the interaction adornment boilerplates for a bounded context based on language and boilerplate name
-     *
-     * @param {string} [language=undefined] The language of the bounded context boilerplate
-     * @param {string} [boilerplateName=undefined] The name of the boilerplate
-     * @memberof BoundedContextsManager
-     */
-    getInteractionLayers(language = undefined, boilerplateName = undefined) {
-        return this.boilerplatesManager.getAdornments(boundedContextBoilerplateType, language, boilerplateName).filter(_ => _.type === 'interaction');
     }
     /**
      * Creates a dolittle bounded context
