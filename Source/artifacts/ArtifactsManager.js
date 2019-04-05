@@ -57,16 +57,15 @@ export class ArtifactsManager {
         return boilerplates;
     }
     /**
-     * Creates an artifact of the given type at the given destination with the given name 
+     * Creates an artifact base on the artifact template at the given destination
      * @param {any} context 
-     * @param {string} language
      * @param {ArtifactTemplate} artifactTemplate
      * @param {string} destinationPath
      * @returns {boolean} Whether or not the artifact was created successfully
      * 
      */
-    createArtifact(context, language, artifactTemplate, destinationPath) {
-        this.logger.info(`Creating an artifact of type '${artifactTemplate.type}' and language '${language}' at destination ${destinationPath}`);
+    createArtifact(context, artifactTemplate, destinationPath) {
+        this.logger.info(`Creating an artifact of type '${artifactTemplate.type}' and language '${artifactTemplate.boilerplate.language}' at destination ${destinationPath}`);
         this.boilerplatesManager.createArtifactInstance(artifactTemplate, destinationPath, context);
         return true;
     }
