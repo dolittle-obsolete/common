@@ -165,8 +165,6 @@ export class BoundedContextsManager {
      * @returns {boolean} Whether or not the bounded context was created successfully
      */
     createBoundedContext(context, boilerplate, destinationPath) {
-        let boilerplate = this.boilerplateByLanguage(language);
-        if (!boilerplate) return false;
         const boundedContextPath = path.join(destinationPath, context.name);
         
         this.boilerplatesManager.createInstance(boilerplate, boundedContextPath, context);
