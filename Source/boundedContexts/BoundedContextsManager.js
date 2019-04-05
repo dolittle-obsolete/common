@@ -107,7 +107,7 @@ export class BoundedContextsManager {
      * @param {string} language 
      * @return {Boilerplate[]} The bounded context {Boilerplate} with of the given language
      */
-    boilerplateByLanguage(language) {
+    boilerplatesByLanguage(language) {
         let boilerplates = this.boilerplatesManager.boilerplatesByLanguageAndType(language, boundedContextBoilerplateType);
         
         return boilerplates;
@@ -155,14 +155,16 @@ export class BoundedContextsManager {
             ));
     }
     /**
-     * Creates a dolittle bounded context
+     * Creates a dolittle bounded context.
+     * 
+     * Interaction layers will be created as well if the dependencies are supplied in the context object.
      *
      * @param {any} context The template context
-     * @param {string} language The core language of the bounded context
+     * @param {Boilerplate} boilerplate The Bounded Context Boilerplate
      * @param {string} destinationPath The absolute path of the destination of the bounded context
      * @returns {boolean} Whether or not the bounded context was created successfully
      */
-    createBoundedContext(context, language, destinationPath) {
+    createBoundedContext(context, boilerplate, destinationPath) {
         let boilerplate = this.boilerplateByLanguage(language);
         if (!boilerplate) return false;
         const boundedContextPath = path.join(destinationPath, context.name);
@@ -171,8 +173,9 @@ export class BoundedContextsManager {
         const boundedContextConfigPath = path.join(boundedContextPath, boundedContextFileName);
         let boundedContextJson = this.fileSystem.readJsonSync(boundedContextConfigPath);
         let interactionLayers = [];
-        if (Object.keys(context).filter(_ => _.startsWith('interaction')).length > 0) {
-            let interactionLayerNames = Object.keys(context).filter(_ => _.startsWith('interaction')).map(prop => context[prop]);
+        let interactionLayerChoices = Object.keys(context).filter(_ => _.startsWith('interaction'));
+        if (interactionLayerChoices.length > 0) {
+            let interactionLayerNames = interactionLayerChoices.map(prop => context[prop]);
             let interactionLayerBoilerplates = this.getInteractionLayers(language, boilerplate.name);
             interactionLayerBoilerplates = interactionLayerBoilerplates.filter(boilerplate => interactionLayerNames.includes(boilerplate.name));
             interactionLayerBoilerplates.forEach(boilerplate => {
@@ -186,7 +189,7 @@ export class BoundedContextsManager {
         }
         let boundedContext = new BoundedContext(boundedContextJson.application, boundedContextJson.boundedContext, boundedContextJson.boundedContextName, 
             resourcesFromJson(boundedContextJson.resources), coreFromJson(boundedContextJson.core), interactionLayers, boundedContextPath);
-        this.fileSystem.writeJsonSync(boundedContextConfigPath, boundedContext.toJson(), {spaces: 4, });
+        this.fileSystem.writeJsonSync(boundedContextConfigPath, boundedContext.toJson(), {spaces: 4});
         return true;
     }
 
