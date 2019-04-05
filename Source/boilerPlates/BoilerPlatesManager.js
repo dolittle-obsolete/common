@@ -204,7 +204,7 @@ export class BoilerplatesManager {
         let boilerplatesConfigObject = {};
         this.installedBoilerplatePaths.forEach(folderPath => {
             let packageJson = this.fileSystem.readJsonSync(path.join(folderPath, 'package.json'));
-            if (packageJson.dolittle.tooling === semver.major(toolingPkg.version)) {
+            if (packageJson.dolittle.tooling === semver.major(toolingPkg.version).toString()) {
                 if (boilerplatesConfigObject[packageJson.name]) {
                     this.logger.warn(`Discovered a boilerplate with an already in-use name '${packageJson.name}'.`);
                     throw new Error(`Found two boilerplates with the same package name targeting the same tooling version.`);

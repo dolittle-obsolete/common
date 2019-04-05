@@ -92,7 +92,7 @@ export class ConfigManager {
      */
     #_makeSureFolderExists() {
         if( !this.fileSystem.existsSync(this.centralFolderLocation)) {
-            this.isFirstRun = true;
+            this.#_isFirstRun = true;
             this.logger.info('Central Dolittle folder does not exist - creating it and setting up default configuration');
             try {
                 this.fileSystem.ensureDirSync(this.centralFolderLocation);
@@ -112,7 +112,7 @@ export class ConfigManager {
             let config = new Config();
             this.fileSystem.writeFile(this.configFileLocation, JSON.stringify(config));
         } else {
-            this.isFirstRun = false;
+            this.#_isFirstRun = false;
         }
     }
 }
