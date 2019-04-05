@@ -5,7 +5,7 @@
 
 import { ArtifactTemplate } from "./ArtifactTemplate";
 import { BoilerplatesManager } from "../boilerplates/BoilerplatesManager";
-import { ArtifactsBoilerplate } from "../boilerPlates/ArtifactsBoilerplate";
+import { BaseBoilerplate } from "../boilerplates/BaseBoilerplate";
 
 export const artifactsBoilerplateType = 'artifacts';
 
@@ -50,7 +50,7 @@ export class ArtifactsManager {
     /**
      * Retrieves the boilerplate configurations for artifacts with the given language
      * @param {string} language 
-     * @return {ArtifactsBoilerplate[]} The Artifact Boilerplates of the given language
+     * @return {BaseBoilerplate[]} The Artifact Boilerplates of the given language
      */
     boilerplatesByLanguage(language) {
         let boilerplates = this.boilerplatesManager.boilerplatesByLanguageAndType(language, artifactsBoilerplateType);

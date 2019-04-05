@@ -3,11 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Boilerplate } from "../boilerplates/Boilerplate";
-import { Dependency } from "../dependencies/Dependency";
 import { BoilerplatesManager } from "../boilerplates/BoilerplatesManager";
 import { Application, applicationFromJson } from "./Application";
 import path from 'path';
+import { BaseBoilerplate } from "../boilerplates/BaseBoilerplate";
 
 export const applicationBoilerplateType = 'application';
 export const applicationFilename = 'application.json';
@@ -85,7 +84,7 @@ export class ApplicationsManager {
     /**
      * Retrieves the boilerplate configurations for application with the given language
      * @param {string} language 
-     * @return {Boilerplate[]} The application {Boilerplate} with of the given language
+     * @return {BaseBoilerplate[]} The application {Boilerplate} with of the given language
      */
     boilerplatesByLanguage(language) {
         let boilerplates = this.boilerplatesManager.boilerplatesByLanguageAndType(language, applicationBoilerplateType);
@@ -96,7 +95,7 @@ export class ApplicationsManager {
      *
      * @param {any} context The template context 
      * @param {string} destinationPath The absolute path of the destination of the application
-     * @param {Boilerplate} boilerplate The boilerplate to create the application from
+     * @param {BaseBoilerplate} boilerplate The boilerplate to create the application from
      * @returns {boolean} Whether or not the application was created successfully
      */
     createApplication(context, destinationPath, boilerplate) {

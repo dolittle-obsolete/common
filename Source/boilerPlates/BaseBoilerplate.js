@@ -6,8 +6,6 @@ import { Dependency } from '../dependencies/Dependency';
 import { getFileDirPath } from '../helpers';
 import _path from 'path';
 import artifactsBoilerplateType from '../artifacts/ArtifactsManager';
-import { artifactsBoilerplateContentFolderName } from './ArtifactsBoilerplate';
-import { boilerplateContentFolderName } from './Boilerplate';
 
 /**
  * Represents the base representation of a boilerplate
@@ -38,8 +36,8 @@ export class BaseBoilerplate {
         this.#_path = path;
         this.#_contentDirectory = _path.join(getFileDirPath(path), 
             type === artifactsBoilerplateType? 
-                artifactsBoilerplateContentFolderName 
-                : boilerplateContentFolderName);
+                'Templates' 
+                : 'Content');
     }
     /**
      * Get the name of the {Boilerplate}
@@ -93,7 +91,7 @@ export class BaseBoilerplate {
      *
      * @type {string}
      * @readonly
-     * @memberof Boilerplate
+     * @memberof BaseBoilerplate
      */
     get contentDirectory() {
         return this.#_contentDirectory;
@@ -102,7 +100,7 @@ export class BaseBoilerplate {
      * Whether or not this boilerplate is the boilerplate of an interaction layer
      *
      * @returns {boolean} 
-     * @memberof Boilerplate
+     * @memberof BaseBoilerplate
      */
     isInteractionLayer() {
         return this.#_type === 'interaction';
@@ -111,9 +109,9 @@ export class BaseBoilerplate {
     /**
      * Check if this is equal to boilerplate
      *
-     * @param {Boilerplate} boilerplate
+     * @param {BaseBoilerplate} boilerplate
      * @returns {boolean}
-     * @memberof Boilerplate
+     * @memberof BaseBoilerplate
      */
     equals(boilerplate) {
         return this.language === boilerplate.language
