@@ -194,7 +194,7 @@ export class BoundedContextsManager {
 
         if (interactionLayerChoices.length > 0) {
             let interactionLayerNames = interactionLayerChoices.map(prop => context[prop]);
-            let interactionLayerBoilerplates = this.getInteractionLayers(language, boilerplate.name);
+            let interactionLayerBoilerplates = this.getInteractionLayers(boilerplate.language, boilerplate.name);
             interactionLayerBoilerplates = interactionLayerBoilerplates.filter(boilerplate => interactionLayerNames.includes(boilerplate.name));
             interactionLayerBoilerplates.forEach(boilerplate => {
                 let entryPoint = `${boilerplate.target[0].toUpperCase()}${boilerplate.target.slice(1)}`;
