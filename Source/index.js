@@ -108,7 +108,7 @@ export function getManagers() {
         boilerplatesManager = new BoilerplatesManager(configManager, httpWrapper, folders, filesystem, logger, Handlebars);
         applicationsManager = new ApplicationsManager(boilerplatesManager, filesystem, logger);
         artifactsManager = new ArtifactsManager(boilerplatesManager, logger);
-        boundedContextsManager = new BoundedContextsManager(boilerplatesManager, folders, filesystem, logger);
+        boundedContextsManager = new BoundedContextsManager(boilerplatesManager, applicationsManager, folders, filesystem, logger);
         dependenciesManager = new DependenciesManager(folders, filesystem, dolittleConfig, logger);
     }
     return {
