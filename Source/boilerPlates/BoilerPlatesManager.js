@@ -315,11 +315,27 @@ export class BoilerplatesManager {
             let result = template(context);
             this.fileSystem.writeFileSync(file, result);
         });
-        boilerplate.scripts.creation.forEach( _ => {
-            const [cmd, ...args] = _.split('.');
-            spawn.sync(cmd, args, {cwd: destination})
-        });
+        let creationScripts = boilerplate.scripts.creation;
 
+        if (creationScripts) {
+            creationScripts.forEach(_ => {
+                let cmd;
+                let args;
+                let cwd = destination;
+                if (_.cmd) {
+                    cmd = _.cmd;
+                    args = _.args;
+                    cwd = _.cwd? path.join(cwd, _.cwd): cwd;
+                } else {
+                    [cmd, ...args] = _.split(' ');
+                }
+                console.log(cmd);
+                console.log(args);
+                console.log(cwd);
+                spawn.sync(cmd, args, {cwd, stdio: "inherit"});
+            });
+        }
+        
     }
     /**
      * Create an instance of {Boilerplate} of an artifact into a specific destination folder with a given context
@@ -380,7 +396,7 @@ export class BoilerplatesManager {
                     Object.keys(boilerplateObject.dependencies).map(key => dependencyFromJson(boilerplateObject.dependencies[key], key))
                     : [],
                 boilerplateObject.namespace,
-                scriptsFromJson(boilerplateObject),
+                scriptsFromJson(boilerplateObject.scripts),
                 boilerplatePath,
                 this.folders,
                 this.fileSystem
@@ -397,7 +413,7 @@ export class BoilerplatesManager {
                     Object.keys(boilerplateObject.dependencies).map(key => dependencyFromJson(boilerplateObject.dependencies[key], key))
                     : [],
                 boilerplateObject.namespace,
-                scriptsFromJson(boilerplateObject),
+                scriptsFromJson(boilerplateObject.scripts),
                 boilerplateObject.target,
                 boilerplateObject.framework,
                 boilerplateObject.parent,
