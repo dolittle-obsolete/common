@@ -17,7 +17,7 @@ import { artifactsBoilerplateType } from '../artifacts/ArtifactsManager';
 import { BaseBoilerplate } from './BaseBoilerplate';
 import { ArtifactsBoilerplate } from './ArtifactsBoilerplate';
 import { scriptsFromJson } from './Scripts';
-
+import spawn from 'cross-spawn';
 const toolingPkg = require('../../package.json');
 
 const boilerplatesDiscoverer = require('@dolittle/boilerplates-discoverer');
@@ -315,6 +315,11 @@ export class BoilerplatesManager {
             let result = template(context);
             this.fileSystem.writeFileSync(file, result);
         });
+        boilerplate.scripts.creation.forEach( _ => {
+            const [cmd, ...args] = _.split('.');
+            spawn.sync(cmd, args, {cwd: destination})
+        });
+
     }
     /**
      * Create an instance of {Boilerplate} of an artifact into a specific destination folder with a given context
