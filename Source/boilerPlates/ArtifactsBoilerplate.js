@@ -7,6 +7,7 @@ import { BaseBoilerplate } from './BaseBoilerplate';
 import { ArtifactTemplate, artifactTemplateFromJson } from '../artifacts/ArtifactTemplate';
 import { Folders } from '../Folders';
 import { getFileDirPath, getFileNameAndExtension } from '../helpers';
+import { Scripts } from './Scripts';
 
 export const artifactsBoilerplateContentFolderName = 'Templates';
 /**
@@ -24,12 +25,13 @@ export class ArtifactsBoilerplate extends BaseBoilerplate{
      * @param {string} type
      * @param {Dependency[]} dependencies
      * @param {string} namespace
+     * @param {Scripts} scripts
      * @param {string} path 
      * @param {Folders} folders
      * @param {import('fs-extra')} fileSystem
      */
-    constructor(language, name, description, type, dependencies, namespace, path, folders, fileSystem) {
-        super(language, name, description, type, dependencies, namespace, path);
+    constructor(language, name, description, type, dependencies, namespace, scripts, path, folders, fileSystem) {
+        super(language, name, description, type, dependencies, namespace, scripts, path);
         this.#_folders = folders;
         this.#_fileSystem = fileSystem;
     }

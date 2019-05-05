@@ -6,6 +6,7 @@ import { Dependency } from '../dependencies/Dependency';
 import { getFileDirPath } from '../helpers';
 import _path from 'path';
 import {artifactsBoilerplateType} from '../artifacts/ArtifactsManager';
+import { Scripts } from './Scripts';
 
 /**
  * Represents the base representation of a boilerplate
@@ -17,6 +18,7 @@ export class BaseBoilerplate {
     #_type;
     #_dependencies;
     #_namespace;
+    #_scripts;
     #_contentDirectory;
     #_path;
     /**
@@ -27,15 +29,17 @@ export class BaseBoilerplate {
      * @param {string} type
      * @param {Dependency[]} dependencies
      * @param {string} namespace
+     * @param {Scripts} scripts
      * @param {string} path 
      */
-    constructor(language, name, description, type, dependencies, namespace, path, ) {
+    constructor(language, name, description, type, dependencies, namespace, scripts, path, ) {
         this.#_language = language;
         this.#_name = name;
         this.#_description = description;
         this.#_type = type;
         this.#_dependencies = dependencies;
         this.#_namespace = namespace;
+        this.#_scripts = scripts;
         this.#_path = path;
         this.#_contentDirectory = _path.join(getFileDirPath(path), 
             type === artifactsBoilerplateType? 
@@ -87,6 +91,13 @@ export class BaseBoilerplate {
      * @memberof BaseBoilerplate
      */
     get namespace() {return this.#_namespace; }
+    /**
+     * Gets the scripts of the {BaseBoilerplate}
+     * @type {Scripts}
+     * @readonly
+     * @memberof BaseBoilerplate
+     */
+    get scripts() {return this.#_scripts;}
 
     /**
      * Get the file path of the boilerplate configuration file

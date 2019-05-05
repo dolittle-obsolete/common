@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { Dependency } from '../dependencies/Dependency';
 import { BaseBoilerplate } from './BaseBoilerplate';
+import { Scripts } from './Scripts';
 
 export const boilerplateContentFolderName = 'Content';
 /**
@@ -23,6 +24,7 @@ export class Boilerplate extends BaseBoilerplate {
      * @param {string} type
      * @param {Dependency[]} dependencies
      * @param {string} namespace
+     * @param {Scripts} scripts
      * @param {string} target
      * @param {string} framework
      * @param {{name: string, type: string, language: string}} parent
@@ -30,8 +32,8 @@ export class Boilerplate extends BaseBoilerplate {
      * @param {string[]} [pathsNeedingBinding]
      * @param {string[]} [filesNeedingBinding]
      */
-    constructor(language, name, description, type, dependencies, namespace, target, framework, parent, path, pathsNeedingBinding, filesNeedingBinding) {
-        super(language, name, description, type, dependencies, namespace, path);
+    constructor(language, name, description, type, dependencies, namespace, scripts, target, framework, parent, path, pathsNeedingBinding, filesNeedingBinding) {
+        super(language, name, description, type, dependencies, namespace, scripts, path);
         this.#_target = target;
         this.#_framework = framework;
         this.#_parent = parent;

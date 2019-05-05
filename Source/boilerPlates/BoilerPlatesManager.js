@@ -16,6 +16,7 @@ import { boilerplatesConfig, nodeModulesPath } from '../index';
 import { artifactsBoilerplateType } from '../artifacts/ArtifactsManager';
 import { BaseBoilerplate } from './BaseBoilerplate';
 import { ArtifactsBoilerplate } from './ArtifactsBoilerplate';
+import { scriptsFromJson } from './Scripts';
 
 const toolingPkg = require('../../package.json');
 
@@ -374,6 +375,7 @@ export class BoilerplatesManager {
                     Object.keys(boilerplateObject.dependencies).map(key => dependencyFromJson(boilerplateObject.dependencies[key], key))
                     : [],
                 boilerplateObject.namespace,
+                scriptsFromJson(boilerplateObject),
                 boilerplatePath,
                 this.folders,
                 this.fileSystem
@@ -390,6 +392,7 @@ export class BoilerplatesManager {
                     Object.keys(boilerplateObject.dependencies).map(key => dependencyFromJson(boilerplateObject.dependencies[key], key))
                     : [],
                 boilerplateObject.namespace,
+                scriptsFromJson(boilerplateObject),
                 boilerplateObject.target,
                 boilerplateObject.framework,
                 boilerplateObject.parent,
