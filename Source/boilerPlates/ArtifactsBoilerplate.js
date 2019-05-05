@@ -23,12 +23,13 @@ export class ArtifactsBoilerplate extends BaseBoilerplate{
      * @param {string} description 
      * @param {string} type
      * @param {Dependency[]} dependencies
+     * @param {string} namespace
      * @param {string} path 
      * @param {Folders} folders
      * @param {import('fs-extra')} fileSystem
      */
-    constructor(language, name, description, type, dependencies, path, folders, fileSystem) {
-        super(language, name, description, type, dependencies, path);
+    constructor(language, name, description, type, dependencies, namespace, path, folders, fileSystem) {
+        super(language, name, description, type, dependencies, namespace, path);
         this.#_folders = folders;
         this.#_fileSystem = fileSystem;
     }

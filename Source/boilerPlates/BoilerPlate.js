@@ -22,6 +22,7 @@ export class Boilerplate extends BaseBoilerplate {
      * @param {string} description 
      * @param {string} type
      * @param {Dependency[]} dependencies
+     * @param {string} namespace
      * @param {string} target
      * @param {string} framework
      * @param {{name: string, type: string, language: string}} parent
@@ -29,8 +30,8 @@ export class Boilerplate extends BaseBoilerplate {
      * @param {string[]} [pathsNeedingBinding]
      * @param {string[]} [filesNeedingBinding]
      */
-    constructor(language, name, description, type, dependencies, target, framework, parent, path, pathsNeedingBinding, filesNeedingBinding) {
-        super(language, name, description, type, dependencies, path);
+    constructor(language, name, description, type, dependencies, namespace, target, framework, parent, path, pathsNeedingBinding, filesNeedingBinding) {
+        super(language, name, description, type, dependencies, namespace, path);
         this.#_target = target;
         this.#_framework = framework;
         this.#_parent = parent;

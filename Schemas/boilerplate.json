@@ -14,7 +14,7 @@
             "type": "string"
         },
         "language": {
-            "description": "The language of the actual boilerplate",
+            "description": "The language of the boilerplate",
             "type": "string",
             "enum": ["any", "csharp", "javascript", "typescript"]
         },
@@ -63,6 +63,10 @@
                 "type": "string"
             }
         },
+        "namespace": {
+            "description": "The namespace of the boilerplate",
+            "type": "string"
+        }
         "dependencies": {
             "$ref": "#/definitions/dependencies"
         }

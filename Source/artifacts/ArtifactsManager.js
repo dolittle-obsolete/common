@@ -50,10 +50,11 @@ export class ArtifactsManager {
     /**
      * Retrieves the boilerplate configurations for artifacts with the given language
      * @param {string} language 
+     * @param {string} [namespace=undefined]
      * @return {BaseBoilerplate[]} The Artifact Boilerplates of the given language
      */
-    boilerplatesByLanguage(language) {
-        let boilerplates = this.boilerplatesManager.boilerplatesByLanguageAndType(language, artifactsBoilerplateType);
+    boilerplatesByLanguage(language, namespace=undefined) {
+        let boilerplates = this.boilerplatesManager.boilerplatesByLanguageAndType(language, artifactsBoilerplateType, namespace);
         return boilerplates;
     }
     /**

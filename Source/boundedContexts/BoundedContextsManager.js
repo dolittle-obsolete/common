@@ -16,6 +16,8 @@ import { ApplicationsManager } from '../applications/ApplicationsManager';
 
 export const boundedContextBoilerplateType = 'boundedContext';
 export const boundedContextFileName = 'bounded-context.json';
+
+const boundedContextAdornmentDependencyName = 'boundedContextAdornment'
 /**
  * 
  *
@@ -117,10 +119,11 @@ export class BoundedContextsManager {
     /**
      * Retrieves the boilerplate configurations for bounded context with the given language
      * @param {string} language 
+     * @param {string} [namespace=undefined]
      * @return {Boilerplate[]} The bounded context {Boilerplate} with of the given language
      */
-    boilerplatesByLanguage(language) {
-        let boilerplates = this.boilerplatesManager.boilerplatesByLanguageAndType(language, boundedContextBoilerplateType);
+    boilerplatesByLanguage(language, namespace=undefined) {
+        let boilerplates = this.boilerplatesManager.boilerplatesByLanguageAndType(language, boundedContextBoilerplateType, namespace);
         
         return boilerplates;
     }
@@ -129,33 +132,60 @@ export class BoundedContextsManager {
      *
      * @param {string} [language=undefined] The language of the bounded context boilerplate
      * @param {string} [boilerplateName=undefined] The name of the boilerplate
+     * @param {string} [namespace=undefined] The namespace of the boilerplate
      * @returns {Boilerplate[]}
      * @memberof BoundedContextsManager
      */
-    getAdornments(language = undefined, boilerplateName = undefined) {
-        return this.boilerplatesManager.getAdornments(boundedContextBoilerplateType, language, boilerplateName).filter(_ => _.type === 'adornment');
+    getAdornments(language = undefined, boilerplateName = undefined, namespace = undefined) {
+        return this.boilerplatesManager.getAdornments(boundedContextBoilerplateType, language, boilerplateName, namespace).filter(_ => _.type === 'adornment');
     }
     /**
      * Gets the interaction adornment boilerplates for a bounded context based on language and boilerplate name
      *
      * @param {string} [language=undefined] The language of the bounded context boilerplate
      * @param {string} [boilerplateName=undefined] The name of the boilerplate
+     * @param {string} [namespace=undefined] The namespace of the boilerplate
      * @returns {InteractionLayer[]}
      * @memberof BoundedContextsManager
      */
-    getInteractionLayers(language = undefined, boilerplateName = undefined) {
-        return this.boilerplatesManager.getAdornments(boundedContextBoilerplateType, language, boilerplateName).filter(_ => _.type === 'interaction');
+    getInteractionLayers(language = undefined, boilerplateName = undefined, namespace = undefined) {
+        return this.boilerplatesManager.getAdornments(boundedContextBoilerplateType, language, boilerplateName, namespace).filter(_ => _.type === 'interaction');
+    }
+    /**
+     * Create dependencies used for prompting the user for bounded context adornment
+     *
+     * @param {string} [language=undefined] The language of the bounded context boilerplate
+     * @param {string} [boilerplateName=undefined] The name of the boilerplate
+     * @param {string} [namespace=undefined] The namespace of the boilerplate
+     * @returns {Dependency[]}
+     * @memberof BoundedContextsManager
+     */
+    createAdornmentDependencies(language = undefined, boilerplateName = undefined, namespace = undefined) {
+        let adornments = this.getAdornments(language, boilerplateName, namespace);
+        if (adornments.length === 0) return [];
+        let boundedContextAdornment = new Dependency(
+            `Choose bounded context adornment`,
+            `${boundedContextAdornmentDependencyName}`,
+            'userInput',
+            undefined,
+            'chooseOne',
+            adornments.map(_ => _.name).concat('None'),
+            `Choose bounded context adornment`
+        );
+
+        return [boundedContextAdornment];
     }
     /**
      * Create dependencies used for prompting the user for interaction layers
      *
      * @param {string} [language=undefined] The language of the bounded context boilerplate
      * @param {string} [boilerplateName=undefined] The name of the boilerplate
+     * @param {string} [namespace=undefined] The namespace of the boilerplate
      * @returns {Dependency[]}
      * @memberof BoundedContextsManager
      */
-    createInteractionDependencies(language = undefined, boilerplateName = undefined) {
-        let interactionLayers = this.getInteractionLayers(language, boilerplateName);
+    createInteractionDependencies(language = undefined, boilerplateName = undefined, namespace = undefined) {
+        let interactionLayers = this.getInteractionLayers(language, boilerplateName, namespace);
         let interactionLayerTypes = groupBy('target')(interactionLayers);
         return Object.keys(interactionLayerTypes)
             .map(target => new Dependency(
@@ -176,9 +206,10 @@ export class BoundedContextsManager {
      * @param {any} context The template context
      * @param {Boilerplate} boilerplate The Bounded Context Boilerplate
      * @param {string} destinationPath The absolute path of the destination of the bounded context
+     * @param {string} [namespace=undefined]
      * @returns {boolean} Whether or not the bounded context was created successfully
      */
-    createBoundedContext(context, boilerplate, destinationPath) {
+    createBoundedContext(context, boilerplate, destinationPath, namespace=undefined) {
         let application = this.applicationsManager.getApplicationFrom(destinationPath);
         if (!application) throw new Error('Could not find application configuration');
         context.applicationId = application.id;
@@ -189,12 +220,21 @@ export class BoundedContextsManager {
         this.boilerplatesManager.createInstance(boilerplate, boundedContextPath, context);
 
         let boundedContextJson = this.fileSystem.readJsonSync(boundedContextConfigPath);
+
+        const hasAdornment = context[boundedContextAdornmentDependencyName] !== undefined;
+
+        if (hasAdornment) {
+            const adornmentBoilerplateName = context[boundedContextAdornmentDependencyName];
+            let adornmentBoilerplate = this.getAdornments(boilerplate.language, boilerplate.name, namespace).find(_ => _.name === adornmentBoilerplateName);
+            if (adornmentBoilerplate) this.boilerplatesManager.createInstance(adornmentBoilerplate, boundedContextPath, context);
+        }
+
         let interactionLayers = [];
         let interactionLayerChoices = Object.keys(context).filter(_ => _.startsWith('interaction'));
 
         if (interactionLayerChoices.length > 0) {
             let interactionLayerNames = interactionLayerChoices.map(prop => context[prop]);
-            let interactionLayerBoilerplates = this.getInteractionLayers(boilerplate.language, boilerplate.name);
+            let interactionLayerBoilerplates = this.getInteractionLayers(boilerplate.language, boilerplate.name, namespace);
             interactionLayerBoilerplates = interactionLayerBoilerplates.filter(boilerplate => interactionLayerNames.includes(boilerplate.name));
             interactionLayerBoilerplates.forEach(boilerplate => {
                 let entryPoint = `${boilerplate.target[0].toUpperCase()}${boilerplate.target.slice(1)}`;

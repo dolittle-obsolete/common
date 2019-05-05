@@ -3,16 +3,12 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Boilerplate } from "../../../boilerplates/Boilerplate";
-import { Dependency } from "../../../dependencies/Dependency";
-import { ApplicationsManager } from "../../ApplicationsManager";
-import { Guid } from "../../../Guid";
+import { Boilerplate } from '../../../boilerplates/Boilerplate';
+import { Dependency } from '../../../dependencies/Dependency';
+import { ApplicationsManager } from '../../ApplicationsManager';
+import { Guid } from '../../../Guid';
 import path from 'path';
 
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
 
 export class a_system_that_has_an_application_and_a_boilerplate_with_a_dependency {
     constructor() {
@@ -37,7 +33,7 @@ export class a_system_that_has_an_application_and_a_boilerplate_with_a_dependenc
         this.boiler_plate_path = path.resolve('path', 'to', 'boilerplate.json');
 
         this.boiler_plates_manager.boilerplatesByLanguageAndType.returns([
-            new Boilerplate(this.language, 'some_artifact', 'some description', 'artifact', this.dependencies, 'target', 'frameWork', {name: 'parent name', language: 'parent language', type: 'parent type'},
+            new Boilerplate(this.language, 'some_artifact', 'some description', 'artifact', this.dependencies, 'namespace', 'target', 'frameWork', {name: 'parent name', language: 'parent language', type: 'parent type'},
                 this.boiler_plate_path, [], [])
         ]);
         this.file_system.existsSync.returns(true);

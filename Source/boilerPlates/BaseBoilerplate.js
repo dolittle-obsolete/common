@@ -16,6 +16,7 @@ export class BaseBoilerplate {
     #_description;
     #_type;
     #_dependencies;
+    #_namespace;
     #_contentDirectory;
     #_path;
     /**
@@ -25,14 +26,16 @@ export class BaseBoilerplate {
      * @param {string} description 
      * @param {string} type
      * @param {Dependency[]} dependencies
+     * @param {string} namespace
      * @param {string} path 
      */
-    constructor(language, name, description, type, dependencies, path, ) {
+    constructor(language, name, description, type, dependencies, namespace, path, ) {
         this.#_language = language;
         this.#_name = name;
         this.#_description = description;
         this.#_type = type;
         this.#_dependencies = dependencies;
+        this.#_namespace = namespace;
         this.#_path = path;
         this.#_contentDirectory = _path.join(getFileDirPath(path), 
             type === artifactsBoilerplateType? 
@@ -40,7 +43,7 @@ export class BaseBoilerplate {
                 : 'Content');
     }
     /**
-     * Get the name of the {Boilerplate}
+     * Get the name of the {BaseBoilerplate}
      * @type {string}
      * @readonly
      * @memberof BaseBoilerplate
@@ -48,7 +51,7 @@ export class BaseBoilerplate {
     get name() { return this.#_name; }
 
     /**
-     * Get the language of the {Boilerplate}
+     * Get the language of the {BaseBoilerplate}
      * @type {string}
      * @readonly
      * @memberof BaseBoilerplate
@@ -56,7 +59,7 @@ export class BaseBoilerplate {
     get language() { return this.#_language; }
 
     /**
-     * Get the description of the {Boilerplate}
+     * Get the description of the {BaseBoilerplate}
      * @type {string}
      * @readonly
      * @memberof BaseBoilerplate
@@ -71,15 +74,22 @@ export class BaseBoilerplate {
      */
     get type() { return this.#_type; }
     /**
-     * Gets all the dependencies of the boilerplate
+     * Gets all the dependencies of the {BaseBoilerplate}
      * @type {Dependency[]}
      * @readonly
      * @memberof BaseBoilerplate
      */
     get dependencies() { return this.#_dependencies; }
+    /**
+     * Gets the namespace of the {BaseBoilerplate}
+     * @type {string}
+     * @readonly
+     * @memberof BaseBoilerplate
+     */
+    get namespace() {return this.#_namespace; }
 
     /**
-     * Get the file path of the {Boilerplate} configuration file
+     * Get the file path of the boilerplate configuration file
      * @type {string}
      * @readonly
      * @memberof BaseBoilerplate
@@ -97,7 +107,7 @@ export class BaseBoilerplate {
         return this.#_contentDirectory;
     }
     /**
-     * Whether or not this boilerplate is the boilerplate of an interaction layer
+     * Whether or not this {BaseBoilerplate} is the {BaseBoilerplate} of an {InteractionLayer}
      *
      * @returns {boolean} 
      * @memberof BaseBoilerplate

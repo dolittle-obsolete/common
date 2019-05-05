@@ -148,29 +148,41 @@ export class BoilerplatesManager {
     /**
      * Get all available boiler plates for a specific language
      * @param {string} language
+     * @param {string} [namespace=undefined]
      * @returns {Boilerplate[]} Available boiler plates for the language
      */
-    boilerplatesByLanguage(language) {
-        return this.boilerplates.filter(boilerplate => boilerplate.language == language);
+    boilerplatesByLanguage(language, namespace=undefined) {
+        return this.boilerplates.filter(_ => {
+            if (_.namespace) return _.namespace === namespace && _.language === language;
+            return _.language === language
+        });
     }
 
     /**
      * Get all available boiler plates for a specific type
      * @param {string} type
+     * @param {string} [namespace=undefined]
      * @returns {Boilerplate[]} Available boiler plates for the type
      */
-    boilerplatesByType(type) {
-        return this.boilerplates.filter(boilerplate => boilerplate.type == type);
+    boilerplatesByType(type, namespace=undefined) {
+        return this.boilerplates.filter(_ => {
+            if (_.namespace) return _.namespace === namespace && _.type === type;
+            return _.type === type;
+        });
     }
 
     /**
      * Get all available boiler plates for a specific language
      * @param {string} language
      * @param {string} type
+     * @param {string} [namespace=undefined]
      * @returns {Boilerplate[]} Available boiler plates for the language
      */
-    boilerplatesByLanguageAndType(language, type) {
-        return this.boilerplates.filter(boilerplate => boilerplate.language == language && boilerplate.type == type);
+    boilerplatesByLanguageAndType(language, type, namespace=undefined) {
+        return this.boilerplates.filter(_ => {
+            if (_.namespace) return _.namespace === namespace && _.language == language && _.type == type;
+            return _.language == language && _.type == type;
+        });
     }
 
     /**
@@ -179,17 +191,19 @@ export class BoilerplatesManager {
      * @param {string} parentType
      * @param {string} [parentLanguage=undefined]
      * @param {string} [parentName=undefined]
+     * @param {string} [namespace=undefined]
      * @returns {Boilerplate[]}
      * @memberof BoilerplatesManager
      */
-    getAdornments(parentType, parentLanguage = undefined, parentName = undefined) {
-        let boilerplates = this.boilerplates.filter(boilerplate => boilerplate.parent && boilerplate.parent.type === parentType);
-        if (parentLanguage) boilerplates = boilerplates.filter(boilerplate => {
-                if (boilerplate.parent.language) return boilerplate.parent.language === parentLanguage;
+    getAdornments(parentType, parentLanguage = undefined, parentName = undefined, namespace = undefined) {
+        let boilerplates = this.boilerplates.filter(_ => _.namespace === namespace && (_.parent && _.parent.type === parentType));
+        
+        if (parentLanguage) boilerplates = boilerplates.filter(_ => {
+                if (_.parent.language) return _.parent.language === parentLanguage;
                 return true;
             });
-        if (parentName) boilerplates = boilerplates.filter(boilerplate => {
-            if (boilerplate.parent.name) return boilerplate.parent.name === parentName;
+        if (parentName) boilerplates = boilerplates.filter(_ => {
+            if (_.parent.name) return _.parent.name === parentName;
             return true;
         });
         return boilerplates;
@@ -359,6 +373,7 @@ export class BoilerplatesManager {
                 boilerplateObject.dependencies !== undefined? 
                     Object.keys(boilerplateObject.dependencies).map(key => dependencyFromJson(boilerplateObject.dependencies[key], key))
                     : [],
+                boilerplateObject.namespace,
                 boilerplatePath,
                 this.folders,
                 this.fileSystem
@@ -374,6 +389,7 @@ export class BoilerplatesManager {
                 boilerplateObject.dependencies !== undefined? 
                     Object.keys(boilerplateObject.dependencies).map(key => dependencyFromJson(boilerplateObject.dependencies[key], key))
                     : [],
+                boilerplateObject.namespace,
                 boilerplateObject.target,
                 boilerplateObject.framework,
                 boilerplateObject.parent,
@@ -421,6 +437,7 @@ export class BoilerplatesManager {
         return ret;
         
     }
+
     #_warnIfUsingOldSystem() {
         const filePath = path.join(this.configManager.centralFolderLocation, 'boiler-plates.json');
         if (this.fileSystem.existsSync(filePath)) {

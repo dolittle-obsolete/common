@@ -2,9 +2,9 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Boilerplate } from "../../../boilerplates/Boilerplate";
-import { Dependency } from "../../../dependencies/Dependency";
-import { BoundedContextsManager } from "../../BoundedContextsManager";
+import { Boilerplate } from '../../../boilerplates/Boilerplate';
+import { Dependency } from '../../../dependencies/Dependency';
+import { BoundedContextsManager } from '../../BoundedContextsManager';
 import path from 'path';
 
 export class a_system_that_has_a_boilerplate_with_a_dependency{

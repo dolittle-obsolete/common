@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ArtifactsManager } from "../../ArtifactsManager";
-import { Boilerplate } from "../../../boilerplates/Boilerplate";
-import { Dependency } from "../../../dependencies/Dependency";
+import { ArtifactsManager } from '../../ArtifactsManager';
+import { Boilerplate } from '../../../boilerplates/Boilerplate';
+import { Dependency } from '../../../dependencies/Dependency';
 import path from 'path';
 
 export class a_system_that_has_a_boilerplate_with_a_dependency {
@@ -41,7 +41,7 @@ export class a_system_that_has_a_boilerplate_with_a_dependency {
             dependencies: {}
         };
         this.boiler_plates_manager.boilerplatesByLanguageAndType.returns([
-            new Boilerplate(this.language, 'some_artifact', 'some description', 'artifact', this.dependencies, 'target', 'frameWork', {},
+            new Boilerplate(this.language, 'some_artifact', 'some description', 'artifact', this.dependencies, 'namespace', 'target', 'frameWork', {},
                 this.boiler_plate_path, [], [])
         ]
         );

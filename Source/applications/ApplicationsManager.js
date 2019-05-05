@@ -84,10 +84,11 @@ export class ApplicationsManager {
     /**
      * Retrieves the boilerplate configurations for application with the given language
      * @param {string} language 
+     * @param {string} [namespace=undefined]
      * @return {BaseBoilerplate[]} The application {Boilerplate} with of the given language
      */
-    boilerplatesByLanguage(language) {
-        let boilerplates = this.boilerplatesManager.boilerplatesByLanguageAndType(language, applicationBoilerplateType);
+    boilerplatesByLanguage(language, namespace=undefined) {
+        let boilerplates = this.boilerplatesManager.boilerplatesByLanguageAndType(language, applicationBoilerplateType, namespace);
         return boilerplates;
     }
     /**
