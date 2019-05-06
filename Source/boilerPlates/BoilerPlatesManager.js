@@ -16,8 +16,8 @@ import { boilerplatesConfig, nodeModulesPath } from '../index';
 import { artifactsBoilerplateType } from '../artifacts/ArtifactsManager';
 import { BaseBoilerplate } from './BaseBoilerplate';
 import { ArtifactsBoilerplate } from './ArtifactsBoilerplate';
-import { scriptsFromJson } from './Scripts';
-import spawn from 'cross-spawn';
+import { scriptsFromJson, runScriptsSync } from './Scripts';
+
 const toolingPkg = require('../../package.json');
 
 const boilerplatesDiscoverer = require('@dolittle/boilerplates-discoverer');
@@ -318,22 +318,8 @@ export class BoilerplatesManager {
         let creationScripts = boilerplate.scripts.creation;
 
         if (creationScripts) {
-            creationScripts.forEach(_ => {
-                let cmd;
-                let args;
-                let cwd = destination;
-                if (_.cmd) {
-                    cmd = _.cmd;
-                    args = _.args;
-                    cwd = _.cwd? path.join(cwd, _.cwd): cwd;
-                } else {
-                    [cmd, ...args] = _.split(' ');
-                }
-                console.log(cmd);
-                console.log(args);
-                console.log(cwd);
-                spawn.sync(cmd, args, {cwd, stdio: "inherit"});
-            });
+            this.logger.info('Running creation scripts');
+            runScriptsSync(creationScripts, destination);
         }
         
     }
