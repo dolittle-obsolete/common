@@ -197,7 +197,10 @@ export class BoilerplatesManager {
      * @memberof BoilerplatesManager
      */
     getAdornments(parentType, parentLanguage = undefined, parentName = undefined, namespace = undefined) {
-        let boilerplates = this.boilerplates.filter(_ => _.namespace === namespace && (_.parent && _.parent.type === parentType));
+        let boilerplates = this.boilerplates.filter(_ => {
+            if (_.namespace) return _.namespace === namespace && (_.parent && _.parent.type === parentType)
+            return _.parent && _.parent.type === parentType;
+        });
         
         if (parentLanguage) boilerplates = boilerplates.filter(_ => {
                 if (_.parent.language) return _.parent.language === parentLanguage;
