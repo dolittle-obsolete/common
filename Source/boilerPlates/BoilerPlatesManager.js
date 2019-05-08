@@ -298,7 +298,7 @@ export class BoilerplatesManager {
      * Create an instance of {Boilerplate} into a specific destination folder with a given context
      * @param {Boilerplate} boilerplate 
      * @param {string} destination 
-     * @param {object} context 
+     * @param {object} context
      */
     createInstance(boilerplate, destination, context) {
         this.folders.makeFolderIfNotExists(destination);
@@ -318,12 +318,6 @@ export class BoilerplatesManager {
             let result = template(context);
             this.fileSystem.writeFileSync(file, result);
         });
-        let creationScripts = boilerplate.scripts.creation;
-
-        if (creationScripts) {
-            this.logger.info('Running creation scripts');
-            runScriptsSync(creationScripts, destination);
-        }
         
     }
     /**

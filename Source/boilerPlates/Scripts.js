@@ -5,6 +5,8 @@
 import { Script } from './Script';
 import lodash from 'lodash';
 import spawn from 'cross-spawn';
+import path from 'path';
+import { ScriptFailedError } from './ScriptFailedError';
 
 export function scriptsFromJson(scripts) { 
     return new Scripts(scripts && scripts.creation || undefined, scripts && scripts.build || undefined, scripts && scripts.run || undefined, scripts? lodash.omit(scripts, ['creation', 'build', 'run']) : undefined);
@@ -71,13 +73,43 @@ export class Scripts
     get rest() {return this.#_rest;}
     
 }
+function scriptOnStderr(data) {
+    if (data && data !== '') console.error(data);
+}
+function scriptOnStdout(data) {
+}
+function scriptOnError(error) {
+    if (error) throw new ScriptFailedError(error);
+}
+function scriptOnUncaughtException(error) {
+    if (error) throw new ScriptFailedError(error);
+}
+
+/**
+ * @callback StdCallback
+ * @param {string} data
+ * @returns {void}
+ */
+
+ /**
+ * @callback OnErrorCallback
+ * @param {error} error
+ * @returns {void}
+ */
+
 /**
  * Run scripts in sync
  * @export
  * @param {Script[] | string[]} scripts 
  * @param {string} cwd
+ * @param {StdCallback} onStderr
+ * @param {StdCallback} onStdout
+ * @param {OnErrorCallback} onError
  */
-export function runScriptsSync(scripts, cwd) {
+export function runScriptsSync(scripts, cwd, onStderr, onStdout, onError) {
+    onStderr = onStderr || scriptOnStderr;
+    onStdout = onStdout || scriptOnStdout;
+    onError = onError || scriptOnError;
     scripts.forEach(script => {
         let cmd;
         let args;
@@ -88,7 +120,10 @@ export function runScriptsSync(scripts, cwd) {
         } else {
             [cmd, ...args] = script.split(' ');
         }
-        spawn.sync(cmd, args, {cwd, stdio: "inherit"});
+        let child = spawn.sync(cmd, args, {cwd});
+        if(child.stderr && child.stderr.toString() !== '') onStderr(child.stderr.toString());
+        onStdout(child.stdout.toString());
+        if (child.error) onError(child.error); 
     });
 }
 /**
@@ -97,8 +132,16 @@ export function runScriptsSync(scripts, cwd) {
  * @export
  * @param {Script[] | string[]} scripts 
  * @param {string} cwd
+ * @param {StdCallback} onStderr
+ * @param {StdCallback} onStdout
+ * @param {OnErrorCallback} onError
+ * @param {OnErrorCallback} onUncaughtException
  */
-export async function runScripts(scripts, cwd) {
+export async function runScripts(scripts, cwd, onStderr, onStdout, onError, onUncaughtException) {
+    onStderr = onStderr || scriptOnStderr;
+    onStdout = onStdout || scriptOnStdout;
+    onError = onError || scriptOnError;
+    onUncaughtException = onUncaughtException || scriptOnUncaughtException;
     for (let script of scripts) {
         let cmd;
         let args;
@@ -109,6 +152,10 @@ export async function runScripts(scripts, cwd) {
         } else {
             [cmd, ...args] = script.split(' ');
         }
-        await spawn(cmd, args, {cwd, stdio: "inherit"});
+        let child = spawn(cmd, args, {cwd});
+        child.stderr.on('data', onStderr);
+        child.stdout.on('data', onStdout);
+        child.on('error', onError);
+        child.on('uncaughtException', onUncaughtException);
     }
 }
