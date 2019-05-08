@@ -16,7 +16,7 @@ import { boilerplatesConfig, nodeModulesPath } from '../index';
 import { artifactsBoilerplateType } from '../artifacts/ArtifactsManager';
 import { BaseBoilerplate } from './BaseBoilerplate';
 import { ArtifactsBoilerplate } from './ArtifactsBoilerplate';
-import { scriptsFromJson, runScriptsSync } from './Scripts';
+import { scriptsFromJson } from './Scripts';
 
 const toolingPkg = require('../../package.json');
 

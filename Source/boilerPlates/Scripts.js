@@ -8,8 +8,8 @@ import spawn from 'cross-spawn';
 import path from 'path';
 import { ScriptFailedError } from './ScriptFailedError';
 
-export function scriptsFromJson(scripts) { 
-    return new Scripts(scripts && scripts.creation || undefined, scripts && scripts.build || undefined, scripts && scripts.run || undefined, scripts? lodash.omit(scripts, ['creation', 'build', 'run']) : undefined);
+export function scriptsFromJson(scripts) {
+    return new Scripts(scripts && scripts.creation || [], scripts && scripts.build || [], scripts && scripts.run || [], scripts? lodash.omit(scripts, ['creation', 'build', 'run']) : undefined);
 }
 /**
   * Represents a Boilerplate's scripts
@@ -29,19 +29,10 @@ export class Scripts
       * @param {any} rest
       */
     constructor (creation, build, run, rest) {
-        this.#_creation = creation? 
-                            creation.cmd? 
-                                creation.map(_ => new Script(_.cmd, _.args, _.cwd)) : creation
-                            : undefined;
-        this.#_build = build? 
-                        build.cmd? 
-                            build.map(_ => new Script(_.cmd, _.args, _.cwd)) : build
-                        : undefined;
-        this.#_run = run? 
-                        run.cmd? 
-                            run.map(_ => new Script(_.cmd, _.args, _.cwd)) : run
-                        : undefined;
-        this.#_rest = rest;  
+        this.#_creation = creation.map(_ => _.cmd? new Script(_.cmd, _.args, _.cwd) : _);
+        this.#_build = build.map(_ => _.cmd? new Script(_.cmd, _.args, _.cwd) : _);
+        this.#_run = run.map(_ => _.cmd? new Script(_.cmd, _.args, _.cwd) : _);
+        this.#_rest = rest;
     }
     /**
      * Gets the creation scripts
@@ -121,8 +112,8 @@ export function runScriptsSync(scripts, cwd, onStderr, onStdout, onError) {
             [cmd, ...args] = script.split(' ');
         }
         let child = spawn.sync(cmd, args, {cwd});
-        if(child.stderr && child.stderr.toString() !== '') onStderr(child.stderr.toString());
-        onStdout(child.stdout.toString());
+        if (child.stderr && child.stderr.toString() !== '') onStderr(child.stderr.toString());
+        if (child.stdout && child.stdout.toString() !== '') onStdout(child.stdout.toString());
         if (child.error) onError(child.error); 
     });
 }

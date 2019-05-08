@@ -13,6 +13,7 @@ import { coreFromJson } from './Core';
 import { InteractionLayer } from './InteractionLayer';
 import { resourcesFromJson } from './Resources';
 import { ApplicationsManager } from '../applications/ApplicationsManager';
+import { ApplicationConfigurationNotFound } from './ApplicationConfigurationNotFound';
 
 export const boundedContextBoilerplateType = 'boundedContext';
 export const boundedContextFileName = 'bounded-context.json';
@@ -207,15 +208,17 @@ export class BoundedContextsManager {
      * @param {Boilerplate} boilerplate The Bounded Context Boilerplate
      * @param {string} destinationPath The absolute path of the destination of the bounded context
      * @param {string} [namespace=undefined]
-     * @returns {boolean} Whether or not the bounded context was created successfully
+     * @returns {{boilerplate: Boilerplate, destination: string}[]} Returns the created boilerplates with destination
      */
     createBoundedContext(context, boilerplate, destinationPath, namespace=undefined) {
         let application = this.applicationsManager.getApplicationFrom(destinationPath);
-        if (!application) throw new Error('Could not find application configuration');
+        if (!application) throw ApplicationConfigurationNotFound.new;
         context.applicationId = application.id;
         
         const boundedContextPath = path.join(destinationPath, context.name);
         const boundedContextConfigPath = path.join(boundedContextPath, boundedContextFileName);
+
+        let createdBoilerplates = [{boilerplate, destination: boundedContextPath}];
         
         this.boilerplatesManager.createInstance(boilerplate, boundedContextPath, context);
 
@@ -227,6 +230,7 @@ export class BoundedContextsManager {
             const adornmentBoilerplateName = context[boundedContextAdornmentDependencyName];
             let adornmentBoilerplate = this.getAdornments(boilerplate.language, boilerplate.name, namespace).find(_ => _.name === adornmentBoilerplateName);
             if (adornmentBoilerplate) this.boilerplatesManager.createInstance(adornmentBoilerplate, boundedContextPath, context);
+            createdBoilerplates.push({boilerplate: adornmentBoilerplate, destination: boundedContextPath});
         }
 
         let interactionLayers = [];
@@ -242,13 +246,14 @@ export class BoundedContextsManager {
                     new InteractionLayer(boilerplate.type, boilerplate.language, boilerplate.framework, entryPoint)
                 );
                 this.boilerplatesManager.createInstance(boilerplate, path.join(boundedContextPath, entryPoint), context);
+                createdBoilerplates.push({boilerplate, destination: boundedContextPath});
             });
         }
         let boundedContext = new BoundedContext(boundedContextJson.application, boundedContextJson.boundedContext, boundedContextJson.boundedContextName, 
             resourcesFromJson(boundedContextJson.resources), coreFromJson(boundedContextJson.core), interactionLayers, boundedContextPath);
 
         this.fileSystem.writeJsonSync(boundedContextConfigPath, boundedContext.toJson(), {spaces: 4});
-        return true;
+        return createdBoilerplates;
     }
     /**
      * Creates an interaction layer and adds it to the bounded context by finding it in the folder.
