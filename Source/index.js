@@ -8,10 +8,10 @@ export const filesystem = require('fs-extra');
 import winston from 'winston';
 import Handlebars from 'handlebars';
 
-import { ApplicationsManager } from './applications/ApplicationsManager';
+import { ApplicationsManager } from './boilerPlates/applications/ApplicationsManager';
 import { ArtifactsManager } from './artifacts/ArtifactsManager';
 import { BoilerplatesManager } from './boilerplates/BoilerplatesManager';
-import { BoundedContextsManager } from './boundedContexts/BoundedContextsManager';
+import { BoundedContextsManager } from './boilerPlates/boundedContexts/BoundedContextsManager';
 import { ConfigManager } from './configuration/ConfigManager';
 import { ConfigParser } from './configuration/ConfigParser';
 import { DependenciesManager } from './dependencies/DependenciesManager';
