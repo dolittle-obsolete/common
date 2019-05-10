@@ -1,43 +1,10 @@
 {
-
-    "compilerOptions": {
-        "module": "commonjs",
-        "esModuleInterop": true,
-        "target": "es5",
-        "declaration": true,
-        "stripInternal": true,
-    
-        "strict": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "noImplicitReturns": true,
-        "noFallthroughCasesInSwitch": true,
-    
-        "moduleResolution": "node",
-        "baseUrl": "./",
-        "paths": {
-            "@dolittle/tooling.common": ["Source/index.ts"]
-        },
-    
-        "rootDirs": [
-            "src"
-        ],
-    
-        "sourceRoot": "./",
-        "inlineSourceMap": true,
-        "inlineSources": true,
-    
-        "experimentalDecorators": true
-        },
-        "include": ["Source"],
-        "typedocOptions": {
-        "out": "./docs",
-        "toc": false,
-        "excludePrivate": true,
-        "includes": "./src",
-        "target": "ES6",
-        "theme": "default",
-        "name": "True Myth"
-        }
-  }
+    "files": [],
+    "references": [
+        {"path": "packages/boilerplates"},
+        {"path": "packages/configuration"},
+        {"path": "packages/dependencies"},
+        {"path": "packages/utilities"},
+    ]
+}
   

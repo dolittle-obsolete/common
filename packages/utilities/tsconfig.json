@@ -1,0 +1,14 @@
+{
+    "extends": "../../tsconfig.settings.json",
+    "compilerOptions": {
+      "rootDir": "Source",
+      "outDir": "lib",
+      "baseUrl": "./",
+      "paths": {
+          "@dolittle/tooling.common.utilities": ["Source/index.ts"]
+      },
+      "sourceRoot": "./Source"
+    },
+    "exclude": ["**/*.d.ts", "**/*.js", "node_modules"],
+    "include": ["**/*.ts"]
+  }

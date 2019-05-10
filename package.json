@@ -1,62 +1,19 @@
 {
-  "name": "@dolittle/tooling.common",
-  "version": "5.0.0-alpha.47",
-  "description": "Common tools for dolittle tooling",
-  "publishConfig": {
-    "access": "public"
-  },
-  "homepage": "https://dolittle.io",
-  "author": "Dolittle",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/dolittle-tools/common.git"
-  },
-  "bugs": {
-    "url": "https://github.com/dolittle-tools/common/issues"
-  },
-  "engines": {
-    "node": ">=8.0.0"
-  },
-  "files": [
-    "dist"
+  "private": true,
+  "workspaces": [
+    "packages/*"
   ],
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "index.d.ts",
-  "scripts": {
-    "ts:cjs": "node_modules/typescript/bin/tsc -p ts/cjs.tsconfig.json",
-    "ts:es": "node_modules/typescript/bin/tsc -p ts/es.tsconfig.json",
-    "ts:typedefs": "node_modules/typescript/bin/tsc --outDir . --emitDeclarationOnly",
-    "ts:all": "yarn ts:cjs && yarn ts:es && yarn ts:typedefs",
-    "ts:clean": "rimraf ./*.d.ts dist",
-    "build": "yarn clean && yarn ts:all",
-    "clean": "rimraf dist && yarn ts:clean",
-    "prepublishOnly": "yarn build",
-    "postpublish": "yarn clean"
-  },
   "devDependencies": {
-    "@types/conf": "^3.0.0",
     "@types/cross-spawn": "^6.0.0",
     "@types/fs-extra": "^5.1.0",
-    "@types/lodash": "^4.14.124",
-    "@types/node": "^12.0.0",
-    "@types/semver": "^6.0.0",
+    "@types/node": "12.0.0",
+    "@types/winston": "^2.4.4",
     "rimraf": "^2.6.3",
     "typescript": "^3.4.5"
   },
   "dependencies": {
-    "@dolittle/boilerplates-discoverer": "^2.0.0-alpha.7",
-    "ajv": "^6.9.1",
-    "conf": "~3.0.0",
     "cross-spawn": "^6.0.5",
     "fs-extra": "^7.0.0",
-    "handlebars": "^4.0.12",
-    "lodash": "^4.17.11",
-    "rc": "^1.2.8",
-    "semver": "^5.6.0",
-    "shelljs": "^0.8.2",
-    "simple-git": "^1.96.0",
-    "winston": "^3.1.0"
+    "winston": "^3.2.1"
   }
 }

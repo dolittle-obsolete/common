@@ -1,0 +1,50 @@
+{
+  "name": "@dolittle/tooling.common.boilerplates",
+  "version": "1.0.0-alpha.1",
+  "description": "The boilerplates system for common dolittle tooling",
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://dolittle.io",
+  "author": "Dolittle",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dolittle-tools/common.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dolittle-tools/common/issues"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "main": "lib/cjs/index.js",
+  "module": "lib/es/index.js",
+  "types": "index.d.ts",
+  "typings": "index.d.ts",
+  "scripts": {
+    "echo": "echo boilerplates",
+    "ts:cjs": "tsc -p ts/cjs.tsconfig.json",
+    "ts:es": "tsc -p ts/es.tsconfig.json",
+    "ts:typedefs": "tsc --outDir . --emitDeclarationOnly",
+    "ts:all": "yarn ts:cjs && yarn ts:es && yarn ts:typedefs",
+    "ts:clean": "rimraf ./*.d.ts lib",
+    "build": "yarn clean && yarn ts:all",
+    "clean": "rimraf dist && yarn ts:clean",
+    "prepublishOnly": "yarn build",
+    "postpublish": "yarn clean"
+  },
+  "dependencies": {
+    "@dolittle/boilerplates-discoverer": "^2.0.0-alpha.7",
+    "@dolittle/tooling.common.configurations": "1.0.0-alpha.1",
+    "@dolittle/tooling.common.dependencies": "1.0.0-alpha.1",
+    "@dolittle/tooling.common.utilities": "1.0.0-alpha.1",
+    "handlebars": "^4.0.12",
+    "lodash": "^4.17.11",
+    "semver": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.125",
+    "@types/semver": "^6.0.0"
+  }
+}
