@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { BaseBoilerplate } from './BaseBoilerplate';
 import { Scripts } from './Scripts';
-import { Dependency } from '@dolittle/tooling.common.dependencies/Dependency';
+import { Dependency } from '@dolittle/tooling.common.dependencies';
 
 export const boilerplateContentFolderName = 'Content';
 /**

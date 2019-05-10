@@ -7,14 +7,14 @@ import path from 'path';
 import * as FsExtra from 'fs-extra';
 import {Logger} from 'winston';
 import { Boilerplate, boilerplateContentFolderName } from './Boilerplate';
-import { Dependency } from '@dolittle/tooling.common.dependencies/Dependency';
-import { Folders } from '@dolittle/tooling.common.utilities/Folders';
+import { Dependency } from '@dolittle/tooling.common.dependencies';
 import { boilerplatesConfig } from './index';
 import { artifactsBoilerplateType } from './artifacts/ArtifactsManager';
 import { BaseBoilerplate } from './BaseBoilerplate';
 import { ArtifactsBoilerplate } from './ArtifactsBoilerplate';
 import { Scripts } from './Scripts';
 import { IBoilerplatesLoader } from './IBoilerplatesLoader';
+import { Folders } from '@dolittle/tooling.common.utilities';
 
 const binaryFiles = [
     '.jpg',

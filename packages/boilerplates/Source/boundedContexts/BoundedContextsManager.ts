@@ -5,7 +5,7 @@
 import path from 'path';
 import * as FsExtra from 'fs-extra';
 import {Logger} from 'winston';
-import { Dependency } from '@dolittle/tooling.common.dependencies/Dependency';
+import { Dependency } from '@dolittle/tooling.common.dependencies';
 
 import { BoundedContext } from './BoundedContext';
 import { groupBy, getFileDirPath } from '@dolittle/tooling.common.utilities/helpers';
@@ -15,10 +15,10 @@ import { Resources } from './Resources';
 import { ApplicationConfigurationNotFound } from './ApplicationConfigurationNotFound';
 import { IBoundedContextsManager } from './IBoundedContextsManager';
 import { Folders } from '@dolittle/tooling.common.utilities/Folders';
-import { ICanManageBoilerplates } from 'Source/ICanManageBoilerplates';
+import { ICanManageBoilerplates } from '../ICanManageBoilerplates';
 import { Boilerplate } from '../Boilerplate';
 import { IApplicationsManager } from '../applications/IApplicationsManager';
-import { ExpectedBoilerplateError } from 'Source/ExpectedBoilerplateError';
+import { ExpectedBoilerplateError } from '../ExpectedBoilerplateError';
 
 export const boundedContextBoilerplateType = 'boundedContext';
 export const boundedContextFileName = 'bounded-context.json';

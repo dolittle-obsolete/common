@@ -9,7 +9,7 @@ import * as Handlebars from 'handlebars';
 import { Logger } from 'winston';
 import { Boilerplate } from './Boilerplate';
 import { IBoilerplatesCreator } from './IBoilerplatesCreator';
-import { Folders } from '@dolittle/tooling.common.utilities/Folders';
+import { Folders } from '@dolittle/tooling.common.utilities';
 
 /**
  * Represents the manager of boiler plates

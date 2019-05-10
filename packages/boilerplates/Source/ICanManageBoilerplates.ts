@@ -4,7 +4,6 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { BaseBoilerplate } from "./BaseBoilerplate";
-import { Boilerplate } from "./Boilerplate";
 /**
  * Responsible for managing boilerplates
  *

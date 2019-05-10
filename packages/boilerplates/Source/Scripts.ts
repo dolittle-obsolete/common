@@ -72,7 +72,7 @@ export class Scripts
 function scriptOnStderr(data: string) {
     if (data && data !== '') console.error(data);
 }
-function scriptOnStdout(data: string) {
+function scriptOnStdout(data?: string) {
 }
 function scriptOnError(error: Error | string) {
     if (error) throw new ScriptFailedError(error);

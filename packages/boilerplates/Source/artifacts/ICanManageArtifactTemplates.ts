@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { ICanManageBoilerplates } from "Source/ICanManageBoilerplates";
+import { ICanManageBoilerplates } from "../ICanManageBoilerplates";
 import { ArtifactTemplate } from "./ArtifactTemplate";
 
 /**

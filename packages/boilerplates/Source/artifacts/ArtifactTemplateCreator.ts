@@ -9,7 +9,7 @@ import {Logger} from 'winston';
 import * as Handlebars from 'handlebars';
 
 import { getFileNameAndExtension } from '@dolittle/tooling.common.utilities/helpers';
-import { Folders } from '@dolittle/tooling.common.utilities/Folders';
+import { Folders } from '@dolittle/tooling.common.utilities';
 import { ArtifactTemplate } from './ArtifactTemplate';
 import { IArtifactTemplateCreator } from './IArtifactTemplateCreator';
 

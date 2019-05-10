@@ -5,7 +5,8 @@
 
 import semver from 'semver';
 import {Logger} from 'winston';
-import { ICanFindOnlineBoilerplatePackages, BoilerplatePackageJson } from './ICanFindOnlineBoilerplatePackages';
+import { ICanFindOnlineBoilerplatePackages } from './ICanFindOnlineBoilerplatePackages';
+import { BoilerplatePackageJson } from './BoundedContextPackageJson';
 
 const toolingPkg = require('../../package.json');
 

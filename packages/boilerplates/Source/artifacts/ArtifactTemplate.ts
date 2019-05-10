@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Dependency } from '@dolittle/tooling.common.dependencies/Dependency';
+import { Dependency } from '@dolittle/tooling.common.dependencies';
 import { areas, getFileDirPath } from '@dolittle/tooling.common.utilities/helpers';
 import { ArtifactsBoilerplate } from '../ArtifactsBoilerplate';
 import * as _path from 'path';

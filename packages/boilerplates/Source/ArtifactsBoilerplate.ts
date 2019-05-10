@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as FsExtra from 'fs-extra'
-import { Dependency } from '@dolittle/tooling.common.dependencies/Dependency';
+import { Dependency } from '@dolittle/tooling.common.dependencies';
 import { Folders } from '@dolittle/tooling.common.utilities/Folders';
 import { getFileDirPath, getFileNameAndExtension } from '@dolittle/tooling.common.utilities/helpers';
 import { ArtifactTemplate } from './artifacts/ArtifactTemplate';

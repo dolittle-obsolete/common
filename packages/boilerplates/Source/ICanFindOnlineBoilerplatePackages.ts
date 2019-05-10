@@ -1,9 +1,9 @@
-import { BoilerplatePackageJson } from "./BoundedContextPackageJson";
-
 /*---------------------------------------------------------------------------------------------
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
+
+import { BoilerplatePackageJson } from "./BoundedContextPackageJson";
 
 /**
  * Responsible for discovering boilerplates

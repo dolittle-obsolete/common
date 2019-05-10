@@ -10,7 +10,6 @@ import semver from 'semver';
 import { ICanDiscoverBoilerplates } from './ICanDiscoverBoilerplates';
 import { nodeModulesPath, boilerplatesConfig } from './index';
 
-import { BaseBoilerplate } from './BaseBoilerplate';
 import { IBoilerplatesLoader } from './IBoilerplatesLoader';
 import { BoilerplatePackageJson } from './BoundedContextPackageJson';
 

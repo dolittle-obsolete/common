@@ -6,7 +6,7 @@ import {Logger} from 'winston';
 import { ArtifactTemplate } from "./ArtifactTemplate";
 import { ICanManageBoilerplates } from '../ICanManageBoilerplates';
 import { ICanManageArtifactTemplates } from './ICanManageArtifactTemplates';
-import { BaseBoilerplate } from 'Source/BaseBoilerplate';
+import { BaseBoilerplate } from '../BaseBoilerplate';
 
 export const artifactsBoilerplateType = 'artifacts';
 
@@ -49,8 +49,8 @@ export class ArtifactsManager implements ICanManageArtifactTemplates {
      * 
      */
     createArtifact(context: any, artifactTemplate: ArtifactTemplate, destinationPath: string): boolean {
-        this.logger.info(`Creating an artifact of type '${artifactTemplate.type}' and language '${artifactTemplate.boilerplate.language}' at destination ${destinationPath}`);
-        this.boilerplatesManager.createArtifactInstance(artifactTemplate, destinationPath, context);
+        this._logger.info(`Creating an artifact of type '${artifactTemplate.type}' and language '${artifactTemplate.boilerplate.language}' at destination ${destinationPath}`);
+        this._boilerplatesManager.(artifactTemplate, destinationPath, context);
         return true;
     }
 }
