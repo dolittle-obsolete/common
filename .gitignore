@@ -3,7 +3,8 @@ dist
 .yalc
 yalc.lock
 yarn.lock
-
+*.d.ts
+lib
 # Logs
 logs
 *.log
