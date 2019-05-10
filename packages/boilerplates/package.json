@@ -23,7 +23,6 @@
   "types": "index.d.ts",
   "typings": "index.d.ts",
   "scripts": {
-    "echo": "echo boilerplates",
     "ts:cjs": "tsc -p ts/cjs.tsconfig.json",
     "ts:es": "tsc -p ts/es.tsconfig.json",
     "ts:typedefs": "tsc --outDir . --emitDeclarationOnly",
