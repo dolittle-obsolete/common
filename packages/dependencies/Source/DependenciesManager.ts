@@ -9,6 +9,7 @@ import * as FsExtra from 'fs-extra';
 import {Logger} from 'winston';
 import { IDependenciesManager } from "./IDependenciesManager";
 import { Folders } from "@dolittle/tooling.common.utilities";
+import { DependencyMissingFieldError } from "./DependencyMissingFieldError";
 /**
  * Manages the dependencies
  *
@@ -64,11 +65,13 @@ export class DependenciesManager implements IDependenciesManager {
     private discoverMultipleFiles(dependency: Dependency, location: string, language: string, dolittleConfig: any): string[] | { value: string, namespace: string }[] {
         let filePaths: string[] = [];
         if (dependency.fromArea === undefined) {
+            if (!dependency.fileMatch) throw DependencyMissingFieldError.new(dependency.name, 'fileMatch');
             filePaths = this._folders.searchRecursiveRegex(location, dependency.fileMatch);
         }
         else {
             const folders = this._folders.getNearestDirsSearchingUpwards(location, new RegExp(dolittleConfig[language][dependency.fromArea]));
-            folders.forEach(folder => filePaths.push(...this._folders.searchRecursiveRegex(folder, dependency.fileMatch)));
+            if (!dependency.fileMatch) throw DependencyMissingFieldError.new(dependency.name, 'fileMatch');
+            folders.forEach(folder => filePaths.push(...this._folders.searchRecursiveRegex(folder, <RegExp>dependency.fileMatch)));
         }
         let results: any[] = [];
 
@@ -86,6 +89,7 @@ export class DependenciesManager implements IDependenciesManager {
         else {
             filePaths.forEach(filePath => {
                 let content = this._fileSystem.readFileSync(filePath, 'utf8');
+                if (!dependency.contentMatch) throw DependencyMissingFieldError.new(dependency.name, 'contentMatch');
                 let theMatch = content.match(dependency.contentMatch);
                 if (theMatch !== null && theMatch.length > 0) {
                     let namespace = '';
@@ -109,6 +113,7 @@ export class DependenciesManager implements IDependenciesManager {
      */
     private createNamespace(dependency: Dependency, location: string): string {
         let milestoneRegexp = dependency.milestone;
+        if (!milestoneRegexp) throw DependencyMissingFieldError.new(dependency.name, 'milestone');
         const milestonePath = this._folders.getNearestFileSearchingUpwards(location, milestoneRegexp);
         if (milestonePath === null || milestonePath === '') {
             this._logger.warn('Could not discover the namespace');
