@@ -19,7 +19,7 @@ export const artifactsBoilerplateType = 'artifacts';
  * @export
  * @class ArtifactsManager
  */
-export class ArtifactsManager implements IArtifactTemplatesManager {
+export class ArtifactTemplatesManager implements IArtifactTemplatesManager {
     private _boilerplates: ArtifactsBoilerplate[];
     private _artifactTemplateCreator: IArtifactTemplateCreator;
     private _boilerplatesManagers: ICanManageBoilerplates[];

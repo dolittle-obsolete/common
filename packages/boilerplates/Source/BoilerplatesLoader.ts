@@ -8,7 +8,7 @@ import { Folders } from '@dolittle/tooling.common.utilities';
 import * as FsExtra from 'fs-extra';
 import path from 'path';
 import { Logger } from 'winston';
-import { artifactsBoilerplateType } from './artifacts/ArtifactsManager';
+import { artifactsBoilerplateType } from './artifacts/ArtifactTemplatesManager';
 import { ArtifactsBoilerplate } from './ArtifactsBoilerplate';
 import { BaseBoilerplate } from './BaseBoilerplate';
 import { Boilerplate, boilerplateContentFolderName } from './Boilerplate';
