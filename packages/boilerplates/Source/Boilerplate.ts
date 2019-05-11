@@ -2,9 +2,9 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+import { Dependency } from '@dolittle/tooling.common.dependencies';
 import { BaseBoilerplate } from './BaseBoilerplate';
 import { Scripts } from './Scripts';
-import { Dependency } from '@dolittle/tooling.common.dependencies';
 
 export const boilerplateContentFolderName = 'Content';
 /**

@@ -3,15 +3,15 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import path from 'path';
 import * as FsExtra from 'fs-extra';
-import {Logger} from 'winston';
+import path from 'path';
 import semver from 'semver';
-import { ICanDiscoverBoilerplates } from './ICanDiscoverBoilerplates';
-import { nodeModulesPath, boilerplatesConfig } from './index';
-
-import { IBoilerplatesLoader } from './IBoilerplatesLoader';
+import { Logger } from 'winston';
 import { BoilerplatePackageJson } from './BoundedContextPackageJson';
+import { IBoilerplatesLoader } from './IBoilerplatesLoader';
+import { ICanDiscoverBoilerplates } from './ICanDiscoverBoilerplates';
+import { boilerplatesConfig, nodeModulesPath } from './index';
+
 
 const boilerplatesDiscoverer = require('@dolittle/boilerplates-discoverer');
 const toolingPkg = require('../../package.json');

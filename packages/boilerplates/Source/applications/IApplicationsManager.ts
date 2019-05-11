@@ -1,11 +1,12 @@
-import { Application } from "./Application";
-import { Boilerplate } from "Source/Boilerplate";
-import { CreatedApplicationDetails } from "./CreatedApplicationDetails";
-
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+
+import { Application } from '@dolittle/tooling.common.configurations';
+import { Boilerplate } from "../Boilerplate";
+import { CreatedApplicationDetails } from "./CreatedApplicationDetails";
+
 /**
  * Manages the application boiler plates
  *

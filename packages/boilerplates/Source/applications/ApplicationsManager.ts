@@ -3,20 +3,20 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import path from 'path';
+import { Application, applicationFilename } from '@dolittle/tooling.common.configurations';
 import * as FsExtra from 'fs-extra';
-
+import path from 'path';
 import { Logger } from 'winston';
-import { Application } from "./Application";
 import { Boilerplate } from "../Boilerplate";
-import { IApplicationsManager } from "./IApplicationsManager";
-import { ICanManageBoilerplates } from "../ICanManageBoilerplates";
+import { ExpectedBoilerplateError } from '../ExpectedBoilerplateError';
 import { IBoilerplatesCreator } from '../IBoilerplatesCreator';
-import { ExpectedBoilerplateError } from 'Source/ExpectedBoilerplateError';
+import { ICanManageBoilerplates } from "../ICanManageBoilerplates";
 import { CreatedApplicationDetails } from './CreatedApplicationDetails';
+import { IApplicationsManager } from "./IApplicationsManager";
+
 
 export const applicationBoilerplateType = 'application';
-export const applicationFilename = 'application.json';
+
 /**
  * 
  *
@@ -71,7 +71,7 @@ export class ApplicationsManager implements IApplicationsManager {
         return boilerplates.filter( _ => {
             if (namespace && _.namespace) return _.namespace === namespace && _.language === language;
             return _.language && language; 
-        })
+        });
     }
     createApplication(context: any, destinationPath: string, boilerplate: Boilerplate): CreatedApplicationDetails[] {
         let destination = destinationPath;
@@ -81,6 +81,7 @@ export class ApplicationsManager implements IApplicationsManager {
     }
 
     private loadAllBoilerplates()  {
+        this._boilerplates = [];
         this._boilerplateManagers.forEach(_ => {
             _.boilerplatesByType(applicationBoilerplateType).forEach(_ => {
                 if (_ instanceof Boilerplate) this._boilerplates.push(_);

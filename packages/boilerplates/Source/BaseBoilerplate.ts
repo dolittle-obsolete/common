@@ -2,11 +2,11 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import _path from 'path';
-import {artifactsBoilerplateType} from './artifacts/ArtifactsManager';
-import { Scripts } from './Scripts';
-import { getFileDirPath } from '@dolittle/tooling.common.utilities/helpers';
 import { Dependency } from '@dolittle/tooling.common.dependencies';
+import { getFileDirPath } from '@dolittle/tooling.common.utilities/helpers';
+import _path from 'path';
+import { artifactsBoilerplateType } from './artifacts/ArtifactsManager';
+import { Scripts } from './Scripts';
 
 /**
  * Represents the base representation of a boilerplate

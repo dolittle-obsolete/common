@@ -3,13 +3,13 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import path from 'path';
+import { Folders } from '@dolittle/tooling.common.utilities';
 import * as FsExtra from 'fs-extra';
 import * as Handlebars from 'handlebars';
+import path from 'path';
 import { Logger } from 'winston';
 import { Boilerplate } from './Boilerplate';
 import { IBoilerplatesCreator } from './IBoilerplatesCreator';
-import { Folders } from '@dolittle/tooling.common.utilities';
 
 /**
  * Represents the manager of boiler plates

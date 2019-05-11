@@ -3,15 +3,15 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import path from 'path';
-import * as FsExtra from 'fs-extra';
-import {Logger} from 'winston';
-import * as Handlebars from 'handlebars';
-
-import { getFileNameAndExtension } from '@dolittle/tooling.common.utilities/helpers';
 import { Folders } from '@dolittle/tooling.common.utilities';
+import { getFileNameAndExtension } from '@dolittle/tooling.common.utilities/helpers';
+import * as FsExtra from 'fs-extra';
+import * as Handlebars from 'handlebars';
+import path from 'path';
+import { Logger } from 'winston';
 import { ArtifactTemplate } from './ArtifactTemplate';
 import { IArtifactTemplateCreator } from './IArtifactTemplateCreator';
+
 
 /**
  * Represents the manager of boiler plates

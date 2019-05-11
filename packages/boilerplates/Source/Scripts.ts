@@ -2,10 +2,10 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Script } from './Script';
-import lodash from 'lodash';
 import spawn from 'cross-spawn';
+import lodash from 'lodash';
 import path from 'path';
+import { Script } from './Script';
 import { ScriptFailedError } from './ScriptFailedError';
 
 

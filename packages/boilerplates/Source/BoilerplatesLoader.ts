@@ -3,18 +3,18 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import path from 'path';
-import * as FsExtra from 'fs-extra';
-import {Logger} from 'winston';
-import { Boilerplate, boilerplateContentFolderName } from './Boilerplate';
 import { Dependency } from '@dolittle/tooling.common.dependencies';
-import { boilerplatesConfig } from './index';
-import { artifactsBoilerplateType } from './artifacts/ArtifactsManager';
-import { BaseBoilerplate } from './BaseBoilerplate';
-import { ArtifactsBoilerplate } from './ArtifactsBoilerplate';
-import { Scripts } from './Scripts';
-import { IBoilerplatesLoader } from './IBoilerplatesLoader';
 import { Folders } from '@dolittle/tooling.common.utilities';
+import * as FsExtra from 'fs-extra';
+import path from 'path';
+import { Logger } from 'winston';
+import { artifactsBoilerplateType } from './artifacts/ArtifactsManager';
+import { ArtifactsBoilerplate } from './ArtifactsBoilerplate';
+import { BaseBoilerplate } from './BaseBoilerplate';
+import { Boilerplate, boilerplateContentFolderName } from './Boilerplate';
+import { IBoilerplatesLoader } from './IBoilerplatesLoader';
+import { boilerplatesConfig } from './index';
+import { Scripts } from './Scripts';
 
 const binaryFiles = [
     '.jpg',

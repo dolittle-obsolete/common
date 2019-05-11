@@ -2,10 +2,10 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import * as FsExtra from 'fs-extra'
 import { Dependency } from '@dolittle/tooling.common.dependencies';
-import { Folders } from '@dolittle/tooling.common.utilities/Folders';
+import { Folders } from '@dolittle/tooling.common.utilities';
 import { getFileDirPath, getFileNameAndExtension } from '@dolittle/tooling.common.utilities/helpers';
+import * as FsExtra from 'fs-extra';
 import { ArtifactTemplate } from './artifacts/ArtifactTemplate';
 import { BaseBoilerplate } from './BaseBoilerplate';
 import { Scripts } from './Scripts';

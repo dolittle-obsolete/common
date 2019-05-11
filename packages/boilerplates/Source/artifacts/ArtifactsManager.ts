@@ -2,11 +2,14 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {Logger} from 'winston';
-import { ArtifactTemplate } from "./ArtifactTemplate";
+import { ExpectedBoilerplateError } from '../ExpectedBoilerplateError';
+import { Logger } from 'winston';
+import { ArtifactsBoilerplate } from '../ArtifactsBoilerplate';
 import { ICanManageBoilerplates } from '../ICanManageBoilerplates';
-import { ICanManageArtifactTemplates } from './ICanManageArtifactTemplates';
-import { BaseBoilerplate } from '../BaseBoilerplate';
+import { ArtifactTemplate } from "./ArtifactTemplate";
+import { CreatedArtifactTemplateDetails } from './CreatedArtifactTemplateDetails';
+import { IArtifactTemplateCreator } from './IArtifactTemplateCreator';
+import { IArtifactTemplatesManager } from './IArtifactTemplatesManager';
 
 export const artifactsBoilerplateType = 'artifacts';
 
@@ -16,19 +19,33 @@ export const artifactsBoilerplateType = 'artifacts';
  * @export
  * @class ArtifactsManager
  */
-export class ArtifactsManager implements ICanManageArtifactTemplates {
-    private _boilerplatesManager: ICanManageBoilerplates;
+export class ArtifactsManager implements IArtifactTemplatesManager {
+    private _boilerplates: ArtifactsBoilerplate[];
+    private _artifactTemplateCreator: IArtifactTemplateCreator;
+    private _boilerplatesManagers: ICanManageBoilerplates[];
     private _logger: Logger;
     
     /**
      * Creates an instance of ArtifactsManager.
-     * @param {ICanManageBoilerplates} boilerplatesManager
+     * @param {ICanManageBoilerplates[]} boilerplatesManagers
      * @param {Logger} logger
      * @memberof ArtifactsManager
      */
-    constructor(boilerplatesManager: ICanManageBoilerplates, logger: Logger) {
-        this._boilerplatesManager = boilerplatesManager;
+    constructor(boilerplatesManagers: ICanManageBoilerplates[], artifactTemplateCreator: IArtifactTemplateCreator, logger: Logger) {
+        this._boilerplatesManagers = boilerplatesManagers;
+        this._artifactTemplateCreator = artifactTemplateCreator
         this._logger = logger;
+        this._boilerplates = [];
+
+        this.loadAllBoilerplates();
+    }
+    get boilerplates(): ArtifactsBoilerplate[] {
+        this.loadAllBoilerplates();
+        return this._boilerplates;
+    }
+    get hasBoilerplate(): boolean {
+        let boilerplates = this.boilerplates;
+        return boilerplates && boilerplates.length > 0;
     }
     /**
      * Retrieves the boilerplate configurations for artifacts with the given language
@@ -36,21 +53,35 @@ export class ArtifactsManager implements ICanManageArtifactTemplates {
      * @param {string} [namespace=undefined]
      * @return {BaseBoilerplate[]} The Artifact Boilerplates of the given language
      */
-    boilerplatesByLanguage(language: string, namespace?: string): BaseBoilerplate[] {
-        let boilerplates = this._boilerplatesManager.boilerplatesByLanguageAndType(language, artifactsBoilerplateType, namespace);
-        return boilerplates;
+    boilerplatesByLanguage(language: string, namespace?: string): ArtifactsBoilerplate[] {
+        let boilerplates = this.boilerplates;
+        return boilerplates.filter( _ => {
+            if (namespace && _.namespace) return _.namespace === namespace && _.language === language;
+            return _.language && language; 
+        });
     }
     /**
      * Creates an artifact base on the artifact template at the given destination
      * @param {any} context 
      * @param {ArtifactTemplate} artifactTemplate
      * @param {string} destinationPath
-     * @returns {boolean} Whether or not the artifact was created successfully
+     * @returns {CreatedArtifactTemplateDetails} Whether or not the artifact was created successfully
      * 
      */
-    createArtifact(context: any, artifactTemplate: ArtifactTemplate, destinationPath: string): boolean {
+    createArtifact(context: any, artifactTemplate: ArtifactTemplate, destinationPath: string): CreatedArtifactTemplateDetails {
         this._logger.info(`Creating an artifact of type '${artifactTemplate.type}' and language '${artifactTemplate.boilerplate.language}' at destination ${destinationPath}`);
-        this._boilerplatesManager.(artifactTemplate, destinationPath, context);
-        return true;
+        this._artifactTemplateCreator.createArtifactBoilerplate(artifactTemplate, destinationPath, context);
+        return {artifactTemplate, boilerplate: artifactTemplate.boilerplate, destination: destinationPath};
+    }
+
+
+    private loadAllBoilerplates()  {
+        this._boilerplates = [];
+        this._boilerplatesManagers.forEach(_ => {
+            _.boilerplatesByType(artifactsBoilerplateType).forEach(_ => {
+                if (_ instanceof ArtifactsBoilerplate) this._boilerplates.push(_);
+                else throw new ExpectedBoilerplateError(`Expected boilerplate of type '${ArtifactsBoilerplate.name}' but got a '${_.constructor.name}'`)
+            });
+        });
     }
 }

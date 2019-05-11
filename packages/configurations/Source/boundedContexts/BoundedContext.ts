@@ -7,6 +7,7 @@ import { Core } from './Core';
 import { InteractionLayer } from './InteractionLayer';
 import { Resources } from './Resources';
 
+export const boundedContextFileName = 'bounded-context.json';
 /**
  * Represents the configuration of a Bounded Context
  *
@@ -96,7 +97,7 @@ export class BoundedContext
      * @memberof BoundedContext
      */
     readonly resources: Resources;
-    
+
     /**
      * The path of the bounded context configuration file
      *
