@@ -92,7 +92,7 @@ export class BoilerplatesManager implements ICanManageBoilerplates {
      *
      * @memberof BoilerplatesManager
      */
-    getAdornmentsForBoilerplate(boilerplate: BaseBoilerplate, namespace?: string): BaseBoilerplate[] {
+    getAdornmentsForBoilerplate(boilerplate: BaseBoilerplate, namespace?: string): Boilerplate[] {
         return this.getAdornments(boilerplate.type, boilerplate.language, boilerplate.name, namespace);
     }
 }

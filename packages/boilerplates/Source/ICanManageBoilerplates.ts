@@ -4,6 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { BaseBoilerplate } from "./BaseBoilerplate";
+import { Boilerplate } from "./Boilerplate";
 /**
  * Responsible for managing boilerplates
  *
@@ -62,16 +63,16 @@ export interface ICanManageBoilerplates {
      * @param {string} [parentLanguage=undefined]
      * @param {string} [parentName=undefined]
      * @param {string} [namespace=undefined]
-     * @returns {BaseBoilerplate[]}
+     * @returns {Boilerplate[]}
      * @memberof ICanManageBoilerplates
      */
-    getAdornments(parentType: string, parentLanguage?: string, parentName?: string, namespace?: string): BaseBoilerplate[]
+    getAdornments(parentType: string, parentLanguage?: string, parentName?: string, namespace?: string): Boilerplate[]
      /**
      * Gets the adornment boilerplates that has a parent with the given fields
      *
      * @param {BaseBoilerplate} boilerplate
-     * @returns {BaseBoilerplate[]}
+     * @returns {Boilerplate[]}
      * @memberof ICanManageBoilerplates
      */
-    getAdornmentsForBoilerplate(boilerplate: BaseBoilerplate, namespace?: string): BaseBoilerplate[]
+    getAdornmentsForBoilerplate(boilerplate: BaseBoilerplate, namespace?: string): Boilerplate[]
 }

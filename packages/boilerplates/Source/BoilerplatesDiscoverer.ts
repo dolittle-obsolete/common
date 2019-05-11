@@ -42,7 +42,7 @@ export class BoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
         this._logger = logger;
         this._discoveredBoilerplates = [];
 
-        this.boilerplatePaths = boilerplatesDiscoverer.local(nodeModulesPath, [], 15);
+        this.boilerplatePaths = boilerplatesDiscoverer.local(this._nodeModulesPath, [], 15);
     }
 
     /**
