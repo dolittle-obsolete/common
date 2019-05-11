@@ -30,8 +30,7 @@
     "ts:clean": "rimraf ./*.d.ts **/*.d.ts lib",
     "build": "yarn clean && yarn ts:all",
     "clean": "rimraf dist && yarn ts:clean",
-    "prepublishOnly": "yarn build",
-    "postpublish": "yarn clean"
+    "prepublishOnly": "yarn build"
   },
   "dependencies": {
     "conf": "^3.0.0"
