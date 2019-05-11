@@ -10,8 +10,8 @@ import { ScriptFailedError } from './ScriptFailedError';
 
 
 /**
-  * Represents a Boilerplate's scripts
-  */
+ * Represents a Boilerplate's scripts
+ */
 export class Scripts
 {
     static fromJson(scripts: any): Scripts {

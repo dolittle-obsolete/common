@@ -98,13 +98,6 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
         return this._loadedBoilerplates;
     }
     
-    /**
-     * Reads the contents of a folder and returns the in-memory representation of the boilerplate.
-     *
-     * @param {string} folder The folder of a boilerplate
-     * @returns {BaseBoilerplate}
-     * @memberof BoilerplatesManager
-     */
     private readBoilerplateFromFolder(folder: string): BaseBoilerplate {
         let boilerplatePath = path.join(folder, 'boilerplate.json');
         
@@ -112,52 +105,50 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
 
         let boilerplateObject = JSON.parse(this._fileSystem.readFileSync(boilerplatePath, 'utf8'));
 
-        return this.parseBoilerplate(boilerplateObject, boilerplatePath);
+        return this.parseBaseBoilerplate(boilerplateObject, boilerplatePath);
     }
 
-    /**
-     * Parses a boilerplate read from a boilerplate package correctly
-     * 
-     * @param {*} boilerplateObject
-     * @param {string} boilerplatePath The path of the boilerplate.json file
-     * @returns {BaseBoilerplate}
-     */
-    private parseBoilerplate(boilerplateObject: any, boilerplatePath: string): BaseBoilerplate {
-        if (boilerplateObject.type === artifactsBoilerplateType) {
-            return new ArtifactsBoilerplate(
-                boilerplateObject.language || 'any',
-                boilerplateObject.name,
-                boilerplateObject.description,
-                boilerplateObject.type,
-                boilerplateObject.dependencies !== undefined? 
-                    Object.keys(boilerplateObject.dependencies).map(key => Dependency.fromJson(boilerplateObject.dependencies[key], key))
-                    : [],
-                boilerplateObject.namespace,
-                Scripts.fromJson(boilerplateObject.scripts),
-                boilerplatePath,
-                this._folders,
-                this._fileSystem
-            );
-        }
-        else {
-            let bindings = this.getBoilerplateBindings(boilerplatePath);
-            return new Boilerplate(
-                boilerplateObject.language || 'any',
-                boilerplateObject.name,
-                boilerplateObject.description,
-                boilerplateObject.type,
-                boilerplateObject.dependencies !== undefined? 
-                    Object.keys(boilerplateObject.dependencies).map(key => Dependency.fromJson(boilerplateObject.dependencies[key], key))
-                    : [],
-                boilerplateObject.namespace,
-                Scripts.fromJson(boilerplateObject.scripts),
-                boilerplateObject.target,
-                boilerplateObject.framework,
-                boilerplateObject.parent,
-                boilerplatePath,
-                bindings.pathsNeedingBinding,
-                bindings.filesNeedingBinding)
-        }
+    private parseBaseBoilerplate(boilerplateObject: any, boilerplatePath: string): BaseBoilerplate {
+        if (boilerplateObject.type === artifactsBoilerplateType) 
+            return this.parseArtifactsBoilerplate(boilerplateObject, boilerplatePath);
+        else 
+            return this.parseBoilerplate(boilerplateObject, boilerplatePath);
+    }
+
+    private parseArtifactsBoilerplate(boilerplateObject: any, boilerplatePath: string): ArtifactsBoilerplate {
+        return new ArtifactsBoilerplate(
+            boilerplateObject.language || 'any',
+            boilerplateObject.name,
+            boilerplateObject.description,
+            boilerplateObject.type,
+            boilerplateObject.dependencies !== undefined? 
+                Object.keys(boilerplateObject.dependencies).map(key => Dependency.fromJson(boilerplateObject.dependencies[key], key))
+                : [],
+            boilerplateObject.namespace,
+            Scripts.fromJson(boilerplateObject.scripts),
+            boilerplatePath,
+            this._folders,
+            this._fileSystem);
+    }
+    private parseBoilerplate(boilerplateObject: any, boilerplatePath: string): Boilerplate {
+        let bindings = this.getBoilerplateBindings(boilerplatePath);
+        return new Boilerplate(
+            boilerplateObject.language || 'any',
+            boilerplateObject.name,
+            boilerplateObject.description,
+            boilerplateObject.type,
+            boilerplateObject.dependencies !== undefined? 
+                Object.keys(boilerplateObject.dependencies).map(key => Dependency.fromJson(boilerplateObject.dependencies[key], key))
+                : [],
+            boilerplateObject.namespace,
+            Scripts.fromJson(boilerplateObject.scripts),
+            boilerplateObject.target,
+            boilerplateObject.framework,
+            boilerplateObject.parent,
+            boilerplatePath,
+            bindings.pathsNeedingBinding,
+            bindings.filesNeedingBinding
+        );
     }
     /**
      * Gets the path and file bindings for a boilerplate
