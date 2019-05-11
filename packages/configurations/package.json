@@ -27,7 +27,7 @@
     "ts:es": "tsc -p ts/es.tsconfig.json",
     "ts:typedefs": "tsc --outDir . --emitDeclarationOnly",
     "ts:all": "yarn ts:cjs && yarn ts:es && yarn ts:typedefs",
-    "ts:clean": "rimraf ./*.d.ts lib",
+    "ts:clean": "rimraf ./*.d.ts **/*.d.ts lib",
     "build": "yarn clean && yarn ts:all",
     "clean": "rimraf dist && yarn ts:clean",
     "prepublishOnly": "yarn build",
