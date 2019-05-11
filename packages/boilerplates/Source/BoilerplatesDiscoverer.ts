@@ -10,7 +10,7 @@ import { Logger } from 'winston';
 import { BoilerplatePackageJson } from './BoundedContextPackageJson';
 import { IBoilerplatesLoader } from './IBoilerplatesLoader';
 import { ICanDiscoverBoilerplates } from './ICanDiscoverBoilerplates';
-import { boilerplatesConfig, nodeModulesPath } from './index';
+import { BoilerplatesConfig } from './configurations';
 
 
 const boilerplatesDiscoverer = require('@dolittle/boilerplates-discoverer');
@@ -19,21 +19,29 @@ const toolingPkg = require('../../package.json');
  * Represents the manager of boiler plates
  */
 export class BoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
-    private _discoveredBoilerplates: BoilerplatePackageJson[];
+    private _boilerplatesConfig: BoilerplatesConfig;
+    private _nodeModulesPath: string;
     private _boilerplatesLoader: IBoilerplatesLoader;
     private _fileSystem: typeof FsExtra;
     private _logger: Logger;
+
+    private _discoveredBoilerplates: BoilerplatePackageJson[];
     /**
      * Initializes a new instance of {BoilerplatesDiscoverer}
+     * @param {BoilerplatesConfig} boilerplateConfig
+     * @param {string} nodeModulesPath
      * @param {IBoilerplatesLoader} boilerplatesLoader
      * @param {typeof FsExtra} fileSystem
      * @param {Logger} logger
      */
-    constructor(boilerplatesLoader: IBoilerplatesLoader, fileSystem: typeof FsExtra, logger: Logger) {
+    constructor(boilerplatesConfig: BoilerplatesConfig, nodeModulesPath: string, boilerplatesLoader: IBoilerplatesLoader, fileSystem: typeof FsExtra, logger: Logger) {
+        this._boilerplatesConfig = boilerplatesConfig;
+        this._nodeModulesPath = nodeModulesPath;
         this._boilerplatesLoader = boilerplatesLoader;
         this._fileSystem = fileSystem;
         this._logger = logger;
         this._discoveredBoilerplates = [];
+
         this.boilerplatePaths = boilerplatesDiscoverer.local(nodeModulesPath, [], 15);
     }
 
@@ -75,6 +83,6 @@ export class BoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
                 
             }
         });
-        if (this._boilerplatesLoader.needsReload) boilerplatesConfig.store = boilerplatesConfigObject;
+        if (this._boilerplatesLoader.needsReload) this._boilerplatesConfig.store = boilerplatesConfigObject;
     }
 }

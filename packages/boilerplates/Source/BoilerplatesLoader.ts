@@ -13,8 +13,8 @@ import { ArtifactsBoilerplate } from './ArtifactsBoilerplate';
 import { BaseBoilerplate } from './BaseBoilerplate';
 import { Boilerplate, boilerplateContentFolderName } from './Boilerplate';
 import { IBoilerplatesLoader } from './IBoilerplatesLoader';
-import { boilerplatesConfig } from './index';
 import { Scripts } from './Scripts';
+import { BoilerplatesConfig } from './configurations';
 
 const binaryFiles = [
     '.jpg',
@@ -30,8 +30,7 @@ const binaryFiles = [
  * Represents the manager of boiler plates
  */
 export class BoilerplatesLoader implements IBoilerplatesLoader {
-    
-    
+    private _boilerplatesConfig: BoilerplatesConfig;
     private _folders: Folders;
     private _fileSystem: typeof FsExtra;
     private _logger: Logger;
@@ -39,18 +38,20 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
 
     /**
      * Initializes a new instance of {BoilerplatesManager}
+     * @param {BoilerplatesConfig} boilerplatesConfig
      * @param {Folders} folders
      * @param {typeof FsExtra} fileSystem
      * @param {Logger} logger
      * @param {typeof Handlebars} handlebars
      */
-    constructor(folders: Folders, fileSystem: typeof FsExtra, logger: Logger) {
+    constructor(boilerplatesConfig: BoilerplatesConfig, folders: Folders, fileSystem: typeof FsExtra, logger: Logger) {
+        this._boilerplatesConfig = boilerplatesConfig;
         this._folders = folders;
         this._fileSystem = fileSystem;
         this._logger = logger;
 
-        if (! fileSystem.existsSync(boilerplatesConfig.path)) {
-            boilerplatesConfig.store = boilerplatesConfig.store;
+        if (! fileSystem.existsSync(this._boilerplatesConfig.path)) {
+            this._boilerplatesConfig.store = this._boilerplatesConfig.store;
         }
     }
     /**
@@ -66,7 +67,7 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
      * @type {string}
      * @memberof BoilerplatesLoader
      */
-    get boilerplatesPath(): string {return boilerplatesConfig.path;}
+    get boilerplatesPath(): string {return this._boilerplatesConfig.path;}
     /**
      * @inheritdoc
      *
@@ -87,7 +88,7 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
     load(): BaseBoilerplate[] {
         this._logger.info('Loading boilerplates')
         this._loadedBoilerplates = [];
-        let boilerplatesConfigObject = boilerplatesConfig.store;
+        let boilerplatesConfigObject: any = this._boilerplatesConfig.store;
 
         Object.keys(boilerplatesConfigObject).forEach(key => {
             let folderPath = path.resolve(boilerplatesConfigObject[key]);
