@@ -11,15 +11,8 @@ import winston from 'winston';
 export * from './Guid';
 export * from './Folders';
 
-/**
- * Generates and returns the .dolittlerc configuration
- *
- * @returns
- */
-export function getDolittleConfig() { return rc('dolittle', dolittleConfigDefault); } 
 
 export const helpers = _helpers;
-
 export const dolittleConfigDefault = {
     any: {
         concepts: 'Concepts',
@@ -35,7 +28,19 @@ export const dolittleConfigDefault = {
     }
 };
 export const fileSystem = _fsExtra;
-export const dolittleConfig = rc('dolittle', dolittleConfigDefault);
+export let dolittleConfig = rc('dolittle', dolittleConfigDefault);
+
+/**
+ * Resets the dolittleConfig object to something else
+ *
+ * @export
+ * @param {*} [config] If config is undefined the config will be the joined result of dolittlerc configurations
+ */
+export function setNewDolittleConfig(config?: any) { 
+    if (!config)
+        config = rc('dolittle', dolittleConfigDefault); 
+    dolittleConfig = config;
+}
 
 export const folders = new Folders(fileSystem);
 export const logger = winston.createLogger({
