@@ -4,4 +4,5 @@
  *--------------------------------------------------------------------------------------------*/
 export * from './CacheConfig';
 export * from './ProjectConfig';
-export * from './boundedContexts'
+export * from './boundedContexts';
+export * from './applications/Application'

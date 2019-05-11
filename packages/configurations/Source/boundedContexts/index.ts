@@ -7,5 +7,3 @@ export * from './Core';
 export * from './InteractionLayer';
 export * from './Resources';
 export * from './ResourceTypeImplementation';
-
-
