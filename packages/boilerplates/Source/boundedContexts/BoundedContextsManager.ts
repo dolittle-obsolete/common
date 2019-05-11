@@ -117,7 +117,7 @@ export class BoundedContextsManager implements IBoundedContextsManager {
         this._boilerplateManagers.forEach(_ => {
             _.getAdornments(boundedContextBoilerplateType, language, boilerplateName, namespace).forEach(_ => {
                 if (_ instanceof Boilerplate) adornments.push(_);
-                else throw new ExpectedBoilerplateError(`Expected boilerplate of type '${Boilerplate.name}' but got a '${_.constructor.name}'`);
+                else throw new ExpectedBoilerplateError(`Expected boilerplate of type '${Boilerplate.name}' but got a '${(<any>_).constructor.name}'`);
             });
         });
         return adornments.filter(_ => _.type === 'adornment');
@@ -136,7 +136,7 @@ export class BoundedContextsManager implements IBoundedContextsManager {
         this._boilerplateManagers.forEach(_ => {
             _.getAdornments(boundedContextBoilerplateType, language, boilerplateName, namespace).forEach(_ => {
                 if (_ instanceof Boilerplate) adornments.push(_);
-                else throw new ExpectedBoilerplateError(`Expected boilerplate of type '${Boilerplate.name}' but got a '${_.constructor.name}'`);
+                else throw new ExpectedBoilerplateError(`Expected boilerplate of type '${Boilerplate.name}' but got a '${(<any>_).constructor.name}'`);
             });
         });
         return adornments.filter(_ => _.type === 'interaction');
