@@ -8,7 +8,7 @@ import * as FsExtra from 'fs-extra';
 
 import { Logger } from 'winston';
 import { Application } from "./Application";
-import { Boilerplate } from "..//Boilerplate";
+import { Boilerplate } from "../Boilerplate";
 import { IApplicationsManager } from "./IApplicationsManager";
 import { ICanManageBoilerplates } from "../ICanManageBoilerplates";
 import { IBoilerplatesCreator } from '../IBoilerplatesCreator';
