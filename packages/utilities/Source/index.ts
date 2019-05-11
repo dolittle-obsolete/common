@@ -10,6 +10,14 @@ import winston from 'winston';
 
 export * from './Guid';
 export * from './Folders';
+
+/**
+ * Generates and returns the .dolittlerc configuration
+ *
+ * @returns
+ */
+export function getDolittleConfig() { return rc('dolittle', dolittleConfigDefault); } 
+
 export const helpers = _helpers;
 
 export const dolittleConfigDefault = {
@@ -28,6 +36,7 @@ export const dolittleConfigDefault = {
 };
 export const fileSystem = _fsExtra;
 export const dolittleConfig = rc('dolittle', dolittleConfigDefault);
+
 export const folders = new Folders(fileSystem);
 export const logger = winston.createLogger({
     level: 'info',
