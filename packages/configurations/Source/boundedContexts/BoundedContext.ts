@@ -4,23 +4,26 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { Core } from './Core';
-import { Resources } from './Resources';
 import { InteractionLayer } from './InteractionLayer';
+import { Resources } from './Resources';
 
 /**
-  * Represents a Bounded Context
-  */
+ * Represents the configuration of a Bounded Context
+ *
+ * @export
+ * @class BoundedContext
+ */
 export class BoundedContext
 {
-  /**
-   * Creates a {BoundedContext}
-   *
-   * @static
-   * @param {*} obj
-   * @param {string} path
-   * @returns {BoundedContext}
-   * @memberof BoundedContext
-   */
+   /**
+    * Creates a {BoundedContext} object 
+    *
+    * @static
+    * @param {*} obj The raw bounded-context.json object
+    * @param {string} path The file path of the bounded-context.json 
+    * @returns {BoundedContext} 
+    * @memberof BoundedContext
+    */
     static fromJson(obj: any, path: string): BoundedContext {
       return new BoundedContext(obj.application, obj.boundedContext, obj.boundedContextName, Resources.fromJson(obj.resources), Core.fromJson(obj.core), 
           obj.interaction? obj.interaction.forEach((interactionLayer: any) => InteractionLayer.fromJson(interactionLayer)) : [], path);
@@ -36,7 +39,7 @@ export class BoundedContext
       * @param {string} path
       */
     constructor (application: string, boundedContext: string, boundedContextName: string, resources: Resources, 
-                  core: Core, interactionLayers: InteractionLayer[], path: string) {
+                core: Core, interactionLayers: InteractionLayer[], path: string) {
         this.application = application;
         this.boundedContext = boundedContext;
         this.boundedContextName = boundedContextName;
@@ -53,6 +56,7 @@ export class BoundedContext
      * @memberof BoundedContext
      */
     readonly application: string;
+    
     /**
      * The bounded context GUID
      *
@@ -60,6 +64,7 @@ export class BoundedContext
      * @memberof BoundedContext
      */
     readonly boundedContext: string;
+
     /**
      * The name of the bounded context
      *
@@ -67,6 +72,7 @@ export class BoundedContext
      * @memberof BoundedContext
      */
     readonly boundedContextName: string;
+
     /**
      * The core configuration 
      *
@@ -74,6 +80,7 @@ export class BoundedContext
      * @memberof BoundedContext
      */
     readonly core: Core;
+
     /**
      * The interaction layers
      *
@@ -81,6 +88,7 @@ export class BoundedContext
      * @memberof BoundedContext
      */
     readonly interactionLayers: InteractionLayer[];
+
     /**
      * The resources configuration
      *
@@ -88,6 +96,7 @@ export class BoundedContext
      * @memberof BoundedContext
      */
     readonly resources: Resources;
+    
     /**
      * The path of the bounded context configuration file
      *

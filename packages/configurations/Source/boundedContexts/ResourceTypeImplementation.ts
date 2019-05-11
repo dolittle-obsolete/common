@@ -3,22 +3,27 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+
 /**
-  * Represents a Bounded Context's resources configuration
-  */
+ * Represents a Bounded Context's resources type implementation configuration
+ * 
+ * @export
+ * @class ResourceTypeImplementation
+ */
 export class ResourceTypeImplementation
 {
     /**
      * Creates a {ResourceTypeImplementation}
      *
      * @static
-     * @param {any} obj
+     * @param {any} obj The resource type implementation object of a Resource from within the bounded-context.json
      * @returns {ResourceTypeImplementation}
      * @memberof ResourceTypeImplementation
      */
     static fromJson(obj: any): ResourceTypeImplementation {
         return new ResourceTypeImplementation(obj.development, obj.production);
     }
+
     /**
       * Instantiates an instance of {ResourceTypeImplementation}
       * @param {string} development 
@@ -28,6 +33,7 @@ export class ResourceTypeImplementation
         this.development = development;
         this.production = production;
     }
+
     /**
      * The resource type implementations for read models
      *
@@ -35,6 +41,7 @@ export class ResourceTypeImplementation
      * @memberof ResourceTypeImplementation
      */
     readonly development: string;
+
     /**
      * The entry point of the bounded context's Core.  A relative path to the folder
      *
@@ -42,7 +49,6 @@ export class ResourceTypeImplementation
      * @memberof ResourceTypeImplementation
      */
     readonly production: string;
-    
 
     toJson() {
         return {

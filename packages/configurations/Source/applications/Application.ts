@@ -4,7 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 
 /**
- * Represents the definition of an application
+ * Represents an application configuration
+ *
+ * @export
+ * @class Application
  */
 export class Application {
     /**
@@ -49,10 +52,10 @@ export class Application {
     readonly name: string;
 
     /**
-      * Gets the path of the application configuration file
-      * @type {string}
-      * @readonly
-      * @memberof Application
-      */
+     * Gets the path of the application configuration file
+     * @type {string}
+     * @readonly
+     * @memberof Application
+     */
     readonly path: string;
 }

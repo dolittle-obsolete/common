@@ -4,15 +4,18 @@
  *--------------------------------------------------------------------------------------------*/
 
 /**
-  * Represents a Bounded Context's core configuration
-  */
+ * Represents the Bounded Context's core configuration
+ *
+ * @export
+ * @class Core
+ */
 export class Core
 {
     /**
-     * Creates a {Core}
+     * Creates a {Core} object
      *
      * @static
-     * @param {*} obj
+     * @param {*} obj The raw core object from within then bounded-context.json
      * @returns {Core}
      * @memberof Core
      */
@@ -29,6 +32,7 @@ export class Core
         this.entryPoint = entryPoint;
         
     }
+
     /**
      * The programming language
      *
@@ -36,6 +40,7 @@ export class Core
      * @memberof Core
      */
     readonly language: string;
+    
     /**
      * The entry point of the bounded context's Core.  A relative path to the folder
      *

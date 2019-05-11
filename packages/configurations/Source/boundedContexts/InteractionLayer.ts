@@ -12,8 +12,8 @@ export class InteractionLayer
      * Creates an {InteractionLayer}
      *
      * @static
-     * @param {any} obj
-     * @returns
+     * @param {any} obj The interaction layer object from within the bounded-context.json
+     * @returns {InteractionLayer}
      * @memberof InteractionLayer
      */
     static fromJson(obj: any): InteractionLayer {
@@ -33,6 +33,7 @@ export class InteractionLayer
         this.framework = framework;
         this.entryPoint = entryPoint;
     }
+
     /**
      * The type of this interaction layer
      *
@@ -40,6 +41,7 @@ export class InteractionLayer
      * @memberof InteractionLayer
      */
     readonly type: string;
+
     /**
      * The programming language
      *
@@ -47,6 +49,7 @@ export class InteractionLayer
      * @memberof InteractionLayer
      */
     readonly language: string;
+
     /**
      * The framework of this interaction layer
      *
@@ -54,6 +57,7 @@ export class InteractionLayer
      * @memberof InteractionLayer
      */
     readonly framework: string;
+    
     /**
      * The entry point of this specific interaction layer.  A relative path to the folder 
      *

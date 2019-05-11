@@ -5,15 +5,18 @@
 import { ResourceTypeImplementation } from "./ResourceTypeImplementation";
 
 /**
-  * Represents a Bounded Context's resources configuration
-  */
+ * Represents a Bounded Context's resources configuration
+ *
+ * @export
+ * @class Resources
+ */
 export class Resources
 {
     /**
      * Creates {Resources}
      *
      * @static
-     * @param {*} obj
+     * @param {*} obj The resources object from within the bounded-context.json
      * @returns {Resources}
      * @memberof Resources
      */
@@ -31,6 +34,7 @@ export class Resources
         this.eventStore = eventStore;
         
     }
+
     /**
      * The resource type implementations for read models
      * 
@@ -39,6 +43,7 @@ export class Resources
      * @memberof Core
      */
     readonly readModels: ResourceTypeImplementation;
+    
     /**
      * The entry point of the bounded context's Core.  A relative path to the folder
      *
