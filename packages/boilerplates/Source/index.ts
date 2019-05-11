@@ -21,6 +21,7 @@ import { BoilerplatesCreator } from './BoilerPlatesCreator';
 import { IBoundedContextsManager, BoundedContextsManager } from './boundedContexts';
 import { IApplicationsManager, ApplicationsManager } from './applications';
 import { IArtifactTemplateCreator, ArtifactTemplateCreator, IArtifactTemplatesManager, ArtifactTemplatesManager } from './artifacts';
+import { BaseBoilerplate } from './BaseBoilerplate';
 
 export * from './applications';
 export * from './artifacts';
@@ -147,3 +148,15 @@ export function setArtifactTemplatesCreator(manager: IArtifactTemplatesManager) 
  * @export
  */
 export function discoverAllBoilerplates() { boilerplatesDiscoverers.forEach(_ => _.discover()); }
+/**
+ * Gets all boilerplates by getting boilerplates from all instances of ICanManageBoilerplates
+ *
+ * @export
+ * @returns {BaseBoilerplate[]}
+ */
+export function getAllBoilerplates(): BaseBoilerplate[] { 
+    let boilerplates: BaseBoilerplate[] = [];
+    boilerplatesManagers.forEach(_ => boilerplates.push(..._.boilerplates));
+
+    return boilerplates;
+}
