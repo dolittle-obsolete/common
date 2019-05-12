@@ -24,6 +24,8 @@ import { IArtifactTemplateCreator, ArtifactTemplateCreator, IArtifactTemplatesMa
 import { BaseBoilerplate } from './BaseBoilerplate';
 import { IBoilerplateManagers } from './IBoilerplateManagers';
 import { BoilerplateManagers } from './BoilerplateManagers';
+import { IBoilerplateDiscoverers } from './IBoilerplateDiscoverers';
+import { BoilerplateDiscoverers } from './BoilerplateDiscoverers';
 
 export * from './applications';
 export * from './artifacts';
@@ -33,6 +35,7 @@ export * from './configurations';
 export * from './ArtifactsBoilerplate';
 export * from './BaseBoilerplate';
 export * from './Boilerplate';
+export * from './BoilerplateDiscoverers';
 export * from './BoilerplateManagers';
 export * from './BoilerplatesCreator';
 export * from './BoilerplatesDiscoverer';
@@ -40,6 +43,7 @@ export * from './BoilerplatesLoader';
 export * from './BoilerplatesManager';
 export * from './BoundedContextPackageJson';
 export * from './ExpectedBoilerplateError';
+export * from './IBoilerplateDiscoverers';
 export * from './IBoilerplateManagers';
 export * from './IBoilerplatesCreator';
 export * from './IBoilerplatesLoader';
@@ -105,9 +109,11 @@ export let instancesOfICanManageBoilerplates: ICanManageBoilerplates[] = [
 ];
 export let boilerplateManagers: IBoilerplateManagers = new BoilerplateManagers(instancesOfICanManageBoilerplates);
 
-export let boilerplatesDiscoverers: ICanDiscoverBoilerplates[] = [
+export let instancesOfICanDiscoverBoilerplates: ICanDiscoverBoilerplates[] = [
     new BoilerplatesDiscoverer(boilerplatesConfig, nodeModulesPath, boilerplatesLoader, fileSystem, logger)
 ];
+export let boilerplateDiscoverers: IBoilerplateDiscoverers = new BoilerplateDiscoverers(instancesOfICanDiscoverBoilerplates);
+
 export let onlineBoilerplateFinders: ICanFindOnlineBoilerplatePackages[] = [
     new OnlineBoilerplatesDiscoverer(logger)
 ]; 
@@ -147,10 +153,3 @@ export let artifactTemplatesManager: IArtifactTemplatesManager = new ArtifactTem
  * @param {IArtifactTemplatesManager} manager
  */
 export function setArtifactTemplatesCreator(manager: IArtifactTemplatesManager) { artifactTemplatesManager = manager; };
-
-/**
- * Discovers all boilerplates using all instances of ICanDiscoverBoilerplates
- *
- * @export
- */
-export function discoverAllBoilerplates() { boilerplatesDiscoverers.forEach(_ => _.discover()); }
