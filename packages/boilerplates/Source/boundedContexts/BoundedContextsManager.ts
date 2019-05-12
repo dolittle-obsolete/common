@@ -13,10 +13,10 @@ import { IApplicationsManager } from '../applications/IApplicationsManager';
 import { Boilerplate } from '../Boilerplate';
 import { ExpectedBoilerplateError } from '../ExpectedBoilerplateError';
 import { IBoilerplatesCreator } from '../IBoilerplatesCreator';
-import { ICanManageBoilerplates } from '../ICanManageBoilerplates';
 import { ApplicationConfigurationNotFound } from './ApplicationConfigurationNotFound';
 import { CreatedBoundedContextDetails } from './CreatedBoundedContextDetails';
 import { IBoundedContextsManager } from './IBoundedContextsManager';
+import { IBoilerplateManagers } from 'Source/IBoilerplateManagers';
 
 
 export const boundedContextBoilerplateType = 'boundedContext';
@@ -30,7 +30,7 @@ const boundedContextAdornmentDependencyName = 'boundedContextAdornment'
  */
 export class BoundedContextsManager implements IBoundedContextsManager {
     private _boilerplates: Boilerplate[]
-    private _boilerplateManagers: ICanManageBoilerplates[];
+    private _boilerplateManagers: IBoilerplateManagers;
     private _boilerplatesCreator: IBoilerplatesCreator;
     private _applicationsManager: IApplicationsManager;
     private _folders: Folders;
@@ -38,7 +38,7 @@ export class BoundedContextsManager implements IBoundedContextsManager {
     private _logger: Logger;
     /**
      *Creates an instance of BoundedContextsManager.
-     * @param {ICanManageBoilerplates} boilerplateManager
+     * @param {IBoilerplateManagers} boilerplateManager
      * @param {IBoilerplatesCreator} boilerplatesCreator
      * @param {IApplicationsManager} applicationsManager
      * @param {Folders} folders
@@ -46,7 +46,7 @@ export class BoundedContextsManager implements IBoundedContextsManager {
      * @param {Logger} logger
      * @memberof BoundedContextsManager
      */
-    constructor(boilerplateManagers: ICanManageBoilerplates[], boilerplatesCreator: IBoilerplatesCreator, applicationsManager: IApplicationsManager, folders: Folders, fileSystem: typeof FsExtra, logger: Logger) {
+    constructor(boilerplateManagers: IBoilerplateManagers, boilerplatesCreator: IBoilerplatesCreator, applicationsManager: IApplicationsManager, folders: Folders, fileSystem: typeof FsExtra, logger: Logger) {
         this._boilerplateManagers = boilerplateManagers;
         this._boilerplatesCreator = boilerplatesCreator;
         this._applicationsManager = applicationsManager;
@@ -113,13 +113,11 @@ export class BoundedContextsManager implements IBoundedContextsManager {
      * @memberof BoundedContextsManager
      */
     getAdornments(language?: string, boilerplateName?: string, namespace?: string): Boilerplate[] {
-        let adornments: Boilerplate[] = [];
-        this._boilerplateManagers.forEach(_ => {
-            _.getAdornments(boundedContextBoilerplateType, language, boilerplateName, namespace).forEach(_ => {
-                if (_ instanceof Boilerplate) adornments.push(_);
+        let adornments: Boilerplate[] = this._boilerplateManagers.getAdornments(boundedContextBoilerplateType, language, boilerplateName, namespace)
+            .map(_ => {
+                if (_ instanceof Boilerplate) return _;
                 else throw new ExpectedBoilerplateError(`Expected boilerplate of type '${Boilerplate.name}' but got a '${(<any>_).constructor.name}'`);
             });
-        });
         return adornments.filter(_ => _.type === 'adornment');
     }
     /**
@@ -132,13 +130,11 @@ export class BoundedContextsManager implements IBoundedContextsManager {
      * @memberof BoundedContextsManager
      */
     getInteractionLayers(language?: string, boilerplateName?: string, namespace?: string): Boilerplate[] {
-        let adornments: Boilerplate[] = [];
-        this._boilerplateManagers.forEach(_ => {
-            _.getAdornments(boundedContextBoilerplateType, language, boilerplateName, namespace).forEach(_ => {
-                if (_ instanceof Boilerplate) adornments.push(_);
+        let adornments: Boilerplate[] = this._boilerplateManagers.getAdornments(boundedContextBoilerplateType, language, boilerplateName, namespace)
+            .map(_ => {
+                if (_ instanceof Boilerplate) return _;
                 else throw new ExpectedBoilerplateError(`Expected boilerplate of type '${Boilerplate.name}' but got a '${(<any>_).constructor.name}'`);
             });
-        });
         return adornments.filter(_ => _.type === 'interaction');
      }
     /**
@@ -283,12 +279,9 @@ export class BoundedContextsManager implements IBoundedContextsManager {
     }
 
     private loadAllBoilerplates()  {
-        this._boilerplates = [];
-        this._boilerplateManagers.forEach(_ => {
-            _.boilerplatesByType(boundedContextBoilerplateType).forEach(_ => {
-                if (_ instanceof Boilerplate) this._boilerplates.push(_);
-                else throw new ExpectedBoilerplateError(`Expected boilerplate of type '${Boilerplate.name}' but got a '${_.constructor.name}'`)
-            });
+        this._boilerplates = this._boilerplateManagers.boilerplatesByType(boundedContextBoilerplateType).map(_ => {
+            if (_ instanceof Boilerplate) return _;
+            else throw new ExpectedBoilerplateError(`Expected boilerplate of type '${Boilerplate.name}' but got a '${_.constructor.name}'`)
         });
     }
     

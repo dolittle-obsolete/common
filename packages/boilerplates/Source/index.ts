@@ -22,6 +22,8 @@ import { IBoundedContextsManager, BoundedContextsManager } from './boundedContex
 import { IApplicationsManager, ApplicationsManager } from './applications';
 import { IArtifactTemplateCreator, ArtifactTemplateCreator, IArtifactTemplatesManager, ArtifactTemplatesManager } from './artifacts';
 import { BaseBoilerplate } from './BaseBoilerplate';
+import { IBoilerplateManagers } from './IBoilerplateManagers';
+import { BoilerplateManagers } from './BoilerplateManagers';
 
 export * from './applications';
 export * from './artifacts';
@@ -96,9 +98,11 @@ export let boilerplatesLoader: IBoilerplatesLoader = new BoilerplatesLoader(boil
  */
 export function setBoilerplatesLoader(loader: IBoilerplatesLoader) { boilerplatesLoader = loader; };
 
-export let boilerplatesManagers: ICanManageBoilerplates[] = [
+export let instancesOfICanManageBoilerplates: ICanManageBoilerplates[] = [
     new BoilerplatesManager(boilerplatesLoader)
 ];
+export let boilerplateManagers: IBoilerplateManagers = new BoilerplateManagers(instancesOfICanManageBoilerplates);
+
 export let boilerplatesDiscoverers: ICanDiscoverBoilerplates[] = [
     new BoilerplatesDiscoverer(boilerplatesConfig, nodeModulesPath, boilerplatesLoader, fileSystem, logger)
 ];
@@ -106,7 +110,7 @@ export let onlineBoilerplateFinders: ICanFindOnlineBoilerplatePackages[] = [
     new OnlineBoilerplatesDiscoverer(logger)
 ]; 
 
-export let applicationsManager: IApplicationsManager = new ApplicationsManager(boilerplatesManagers, boilerplatesCreator, fileSystem, logger);
+export let applicationsManager: IApplicationsManager = new ApplicationsManager(boilerplateManagers, boilerplatesCreator, fileSystem, logger);
 /**
  * Sets the internal IApplicationsManager
  *
@@ -115,7 +119,7 @@ export let applicationsManager: IApplicationsManager = new ApplicationsManager(b
  */
 export function setApplicationsManager(manager: IApplicationsManager) { applicationsManager = manager; };
 
-export let boundedContextsManager: IBoundedContextsManager = new BoundedContextsManager(boilerplatesManagers, boilerplatesCreator, applicationsManager, folders, fileSystem, logger);
+export let boundedContextsManager: IBoundedContextsManager = new BoundedContextsManager(boilerplateManagers, boilerplatesCreator, applicationsManager, folders, fileSystem, logger);
 /**
  * Sets the internal IBoundedContextsManager
  *
@@ -133,7 +137,7 @@ export let artifactTemplateCreator: IArtifactTemplateCreator = new ArtifactTempl
  */
 export function setArtifactTemplateCreator(creator: IArtifactTemplateCreator) { artifactTemplateCreator = creator; };
 
-export let artifactTemplatesManager: IArtifactTemplatesManager = new ArtifactTemplatesManager(boilerplatesManagers, artifactTemplateCreator, logger);
+export let artifactTemplatesManager: IArtifactTemplatesManager = new ArtifactTemplatesManager(boilerplateManagers, artifactTemplateCreator, logger);
 /**
  * Sets the internal IArtifactTemplatesManager
  *
@@ -148,15 +152,3 @@ export function setArtifactTemplatesCreator(manager: IArtifactTemplatesManager) 
  * @export
  */
 export function discoverAllBoilerplates() { boilerplatesDiscoverers.forEach(_ => _.discover()); }
-/**
- * Gets all boilerplates by getting boilerplates from all instances of ICanManageBoilerplates
- *
- * @export
- * @returns {BaseBoilerplate[]}
- */
-export function getAllBoilerplates(): BaseBoilerplate[] { 
-    let boilerplates: BaseBoilerplate[] = [];
-    boilerplatesManagers.forEach(_ => boilerplates.push(..._.boilerplates));
-
-    return boilerplates;
-}

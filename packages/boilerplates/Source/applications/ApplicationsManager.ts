@@ -10,9 +10,9 @@ import { Logger } from 'winston';
 import { Boilerplate } from "../Boilerplate";
 import { ExpectedBoilerplateError } from '../ExpectedBoilerplateError';
 import { IBoilerplatesCreator } from '../IBoilerplatesCreator';
-import { ICanManageBoilerplates } from "../ICanManageBoilerplates";
 import { CreatedApplicationDetails } from './CreatedApplicationDetails';
 import { IApplicationsManager } from "./IApplicationsManager";
+import { IBoilerplateManagers } from 'Source/IBoilerplateManagers';
 
 
 export const applicationBoilerplateType = 'application';
@@ -26,19 +26,19 @@ export const applicationBoilerplateType = 'application';
 export class ApplicationsManager implements IApplicationsManager {
 
     private _boilerplates: Boilerplate[];
-    private _boilerplateManagers: ICanManageBoilerplates[];
+    private _boilerplateManagers: IBoilerplateManagers;
     private _boilerplatesCreator: IBoilerplatesCreator;
     private _fileSystem: typeof FsExtra;
     private _logger: Logger;
 
     /**
      *Creates an instance of ApplicationsManager.
-     * @param {ICanManageBoilerplates[]} boilerplateManagers
+     * @param {IBoilerplateManagers} boilerplateManagers
      * @param {typeof FsExtra} fileSystem
      * @param {Logger} logger
      * @memberof ApplicationsManager
      */
-    constructor(boilerplateManagers: ICanManageBoilerplates[], boilerplatesCreator: IBoilerplatesCreator, fileSystem: typeof FsExtra, logger: Logger) {
+    constructor(boilerplateManagers: IBoilerplateManagers, boilerplatesCreator: IBoilerplatesCreator, fileSystem: typeof FsExtra, logger: Logger) {
         this._boilerplateManagers = boilerplateManagers;
         this._boilerplatesCreator = boilerplatesCreator;
         this._fileSystem = fileSystem;
@@ -46,7 +46,6 @@ export class ApplicationsManager implements IApplicationsManager {
         this._boilerplates = [];
 
         this.loadAllBoilerplates();
-        
     }
     get boilerplates(): Boilerplate[] {
         this.loadAllBoilerplates();
@@ -81,12 +80,9 @@ export class ApplicationsManager implements IApplicationsManager {
     }
 
     private loadAllBoilerplates()  {
-        this._boilerplates = [];
-        this._boilerplateManagers.forEach(_ => {
-            _.boilerplatesByType(applicationBoilerplateType).forEach(_ => {
-                if (_ instanceof Boilerplate) this._boilerplates.push(_);
-                else throw new ExpectedBoilerplateError(`Expected boilerplate of type '${Boilerplate.name}' but got a '${_.constructor.name}'`)
-            });
+        this._boilerplates = this._boilerplateManagers.boilerplatesByType(applicationBoilerplateType).map(_ => {
+            if (_ instanceof Boilerplate) return _;
+            else throw new ExpectedBoilerplateError(`Expected boilerplate of type '${Boilerplate.name}' but got a '${_.constructor.name}'`);
         });
     }
 }

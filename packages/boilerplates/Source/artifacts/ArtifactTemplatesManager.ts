@@ -5,11 +5,11 @@
 import { ExpectedBoilerplateError } from '../ExpectedBoilerplateError';
 import { Logger } from 'winston';
 import { ArtifactsBoilerplate } from '../ArtifactsBoilerplate';
-import { ICanManageBoilerplates } from '../ICanManageBoilerplates';
 import { ArtifactTemplate } from "./ArtifactTemplate";
 import { CreatedArtifactTemplateDetails } from './CreatedArtifactTemplateDetails';
 import { IArtifactTemplateCreator } from './IArtifactTemplateCreator';
 import { IArtifactTemplatesManager } from './IArtifactTemplatesManager';
+import { IBoilerplateManagers } from 'Source/IBoilerplateManagers';
 
 export const artifactsBoilerplateType = 'artifacts';
 
@@ -22,17 +22,17 @@ export const artifactsBoilerplateType = 'artifacts';
 export class ArtifactTemplatesManager implements IArtifactTemplatesManager {
     private _boilerplates: ArtifactsBoilerplate[];
     private _artifactTemplateCreator: IArtifactTemplateCreator;
-    private _boilerplatesManagers: ICanManageBoilerplates[];
+    private _boilerplateManagers: IBoilerplateManagers;
     private _logger: Logger;
     
     /**
      * Creates an instance of ArtifactsManager.
-     * @param {ICanManageBoilerplates[]} boilerplatesManagers
+     * @param {IBoilerplateManagers} boilerplateManagers
      * @param {Logger} logger
      * @memberof ArtifactsManager
      */
-    constructor(boilerplatesManagers: ICanManageBoilerplates[], artifactTemplateCreator: IArtifactTemplateCreator, logger: Logger) {
-        this._boilerplatesManagers = boilerplatesManagers;
+    constructor(boilerplateManagers: IBoilerplateManagers, artifactTemplateCreator: IArtifactTemplateCreator, logger: Logger) {
+        this._boilerplateManagers = boilerplateManagers;
         this._artifactTemplateCreator = artifactTemplateCreator
         this._logger = logger;
         this._boilerplates = [];
@@ -76,12 +76,9 @@ export class ArtifactTemplatesManager implements IArtifactTemplatesManager {
 
 
     private loadAllBoilerplates()  {
-        this._boilerplates = [];
-        this._boilerplatesManagers.forEach(_ => {
-            _.boilerplatesByType(artifactsBoilerplateType).forEach(_ => {
-                if (_ instanceof ArtifactsBoilerplate) this._boilerplates.push(_);
-                else throw new ExpectedBoilerplateError(`Expected boilerplate of type '${ArtifactsBoilerplate.name}' but got a '${_.constructor.name}'`)
-            });
+        this._boilerplates = this._boilerplateManagers.boilerplatesByType(artifactsBoilerplateType).map(_ => {
+            if (_ instanceof ArtifactsBoilerplate) return _;
+            else throw new ExpectedBoilerplateError(`Expected boilerplate of type '${ArtifactsBoilerplate.name}' but got a '${_.constructor.name}'`)
         });
     }
 }
