@@ -30,7 +30,7 @@ export class NonPromptDependencyResolver implements ICanResolveSyncDependencies 
     }    
     
     canResolve(dependency: Dependency): boolean {
-        return dependency.userInputType !== undefined && dependency.userInputType === 'argument';
+        return dependency.type === 'discover';
     }
 
 }
