@@ -28,6 +28,8 @@ export const dolittleConfigDefault = {
     }
 };
 export const fileSystem = _fsExtra;
+export type FileSystem = typeof _fsExtra;
+
 export let dolittleConfig = rc('dolittle', dolittleConfigDefault);
 
 /**
