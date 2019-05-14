@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { BoundedContext, boundedContextFileName, Core, InteractionLayer, Resources } from '@dolittle/tooling.common.configurations';
 import { Dependency } from '@dolittle/tooling.common.dependencies';
-import { Folders } from '@dolittle/tooling.common.utilities/Folders';
+import { Folders } from '@dolittle/tooling.common.utilities';
 import { getFileDirPath, groupBy } from '@dolittle/tooling.common.utilities';
 import * as FsExtra from 'fs-extra';
 import path from 'path';

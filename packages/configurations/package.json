@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.configurations",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.5",
   "description": "Common configuration system for dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -22,7 +22,7 @@
   "types": "index.d.ts",
   "typings": "index.d.ts",
   "scripts": {
-    "ts:cjs": "tsc -p ts/cjs.tsconfig.json",
+    "ts:cjs": "tsc -p tsconfig.json --declaration false",
     "ts:typedefs": "tsc --outDir . --emitDeclarationOnly",
     "ts:all": "yarn ts:cjs && yarn ts:typedefs",
     "ts:clean": "rimraf ./*.d.ts **/*.d.ts lib",
