@@ -5,14 +5,12 @@
 import rc from 'rc';
 import * as _fsExtra from 'fs-extra';
 import { Folders } from './Folders';
-import * as _helpers from './helpers';
 import winston from 'winston';
 
 export * from './Guid';
 export * from './Folders';
+export * from './helpers';
 
-
-export const helpers = _helpers;
 export const dolittleConfigDefault = {
     any: {
         concepts: 'Concepts',
