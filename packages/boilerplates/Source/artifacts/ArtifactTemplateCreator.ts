@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Folders } from '@dolittle/tooling.common.utilities';
-import { getFileNameAndExtension } from '@dolittle/tooling.common.utilities/helpers';
+import { getFileNameAndExtension } from '@dolittle/tooling.common.utilities';
 import * as FsExtra from 'fs-extra';
 import * as Handlebars from 'handlebars';
 import path from 'path';

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Dependency } from "./Dependency";
-import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir } from "@dolittle/tooling.common.utilities/helpers";
+import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir } from "@dolittle/tooling.common.utilities";
 import * as FsExtra from 'fs-extra';
 import {Logger} from 'winston';
 import { IDependenciesManager } from "./IDependenciesManager";

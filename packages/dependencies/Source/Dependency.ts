@@ -2,8 +2,8 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { areas } from '@dolittle/tooling.common.utilities/helpers';
 
+import {areas} from '@dolittle/tooling.common.utilities';
 const dependencyTypes = [
     'discover',
     'userInput'

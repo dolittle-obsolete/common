@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { Dependency } from '@dolittle/tooling.common.dependencies';
-import { getFileDirPath } from '@dolittle/tooling.common.utilities/helpers';
+import { getFileDirPath } from '@dolittle/tooling.common.utilities';
 import _path from 'path';
 import { artifactsBoilerplateType } from './artifacts/ArtifactTemplatesManager';
 import { Scripts } from './Scripts';
