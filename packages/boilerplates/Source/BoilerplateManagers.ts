@@ -2,10 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { BaseBoilerplate } from './BaseBoilerplate';
-import { Boilerplate } from './Boilerplate';
-import { ICanManageBoilerplates } from './ICanManageBoilerplates';
-import { IBoilerplateManagers } from './IBoilerplateManagers';
+import { BaseBoilerplate, Boilerplate, ICanManageBoilerplates, IBoilerplateManagers } from './internal';
 
 /**
  * Represents the manager of boiler plates

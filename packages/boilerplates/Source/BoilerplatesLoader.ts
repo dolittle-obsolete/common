@@ -8,13 +8,7 @@ import { Folders } from '@dolittle/tooling.common.utilities';
 import * as FsExtra from 'fs-extra';
 import path from 'path';
 import { Logger } from 'winston';
-import { artifactsBoilerplateType } from './artifacts/ArtifactTemplatesManager';
-import { ArtifactsBoilerplate } from './ArtifactsBoilerplate';
-import { BaseBoilerplate } from './BaseBoilerplate';
-import { Boilerplate, boilerplateContentFolderName } from './Boilerplate';
-import { IBoilerplatesLoader } from './IBoilerplatesLoader';
-import { Scripts } from './Scripts';
-import { BoilerplatesConfig } from './configurations';
+import { artifactsBoilerplateType, ArtifactsBoilerplate, BaseBoilerplate, Boilerplate, boilerplateContentFolderName, IBoilerplatesLoader, Scripts, BoilerplatesConfig } from './internal';
 
 const binaryFiles = [
     '.jpg',

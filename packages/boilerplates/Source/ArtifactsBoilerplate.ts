@@ -6,9 +6,7 @@ import { Dependency } from '@dolittle/tooling.common.dependencies';
 import { Folders } from '@dolittle/tooling.common.utilities';
 import { getFileDirPath, getFileNameAndExtension } from '@dolittle/tooling.common.utilities';
 import * as FsExtra from 'fs-extra';
-import { ArtifactTemplate } from './artifacts/ArtifactTemplate';
-import { BaseBoilerplate } from './BaseBoilerplate';
-import { Scripts } from './Scripts';
+import { ArtifactTemplate, BaseBoilerplate, Scripts } from './internal';
 
 export const artifactsBoilerplateContentFolderName = 'Templates';
 /**

@@ -4,8 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Application } from '@dolittle/tooling.common.configurations';
-import { Boilerplate } from "../Boilerplate";
-import { CreatedApplicationDetails } from "./CreatedApplicationDetails";
+import { Boilerplate, CreatedApplicationDetails } from "../internal";
 
 /**
  * Manages the application boiler plates

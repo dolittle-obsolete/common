@@ -2,14 +2,8 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { ExpectedBoilerplateError } from '../ExpectedBoilerplateError';
 import { Logger } from 'winston';
-import { ArtifactsBoilerplate } from '../ArtifactsBoilerplate';
-import { ArtifactTemplate } from "./ArtifactTemplate";
-import { CreatedArtifactTemplateDetails } from './CreatedArtifactTemplateDetails';
-import { IArtifactTemplateCreator } from './IArtifactTemplateCreator';
-import { IArtifactTemplatesManager } from './IArtifactTemplatesManager';
-import { IBoilerplateManagers } from '../IBoilerplateManagers';
+import { ArtifactsBoilerplate, ArtifactTemplate, CreatedArtifactTemplateDetails, IArtifactTemplateCreator, IArtifactTemplatesManager, IBoilerplateManagers, ExpectedBoilerplateError } from '../internal';
 
 export const artifactsBoilerplateType = 'artifacts';
 

@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { BaseBoilerplate } from "./BaseBoilerplate";
+import { BaseBoilerplate } from "./internal";
 
 /**
  * Responsible for loading the boilerplates into the boilerplates system

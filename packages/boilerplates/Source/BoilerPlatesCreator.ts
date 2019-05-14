@@ -8,8 +8,7 @@ import * as FsExtra from 'fs-extra';
 import * as Handlebars from 'handlebars';
 import path from 'path';
 import { Logger } from 'winston';
-import { Boilerplate } from './Boilerplate';
-import { IBoilerplatesCreator } from './IBoilerplatesCreator';
+import { Boilerplate, IBoilerplatesCreator } from './internal';
 
 /**
  * Represents the manager of boiler plates

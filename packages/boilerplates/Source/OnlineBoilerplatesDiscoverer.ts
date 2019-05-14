@@ -5,10 +5,9 @@
 
 import semver from 'semver';
 import { Logger } from 'winston';
-import { BoilerplatePackageJson } from './BoundedContextPackageJson';
-import { ICanFindOnlineBoilerplatePackages } from './ICanFindOnlineBoilerplatePackages';
+import { BoilerplatePackageJson, ICanFindOnlineBoilerplatePackages } from './internal';
 
-const toolingPkg = require('../../package.json');
+const toolingPkg = require('../package.json');
 
 const boilerplatesDiscoverer = require('@dolittle/boilerplates-discoverer');
 

@@ -9,14 +9,8 @@ import { getFileDirPath, groupBy } from '@dolittle/tooling.common.utilities';
 import * as FsExtra from 'fs-extra';
 import path from 'path';
 import { Logger } from 'winston';
-import { IApplicationsManager } from '../applications/IApplicationsManager';
-import { Boilerplate } from '../Boilerplate';
-import { ExpectedBoilerplateError } from '../ExpectedBoilerplateError';
-import { IBoilerplatesCreator } from '../IBoilerplatesCreator';
-import { ApplicationConfigurationNotFound } from './ApplicationConfigurationNotFound';
-import { CreatedBoundedContextDetails } from './CreatedBoundedContextDetails';
-import { IBoundedContextsManager } from './IBoundedContextsManager';
-import { IBoilerplateManagers } from '../IBoilerplateManagers';
+import { IApplicationsManager, Boilerplate, ExpectedBoilerplateError, IBoilerplatesCreator, ApplicationConfigurationNotFound, 
+    CreatedBoundedContextDetails, IBoundedContextsManager, IBoilerplateManagers } from '../internal';
 
 
 export const boundedContextBoilerplateType = 'boundedContext';

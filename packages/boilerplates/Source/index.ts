@@ -3,57 +3,19 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { Guid, dolittleConfigDefault, folders, fileSystem, logger } from '@dolittle/tooling.common.utilities';
-import Handlebars from 'handlebars';
-import { BoilerplatesManager } from './BoilerplatesManager';
-import { ICanManageBoilerplates } from './ICanManageBoilerplates';
-import { IBoilerplatesLoader } from './IBoilerplatesLoader';
-import { BoilerplatesLoader } from './BoilerplatesLoader';
-import spawn from 'cross-spawn'; 
 import { ProjectConfig } from '@dolittle/tooling.common.configurations';
-import { BoilerplatesConfig } from './configurations';
-import { ICanDiscoverBoilerplates } from './ICanDiscoverBoilerplates';
-import { BoilerplatesDiscoverer } from './BoilerplatesDiscoverer';
-import { ICanFindOnlineBoilerplatePackages } from './ICanFindOnlineBoilerplatePackages';
-import { OnlineBoilerplatesDiscoverer } from './OnlineBoilerplatesDiscoverer';
-import { IBoilerplatesCreator } from './IBoilerplatesCreator';
-import { BoilerplatesCreator } from './BoilerPlatesCreator';
-import { IBoundedContextsManager, BoundedContextsManager } from './boundedContexts';
-import { IApplicationsManager, ApplicationsManager } from './applications';
-import { IArtifactTemplateCreator, ArtifactTemplateCreator, IArtifactTemplatesManager, ArtifactTemplatesManager } from './artifacts';
-import { BaseBoilerplate } from './BaseBoilerplate';
-import { IBoilerplateManagers } from './IBoilerplateManagers';
-import { BoilerplateManagers } from './BoilerplateManagers';
-import { IBoilerplateDiscoverers } from './IBoilerplateDiscoverers';
-import { BoilerplateDiscoverers } from './BoilerplateDiscoverers';
+import { Guid, dolittleConfigDefault, folders, fileSystem, logger } from '@dolittle/tooling.common.utilities';
+import spawn from 'cross-spawn'; 
+import Handlebars from 'handlebars';
 
-export * from './applications';
-export * from './artifacts';
-export * from './boundedContexts';
-export * from './configurations';
+import {
+    BoilerplatesConfig, IBoilerplatesCreator, BoilerplatesCreator, IBoilerplatesLoader, BoilerplatesLoader, ICanManageBoilerplates, BoilerplatesManager, 
+    IBoilerplateManagers, BoilerplateManagers, ICanDiscoverBoilerplates, BoilerplateDiscoverers, BoilerplatesDiscoverer, IBoilerplateDiscoverers, 
+    ICanFindOnlineBoilerplatePackages, OnlineBoilerplatesDiscoverer, IApplicationsManager, ApplicationsManager, IBoundedContextsManager, BoundedContextsManager, 
+    IArtifactTemplateCreator, ArtifactTemplateCreator, IArtifactTemplatesManager, ArtifactTemplatesManager
+} from './internal';
 
-export * from './ArtifactsBoilerplate';
-export * from './BaseBoilerplate';
-export * from './Boilerplate';
-export * from './BoilerplateDiscoverers';
-export * from './BoilerplateManagers';
-export * from './BoilerplatesCreator';
-export * from './BoilerplatesDiscoverer';
-export * from './BoilerplatesLoader';
-export * from './BoilerplatesManager';
-export * from './BoundedContextPackageJson';
-export * from './ExpectedBoilerplateError';
-export * from './IBoilerplateDiscoverers';
-export * from './IBoilerplateManagers';
-export * from './IBoilerplatesCreator';
-export * from './IBoilerplatesLoader';
-export * from './ICanDiscoverBoilerplates';
-export * from './ICanFindOnlineBoilerplatePackages';
-export * from './ICanManageBoilerplates';
-export * from './OnlineBoilerplatesDiscoverer';
-export * from './Script';
-export * from './ScriptFailedError';
-export * from './Scripts'
+export * from './internal';
 
 /**
  * Sets up the handlebars system with custom helpers

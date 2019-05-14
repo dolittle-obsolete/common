@@ -3,9 +3,8 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { BaseBoilerplate } from "./BaseBoilerplate";
-import { Boilerplate } from "./Boilerplate";
-import { ICanManageBoilerplates } from "./ICanManageBoilerplates";
+import { BaseBoilerplate, Boilerplate, ICanManageBoilerplates } from "./internal";
+
 /**
  * Responsible for the boilerplate managers
  *

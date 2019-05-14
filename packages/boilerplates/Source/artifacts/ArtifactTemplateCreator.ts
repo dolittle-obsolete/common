@@ -9,8 +9,7 @@ import * as FsExtra from 'fs-extra';
 import * as Handlebars from 'handlebars';
 import path from 'path';
 import { Logger } from 'winston';
-import { ArtifactTemplate } from './ArtifactTemplate';
-import { IArtifactTemplateCreator } from './IArtifactTemplateCreator';
+import { ArtifactTemplate, IArtifactTemplateCreator } from '../internal';
 
 
 /**

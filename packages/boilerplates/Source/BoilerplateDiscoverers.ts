@@ -3,9 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { BoilerplatePackageJson } from './BoundedContextPackageJson';
-import { ICanDiscoverBoilerplates } from './ICanDiscoverBoilerplates';
-import { IBoilerplateDiscoverers } from './IBoilerplateDiscoverers';
+import { BoilerplatePackageJson, ICanDiscoverBoilerplates, IBoilerplateDiscoverers } from './internal';
 
 /**
  * Represents a system for dealing with all boilerplate discoverers

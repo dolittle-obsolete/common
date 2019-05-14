@@ -5,7 +5,7 @@
 import { Dependency } from '@dolittle/tooling.common.dependencies';
 import { areas, getFileDirPath } from '@dolittle/tooling.common.utilities';
 import * as _path from 'path';
-import { ArtifactsBoilerplate } from '../ArtifactsBoilerplate';
+import { ArtifactsBoilerplate } from '../internal';
 
 
 function throwIfInvalidArea(area: string): void {

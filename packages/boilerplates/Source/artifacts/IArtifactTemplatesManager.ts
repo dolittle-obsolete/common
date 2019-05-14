@@ -3,9 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { ArtifactTemplate } from "./ArtifactTemplate";
-import { ArtifactsBoilerplate } from "../ArtifactsBoilerplate";
-import { CreatedArtifactTemplateDetails } from "./CreatedArtifactTemplateDetails";
+import { ArtifactTemplate, ArtifactsBoilerplate, CreatedArtifactTemplateDetails } from "../internal";
 
 /**
  * Responsible for managing Artifact templates

@@ -5,8 +5,7 @@
 import spawn from 'cross-spawn';
 import lodash from 'lodash';
 import path from 'path';
-import { Script } from './Script';
-import { ScriptFailedError } from './ScriptFailedError';
+import { Script, ScriptFailedError } from './internal';
 
 
 /**

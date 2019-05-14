@@ -7,12 +7,7 @@ import { Application, applicationFilename } from '@dolittle/tooling.common.confi
 import * as FsExtra from 'fs-extra';
 import path from 'path';
 import { Logger } from 'winston';
-import { Boilerplate } from "../Boilerplate";
-import { ExpectedBoilerplateError } from '../ExpectedBoilerplateError';
-import { IBoilerplatesCreator } from '../IBoilerplatesCreator';
-import { CreatedApplicationDetails } from './CreatedApplicationDetails';
-import { IApplicationsManager } from "./IApplicationsManager";
-import { IBoilerplateManagers } from '../IBoilerplateManagers';
+import { IApplicationsManager, Boilerplate, IBoilerplateManagers, IBoilerplatesCreator, CreatedApplicationDetails, ExpectedBoilerplateError } from '../internal';
 
 
 export const applicationBoilerplateType = 'application';

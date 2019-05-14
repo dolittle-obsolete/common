@@ -7,14 +7,11 @@ import * as FsExtra from 'fs-extra';
 import path from 'path';
 import semver from 'semver';
 import { Logger } from 'winston';
-import { BoilerplatePackageJson } from './BoundedContextPackageJson';
-import { IBoilerplatesLoader } from './IBoilerplatesLoader';
-import { ICanDiscoverBoilerplates } from './ICanDiscoverBoilerplates';
-import { BoilerplatesConfig } from './configurations';
+import { BoilerplatePackageJson, IBoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplatesConfig } from './internal';
 
 
 const boilerplatesDiscoverer = require('@dolittle/boilerplates-discoverer');
-const toolingPkg = require('../../package.json');
+const toolingPkg = require('../package.json');
 /**
  * Represents the manager of boiler plates
  */

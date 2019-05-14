@@ -1,11 +1,9 @@
-
 /*---------------------------------------------------------------------------------------------
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { ArtifactsBoilerplate } from '../ArtifactsBoilerplate';
-import { ArtifactTemplate } from './ArtifactTemplate';
+import { ArtifactsBoilerplate, ArtifactTemplate } from '../internal';
 
  export type CreatedArtifactTemplateDetails = {
     /**

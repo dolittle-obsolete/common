@@ -5,8 +5,7 @@
 import { Dependency } from '@dolittle/tooling.common.dependencies';
 import { getFileDirPath } from '@dolittle/tooling.common.utilities';
 import _path from 'path';
-import { artifactsBoilerplateType } from './artifacts/ArtifactTemplatesManager';
-import { Scripts } from './Scripts';
+import { artifactsBoilerplateType, Scripts } from './internal';
 
 /**
  * Represents the base representation of a boilerplate
