@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.boilerplates",
-  "version": "1.0.0-alpha.8",
+  "version": "1.0.0-alpha.10",
   "description": "The boilerplates system for common dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -18,15 +18,13 @@
   "engines": {
     "node": ">=8.0.0"
   },
-  "main": "lib/cjs/index.js",
-  "module": "lib/es/index.js",
+  "main": "lib/index.js",
   "types": "index.d.ts",
   "typings": "index.d.ts",
   "scripts": {
     "ts:cjs": "tsc -p ts/cjs.tsconfig.json",
-    "ts:es": "tsc -p ts/es.tsconfig.json",
     "ts:typedefs": "tsc --outDir . --emitDeclarationOnly",
-    "ts:all": "yarn ts:cjs && yarn ts:es && yarn ts:typedefs",
+    "ts:all": "yarn ts:cjs && yarn ts:typedefs",
     "ts:clean": "rimraf ./*.d.ts **/*.d.ts lib",
     "build": "yarn clean && yarn ts:all",
     "clean": "rimraf dist && yarn ts:clean",
