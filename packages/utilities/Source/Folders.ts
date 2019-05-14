@@ -10,13 +10,12 @@ import * as FsExtra from 'fs-extra';
  */
 export class Folders
 {
-    private _fileSystem: typeof FsExtra;
     /**
      * Initializes a new instance of {folders}
      * @param {typeof FsExtra)} fileSystem 
      */
-    constructor(fileSystem: typeof FsExtra) {
-        this._fileSystem = fileSystem;
+    
+    constructor(private _fileSystem: typeof FsExtra) {
     }
     /**
      * Creates a feature from the current working directory. 
