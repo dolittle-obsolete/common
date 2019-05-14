@@ -5,7 +5,7 @@
 
 import { BoundedContext } from "@dolittle/tooling.common.configurations";
 import { Dependency } from "@dolittle/tooling.common.dependencies";
-import { Boilerplate } from "Source/Boilerplate";
+import { Boilerplate } from "../Boilerplate";
 import { CreatedBoundedContextDetails } from "./CreatedBoundedContextDetails";
 
 /**

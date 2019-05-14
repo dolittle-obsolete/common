@@ -16,7 +16,7 @@ import { IBoilerplatesCreator } from '../IBoilerplatesCreator';
 import { ApplicationConfigurationNotFound } from './ApplicationConfigurationNotFound';
 import { CreatedBoundedContextDetails } from './CreatedBoundedContextDetails';
 import { IBoundedContextsManager } from './IBoundedContextsManager';
-import { IBoilerplateManagers } from 'Source/IBoilerplateManagers';
+import { IBoilerplateManagers } from '../IBoilerplateManagers';
 
 
 export const boundedContextBoilerplateType = 'boundedContext';

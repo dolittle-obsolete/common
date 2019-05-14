@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.boilerplates",
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.7",
   "description": "The boilerplates system for common dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -39,7 +39,8 @@
     "@dolittle/tooling.common.utilities": "alpha",
     "handlebars": "^4.0.12",
     "lodash": "^4.17.11",
-    "semver": "^6.0.0"
+    "semver": "^6.0.0",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.125",

@@ -9,7 +9,7 @@ import { ArtifactTemplate } from "./ArtifactTemplate";
 import { CreatedArtifactTemplateDetails } from './CreatedArtifactTemplateDetails';
 import { IArtifactTemplateCreator } from './IArtifactTemplateCreator';
 import { IArtifactTemplatesManager } from './IArtifactTemplatesManager';
-import { IBoilerplateManagers } from 'Source/IBoilerplateManagers';
+import { IBoilerplateManagers } from '../IBoilerplateManagers';
 
 export const artifactsBoilerplateType = 'artifacts';
 

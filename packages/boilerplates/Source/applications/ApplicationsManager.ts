@@ -12,7 +12,7 @@ import { ExpectedBoilerplateError } from '../ExpectedBoilerplateError';
 import { IBoilerplatesCreator } from '../IBoilerplatesCreator';
 import { CreatedApplicationDetails } from './CreatedApplicationDetails';
 import { IApplicationsManager } from "./IApplicationsManager";
-import { IBoilerplateManagers } from 'Source/IBoilerplateManagers';
+import { IBoilerplateManagers } from '../IBoilerplateManagers';
 
 
 export const applicationBoilerplateType = 'application';
