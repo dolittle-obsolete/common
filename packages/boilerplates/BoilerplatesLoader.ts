@@ -82,7 +82,7 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
                 delete boilerplatesConfigObject[key];
                 this._boilerplatesConfig.store = boilerplatesConfigObject;
             }
-            this._loadedBoilerplates.push(this.readBoilerplateFromFolder(folderPath));
+            else this._loadedBoilerplates.push(this.readBoilerplateFromFolder(folderPath));
         });
         this.needsReload = false;
         return this._loadedBoilerplates;
