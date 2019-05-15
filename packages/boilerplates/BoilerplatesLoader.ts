@@ -77,6 +77,11 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
 
         Object.keys(boilerplatesConfigObject).forEach(key => {
             let folderPath = path.resolve(boilerplatesConfigObject[key]);
+            if (!this._fileSystem.existsSync(folderPath)) {
+                this._logger.info(`Boilerplate path '${folderPath}' does not exist. Removing entry from boilerplates configuration`);
+                delete boilerplatesConfigObject[key];
+                this._boilerplatesConfig.store = boilerplatesConfigObject;
+            }
             this._loadedBoilerplates.push(this.readBoilerplateFromFolder(folderPath));
         });
         this.needsReload = false;
@@ -86,7 +91,10 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
     private readBoilerplateFromFolder(folder: string): BaseBoilerplate {
         let boilerplatePath = path.join(folder, 'boilerplate.json');
         
-        if (!this._fileSystem.existsSync(boilerplatePath)) throw new Error(`Could not find boilerplate configuration in '${folder}'`);
+        if (!this._fileSystem.existsSync(boilerplatePath)) {
+            this._logger.info(`The path of a boilerplate defined in the boilerplates configuration does not exists. Path: ${boilerplatePath}`);
+            throw new Error(`Could not find boilerplate configuration in '${folder}'`);
+        }
 
         let boilerplateObject = JSON.parse(this._fileSystem.readFileSync(boilerplatePath, 'utf8'));
 
