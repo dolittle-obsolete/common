@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ResourceTypeImplementation } from "./ResourceTypeImplementation";
+import { ResourceTypeImplementation } from "../internal";
 
 /**
  * Represents a Bounded Context's resources configuration

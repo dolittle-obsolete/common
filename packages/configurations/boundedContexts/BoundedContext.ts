@@ -3,9 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { Core } from './Core';
-import { InteractionLayer } from './InteractionLayer';
-import { Resources } from './Resources';
+import { Core, InteractionLayer, Resources } from '../internal';
 
 export const boundedContextFileName = 'bounded-context.json';
 /**

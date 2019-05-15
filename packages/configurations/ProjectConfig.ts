@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { CacheConfig } from './CacheConfig';
+import { CacheConfig } from './internal';
 
 /**
  * Represents the cached project configuration file for the tooling
