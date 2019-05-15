@@ -2,10 +2,10 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Dependency } from './Dependency';
+import { Dependency } from './internal';
 
 /**
- * Represents a class that can resolve dependencies
+ * Represents a system that can resolve dependencies
  *
  * @export
  * @interface ICanResolveDependencies

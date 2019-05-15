@@ -1,22 +1,26 @@
-import { IDependencyResolvers } from "./IDependencyResolvers";
-import { ICanResolveDependencies } from "./ICanResolveDependencies";
-import { Dependency } from "./Dependency";
-import { MultipleResolversError } from "./MultipleResolversError";
-import { CannotResolveDependencyError } from "./CannotResolveDependencyError";
-
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
- export class DependencyResolvers implements IDependencyResolvers {
-    private _resolvers: ICanResolveDependencies[]
+import { IDependencyResolvers, ICanResolveDependencies, Dependency, MultipleResolversError, CannotResolveDependencyError  } from "./internal";
 
-    constructor(resolvers: ICanResolveDependencies[]) {
-        this._resolvers = resolvers;
-    }
+ /**
+  * Can resolve all dependencies
+  *
+  * @export
+  * @class DependencyResolvers
+  * @implements {IDependencyResolvers}
+  */
+ export class DependencyResolvers implements IDependencyResolvers {
+     
+    constructor(private _resolvers: ICanResolveDependencies[]) {}
+
     get resolvers() { return this._resolvers; }
-    
+
+    addResolvers(...resolvers: ICanResolveDependencies[]): void {
+        this._resolvers.push(...resolvers);
+    }
     async resolve(context: any, dependencies: Dependency[], destinationPath?: string, coreLanguage?: string, args?: string[]): Promise<any> {
         for (let entry of this.getResolverToDependenciesMap(dependencies).entries()) {
             let resolver = entry[0];
@@ -28,7 +32,6 @@ import { CannotResolveDependencyError } from "./CannotResolveDependencyError";
     }
     private getResolverToDependenciesMap(dependencies: Dependency[]) {
         let resolverToDependenciesMap = new Map<ICanResolveDependencies, Dependency[]>();
-
         dependencies.forEach(dep => {
             let resolvers = 0;
             let resolver: ICanResolveDependencies | undefined 

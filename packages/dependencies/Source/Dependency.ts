@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import {areas} from '@dolittle/tooling.common.utilities';
+
 const dependencyTypes = [
     'discover',
     'userInput'
@@ -62,7 +63,12 @@ function throwIfInvalidArea(fromArea?: string) {
         throw new Error(`Invalid area ${fromArea}`);
     }
 }
-
+/**
+ * Represents the configuration of a dependency
+ *
+ * @export
+ * @class Dependency
+ */
 export class Dependency {
     /**
      * Creates a {Dependency}

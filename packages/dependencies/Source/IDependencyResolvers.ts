@@ -2,11 +2,11 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Dependency } from './Dependency';
-import { ICanResolveDependencies } from './ICanResolveDependencies';
+import { Dependency, ICanResolveDependencies } from './internal';
+
 
 /**
- * Represents a class that can resolve sync dependencies
+ * Represents a system that can resolve sync dependencies
  *
  * @export
  * @interface ICanResolveSyncDependencies
@@ -19,7 +19,13 @@ export interface IDependencyResolvers {
      * @memberof IDependencyResolvers
      */
     readonly resolvers: ICanResolveDependencies[];
-
+    /**
+     * Add resolvers
+     *
+     * @param {...ICanResolveDependencies[]} resolver
+     * @memberof IDependencyResolvers
+     */
+    addResolvers(...resolver: ICanResolveDependencies[]): void
     /**
      * Resolves all dependencies
      *

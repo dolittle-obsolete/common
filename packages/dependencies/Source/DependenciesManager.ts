@@ -3,13 +3,11 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Dependency } from "./Dependency";
-import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir } from "@dolittle/tooling.common.utilities";
+import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir, Folders } from "@dolittle/tooling.common.utilities";
 import * as FsExtra from 'fs-extra';
 import {Logger} from 'winston';
-import { IDependenciesManager } from "./IDependenciesManager";
-import { Folders } from "@dolittle/tooling.common.utilities";
-import { DependencyMissingFieldError } from "./DependencyMissingFieldError";
+import { Dependency, IDependenciesManager, DependencyMissingFieldError } from "./internal";
+
 /**
  * Manages the dependencies
  *
@@ -17,10 +15,7 @@ import { DependencyMissingFieldError } from "./DependencyMissingFieldError";
  * @class DependenciesManager
  */
 export class DependenciesManager implements IDependenciesManager {
-    private _folders: Folders;
-    private _fileSystem: typeof FsExtra;
-    private _logger: Logger;
-    private _dolittleConfig: any;
+    
     /**
      *Creates an instance of DependenciesManager.
      * @param {Folders} folders
@@ -29,12 +24,7 @@ export class DependenciesManager implements IDependenciesManager {
      * @param {Logger} logger
      * @memberof DependenciesManager
      */
-    constructor(folders: Folders, fileSystem: typeof FsExtra, dolittleConfig: any, logger: Logger) {
-        this._folders = folders;
-        this._fileSystem = fileSystem;
-        this._dolittleConfig = dolittleConfig;
-        this._logger = logger;
-    }
+    constructor(private _folders: Folders, private _fileSystem: typeof FsExtra, private _dolittleConfig: any, private _logger: Logger) {}
 
     /**
      * Discovers a dependency

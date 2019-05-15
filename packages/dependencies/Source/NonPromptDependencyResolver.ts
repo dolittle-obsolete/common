@@ -3,13 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ICanResolveSyncDependencies } from "./ICanResolveSyncDependencies";
-import {Dependency} from './Dependency';
-import { IDependenciesManager } from "./IDependenciesManager";
-import { MissingDestinationPath } from "./MissingDestinationPath";
-import { MissingCoreLanguage } from "./MissingCoreLanguage";
-import { CannotResolveDependencyError } from "./CannotResolveDependencyError";
-
+import { ICanResolveSyncDependencies, Dependency, IDependenciesManager, MissingDestinationPath, MissingCoreLanguage, CannotResolveDependencyError } from "./internal";
 export class NonPromptDependencyResolver implements ICanResolveSyncDependencies {
     
     private _dependenciesManager: IDependenciesManager;
