@@ -19,6 +19,13 @@ export interface IBoilerplateDiscoverers {
      * @memberof IBoilerplateDiscoverers
      */
     readonly boilerplateDiscoverers: ICanDiscoverBoilerplates[]
+    /**
+     * Adds discoverers
+     *
+     * @param {...ICanDiscoverBoilerplates[]} boilerplateDiscoverers
+     * @memberof IBoilerplateDiscoverers
+     */
+    addDiscoverers(...boilerplateDiscoverers: ICanDiscoverBoilerplates[]): void
 
     /**
      * Discovers boilerplates

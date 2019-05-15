@@ -18,15 +18,21 @@ export interface IBoilerplateManagers {
      * @type {ICanManageBoilerplates[]}
      * @memberof IBoilerplateManagers
      */
-    managers: ICanManageBoilerplates[] 
+    readonly managers: ICanManageBoilerplates[] 
     /**
      * Get all boiler plates
      *
      * @type {BaseBoilerplate[]}
      * @memberof IBoilerplateManagers
      */
-    boilerplates: BaseBoilerplate[];
-
+    readonly boilerplates: BaseBoilerplate[];
+    /**
+     * Adds managers
+     *
+     * @param {...ICanManageBoilerplates[]} managers
+     * @memberof IBoilerplateManagers
+     */
+    addManagers(...managers: ICanManageBoilerplates[]): void
     /**
      * Get all available boiler plates for a specific language
      * @param {string} language

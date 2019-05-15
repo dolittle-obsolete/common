@@ -22,8 +22,9 @@ export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
     constructor(boilerplateDiscoverers: ICanDiscoverBoilerplates[]) {
         this.boilerplateDiscoverers = boilerplateDiscoverers;
     }
-
+    
     readonly boilerplateDiscoverers: ICanDiscoverBoilerplates[];
+    
     /**
      * @inheritdoc
      *
@@ -47,6 +48,10 @@ export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
         let boilerplates: BoilerplatePackageJson[] = [];
         this.boilerplateDiscoverers.forEach(_ => boilerplates.push(..._.discoveredBoilerplates));
         return boilerplates;
+    }
+
+    addDiscoverers(...boilerplateDiscoverers: ICanDiscoverBoilerplates[]): void {
+        this.boilerplateDiscoverers.push(...boilerplateDiscoverers);
     }
     /**
      * @inheritdoc

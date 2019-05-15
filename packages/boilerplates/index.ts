@@ -66,12 +66,12 @@ export let boilerplatesLoader: IBoilerplatesLoader = new BoilerplatesLoader(boil
  */
 export function setBoilerplatesLoader(loader: IBoilerplatesLoader) { boilerplatesLoader = loader; };
 
-export let instancesOfICanManageBoilerplates: ICanManageBoilerplates[] = [
+let instancesOfICanManageBoilerplates: ICanManageBoilerplates[] = [
     new BoilerplatesManager(boilerplatesLoader)
 ];
 export let boilerplateManagers: IBoilerplateManagers = new BoilerplateManagers(instancesOfICanManageBoilerplates);
 
-export let instancesOfICanDiscoverBoilerplates: ICanDiscoverBoilerplates[] = [
+let instancesOfICanDiscoverBoilerplates: ICanDiscoverBoilerplates[] = [
     new BoilerplatesDiscoverer(boilerplatesConfig, nodeModulesPath, boilerplatesLoader, fileSystem, logger)
 ];
 export let boilerplateDiscoverers: IBoilerplateDiscoverers = new BoilerplateDiscoverers(instancesOfICanDiscoverBoilerplates);

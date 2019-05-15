@@ -8,7 +8,6 @@ import { BaseBoilerplate, Boilerplate, ICanManageBoilerplates, IBoilerplateManag
  * Represents the manager of boiler plates
  */
 export class BoilerplateManagers implements IBoilerplateManagers {
-    
     /**
      * Creates an instance of BoilerplatesManager.
      * @param {IBoilerplatesLoader} boilerplatesLoader
@@ -25,6 +24,10 @@ export class BoilerplateManagers implements IBoilerplateManagers {
         let boilerplates: BaseBoilerplate[] = [];
         this.managers.forEach(_ => boilerplates.push(..._.boilerplates));
         return boilerplates;
+    }
+    
+    addManagers(...managers: ICanManageBoilerplates[]): void {
+        this.managers.push(...managers);
     }
     /**
      * @inheritdoc
