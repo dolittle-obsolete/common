@@ -19,13 +19,7 @@ export const applicationBoilerplateType = 'application';
  * @class ArtifactsManager
  */
 export class ApplicationsManager implements IApplicationsManager {
-
     private _boilerplates: Boilerplate[];
-    private _boilerplateManagers: IBoilerplateManagers;
-    private _boilerplatesCreator: IBoilerplatesCreator;
-    private _fileSystem: typeof FsExtra;
-    private _logger: Logger;
-
     /**
      *Creates an instance of ApplicationsManager.
      * @param {IBoilerplateManagers} boilerplateManagers
@@ -33,13 +27,9 @@ export class ApplicationsManager implements IApplicationsManager {
      * @param {Logger} logger
      * @memberof ApplicationsManager
      */
-    constructor(boilerplateManagers: IBoilerplateManagers, boilerplatesCreator: IBoilerplatesCreator, fileSystem: typeof FsExtra, logger: Logger) {
-        this._boilerplateManagers = boilerplateManagers;
-        this._boilerplatesCreator = boilerplatesCreator;
-        this._fileSystem = fileSystem;
-        this._logger = logger;
-        this._boilerplates = [];
-
+    constructor(private _boilerplateManagers: IBoilerplateManagers, private _boilerplatesCreator: IBoilerplatesCreator, private _fileSystem: typeof FsExtra,
+        private _logger: Logger) {
+        this._boilerplates = []
         this.loadAllBoilerplates();
     }
     get boilerplates(): Boilerplate[] {

@@ -24,10 +24,6 @@ const binaryFiles = [
  * Represents the manager of boiler plates
  */
 export class BoilerplatesLoader implements IBoilerplatesLoader {
-    private _boilerplatesConfig: BoilerplatesConfig;
-    private _folders: Folders;
-    private _fileSystem: typeof FsExtra;
-    private _logger: Logger;
     private _loadedBoilerplates!: BaseBoilerplate[];
 
     /**
@@ -38,13 +34,8 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
      * @param {Logger} logger
      * @param {typeof Handlebars} handlebars
      */
-    constructor(boilerplatesConfig: BoilerplatesConfig, folders: Folders, fileSystem: typeof FsExtra, logger: Logger) {
-        this._boilerplatesConfig = boilerplatesConfig;
-        this._folders = folders;
-        this._fileSystem = fileSystem;
-        this._logger = logger;
-
-        if (! fileSystem.existsSync(this._boilerplatesConfig.path)) {
+    constructor(private _boilerplatesConfig: BoilerplatesConfig, private _folders: Folders, private _fileSystem: typeof FsExtra, private _logger: Logger) {
+        if (! this._fileSystem.existsSync(this._boilerplatesConfig.path)) {
             this._boilerplatesConfig.store = this._boilerplatesConfig.store;
         }
     }

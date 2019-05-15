@@ -19,15 +19,13 @@ const boilerplatesDiscoverer = require('@dolittle/boilerplates-discoverer');
  * @implements {ICanFindOnlineBoilerplatePackages}
  */
 export class OnlineBoilerplatesDiscoverer implements ICanFindOnlineBoilerplatePackages {
-    private _logger: Logger;
-
+    
     /**
      * Initializes a new instance of {OnlineBoiler}
      * @param {Logger} logger
      */
     
-    constructor(logger: Logger) {
-        this._logger = logger;
+    constructor(private _logger: Logger) {
     }
     
     /**

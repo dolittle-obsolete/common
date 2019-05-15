@@ -16,12 +16,6 @@ const toolingPkg = require('../package.json');
  * Represents the manager of boiler plates
  */
 export class BoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
-    private _boilerplatesConfig: BoilerplatesConfig;
-    private _nodeModulesPath: string;
-    private _boilerplatesLoader: IBoilerplatesLoader;
-    private _fileSystem: typeof FsExtra;
-    private _logger: Logger;
-
     private _discoveredBoilerplates: BoilerplatePackageJson[];
     /**
      * Initializes a new instance of {BoilerplatesDiscoverer}
@@ -31,12 +25,8 @@ export class BoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
      * @param {typeof FsExtra} fileSystem
      * @param {Logger} logger
      */
-    constructor(boilerplatesConfig: BoilerplatesConfig, nodeModulesPath: string, boilerplatesLoader: IBoilerplatesLoader, fileSystem: typeof FsExtra, logger: Logger) {
-        this._boilerplatesConfig = boilerplatesConfig;
-        this._nodeModulesPath = nodeModulesPath;
-        this._boilerplatesLoader = boilerplatesLoader;
-        this._fileSystem = fileSystem;
-        this._logger = logger;
+    constructor(private _boilerplatesConfig: BoilerplatesConfig, private _nodeModulesPath: string, private _boilerplatesLoader: IBoilerplatesLoader, 
+        private _fileSystem: typeof FsExtra, private _logger: Logger) {
         this._discoveredBoilerplates = [];
 
         this.boilerplatePaths = boilerplatesDiscoverer.local(this._nodeModulesPath, [], 15);

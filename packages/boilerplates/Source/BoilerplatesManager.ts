@@ -8,14 +8,12 @@ import { BaseBoilerplate, Boilerplate, IBoilerplatesLoader, ICanManageBoilerplat
  * Represents the manager of boiler plates
  */
 export class BoilerplatesManager implements ICanManageBoilerplates {
-    private _boilerplatesLoader: IBoilerplatesLoader;
     /**
      * Creates an instance of BoilerplatesManager.
      * @param {IBoilerplatesLoader} boilerplatesLoader
      * @memberof BoilerplatesManager
      */
-    constructor(boilerplatesLoader: IBoilerplatesLoader) {
-        this._boilerplatesLoader = boilerplatesLoader;
+    constructor(private _boilerplatesLoader: IBoilerplatesLoader) {
     } 
     /**
      * @inheritdoc

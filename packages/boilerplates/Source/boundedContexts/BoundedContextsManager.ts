@@ -4,8 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { BoundedContext, boundedContextFileName, Core, InteractionLayer, Resources } from '@dolittle/tooling.common.configurations';
 import { Dependency } from '@dolittle/tooling.common.dependencies';
-import { Folders } from '@dolittle/tooling.common.utilities';
-import { getFileDirPath, groupBy } from '@dolittle/tooling.common.utilities';
+import { Folders, getFileDirPath, groupBy } from '@dolittle/tooling.common.utilities';
 import * as FsExtra from 'fs-extra';
 import path from 'path';
 import { Logger } from 'winston';
@@ -24,12 +23,6 @@ const boundedContextAdornmentDependencyName = 'boundedContextAdornment'
  */
 export class BoundedContextsManager implements IBoundedContextsManager {
     private _boilerplates: Boilerplate[]
-    private _boilerplateManagers: IBoilerplateManagers;
-    private _boilerplatesCreator: IBoilerplatesCreator;
-    private _applicationsManager: IApplicationsManager;
-    private _folders: Folders;
-    private _filesystem: typeof FsExtra;
-    private _logger: Logger;
     /**
      *Creates an instance of BoundedContextsManager.
      * @param {IBoilerplateManagers} boilerplateManager
@@ -40,13 +33,8 @@ export class BoundedContextsManager implements IBoundedContextsManager {
      * @param {Logger} logger
      * @memberof BoundedContextsManager
      */
-    constructor(boilerplateManagers: IBoilerplateManagers, boilerplatesCreator: IBoilerplatesCreator, applicationsManager: IApplicationsManager, folders: Folders, fileSystem: typeof FsExtra, logger: Logger) {
-        this._boilerplateManagers = boilerplateManagers;
-        this._boilerplatesCreator = boilerplatesCreator;
-        this._applicationsManager = applicationsManager;
-        this._folders = folders;
-        this._logger = logger;
-        this._filesystem = fileSystem;
+    constructor(private _boilerplateManagers: IBoilerplateManagers, private _boilerplatesCreator: IBoilerplatesCreator, private _applicationsManager: IApplicationsManager,
+        private _folders: Folders, private _filesystem: typeof FsExtra, private _logger: Logger) {
         this._boilerplates = [];
 
         this.loadAllBoilerplates();

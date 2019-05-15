@@ -15,20 +15,13 @@ export const artifactsBoilerplateType = 'artifacts';
  */
 export class ArtifactTemplatesManager implements IArtifactTemplatesManager {
     private _boilerplates: ArtifactsBoilerplate[];
-    private _artifactTemplateCreator: IArtifactTemplateCreator;
-    private _boilerplateManagers: IBoilerplateManagers;
-    private _logger: Logger;
-    
     /**
      * Creates an instance of ArtifactsManager.
      * @param {IBoilerplateManagers} boilerplateManagers
      * @param {Logger} logger
      * @memberof ArtifactsManager
      */
-    constructor(boilerplateManagers: IBoilerplateManagers, artifactTemplateCreator: IArtifactTemplateCreator, logger: Logger) {
-        this._boilerplateManagers = boilerplateManagers;
-        this._artifactTemplateCreator = artifactTemplateCreator
-        this._logger = logger;
+    constructor(private _boilerplateManagers: IBoilerplateManagers, private _artifactTemplateCreator: IArtifactTemplateCreator, private _logger: Logger) {
         this._boilerplates = [];
 
         this.loadAllBoilerplates();

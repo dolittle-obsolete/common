@@ -14,10 +14,6 @@ import { Boilerplate, IBoilerplatesCreator } from './internal';
  * Represents the manager of boiler plates
  */
 export class BoilerplatesCreator implements IBoilerplatesCreator {
-    private _folders: Folders;
-    private _fileSystem: typeof FsExtra;
-    private _logger: Logger;
-    private _handlebars: typeof Handlebars;
 
     /**
      * Initializes a new instance of {BoilerplatesManager}
@@ -26,11 +22,7 @@ export class BoilerplatesCreator implements IBoilerplatesCreator {
      * @param {Logger} logger
      * @param {typeof Handlebars} handlebars
      */
-    constructor(folders: Folders, fileSystem: typeof FsExtra, logger: Logger, handlebars: typeof Handlebars) {
-        this._folders = folders;
-        this._fileSystem = fileSystem;
-        this._logger = logger;
-        this._handlebars = handlebars;
+    constructor(private _folders: Folders, private _fileSystem: typeof FsExtra, private _logger: Logger, private _handlebars: typeof Handlebars) {
     }
     /**
      * @inheritdoc
