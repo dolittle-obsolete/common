@@ -111,14 +111,15 @@ export function runScriptsSync(scripts: Script[] | string[], cwd: string,
     scripts.forEach((script: any) => {
         let cmd;
         let args;
+        let _cwd = cwd;
         if (script.cmd) {
             cmd = script.cmd;
             args = script.args;
-            cwd = script.cwd? path.join(cwd, script.cwd): cwd;
+            _cwd = script.cwd? path.join(cwd, script.cwd): cwd;
         } else {
             [cmd, ...args] = script.split(' ');
         }
-        let child = spawn.sync(cmd, args, {cwd});
+        let child = spawn.sync(cmd, args, {cwd: _cwd});
         if (child.stderr && child.stderr.toString() !== '') onStderr(child.stderr.toString());
         if (child.stdout && child.stdout.toString() !== '') onStdout(child.stdout.toString());
         if (child.error) onError(child.error); 
@@ -147,14 +148,15 @@ export async function runScripts(scripts: Script[] | string[], cwd: string,
     for (let script of scripts) {
         let cmd;
         let args;
+        let _cwd = cwd;
         if (script instanceof Script) {
             cmd = script.cmd;
             args = script.args;
-            cwd = script.cwd? path.join(cwd, script.cwd): cwd;
+            _cwd = script.cwd? path.join(cwd, script.cwd): cwd;
         } else {
             [cmd, ...args] = script.split(' ');
         }
-        let child = spawn(cmd, args, {cwd});
+        let child = spawn(cmd, args, {cwd: _cwd});
         if (child.stderr) child.stderr.on('data', onStderr);
         if (child.stdout) child.stdout.on('data', onStdout);
         child.on('error', onError);
