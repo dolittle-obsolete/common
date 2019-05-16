@@ -13,7 +13,7 @@ export const artifactsBoilerplateContentFolderName = 'Templates';
  */
 export class ArtifactsBoilerplate extends BaseBoilerplate {
 
-    private _artifactTemplates: ArtifactTemplate[] = [];
+    private _artifactTemplates!: ArtifactTemplate[];
     
     /**
      * Initializes a new instance of {ArtifactsBoilerplate}
