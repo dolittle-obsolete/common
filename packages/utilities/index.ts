@@ -10,6 +10,7 @@ import winston from 'winston';
 export * from './Guid';
 export * from './Folders';
 export * from './helpers';
+export * from './actions';
 
 export const dolittleConfigDefault = {
     any: {

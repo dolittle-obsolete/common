@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.utilities",
-  "version": "1.0.0-alpha.8",
+  "version": "1.0.0-alpha.9",
   "description": "Common utilities for dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -31,6 +31,7 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
+    "is-online": "^8.2.0",
     "rc": "^1.2.8"
   },
   "devDependencies": {
