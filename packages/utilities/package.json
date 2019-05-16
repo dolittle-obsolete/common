@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.utilities",
-  "version": "1.0.0-alpha.9",
+  "version": "1.0.0-alpha.10",
   "description": "Common utilities for dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "is-online": "^8.2.0",
+    "latest-version": "^5.1.0",
     "rc": "^1.2.8"
   },
   "devDependencies": {

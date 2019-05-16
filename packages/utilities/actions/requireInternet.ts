@@ -3,9 +3,9 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import isOnline from 'is-online';
+import { OnStdCallback } from './OnStdCallback';
 
 
-export type OnStdCallback = (data: string) => void;
 /**
  * Checks whether or not the user is connected to the internet.
  * An error will be thrown when there is no connection
