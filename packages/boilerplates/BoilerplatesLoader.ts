@@ -71,7 +71,6 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
      * @memberof BoilerplatesLoader
      */
     load(): BaseBoilerplate[] {
-        this._logger.info('Loading boilerplates')
         this._loadedBoilerplates = [];
         let boilerplatesConfigObject: any = this._boilerplatesConfig.store;
 
