@@ -26,7 +26,8 @@ export * from './Script';
 export * from './ScriptFailedError';
 export * from './Scripts'
 
-export * from './applications/index';
-export * from './artifacts/index';
-export * from './boundedContexts/index';
-export * from './configurations/index';
+export * from './actions';
+export * from './applications';
+export * from './artifacts';
+export * from './boundedContexts';
+export * from './configurations';
