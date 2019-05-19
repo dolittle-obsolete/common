@@ -2,23 +2,26 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Dependency } from './internal';
+import { Dependency, IDiscoverDependency } from './internal';
+
+export type DependencyDiscoverResult = string | string[] | {value: string, namespace: string}[]
 
 /**
- * Manages the dependencies
+ * Responsible for resolving the 'discover' part of a dependency
  *
  * @export
- * @class DependenciesManager
+ * @class IDependencyDiscoverResolver
  */
-export interface IDependenciesManager {
+export interface IDependencyDiscoverResolver {
+    
     /**
-     * Discovers a dependency
+     * Resolves the 'discover' part of a dependency
      * @param {Dependency} dependency The dependency 
      * @param {string} startLocation The path to start searching from
      * @param {string} language The core language
      * @param {any} dolittleConfig
-     * @returns {string[] | {value: string, namespace: string}[]} A list of paths or a list of paths and namespace names
+     * @returns 
      */
-    discover(dependency: Dependency, startLocation: string, language: string, dolittleConfig: any ): string | string[] | {value: string, namespace: string}[];
+    resolve(dependency: IDiscoverDependency, startLocation: string, language: string, dolittleConfig: any ): DependencyDiscoverResult
 
 }

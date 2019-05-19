@@ -6,15 +6,16 @@
 import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir, Folders } from "@dolittle/tooling.common.utilities";
 import * as FsExtra from 'fs-extra';
 import {Logger} from 'winston';
-import { Dependency, IDependenciesManager, DependencyMissingFieldError } from "./internal";
+import {MissingDestinationPath, MissingCoreLanguage, namespaceDiscoverType, multipleFilesDiscoverType, IDependencyDiscoverResolver, DependencyMissingFieldError, DependencyDiscoverResult, IDiscoverDependency } from "./internal";
 
 /**
- * Manages the dependencies
+ * Resolves a dependency's 'discover' field
  *
  * @export
- * @class DependenciesManager
+ * @class DependencyDiscoverResolver
+ * @implements {IDependencyDiscoverResolver}
  */
-export class DependenciesManager implements IDependenciesManager {
+export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
     
     /**
      *Creates an instance of DependenciesManager.
@@ -30,15 +31,17 @@ export class DependenciesManager implements IDependenciesManager {
      * Discovers a dependency
      * @param {Dependency} dependency The dependency 
      * @param {string} location The path to start searching from
-     * @param {string} language The core language
+     * @param {string} coreLanguage The core language
      * @param {*} dolittleConfig
      */
-    discover(dependency: Dependency, startLocation: string, language: string, dolittleConfig: any = this._dolittleConfig ): string | string[] | {value: string, namespace: string}[] {
-        if (dependency.discoverType === 'namespace') {
+    resolve(dependency: IDiscoverDependency, startLocation: string, coreLanguage: string, dolittleConfig: any = this._dolittleConfig ): DependencyDiscoverResult {
+        if (!startLocation) throw MissingDestinationPath.new;
+        if (!coreLanguage) throw MissingCoreLanguage.new;
+        if (dependency.discoverType === namespaceDiscoverType) {
             return this.createNamespace(dependency, startLocation);
         }
-        else if (dependency.discoverType === 'multipleFiles') {
-            return this.discoverMultipleFiles(dependency, startLocation, language, dolittleConfig);
+        else if (dependency.discoverType === multipleFilesDiscoverType) {
+            return this.discoverMultipleFiles(dependency, startLocation, coreLanguage, dolittleConfig);
         }
 
         throw new Error(`Cannot handle discoveryType '${dependency.discoverType}'`);
@@ -52,7 +55,7 @@ export class DependenciesManager implements IDependenciesManager {
      * @param {*} dolittleConfig 
      * @returns {string[] | {value: string, namespace: string}[]} returns a list of 
      */
-    private discoverMultipleFiles(dependency: Dependency, location: string, language: string, dolittleConfig: any): string[] | { value: string, namespace: string }[] {
+    private discoverMultipleFiles(dependency: IDiscoverDependency, location: string, language: string, dolittleConfig: any): string[] | { value: string, namespace: string }[] {
         let filePaths: string[] = [];
         if (dependency.fromArea === undefined) {
             if (!dependency.fileMatch) throw DependencyMissingFieldError.new(dependency.name, 'fileMatch');
@@ -101,7 +104,7 @@ export class DependenciesManager implements IDependenciesManager {
      * @param {string} location
      * @returns {string} 
      */
-    private createNamespace(dependency: Dependency, location: string): string {
+    private createNamespace(dependency: IDiscoverDependency, location: string): string {
         let milestoneRegexp = dependency.milestone;
         if (!milestoneRegexp) throw DependencyMissingFieldError.new(dependency.name, 'milestone');
         const milestonePath = this._folders.getNearestFileSearchingUpwards(location, milestoneRegexp);

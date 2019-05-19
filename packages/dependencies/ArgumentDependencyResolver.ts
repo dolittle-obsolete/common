@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { ICanResolveSyncDependencies, Dependency, ArgumentsNotMatchingDependenciesError, CannotResolveDependencyError } from "./internal";
+import { IPromptDependency, argumentUserInputType, promptDependencyType, ICanResolveSyncDependencies, Dependency, ArgumentsNotMatchingDependenciesError, CannotResolveDependencyError, PromptDependency } from "./internal";
 
 /**
  * Resolves argument dependencies
@@ -29,7 +29,7 @@ export class ArgumentDependencyResolver implements ICanResolveSyncDependencies {
     }    
     
     canResolve(dependency: Dependency): boolean {
-        return dependency.userInputType !== undefined && dependency.userInputType === 'argument';
+        return dependency.type === promptDependencyType && (<any>dependency).userInputType === argumentUserInputType;
     }
 
 }
