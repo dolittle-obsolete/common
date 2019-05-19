@@ -8,6 +8,7 @@ import { discoverDependencyType, ICanResolveSyncDependencies, Dependency, IDepen
 export class DiscoverDependencyResolver implements ICanResolveSyncDependencies {
     
     constructor(private _discoverResolver: IDependencyDiscoverResolver, private _dolittleConfig: any) {}
+
     resolve(context: any, dependencies: Dependency[], destinationPath?: string, coreLanguage?: string, args?: string[]) {
         if (!destinationPath) throw MissingDestinationPath.new;
         if (!coreLanguage) throw MissingCoreLanguage.new;
@@ -19,6 +20,6 @@ export class DiscoverDependencyResolver implements ICanResolveSyncDependencies {
     }    
     
     canResolve(dependency: Dependency): boolean {
-        return dependency.type === discoverDependencyType;
+        return dependency.type === discoverDependencyType && (<any>dependency).userInputType === undefined;
     }
 }

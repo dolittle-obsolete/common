@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.dependencies",
-  "version": "1.0.0-alpha.10",
+  "version": "1.0.0-alpha.12",
   "description": "Common dependency system for dolittle tooling",
   "publishConfig": {
     "access": "public"

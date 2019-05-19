@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { IPromptDependency, argumentUserInputType, promptDependencyType, ICanResolveSyncDependencies, Dependency, ArgumentsNotMatchingDependenciesError, CannotResolveDependencyError, PromptDependency } from "./internal";
+import { argumentUserInputType, promptDependencyType, ICanResolveSyncDependencies, Dependency, ArgumentsNotMatchingDependenciesError, CannotResolveDependencyError, PromptDependency } from "./internal";
 
 /**
  * Resolves argument dependencies
