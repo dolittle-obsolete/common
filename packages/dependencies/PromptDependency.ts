@@ -7,12 +7,14 @@ import {IPromptDependency, Dependency} from './internal';
 
 export const argumentUserInputType = 'argument';
 export const inputUserInputType = 'input';
+export const confirmUserInputType = 'confirm';
 export const chooseOneUserInputType = 'chooseOne';
 export const chooseMultipleUserInputType = 'chooseMultiple';
 
 export const dependencyUserInputTypes = [
     argumentUserInputType,
     inputUserInputType,
+    confirmUserInputType,
     chooseOneUserInputType,
     chooseMultipleUserInputType
 ];
