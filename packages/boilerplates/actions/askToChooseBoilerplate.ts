@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { Dependency, IDependencyResolvers } from '@dolittle/tooling.common.dependencies';
+import { PromptDependency, IDependencyResolvers, chooseOneUserInputType } from '@dolittle/tooling.common.dependencies';
 import { BaseBoilerplate } from '../internal';
 
 /**
@@ -21,7 +21,7 @@ export async function chooseBoilerplate(boilerplates: BaseBoilerplate[], resolve
 
 async function askWhichBoilerplate(boilerplates: BaseBoilerplate[], resolvers: IDependencyResolvers) {
     let choices = boilerplates.map(boilerplate => new Object({name: `${boilerplate.namespace? `${boilerplate.namespace}::`: ''}${boilerplate.name} language: ${boilerplate.language}`, value: boilerplate}));
-    let dep = new Dependency('Choose a boilerplate', 'boilerplate', 'userInput', undefined, 'chooseOne', choices, 'Choose boilerplate:');
+    let dep = new PromptDependency('boilerplate', 'Choose a boilerplate', chooseOneUserInputType, 'Choose boilerplate:', choices);
     let answer = await resolvers.resolve({}, [dep]);
     return <BaseBoilerplate>answer['boilerplate'];
 }

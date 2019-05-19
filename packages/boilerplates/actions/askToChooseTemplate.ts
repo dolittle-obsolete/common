@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { IDependencyResolvers, Dependency } from '@dolittle/tooling.common.dependencies';
+import { IDependencyResolvers, PromptDependency, chooseOneUserInputType } from '@dolittle/tooling.common.dependencies';
 import { ArtifactTemplate } from '../internal';
 
 /**
@@ -21,7 +21,7 @@ export async function chooseTemplate(templates: ArtifactTemplate[], resolvers: I
 
 async function askWhichTemplate(templates: ArtifactTemplate[], resolvers: IDependencyResolvers) {
     let choices = templates.map(_ => new Object({name: `${_.name} language: ${_.boilerplate.language}`, value: _}));
-    let dep = new Dependency('Choose an artifact template', 'artifactTemplate', 'userInput', undefined, 'chooseOne', choices, 'Choose template:');
+    let dep = new PromptDependency('artifactTemplate','Choose an artifact template', chooseOneUserInputType, 'Choose template:', choices);
     let answer = await resolvers.resolve({}, [dep]);
     return <ArtifactTemplate>answer['artifactTemplate'];
 }

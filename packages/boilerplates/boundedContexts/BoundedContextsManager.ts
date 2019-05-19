@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { BoundedContext, boundedContextFileName, Core, InteractionLayer, Resources } from '@dolittle/tooling.common.configurations';
-import { Dependency } from '@dolittle/tooling.common.dependencies';
+import { PromptDependency, chooseOneUserInputType } from '@dolittle/tooling.common.dependencies';
 import { Folders, getFileDirPath, groupBy } from '@dolittle/tooling.common.utilities';
 import * as FsExtra from 'fs-extra';
 import path from 'path';
@@ -128,17 +128,15 @@ export class BoundedContextsManager implements IBoundedContextsManager {
      * @returns {Dependency[]}
      * @memberof BoundedContextsManager
      */
-    createAdornmentDependencies(language?: string, boilerplateName?: string, namespace?: string): Dependency[] {
+    createAdornmentDependencies(language?: string, boilerplateName?: string, namespace?: string): PromptDependency[] {
         let adornments = this.getAdornments(language, boilerplateName, namespace);
         if (adornments.length === 0) return [];
-        let boundedContextAdornment = new Dependency(
-            `Choose bounded context adornment`,
+        let boundedContextAdornment = new PromptDependency(
             `${boundedContextAdornmentDependencyName}`,
-            'userInput',
-            undefined,
-            'chooseOne',
-            adornments.map(_ => _.name).concat('None'),
-            `Choose bounded context adornment`
+            `Choose bounded context adornment`,
+            chooseOneUserInputType,
+            `Choose bounded context adornment`,
+            adornments.map(_ => _.name).concat('None')
         );
 
         return [boundedContextAdornment];
@@ -152,18 +150,16 @@ export class BoundedContextsManager implements IBoundedContextsManager {
      * @returns {Dependency[]}
      * @memberof BoundedContextsManager
      */
-    createInteractionDependencies(language?: string, boilerplateName?: string, namespace?: string): Dependency[] {
+    createInteractionDependencies(language?: string, boilerplateName?: string, namespace?: string): PromptDependency[] {
         let interactionLayers = this.getInteractionLayers(language, boilerplateName, namespace);
         let interactionLayerTypes = groupBy('target')(interactionLayers);
         return Object.keys(interactionLayerTypes)
-            .map(target => new Dependency(
+            .map(target => new PromptDependency(
                 `Choose ${target} interaction layer`,
                 `interaction${target}`,
-                'userInput',
-                undefined,
-                'chooseOne',
-                interactionLayers.map(_ => _.name).concat('None'),
-                `Choose ${target} interaction layer`
+                chooseOneUserInputType,
+                `Choose ${target} interaction layer`,
+                interactionLayers.map(_ => _.name).concat('None')
             ));
     }
     /**
