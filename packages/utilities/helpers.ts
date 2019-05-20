@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import path from 'path';
+const path = require('path');
 /**
  * Stolen from https://gist.github.com/JamieMason/0566f8412af9fe6a1d470aa1e089a752
  * Returns a function that returns a function that groups an array of object by a property name, key 

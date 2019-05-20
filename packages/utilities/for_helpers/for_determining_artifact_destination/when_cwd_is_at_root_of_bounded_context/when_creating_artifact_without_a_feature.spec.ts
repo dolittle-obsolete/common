@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {determineDestination} from '../../../helpers';
+import {determineDestination} from '../../../index';
 import { a_configuration_for_cwd_at_root } from './given/a_configuration_for_cwd_at_root.given';
 
 describe('when creating artifact without a feature', () => {
