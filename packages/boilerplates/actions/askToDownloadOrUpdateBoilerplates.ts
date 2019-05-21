@@ -48,7 +48,7 @@ async function askWhichBoilerplates(boilerplates: BoilerplatePackageInfo[], reso
 
     let answers = await resolvers.resolve({}, [downloadAllDep]);
     
-    if (answers['downloadAll']) {
+    if (!answers['downloadAll']) {
 
         let choices = boilerplates.map(_ => new Object({name: `${_.name}`, value: `${_.name}@${_.latest? _.latest : _.version}`}));
         let chooseBoilerplatesDependency = new PromptDependency('boilerplates', 'Which boilerplates to download', chooseMultipleUserInputType, 'Choose boilerplates:', choices)
