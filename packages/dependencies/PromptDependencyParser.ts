@@ -11,8 +11,7 @@ export class PromptDependencyParser implements ICanParseDependencies {
         return obj.type === promptDependencyType;
      }     
     parse(obj: any, name: string): IPromptDependency {
-        return new PromptDependency(name, obj.description, obj.userInputType, obj.choices,
-            obj.promptMessage, obj.customInput );
+        return new PromptDependency(name, obj.description, obj.userInputType, obj.promptMessage, obj.choices, obj.customInput );
      }
 
 
