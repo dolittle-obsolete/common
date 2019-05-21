@@ -22,10 +22,6 @@ export const dependencyDiscoverTypes = [
 
 export class DiscoverDependency extends Dependency implements IDiscoverDependency  {
     
-    static fromJson(obj: any, name: string): DiscoverDependency {
-        return new DiscoverDependency(name, obj.description, obj.discoverType, obj.withNamespace,
-                                         obj.milestone, obj.fileMatch, obj.contentMatch, obj.fromArea);
-    }
     static throwIfInvalidDiscoverDependency(discoverType: string, withNamespace?: boolean, milestone?: RegExp, fileMatch?: RegExp) {
         let throwError = false;
         let errors = [];

@@ -10,6 +10,6 @@
       "sourceRoot": "./",
       "downlevelIteration": true
     },
-    "exclude": ["**/*.d.ts", "**/*.js", "node_modules"],
+    "exclude": ["**/*.d.ts", "**/*.js", "**/for_*", "node_modules"],
     "include": ["**/*.ts"]
   }

@@ -7,11 +7,6 @@ import {DiscoverDependency, IPromptDependency, PromptDependency} from './interna
 
 export class DiscoverAndPromptDependency extends DiscoverDependency implements IPromptDependency {
     
-    static fromJson(obj: any, name: string): DiscoverAndPromptDependency {
-        return new DiscoverAndPromptDependency(name, obj.description, obj.discoverType, obj.userInputType, obj.promptMessage, obj.choices,
-             obj.customInput, obj.withNamespace, obj.milestone, obj.fileMatch, obj.contentMatch, obj.fromArea);
-    }
-    
     constructor (name: string, description: string, discoverType: string, userInputType: string, promptMessage: string,
             choices?: any[], customInput?: string, withNamespace?: boolean, milestone?: string, fileMatch?: string, 
             contentMatch?: string, fromArea?: string ) {

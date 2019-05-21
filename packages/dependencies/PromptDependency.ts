@@ -20,12 +20,6 @@ export const dependencyUserInputTypes = [
 ];
 
 export class PromptDependency extends Dependency implements IPromptDependency {
-    
-    static fromJson(obj: any, name: string): PromptDependency {
-        return new PromptDependency(name, obj.description, obj.userInputType, obj.choices,
-            obj.promptMessage, obj.customInput );
-    }
-    
     constructor (name: string, description: string, userInputType: string, promptMessage: string, choices?: any[], 
             customInput?: string) {
         super(name, description, 'userInput');
