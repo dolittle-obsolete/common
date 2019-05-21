@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { IDependencyResolvers, ICanResolveDependencies, Dependency, MultipleResolversError, CannotResolveDependencyError  } from "./internal";
+import { IDependencyResolvers, ICanResolveDependencies, IDependency, MultipleResolversError, CannotResolveDependencyError  } from "./internal";
 
  /**
   * Can resolve all dependencies
@@ -21,7 +21,7 @@ import { IDependencyResolvers, ICanResolveDependencies, Dependency, MultipleReso
     addResolvers(...resolvers: ICanResolveDependencies[]): void {
         this._resolvers.push(...resolvers);
     }
-    async resolve(context: any, dependencies: Dependency[], destinationPath?: string, coreLanguage?: string, args?: string[]): Promise<any> {
+    async resolve(context: any, dependencies: IDependency[], destinationPath?: string, coreLanguage?: string, args?: string[]): Promise<any> {
         for (let entry of this.getResolverToDependenciesMap(dependencies).entries()) {
             let resolver = entry[0];
             let deps = entry[1];
@@ -30,8 +30,8 @@ import { IDependencyResolvers, ICanResolveDependencies, Dependency, MultipleReso
 
         return context;
     }
-    private getResolverToDependenciesMap(dependencies: Dependency[]) {
-        let resolverToDependenciesMap = new Map<ICanResolveDependencies, Dependency[]>();
+    private getResolverToDependenciesMap(dependencies: IDependency[]) {
+        let resolverToDependenciesMap = new Map<ICanResolveDependencies, IDependency[]>();
         dependencies.forEach(dep => {
             let resolvers = 0;
             let resolver: ICanResolveDependencies | undefined 

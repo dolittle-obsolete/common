@@ -3,13 +3,13 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { discoverDependencyType, ICanResolveSyncDependencies, Dependency, IDependencyDiscoverResolver, MissingDestinationPath, MissingCoreLanguage, CannotResolveDependencyError } from "./internal";
+import { discoverDependencyType, ICanResolveSyncDependencies, IDependency, IDependencyDiscoverResolver, MissingDestinationPath, MissingCoreLanguage, CannotResolveDependencyError } from "./internal";
 
 export class DiscoverDependencyResolver implements ICanResolveSyncDependencies {
     
     constructor(private _discoverResolver: IDependencyDiscoverResolver, private _dolittleConfig: any) {}
 
-    resolve(context: any, dependencies: Dependency[], destinationPath?: string, coreLanguage?: string, args?: string[]) {
+    resolve(context: any, dependencies: IDependency[], destinationPath?: string, coreLanguage?: string, args?: string[]) {
         if (!destinationPath) throw MissingDestinationPath.new;
         if (!coreLanguage) throw MissingCoreLanguage.new;
         dependencies.forEach(dep => {
@@ -19,7 +19,7 @@ export class DiscoverDependencyResolver implements ICanResolveSyncDependencies {
         return context;
     }    
     
-    canResolve(dependency: Dependency): boolean {
+    canResolve(dependency: IDependency): boolean {
         return dependency.type === discoverDependencyType && (<any>dependency).userInputType === undefined;
     }
 }
