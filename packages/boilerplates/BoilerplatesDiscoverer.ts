@@ -17,6 +17,7 @@ const toolingPkg = require('../package.json');
  */
 export class BoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
     private _discoveredBoilerplates: BoilerplatePackageJson[];
+    private _boilerplatePaths: string[];
     /**
      * Initializes a new instance of {BoilerplatesDiscoverer}
      * @param {BoilerplatesConfig} boilerplateConfig
@@ -29,7 +30,7 @@ export class BoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
         private _fileSystem: typeof FsExtra, private _logger: Logger) {
         this._discoveredBoilerplates = [];
 
-        this.boilerplatePaths = boilerplatesDiscoverer.local(this._nodeModulesPath, [], 15);
+        this._boilerplatePaths = this._boilerplatePaths = boilerplatesDiscoverer.local(this._nodeModulesPath, [], 50);
     }
 
     /**
@@ -39,7 +40,7 @@ export class BoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
      * @type {string[]}
      * @memberof BoilerplatesDiscoverer
      */
-    readonly boilerplatePaths: string[]
+    get boilerplatePaths() {return this._boilerplatePaths; }
     /**
      * @inheritdoc
      *
@@ -53,8 +54,8 @@ export class BoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
      * @memberof BoilerplatesManager
      */
     discover() {
+        this._boilerplatePaths = boilerplatesDiscoverer.local(this._nodeModulesPath, [], 50);
         this._discoveredBoilerplates = [];
-
         let boilerplatesConfigObject: any = {};
 
         this.boilerplatePaths.forEach(folderPath => {

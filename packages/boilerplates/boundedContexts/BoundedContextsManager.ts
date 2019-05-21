@@ -155,8 +155,8 @@ export class BoundedContextsManager implements IBoundedContextsManager {
         let interactionLayerTypes = groupBy('target')(interactionLayers);
         return Object.keys(interactionLayerTypes)
             .map(target => new PromptDependency(
-                `Choose ${target} interaction layer`,
                 `interaction${target}`,
+                `Choose ${target} interaction layer`,
                 chooseOneUserInputType,
                 `Choose ${target} interaction layer`,
                 interactionLayers.map(_ => _.name).concat('None')
