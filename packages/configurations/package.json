@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.configurations",
-  "version": "1.0.0-alpha.6",
+  "version": "5.0.0",
   "description": "Common configuration system for dolittle tooling",
   "publishConfig": {
     "access": "public"
