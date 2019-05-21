@@ -31,6 +31,6 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@dolittle/tooling.common.utilities": "alpha"
+    "@dolittle/tooling.common.utilities": "latest"
   }
 }

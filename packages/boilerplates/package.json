@@ -32,9 +32,9 @@
   },
   "dependencies": {
     "@dolittle/boilerplates-discoverer": "^2.0.0-alpha.7",
-    "@dolittle/tooling.common.configurations": "alpha",
-    "@dolittle/tooling.common.dependencies": "alpha",
-    "@dolittle/tooling.common.utilities": "alpha",
+    "@dolittle/tooling.common.configurations": "latest",
+    "@dolittle/tooling.common.dependencies": "latest",
+    "@dolittle/tooling.common.utilities": "latest",
     "handlebars": "^4.0.12",
     "lodash": "^4.17.11",
     "semver": "^6.0.0",
