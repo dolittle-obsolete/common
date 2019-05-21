@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Dependency } from '@dolittle/tooling.common.dependencies';
+import { dependencyParsers, IDependency } from '@dolittle/tooling.common.dependencies';
 import { areas, getFileDirPath } from '@dolittle/tooling.common.utilities';
 import * as _path from 'path';
 import { ArtifactsBoilerplate } from '../internal';
@@ -32,11 +32,11 @@ export class ArtifactTemplate
     static fromJson(obj: any, path: string, includedFiles: string[], boilerplate: ArtifactsBoilerplate) {
         return new ArtifactTemplate(boilerplate, obj.name, obj.type, obj.area, obj.description,
             obj.dependencies !== undefined? 
-                Object.keys(obj.dependencies).map(key => Dependency.fromJson(obj.dependencies[key], key))
+                Object.keys(obj.dependencies).map(key => dependencyParsers.parse(obj.dependencies[key], key))
                 : [], includedFiles, path);
     }
 
-    private _allDependencies: Dependency[];
+    private _allDependencies: IDependency[];
     private _filesToCreate: string[];
     /**
      * Creates an instance of {ArtifactTemplate}.
@@ -51,7 +51,7 @@ export class ArtifactTemplate
      * @memberof ArtifactTemplate
      */
     constructor (boilerplate: ArtifactsBoilerplate, name: string, type: string, area: string, description: string,
-        dependencies: Dependency[], includedFiles: string[], path: string) {
+        dependencies: IDependency[], includedFiles: string[], path: string) {
         this.boilerplate = boilerplate;
         this.name = name;
         this.type = type;
@@ -112,7 +112,7 @@ export class ArtifactTemplate
      * @type {Dependency[]}
      * @memberof ArtifactTemplate
      */
-    readonly dependencies: Dependency[];
+    readonly dependencies: IDependency[];
     /**
      * The list of files that needs to be templated
      *
@@ -134,7 +134,7 @@ export class ArtifactTemplate
      * @returns {Dependency[]}
      * @memberof ArtifactTemplate
      */
-    get allDependencies(): Dependency[] {return this._allDependencies;}
+    get allDependencies(): IDependency[] {return this._allDependencies;}
     /**
      * Gets a list of the files that needs to be created
      *

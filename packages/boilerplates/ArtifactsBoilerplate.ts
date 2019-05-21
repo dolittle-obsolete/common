@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Dependency } from '@dolittle/tooling.common.dependencies';
+import { IDependency } from '@dolittle/tooling.common.dependencies';
 import { Folders, getFileDirPath, getFileNameAndExtension } from '@dolittle/tooling.common.utilities';
 import * as FsExtra from 'fs-extra';
 import { ArtifactTemplate, BaseBoilerplate, Scripts } from './internal';
@@ -21,14 +21,14 @@ export class ArtifactsBoilerplate extends BaseBoilerplate {
      * @param {string} name 
      * @param {string} description 
      * @param {string} type
-     * @param {Dependency[]} dependencies
+     * @param {IDependency[]} dependencies
      * @param {string} namespace
      * @param {Scripts} scripts
      * @param {string} path 
      * @param {Folders} folders
      * @param {typeof FsExtra} fileSystem
      */
-    constructor(language: string, name: string, description: string, type: string, dependencies: Dependency[], namespace: string, scripts: Scripts, path: string, folders: Folders, fileSystem: typeof FsExtra) {
+    constructor(language: string, name: string, description: string, type: string, dependencies: IDependency[], namespace: string, scripts: Scripts, path: string, folders: Folders, fileSystem: typeof FsExtra) {
         super(language, name, description, type, dependencies, namespace, scripts, path);
         this.folders = folders;
         this.fileSystem = fileSystem;

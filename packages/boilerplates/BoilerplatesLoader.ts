@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Dependency } from '@dolittle/tooling.common.dependencies';
+import { dependencyParsers } from '@dolittle/tooling.common.dependencies';
 import { Folders } from '@dolittle/tooling.common.utilities';
 import * as FsExtra from 'fs-extra';
 import path from 'path';
@@ -114,7 +114,7 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
             boilerplateObject.description,
             boilerplateObject.type,
             boilerplateObject.dependencies !== undefined? 
-                Object.keys(boilerplateObject.dependencies).map(key => Dependency.fromJson(boilerplateObject.dependencies[key], key))
+                Object.keys(boilerplateObject.dependencies).map(key => dependencyParsers.parse(boilerplateObject.dependencies[key], key))
                 : [],
             boilerplateObject.namespace,
             Scripts.fromJson(boilerplateObject.scripts),
@@ -130,7 +130,7 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
             boilerplateObject.description,
             boilerplateObject.type,
             boilerplateObject.dependencies !== undefined? 
-                Object.keys(boilerplateObject.dependencies).map(key => Dependency.fromJson(boilerplateObject.dependencies[key], key))
+                Object.keys(boilerplateObject.dependencies).map(key => dependencyParsers.parse(boilerplateObject.dependencies[key], key))
                 : [],
             boilerplateObject.namespace,
             Scripts.fromJson(boilerplateObject.scripts),

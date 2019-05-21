@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Dependency } from '@dolittle/tooling.common.dependencies';
+import { IDependency } from '@dolittle/tooling.common.dependencies';
 import { getFileDirPath } from '@dolittle/tooling.common.utilities';
 import _path from 'path';
 import { artifactsBoilerplateType, Scripts } from './internal';
@@ -18,12 +18,12 @@ export class BaseBoilerplate {
      * @param {string} name 
      * @param {string} description 
      * @param {string} type
-     * @param {Dependency[]} dependencies
+     * @param {IDependency[]} dependencies
      * @param {string} namespace
      * @param {Scripts} scripts
      * @param {string} path 
      */
-    constructor(language: string, name: string, description: string, type: string, dependencies: Dependency[], namespace: string, scripts: Scripts, path: string) {
+    constructor(language: string, name: string, description: string, type: string, dependencies: IDependency[], namespace: string, scripts: Scripts, path: string) {
         this.language = language;
         this.name = name;
         this.description = description;
@@ -69,10 +69,10 @@ export class BaseBoilerplate {
     /**
      * The dependencies of the {BaseBoilerplate}
      *
-     * @type {Dependency[]}
+     * @type {IDependency[]}
      * @memberof BaseBoilerplate
      */
-    readonly dependencies: Dependency[];
+    readonly dependencies: IDependency[];
     /**
      * The namespace of the {BaseBoilerplate}
      *

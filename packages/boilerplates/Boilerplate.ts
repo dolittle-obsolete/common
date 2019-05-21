@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Dependency } from '@dolittle/tooling.common.dependencies';
+import { IDependency } from '@dolittle/tooling.common.dependencies';
 import { BaseBoilerplate, Scripts } from './internal';
 
 export const boilerplateContentFolderName = 'Content';
@@ -17,7 +17,7 @@ export class Boilerplate extends BaseBoilerplate {
      * @param {string} name 
      * @param {string} description 
      * @param {string} type
-     * @param {Dependency[]} dependencies
+     * @param {IDependency[]} dependencies
      * @param {string} namespace
      * @param {Scripts} scripts
      * @param {string} target
@@ -27,7 +27,7 @@ export class Boilerplate extends BaseBoilerplate {
      * @param {string[]} [pathsNeedingBinding]
      * @param {string[]} [filesNeedingBinding]
      */
-    constructor(language: string, name: string, description: string, type: string, dependencies: Dependency[], namespace: string, 
+    constructor(language: string, name: string, description: string, type: string, dependencies: IDependency[], namespace: string, 
         scripts: Scripts, target: string, framework: string, parent: { name: string; type: string; language: string; }, 
         path: string, pathsNeedingBinding: string[], filesNeedingBinding: string[]) {
     super(language, name, description, type, dependencies, namespace, scripts, path);
