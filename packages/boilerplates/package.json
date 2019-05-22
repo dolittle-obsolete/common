@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.boilerplates",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "The boilerplates system for common dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -32,9 +32,9 @@
   },
   "dependencies": {
     "@dolittle/boilerplates-discoverer": "^2.0.0-alpha.7",
-    "@dolittle/tooling.common.configurations": "latest",
-    "@dolittle/tooling.common.dependencies": "latest",
-    "@dolittle/tooling.common.utilities": "latest",
+    "@dolittle/tooling.common.configurations": "5.0.*",
+    "@dolittle/tooling.common.dependencies": "5.0.*",
+    "@dolittle/tooling.common.utilities": "5.0.*",
     "handlebars": "^4.0.12",
     "lodash": "^4.17.11",
     "semver": "^6.0.0",
