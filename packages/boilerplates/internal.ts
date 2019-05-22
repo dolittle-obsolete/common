@@ -12,7 +12,7 @@ export * from './BoilerplatesCreator';
 export * from './BoilerplatesDiscoverer';
 export * from './BoilerplatesLoader';
 export * from './BoilerplatesManager';
-export * from './BoundedContextPackageJson';
+export * from './BoilerplatePackageJson';
 export * from './ExpectedBoilerplateError';
 export * from './IBoilerplateDiscoverers';
 export * from './IBoilerplateManagers';
