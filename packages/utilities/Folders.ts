@@ -6,7 +6,7 @@ import * as path from 'path';
 import { areas, determineDestination } from './helpers';
 import * as FsExtra from 'fs-extra';
 /**
- * Represents helpers for working with folders
+ *  A class that contains functions for working with folders
  */
 export class Folders
 {
@@ -15,29 +15,28 @@ export class Folders
      * @param {typeof FsExtra)} fileSystem 
      */
     
-    constructor(private _fileSystem: typeof FsExtra) {
-    }
+    constructor(private _fileSystem: typeof FsExtra) {}
     /**
      * Creates a feature from the current working directory. 
      *
-     * @param {string} cwd To create feature from
+     * @param {string} cwd The directory to create feature from
      * @param {string} feature The feature to create. The string can be '.' separated to signify sub features (parentFeature.subFeature.subSubFeature)
-     * @param {string} boundedContextPath 
+     * @param {string} boundedContextPath The path to the bounded-context.json configuration file
      * @param {*} dolittleConfig
+     * @param {string} coreLanguage 
      * @memberof Folders
      */
-    createFeature(cwd: string, feature: string, boundedContextPath: string, dolittleConfig: any) {
-        areas.forEach(area => this.makeFolderIfNotExists(determineDestination(area, 'csharp', feature + '.', cwd, boundedContextPath, dolittleConfig).destination));
+    createFeature(cwd: string, feature: string, boundedContextPath: string, dolittleConfig: any, coreLanguage: string) {
+        areas.forEach(area => this.makeFolderIfNotExists(determineDestination(area, coreLanguage, feature + '.', cwd, boundedContextPath, dolittleConfig).destination));
     }
 
     /**
      * Copy one folder and its content recursively to a specified destination
      * @param {string} destination Destination path to copy to
      * @param {string} source Source path to copy from
-     * @returns {void}
      * @memberof Folders
      */
-    copy(destination: string, source: string): void
+    copy(destination: string, source: string)
     {
         destination = path.normalize(destination);
         source = path.normalize(source);
@@ -47,10 +46,9 @@ export class Folders
     /**
      * Create a folder if it does not exist
      * @param {string} folderPath Name of the folder to make sure exists
-     * @returns {void}
      * @memberof Folders
      */
-    makeFolderIfNotExists(folderPath: string): void
+    makeFolderIfNotExists(folderPath: string)
     {
         folderPath = path.normalize(folderPath);
         try {
@@ -69,7 +67,7 @@ export class Folders
 
     /**
      * Get top level folders in a given path
-     * @param {string} folder 
+     * @param {string} folder The directory to search
      * @returns {string[]}
      * @memberof Folders
      */
@@ -89,9 +87,9 @@ export class Folders
 
     /**
      * Get top level folders in a given path
-     * @param {string} folder path 
+     * @param {string} folder The directory to search 
      * @param {RegExp} regularExp
-     * @returns {string[]} folder paths
+     * @returns {string[]} 
      * @memberof Folders
      */
     getFoldersInRegex(folder: string, regularExp: RegExp): string[] {
