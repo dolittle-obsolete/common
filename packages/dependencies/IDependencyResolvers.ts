@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 import { IDependency, ICanResolveDependencies } from './internal';
 
-
 /**
  * Represents a system that can resolve sync dependencies
  *
@@ -13,27 +12,29 @@ import { IDependency, ICanResolveDependencies } from './internal';
  */
 export interface IDependencyResolvers {
     /**
-     * Gets the dependency resolvers
+     * All instances of {ICanResolveDependencies} that this system uses for resolving dependencies
      *
      * @type {ICanResolveDependencies[]}
      * @memberof IDependencyResolvers
      */
     readonly resolvers: ICanResolveDependencies[];
     /**
-     * Add resolvers
+     * Add instances of {ICanResolveDependencies} resolvers to the dependency resolving system
      *
-     * @param {...ICanResolveDependencies[]} resolver
+     * @param {...ICanResolveDependencies[]} resolvers
      * @memberof IDependencyResolvers
      */
-    addResolvers(...resolver: ICanResolveDependencies[]): void
+    addResolvers(...resolvers: ICanResolveDependencies[]): void
     /**
      * Resolves all dependencies
      *
-     * @param {*} context
-     * @param {IDependency[]} dependencies
-     * @param {string} [destinationPath]
-     * @param {string} [coreLanguage]
-     * @param {string[]} [args]
+     * Throws an exception if there are multiple resolvers for a dependency
+     * 
+     * @param {*} context The context to base off of. Fields will be appended to the context and returned
+     * @param {IDependency[]} dependencies The dependencies to resolve
+     * @param {string} [destinationPath] The optional source path for where the discovery mechanism should start from 
+     * @param {string} [coreLanguage] The optional core language of the created application, bounded context or artifact 
+     * @param {string[]} [args] The optional list of arguments, only used for resolving argument dependencies
      * @returns {Promise<any>}
      * @memberof IDependencyResolvers
      */

@@ -11,7 +11,29 @@ import { IDependency, ICanParseDependencies } from "./internal";
  * @interface IDependencyParser
  */
 export interface IDependencyParsers {
-    parsers: ICanParseDependencies[]
+    /**
+     * All the instances of {ICanParseDependencies} that this system uses for parsing a dependency
+     *
+     * @type {ICanParseDependencies[]}
+     * @readonly
+     * @memberof IDependencyParsers
+     */
+    readonly parsers: ICanParseDependencies[]
+    /**
+     * Parses a single dependency object by invoking an instance of {ICanParseDependencies} which can parse the given dependency
+     * 
+     * Throws an exception if multiple parsers can parse the given dependency
+     * @param {*} obj The dependency json object
+     * @param {string} name The name of the dependency
+     * @returns {IDependency}
+     * @memberof IDependencyParsers
+     */
     parse(obj: any, name: string): IDependency
+    /**
+     * Add instances of {ICanParseDependencies} parsers to the dependency parsing system
+     *
+     * @param {...ICanParseDependencies[]} parser
+     * @memberof IDependencyParsers
+     */
     addParsers(...parser: ICanParseDependencies[]): void
 }

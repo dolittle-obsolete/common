@@ -5,7 +5,6 @@
 
 import {IDependency, DependencyMissingFieldError} from './internal';
 
-
 export const discoverDependencyType = 'discover';
 export const promptDependencyType = 'userInput';
 
@@ -15,7 +14,7 @@ export const dependencyTypes = [
 ];
 
 /**
- * Represents the configuration of a dependency
+ * Represents the abstract base configuration class of a dependency
  *
  * @export
  * @class Dependency

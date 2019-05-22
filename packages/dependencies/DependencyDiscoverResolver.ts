@@ -18,22 +18,15 @@ import {MissingDestinationPath, MissingCoreLanguage, namespaceDiscoverType, mult
 export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
     
     /**
-     *Creates an instance of DependenciesManager.
-     * @param {Folders} folders
-     * @param {typeof FsExtra} fileSystem
-     * @param {any} dolittleConfig Pre-loaded dolittle configuration file
-     * @param {Logger} logger
-     * @memberof DependenciesManager
+     *Creates an instance of DependencyDiscoverResolver.
+     * @param {Folders} _folders
+     * @param {typeof FsExtra} _fileSystem
+     * @param {*} _dolittleConfig
+     * @param {Logger} _logger
+     * @memberof DependencyDiscoverResolver
      */
     constructor(private _folders: Folders, private _fileSystem: typeof FsExtra, private _dolittleConfig: any, private _logger: Logger) {}
 
-    /**
-     * Discovers a dependency
-     * @param {Dependency} dependency The dependency 
-     * @param {string} location The path to start searching from
-     * @param {string} coreLanguage The core language
-     * @param {*} dolittleConfig
-     */
     resolve(dependency: IDiscoverDependency, startLocation: string, coreLanguage: string, dolittleConfig: any = this._dolittleConfig ): DependencyDiscoverResult {
         if (!startLocation) throw MissingDestinationPath.new;
         if (!coreLanguage) throw MissingCoreLanguage.new;
@@ -47,14 +40,6 @@ export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
         throw new Error(`Cannot handle discoveryType '${dependency.discoverType}'`);
     }
 
-    /**
-     * Discovers multiple files
-     * @param {Dependency} dependency The dependency
-     * @param {string} location The path to start searching from
-     * @param {string} language The core language
-     * @param {*} dolittleConfig 
-     * @returns {string[] | {value: string, namespace: string}[]} returns a list of 
-     */
     private discoverMultipleFiles(dependency: IDiscoverDependency, location: string, language: string, dolittleConfig: any): string[] | { value: string, namespace: string }[] {
         let filePaths: string[] = [];
         if (dependency.fromArea === undefined) {
@@ -98,12 +83,6 @@ export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
         return results;
     }
 
-    /**
-     * Creates the namespace
-     * @param {Dependency} dependency 
-     * @param {string} location
-     * @returns {string} 
-     */
     private createNamespace(dependency: IDiscoverDependency, location: string): string {
         let milestoneRegexp = dependency.milestone;
         if (!milestoneRegexp) throw DependencyMissingFieldError.new(dependency.name, 'milestone');

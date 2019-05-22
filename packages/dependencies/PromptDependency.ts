@@ -19,6 +19,14 @@ export const dependencyUserInputTypes = [
     chooseMultipleUserInputType
 ];
 
+/**
+ * Represents the configuration of a dependency with only the 'prompt' element
+ *
+ * @export
+ * @class PromptDependency
+ * @extends {Dependency}
+ * @implements {IPromptDependency}
+ */
 export class PromptDependency extends Dependency implements IPromptDependency {
     constructor (name: string, description: string, userInputType: string, promptMessage: string, choices?: any[], 
             customInput?: string) {

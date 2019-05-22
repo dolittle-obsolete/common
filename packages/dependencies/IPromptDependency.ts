@@ -7,6 +7,13 @@ import {IDependency} from './internal';
 
 export type DependencyChoice = string | {name: string, value: any};
 
+/**
+ * Represents the configuration of a prompt dependency
+ *
+ * @export
+ * @interface IPromptDependency
+ * @extends {IDependency}
+ */
 export interface IPromptDependency extends IDependency {
    
     /**

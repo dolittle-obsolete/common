@@ -14,12 +14,19 @@ export interface ICanParseDependencies {
     /**
      * Whether this parser can parse the given dependency object
      *
+     * @param {*} obj The dependency json object
+     * @returns {boolean}
+     * @memberof ICanParseDependencies
      */
     canParse(obj: any): boolean;
 
     /**
-     * Resolves dependencies and returns the context object
+     * Parses a single dependency object
      *
+     * @param {*} obj The dependency json object
+     * @param {string} name The name of the dependency
+     * @returns {IDependency} An instance of a Dependency sub-type
+     * @memberof ICanParseDependencies
      */
     parse(obj: any, name: string): IDependency
 

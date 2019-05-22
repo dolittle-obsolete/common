@@ -13,13 +13,13 @@ import { IDependency, ICanResolveDependencies } from './internal';
 export interface ICanResolveASyncDependencies extends ICanResolveDependencies {
     
     /**
-     * Resolves async dependencies and returns the context object
+     * Resolves async dependencies
      *
-     * @param {*} context
-     * @param {IDependency[]} dependencies
-     * @param {string} [destinationPath]
-     * @param {string} [coreLanguage]
-     * @param {string[]} [args]
+     * @param {*} context The context to base off of. Fields will be appended to the context and returned
+     * @param {IDependency[]} dependencies The dependencies to resolve
+     * @param {string} [destinationPath] The optional source path for where the discovery mechanism should start from 
+     * @param {string} [coreLanguage] The optional core language of the created application, bounded context or artifact 
+     * @param {string[]} [args] The optional list of arguments, only used for resolving argument dependencies
      * @returns {Promise<any>}
      * @memberof ICanResolveASyncDependencies
      */

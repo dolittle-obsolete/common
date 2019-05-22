@@ -21,6 +21,7 @@ export class DependencyParsers implements IDependencyParsers {
     addParsers(...parsers: ICanParseDependencies[]) {
         this._parsers.push(...parsers);
     }
+    
     parse(obj: any, name: string): IDependency {
         let parser: ICanParseDependencies | null = null;
 

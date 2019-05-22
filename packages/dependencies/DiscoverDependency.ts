@@ -20,6 +20,14 @@ export const dependencyDiscoverTypes = [
     multipleFileContentsDiscoverType
 ];
 
+/**
+ * Represents the configuration of a dependency with only a 'discover' element
+ *
+ * @export
+ * @class DiscoverDependency
+ * @extends {Dependency}
+ * @implements {IDiscoverDependency}
+ */
 export class DiscoverDependency extends Dependency implements IDiscoverDependency  {
     
     static throwIfInvalidDiscoverDependency(discoverType: string, withNamespace?: boolean, milestone?: RegExp, fileMatch?: RegExp) {

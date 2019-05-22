@@ -3,8 +3,16 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import {DiscoverDependency, IPromptDependency, PromptDependency} from './internal';
+import {DiscoverDependency, IPromptDependency, PromptDependency, IDependency, discoverDependencyType} from './internal';
 
+/**
+ * Represents the configuration of a dependency which has both a 'discover' element and a 'prompt' element. 
+ *
+ * @export
+ * @class DiscoverAndPromptDependency
+ * @extends {DiscoverDependency}
+ * @implements {IPromptDependency}
+ */
 export class DiscoverAndPromptDependency extends DiscoverDependency implements IPromptDependency {
     
     constructor (name: string, description: string, discoverType: string, userInputType: string, promptMessage: string,

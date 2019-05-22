@@ -5,6 +5,13 @@
 
 import { discoverDependencyType, ICanResolveSyncDependencies, IDependency, IDependencyDiscoverResolver, MissingDestinationPath, MissingCoreLanguage, CannotResolveDependencyError } from "./internal";
 
+/**
+ * Resolves {DiscoverDependency}
+ *
+ * @export
+ * @class DiscoverDependencyResolver
+ * @implements {ICanResolveSyncDependencies}
+ */
 export class DiscoverDependencyResolver implements ICanResolveSyncDependencies {
     
     constructor(private _discoverResolver: IDependencyDiscoverResolver, private _dolittleConfig: any) {}

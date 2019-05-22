@@ -3,10 +3,10 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 /**
- * The error that gets throw when attempting to create an invalid dependency 
+ * The error that gets throw when attempting to create a dependency with an invalid 'type'
  *
  * @export
- * @class DependencyMissingFieldError
+ * @class InvalidDependencyTypeError
  * @extends {Error}
  */
 export class InvalidDependencyTypeError extends Error {

@@ -5,6 +5,13 @@
 
 import {IDependency} from './internal';
 
+/**
+ * Represents the configuration of a discover dependency
+ *
+ * @export
+ * @interface IDiscoverDependency
+ * @extends {IDependency}
+ */
 export interface IDiscoverDependency extends IDependency {
    
     /**
