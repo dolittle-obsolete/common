@@ -5,7 +5,6 @@ yalc.lock
 yarn.lock
 *.d.ts
 lib
-!types/**/*.d.ts
 # Logs
 logs
 *.log

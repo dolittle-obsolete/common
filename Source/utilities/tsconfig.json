@@ -5,7 +5,6 @@
       "outDir": "lib",
       "baseUrl": "./",
       "paths": {
-          "*": ["../../types/*"],
           "@dolittle/tooling.common.utilities": ["index.ts"]
       },
       "sourceRoot": "./"
