@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ResourceTypeImplementation } from "../internal";
+import { ResourceTypeImplementation } from "../index";
 
 /**
  * Represents a Bounded Context's resources configuration
@@ -12,13 +12,14 @@ import { ResourceTypeImplementation } from "../internal";
  */
 export class Resources
 {
+
     /**
-     * Creates {Resources}
+     * Creates a new {Resources}
      *
      * @static
      * @param {*} obj The resources object from within the bounded-context.json
      * @returns {Resources}
-     * @memberof Resources
+ 
      */
     static fromJson(obj: any): Resources {
         return new Resources(ResourceTypeImplementation.fromJson(obj.readModels), ResourceTypeImplementation.fromJson(obj.eventStore));
@@ -32,7 +33,6 @@ export class Resources
     constructor (readModels: ResourceTypeImplementation, eventStore: ResourceTypeImplementation) {
         this.readModels = readModels;
         this.eventStore = eventStore;
-        
     }
 
     /**
@@ -40,7 +40,6 @@ export class Resources
      * 
      * @type {ResourceTypeImplementation}
      * @readonly
-     * @memberof Core
      */
     readonly readModels: ResourceTypeImplementation;
     
@@ -49,7 +48,6 @@ export class Resources
      *
      * @type {ResourceTypeImplementation}
      * @readonly
-     * @memberof Core
      */
     readonly eventStore: ResourceTypeImplementation;
 

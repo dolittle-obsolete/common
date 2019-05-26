@@ -4,17 +4,17 @@
  *--------------------------------------------------------------------------------------------*/
 
 /**
-  * Represents one of the Bounded Context's interaction layers
-  */
+ * Represents one of the Bounded Context's interaction layers
+ */
 export class InteractionLayer
 {
+
     /**
      * Creates an {InteractionLayer}
      *
      * @static
      * @param {any} obj The interaction layer object from within the bounded-context.json
      * @returns {InteractionLayer}
-     * @memberof InteractionLayer
      */
     static fromJson(obj: any): InteractionLayer {
         return new InteractionLayer(obj.type, obj.language, obj.framework, obj.entryPoint);
@@ -38,7 +38,6 @@ export class InteractionLayer
      * The type of this interaction layer
      *
      * @type {string}
-     * @memberof InteractionLayer
      */
     readonly type: string;
 
@@ -46,7 +45,6 @@ export class InteractionLayer
      * The programming language
      *
      * @type {string}
-     * @memberof InteractionLayer
      */
     readonly language: string;
 
@@ -54,7 +52,6 @@ export class InteractionLayer
      * The framework of this interaction layer
      *
      * @type {string}
-     * @memberof InteractionLayer
      */
     readonly framework: string;
     
@@ -62,7 +59,6 @@ export class InteractionLayer
      * The entry point of this specific interaction layer.  A relative path to the folder 
      *
      * @type {string}
-     * @memberof InteractionLayer
      */
     readonly entryPoint: string;
 

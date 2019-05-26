@@ -12,23 +12,23 @@
  */
 export class ResourceTypeImplementation
 {
+
     /**
      * Creates a {ResourceTypeImplementation}
      *
      * @static
      * @param {any} obj The resource type implementation object of a Resource from within the bounded-context.json
      * @returns {ResourceTypeImplementation}
-     * @memberof ResourceTypeImplementation
      */
     static fromJson(obj: any): ResourceTypeImplementation {
         return new ResourceTypeImplementation(obj.development, obj.production);
     }
 
     /**
-      * Instantiates an instance of {ResourceTypeImplementation}
-      * @param {string} development 
-      * @param {string} production
-      */
+     * Instantiates an instance of {ResourceTypeImplementation}
+     * @param {string} development 
+     * @param {string} production
+     */
     constructor (development: string, production: string) {
         this.development = development;
         this.production = production;
@@ -38,7 +38,6 @@ export class ResourceTypeImplementation
      * The resource type implementations for read models
      *
      * @type {string}
-     * @memberof ResourceTypeImplementation
      */
     readonly development: string;
 
@@ -46,7 +45,6 @@ export class ResourceTypeImplementation
      * The entry point of the bounded context's Core.  A relative path to the folder
      *
      * @type {string}
-     * @memberof ResourceTypeImplementation
      */
     readonly production: string;
 

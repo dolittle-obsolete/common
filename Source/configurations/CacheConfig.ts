@@ -16,12 +16,12 @@ import path from 'path';
  * @extends {Conf}
  */
 export class CacheConfig extends Conf {
+
     /**
-     * Creates an instance of {CacheConfig}.
+     * Instantiates an instance of {CacheConfig}.
      * @param {string} configName The name of the configuration. Becomes the filename
      * @param {string} nodeModulesFolder The path of the global node_modules folder
      * @param {{[key: string]: any}} defaultObj
-     * @memberof CacheConfig
      */
     constructor(configName: string, nodeModulesFolder: string, defaultObj: { [key: string]: any; }) {
         super({

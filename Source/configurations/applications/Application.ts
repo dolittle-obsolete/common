@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 export const applicationFilename = 'application.json';
+
 /**
  * Represents an application configuration
  *
@@ -11,6 +12,7 @@ export const applicationFilename = 'application.json';
  * @class Application
  */
 export class Application {
+
     /**
      * Creates and returns a new {Application}
      *
@@ -18,14 +20,14 @@ export class Application {
      * @param {*} obj
      * @param {string} path
      * @returns {Application}
-     * @memberof Application
+ 
      */
     static fromJson(obj: any, path: string): Application {
         return new Application(obj.id, obj.name, path);
     }
 
     /**
-     * Initializes a new instance of {Application}
+     * Instantiates a new instance of {Application}
      * @param {string} id Unique identifier for application
      * @param {string} name Name of application
      * @param {string} path Path of application configuration file
@@ -40,7 +42,6 @@ export class Application {
      * Gets the unique identifier for the application
      * @type {string}
      * @readonly
-     * @memberof Application
      */
     readonly id: string;
 
@@ -48,7 +49,6 @@ export class Application {
      * Gets the name of the application
      * @type {string}
      * @readonly
-     * @memberof Application
      */
     readonly name: string;
 
@@ -56,7 +56,6 @@ export class Application {
      * Gets the path of the application configuration file
      * @type {string}
      * @readonly
-     * @memberof Application
      */
     readonly path: string;
 }

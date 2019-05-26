@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { Core, InteractionLayer, Resources } from '../internal';
+import { Core, InteractionLayer, Resources } from '../index';
 
 export const boundedContextFileName = 'bounded-context.json';
 /**
@@ -14,6 +14,7 @@ export const boundedContextFileName = 'bounded-context.json';
  */
 export class BoundedContext
 {
+
    /**
     * Creates a {BoundedContext} object 
     *
@@ -21,7 +22,6 @@ export class BoundedContext
     * @param {*} obj The raw bounded-context.json object
     * @param {string} path The file path of the bounded-context.json 
     * @returns {BoundedContext} 
-    * @memberof BoundedContext
     */
     static fromJson(obj: any, path: string): BoundedContext {
       return new BoundedContext(obj.application, obj.boundedContext, obj.boundedContextName, Resources.fromJson(obj.resources), Core.fromJson(obj.core), 
@@ -52,7 +52,6 @@ export class BoundedContext
      * The application GUID
      *
      * @type {string}
-     * @memberof BoundedContext
      */
     readonly application: string;
     
@@ -60,7 +59,6 @@ export class BoundedContext
      * The bounded context GUID
      *
      * @type {string}
-     * @memberof BoundedContext
      */
     readonly boundedContext: string;
 
@@ -68,7 +66,6 @@ export class BoundedContext
      * The name of the bounded context
      *
      * @type {string}
-     * @memberof BoundedContext
      */
     readonly boundedContextName: string;
 
@@ -76,7 +73,6 @@ export class BoundedContext
      * The core configuration 
      *
      * @type {Core}
-     * @memberof BoundedContext
      */
     readonly core: Core;
 
@@ -84,7 +80,6 @@ export class BoundedContext
      * The interaction layers
      *
      * @type {InteractionLayer[]}
-     * @memberof BoundedContext
      */
     readonly interactionLayers: InteractionLayer[];
 
@@ -92,7 +87,6 @@ export class BoundedContext
      * The resources configuration
      *
      * @type {Resources}
-     * @memberof BoundedContext
      */
     readonly resources: Resources;
 
@@ -100,7 +94,6 @@ export class BoundedContext
      * The path of the bounded context configuration file
      *
      * @type {string}
-     * @memberof BoundedContext
      */
     readonly path: string;
 
@@ -108,11 +101,11 @@ export class BoundedContext
      * Adds an interaction layer 
      *
      * @param {InteractionLayer} interactionLayer
-     * @memberof BoundedContext
      */
     addInteractionLayer(interactionLayer: InteractionLayer) {
         this.interactionLayers.push(interactionLayer);
     }
+    
     toJson() {
         return {
             application: this.application,
