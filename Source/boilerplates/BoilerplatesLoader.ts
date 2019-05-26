@@ -8,7 +8,7 @@ import { Folders } from '@dolittle/tooling.common.utilities';
 import * as FsExtra from 'fs-extra';
 import path from 'path';
 import { Logger } from 'winston';
-import { artifactsBoilerplateType, ArtifactsBoilerplate, BaseBoilerplate, Boilerplate, boilerplateContentFolderName, IBoilerplatesLoader, Scripts, BoilerplatesConfig } from './internal';
+import { artifactsBoilerplateType, ArtifactsBoilerplate, Boilerplate, NonArtifactsBoilerplate, boilerplateContentFolderName, IBoilerplatesLoader, Scripts, BoilerplatesConfig } from './internal';
 
 const binaryFiles = [
     '.jpg',
@@ -24,7 +24,7 @@ const binaryFiles = [
  * Represents the manager of boiler plates
  */
 export class BoilerplatesLoader implements IBoilerplatesLoader {
-    private _loadedBoilerplates!: BaseBoilerplate[];
+    private _loadedBoilerplates!: Boilerplate[];
 
     /**
      * Initializes a new instance of {BoilerplatesManager}
@@ -42,7 +42,7 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
     /**
      * @inheritdoc
      *
-     * @memberof BoilerplatesLoader
+ 
      */
     needsReload = true;
     /**
@@ -50,17 +50,17 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
      *
      * @readonly
      * @type {string}
-     * @memberof BoilerplatesLoader
+ 
      */
     get boilerplatesPath(): string {return this._boilerplatesConfig.path;}
     /**
      * @inheritdoc
      *
      * @readonly
-     * @type {BaseBoilerplate[]}
-     * @memberof BoilerplatesLoader
+     * @type {Boilerplate[]}
+ 
      */
-    get loadedBoilerplates(): BaseBoilerplate[] {
+    get loadedBoilerplates(): Boilerplate[] {
         if (!this._loadedBoilerplates || this.needsReload) return this.load();
         return this._loadedBoilerplates;
     }
@@ -68,9 +68,9 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
     /**
      * @inheritdoc
      * 
-     * @memberof BoilerplatesLoader
+ 
      */
-    load(): BaseBoilerplate[] {
+    load(): Boilerplate[] {
         this._loadedBoilerplates = [];
         let boilerplatesConfigObject: any = this._boilerplatesConfig.store;
 
@@ -87,7 +87,7 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
         return this._loadedBoilerplates;
     }
     
-    private readBoilerplateFromFolder(folder: string): BaseBoilerplate {
+    private readBoilerplateFromFolder(folder: string): Boilerplate {
         let boilerplatePath = path.join(folder, 'boilerplate.json');
         
         if (!this._fileSystem.existsSync(boilerplatePath)) {
@@ -100,7 +100,7 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
         return this.parseBaseBoilerplate(boilerplateObject, boilerplatePath);
     }
 
-    private parseBaseBoilerplate(boilerplateObject: any, boilerplatePath: string): BaseBoilerplate {
+    private parseBaseBoilerplate(boilerplateObject: any, boilerplatePath: string): Boilerplate {
         if (boilerplateObject.type === artifactsBoilerplateType) 
             return this.parseArtifactsBoilerplate(boilerplateObject, boilerplatePath);
         else 
@@ -122,9 +122,9 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
             this._folders,
             this._fileSystem);
     }
-    private parseBoilerplate(boilerplateObject: any, boilerplatePath: string): Boilerplate {
+    private parseBoilerplate(boilerplateObject: any, boilerplatePath: string): NonArtifactsBoilerplate {
         let bindings = this.getBoilerplateBindings(boilerplatePath);
-        return new Boilerplate(
+        return new NonArtifactsBoilerplate(
             boilerplateObject.language || 'any',
             boilerplateObject.name,
             boilerplateObject.description,

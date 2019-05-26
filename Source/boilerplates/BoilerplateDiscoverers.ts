@@ -17,7 +17,7 @@ export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
     /**
      * Creates an instance of BoilerplateDiscoverers.
      * @param {ICanDiscoverBoilerplates[]} boilerplateDiscoverers
-     * @memberof BoilerplateDiscoverers
+ 
      */
     constructor(boilerplateDiscoverers: ICanDiscoverBoilerplates[]) {
         this.boilerplateDiscoverers = boilerplateDiscoverers;
@@ -30,7 +30,7 @@ export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
      *
      * @readonly
      * @type {string[]}
-     * @memberof BoilerplatesDiscoverer
+ 
      */
     get boilerplatePaths() {
         let paths: string[] = [];
@@ -42,7 +42,7 @@ export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
      *
      * @readonly
      * @type {BoilerplatePackageJson[]}
-     * @memberof BoilerplatesDiscoverer
+ 
      */
     get discoveredBoilerplates(): BoilerplatePackageJson[] {
         let boilerplates: BoilerplatePackageJson[] = [];
@@ -55,7 +55,7 @@ export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
     }
     /**
      * @inheritdoc
-     * @memberof BoilerplatesManager
+ 
      */
     discover() {
         this.boilerplateDiscoverers.forEach(_ => _.discover());

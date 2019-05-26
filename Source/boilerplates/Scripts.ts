@@ -5,7 +5,7 @@
 import spawn from 'cross-spawn';
 import lodash from 'lodash';
 import path from 'path';
-import { Script, ScriptFailedError } from './internal';
+import { Script, ScriptFailed } from './index';
 
 
 /**
@@ -42,42 +42,41 @@ export class Scripts
      * Gets the creation scripts
      * @type {Script[] | string[]}
      * @readonly
-     * @memberof Scripts
      */
     readonly creation: Script[] | string[];
+
     /**
      * Gets the build scripts
      * @type {Script[] | string[]}
      * @readonly
-     * @memberof Scripts
      */
     readonly build: Script[] | string[]
+
     /**
      * Gets the run scripts
      * @type {Script[] | string[]}
      * @readonly
-     * @memberof Scripts
      */
     readonly run: Script[] | string[];
+
     /**
      * Gets the rest of the scripts
      * @type {any}
      * @readonly
-     * @memberof Scripts
      */
     readonly rest: any;
-    
 }
+
 function scriptOnStderr(data: string) {
     if (data && data !== '') console.error(data);
 }
 function scriptOnStdout(data?: string) {
 }
 function scriptOnError(error: Error | string) {
-    if (error) throw new ScriptFailedError(error);
+    if (error) throw new ScriptFailed(error);
 }
 function scriptOnUncaughtException(error: Error) {
-    if (error) throw new ScriptFailedError(error);
+    if (error) throw new ScriptFailed(error);
 }
 
 /**

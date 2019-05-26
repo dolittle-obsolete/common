@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.boilerplates",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "The boilerplates system for common dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -35,6 +35,8 @@
     "@dolittle/tooling.common.configurations": "5.0.*",
     "@dolittle/tooling.common.dependencies": "5.0.*",
     "@dolittle/tooling.common.utilities": "5.0.*",
+    "cross-spawn": "^6.0.5",
+    "fs-extra": "^8.0.1",
     "handlebars": "^4.0.12",
     "lodash": "^4.17.11",
     "semver": "^6.0.0",

@@ -3,10 +3,10 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { BoilerplatePackageJson } from "./internal";
+import { BoilerplatePackageJson } from "./index";
 
 /**
- * Responsible for discovering boilerplates
+ * Defines a system that's responsible for discovering boilerplates
  *
  * @export
  * @interface ICanFindOnlineBoilerplatePackages
@@ -19,9 +19,9 @@ export interface ICanFindOnlineBoilerplatePackages {
      * @param {string[]} [keywords] Additional keywords used in search
      * @param {number} [limit] The limit of boilerplates
      * @returns {Promise<BoilerplatePackageJson>}
-     * @memberof ICanFindOnlineBoilerplatePackages
+ 
      */
-    discoverLatestOnlineBoilerplates(keywords?: string[], limit?: number): Promise<BoilerplatePackageJson[]>
+    latestOnline(keywords?: string[], limit?: number): Promise<BoilerplatePackageJson[]>
 
 
     /**
@@ -29,17 +29,17 @@ export interface ICanFindOnlineBoilerplatePackages {
      *
      * @param {string} boilerplatePackageName
      * @returns {Promise<BoilerplatePackageJson>}
-     * @memberof ICanFindOnlineBoilerplatePackages
+ 
      */
-    latestCompatibleBoilerplate(boilerplatePackageName: string): Promise<BoilerplatePackageJson>
+    latestCompatible(boilerplatePackageName: string): Promise<BoilerplatePackageJson>
 
     /**
      * Finds boilerplate packages online and and returns the package.json objects of the latest versions of the boilerplates packages compatible with the common tooling major version
      *
      * @returns A list of compatible packages
      * @returns {Promise<BoilerplatePackageJson>}
-     * @memberof ICanFindOnlineBoilerplatePackages
+ 
      */
-    discoverLatestOnlineDolittleBoilerplates(): Promise<BoilerplatePackageJson[]>
+    latestOnlineDolittle(): Promise<BoilerplatePackageJson[]>
 
 }

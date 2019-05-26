@@ -3,16 +3,17 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { IDependency } from '@dolittle/tooling.common.dependencies';
-import { BaseBoilerplate, Scripts } from './internal';
+import { getFileDirPath } from '@dolittle/tooling.common.utilities';
+import _path from 'path';
+import { artifactsBoilerplateType, Scripts } from './index';
 
-export const boilerplateContentFolderName = 'Content';
 /**
- * Represents the standard boilerplate, meaning a non-artifacts boilerplate 
+ * Represents the base representation of a boilerplate
  */
-export class Boilerplate extends BaseBoilerplate {
-
+export abstract class Boilerplate {
+    
     /**
-     * Initializes a new instance of {Boilerplate}
+     * Instantiates a new instance of {Boilerplate}
      * @param {string} language 
      * @param {string} name 
      * @param {string} description 
@@ -20,56 +21,108 @@ export class Boilerplate extends BaseBoilerplate {
      * @param {IDependency[]} dependencies
      * @param {string} namespace
      * @param {Scripts} scripts
-     * @param {string} target
-     * @param {string} framework
-     * @param {{name: string, type: string, language: string}} parent
      * @param {string} path 
-     * @param {string[]} [pathsNeedingBinding]
-     * @param {string[]} [filesNeedingBinding]
      */
-    constructor(language: string, name: string, description: string, type: string, dependencies: IDependency[], namespace: string, 
-        scripts: Scripts, target: string, framework: string, parent: { name: string; type: string; language: string; }, 
-        path: string, pathsNeedingBinding: string[], filesNeedingBinding: string[]) {
-    super(language, name, description, type, dependencies, namespace, scripts, path);
-    this.target = target;
-    this.framework = framework;
-    this.parent = parent;
-    this.pathsNeedingBinding = pathsNeedingBinding || [];
-    this.filesNeedingBinding = filesNeedingBinding || [];
+    constructor(language: string, name: string, description: string, type: string, dependencies: IDependency[], namespace: string, scripts: Scripts, path: string) {
+        this.language = language;
+        this.name = name;
+        this.description = description;
+        this.type = type;
+        this.dependencies = dependencies;
+        this.namespace = namespace;
+        this.scripts = scripts;
+        this.path = path;
+        this.contentDirectory = _path.join(getFileDirPath(path), 
+            type === artifactsBoilerplateType? 
+                'Templates' 
+                : 'Content');
     }
+    abstract static folderContentName: string;
     /**
-     * Get the target of {Boilerplate}.
+     * The name of the {BaseBoilerplate}
      *
      * @type {string}
-     * @memberof Boilerplate
+ 
      */
-    readonly target: string;
+    readonly name: string;
+
     /**
-     * Get the framework of {Boilerplate}
+     * The language of the {BaseBoilerplate}
      *
      * @type {string}
-     * @memberof Boilerplate
      */
-    readonly framework: string;
+    readonly language: string;
+
     /**
-     * Get the parent boilerplate that this is an adornment boilerplate of
+     * The description of the {BaseBoilerplate}
      *
-     * @type {{name: string, type: string, language: string}}
-     * @memberof Boilerplate
+     * @type {string}
      */
-    readonly parent: {name: string, type: string, language: string};
+    readonly description: string;
+
     /**
-     * Get the paths that need binding - relative within the content of the location of the {Boilerplate}
+     * The type of {BaseBoilerplate}
      *
-     * @type {string[]}
-     * @memberof Boilerplate
+     * @type {string}
      */
-    readonly pathsNeedingBinding: string[];
+
+    readonly type: string;
+
     /**
-     * Gets the files that need binding - relative within the content of the location of the {Boilerplate}
+     * The dependencies of the {BaseBoilerplate}
      *
-     * @type {string[]}
-     * @memberof Boilerplate
+     * @type {IDependency[]}
      */
-    readonly filesNeedingBinding: string[];
+    readonly dependencies: IDependency[];
+
+    /**
+     * The namespace of the {BaseBoilerplate}
+     *
+     * @type {string}
+     */
+    readonly namespace: string;
+
+    /**
+     * The scripts of the {BaseBoilerplate}
+     *
+     * @type {Scripts}
+     */
+    readonly scripts: Scripts;
+
+    /**
+     * The path of the directory of the boilerplate files 
+     *
+     * @type {string}
+     */
+    readonly contentDirectory: string;
+    
+    /**
+     * The file path of the boilerplate configuration file
+     *
+     * @type {string}
+     */
+    readonly path: string;
+
+    /**
+     * Whether or not this {BaseBoilerplate} is the {BaseBoilerplate} of an {InteractionLayer}
+     *
+     * @returns {boolean} 
+     */
+    isInteractionLayer(): boolean {
+        return this.type === 'interaction';
+    }   
+
+    /**
+     * Check if this is equal to boilerplate
+     *
+     * @param {Boilerplate} boilerplate
+     * @returns {boolean}
+ 
+     */
+    equals(boilerplate: Boilerplate): boolean {
+        return this.language === boilerplate.language
+                && this.name === boilerplate.name
+                && this.type === boilerplate.type;
+         
+    }
 }

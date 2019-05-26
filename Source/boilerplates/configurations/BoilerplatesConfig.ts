@@ -15,7 +15,7 @@ export class BoilerplatesConfig extends CacheConfig {
     /**
      * Creates an instance of {BoilerplatesConfig}.
      * @param {string} nodeModulesFolder
-     * @memberof BoilerplatesConfig
+ 
      */
     constructor(nodeModulesFolder: string) {
         super('boilerplates', nodeModulesFolder, {});

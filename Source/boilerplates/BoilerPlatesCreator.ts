@@ -8,7 +8,7 @@ import * as FsExtra from 'fs-extra';
 import * as Handlebars from 'handlebars';
 import path from 'path';
 import { Logger } from 'winston';
-import { Boilerplate, IBoilerplatesCreator } from './internal';
+import { NonArtifactsBoilerplate, IBoilerplatesCreator } from './internal';
 
 /**
  * Represents the manager of boiler plates
@@ -27,7 +27,7 @@ export class BoilerplatesCreator implements IBoilerplatesCreator {
     /**
      * @inheritdoc
      */
-    createBoilerplate(boilerplate: Boilerplate, destination: string, context: object) {
+    createBoilerplate(boilerplate: NonArtifactsBoilerplate, destination: string, context: object) {
         this._logger.info(`Creating boilerplate with name '${boilerplate.name}' at destination '${destination}'`);
 
         this._folders.makeFolderIfNotExists(destination);

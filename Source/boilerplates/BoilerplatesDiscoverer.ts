@@ -38,7 +38,7 @@ export class BoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
      *
      * @readonly
      * @type {string[]}
-     * @memberof BoilerplatesDiscoverer
+ 
      */
     get boilerplatePaths() {return this._boilerplatePaths; }
     /**
@@ -46,12 +46,12 @@ export class BoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
      *
      * @readonly
      * @type {BoilerplatePackageJson[]}
-     * @memberof BoilerplatesDiscoverer
+ 
      */
     get discoveredBoilerplates(): BoilerplatePackageJson[] {return this._discoveredBoilerplates;}
     /**
      * @inheritdoc
-     * @memberof BoilerplatesManager
+ 
      */
     discover() {
         this._boilerplatePaths = boilerplatesDiscoverer.local(this._nodeModulesPath, [], 50);

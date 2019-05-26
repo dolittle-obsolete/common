@@ -16,7 +16,7 @@ export interface IArtifactTemplatesManager {
      * Gets all the artifact template boilerplates 
      *
      * @type {ArtifactsBoilerplate[]}
-     * @memberof IArtifactTemplatesManager
+ 
      */
     boilerplates: ArtifactsBoilerplate[]
 
@@ -24,7 +24,7 @@ export interface IArtifactTemplatesManager {
      * Whether or not there are any artifact template boilerplates
      *
      * @type {boolean}
-     * @memberof IArtifactTemplatesManager
+ 
      */
     hasBoilerplate: boolean
 
@@ -33,7 +33,7 @@ export interface IArtifactTemplatesManager {
      * @param {string} language 
      * @param {string} [namespace=undefined]
      * @return {ArtifactsBoilerplate[]} The artifact boilerplates with of the given language
-     * @memberof IArtifactTemplatesManager
+ 
      */
     boilerplatesByLanguage(language: string, namespace?: string): ArtifactsBoilerplate[]
     
@@ -43,7 +43,7 @@ export interface IArtifactTemplatesManager {
      * @param {ArtifactTemplate} artifactTemplate
      * @param {string} destinationPath
      * @returns {boolean} Whether or not the artifact was created successfully
-     * @memberof IArtifactTemplatesManager
+ 
      * 
      */
     createArtifact(context: any, artifactTemplate: ArtifactTemplate, destinationPath: string): CreatedArtifactTemplateDetails

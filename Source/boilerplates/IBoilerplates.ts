@@ -3,28 +3,27 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { BaseBoilerplate, Boilerplate } from "./internal";
+import { Boilerplate, NonArtifactsBoilerplate } from "./index";
 
 /**
- * Responsible for managing boilerplates
+ * Defines a system that's responsible for managing boilerplates and creating them
  *
  * @export
- * @interface ICanManageBoilerplates
+ * @interface IBoilerplates
  */
-export interface ICanManageBoilerplates {
+export interface IBoilerplates {
+
      /**
      * Get all boiler plates
      *
-     * @type {BaseBoilerplate[]}
-     * @memberof ICanManageBoilerplates
+     * @type {Boilerplate[]}
      */
-    boilerplates: BaseBoilerplate[];
+    boilerplates: Boilerplate[];
 
     /**
      * Whether or not there exists any boiler plates
      *
      * @type {boolean}
-     * @memberof ICanManageBoilerplates
      */
     hasBoilerplates: boolean;
 
@@ -32,29 +31,26 @@ export interface ICanManageBoilerplates {
      * Get all available boiler plates for a specific language
      * @param {string} language
      * @param {string} [namespace=undefined]
-     * @returns {BaseBoilerplate[]} Available boiler plates for the language
-     * @memberof ICanManageBoilerplates
+     * @returns {Boilerplate[]} Available boiler plates for the language
      */
-    boilerplatesByLanguage(language: string, namespace?: string): BaseBoilerplate[];
+    byLanguage(language: string, namespace?: string): Boilerplate[];
 
     /**
      * Get all available boiler plates for a specific type
      * @param {string} type
      * @param {string} [namespace=undefined]
-     * @returns {BaseBoilerplate[]} Available boiler plates for the type
-     * @memberof ICanManageBoilerplates
+     * @returns {Boilerplate[]} Available boiler plates for the type
      */
-    boilerplatesByType(type: string, namespace?: string): BaseBoilerplate[];
+    byType(type: string, namespace?: string): Boilerplate[];
 
     /**
      * Get all available boiler plates for a specific language
      * @param {string} language
      * @param {string} type
      * @param {string} [namespace=undefined]
-     * @returns {BaseBoilerplate[]} Available boiler plates for the language
-     * @memberof ICanManageBoilerplates
+     * @returns {Boilerplate[]} Available boiler plates for the language
      */
-    boilerplatesByLanguageAndType(language: string, type: string, namespace?: string): BaseBoilerplate[];
+    byLanguageAndType(language: string, type: string, namespace?: string): Boilerplate[];
 
      /**
      * Gets the adornment boilerplates that has a parent with the given fields
@@ -63,16 +59,24 @@ export interface ICanManageBoilerplates {
      * @param {string} [parentLanguage=undefined]
      * @param {string} [parentName=undefined]
      * @param {string} [namespace=undefined]
-     * @returns {Boilerplate[]}
-     * @memberof ICanManageBoilerplates
+     * @returns {NonArtifactsBoilerplate[]}
      */
-    getAdornments(parentType: string, parentLanguage?: string, parentName?: string, namespace?: string): Boilerplate[]
+    adornmentsFor(parentType: string, parentLanguage?: string, parentName?: string, namespace?: string): NonArtifactsBoilerplate[]
+
      /**
      * Gets the adornment boilerplates that has a parent with the given fields
      *
-     * @param {BaseBoilerplate} boilerplate
-     * @returns {Boilerplate[]}
-     * @memberof ICanManageBoilerplates
+     * @param {Boilerplate} boilerplate
+     * @returns {NonArtifactsBoilerplate[]}
      */
-    getAdornmentsForBoilerplate(boilerplate: BaseBoilerplate, namespace?: string): Boilerplate[]
+    adornmentsForBoilerplate(boilerplate: Boilerplate, namespace?: string): NonArtifactsBoilerplate[]
+
+    /**
+     * Create a boilerplate into a specific destination folder with a given context
+     *
+     * @param {NonArtifactsBoilerplate} boilerplate
+     * @param {string} destination
+     * @param {any} context
+     */
+    create(boilerplate: NonArtifactsBoilerplate, destination: string, context: any): void
 }

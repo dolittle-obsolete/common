@@ -27,7 +27,7 @@ export class ArtifactTemplate
      * @param {string[]} includedFiles The files that needs to be created by the template
      * @param {ArtifactsBoilerplate} boilerplate
      * @returns
-     * @memberof ArtifactTemplate
+ 
      */
     static fromJson(obj: any, path: string, includedFiles: string[], boilerplate: ArtifactsBoilerplate) {
         return new ArtifactTemplate(boilerplate, obj.name, obj.type, obj.area, obj.description,
@@ -48,7 +48,7 @@ export class ArtifactTemplate
      * @param {Dependency[]} dependencies
      * @param {string[]} includedFiles
      * @param {string} path
-     * @memberof ArtifactTemplate
+ 
      */
     constructor (boilerplate: ArtifactsBoilerplate, name: string, type: string, area: string, description: string,
         dependencies: IDependency[], includedFiles: string[], path: string) {
@@ -75,56 +75,56 @@ export class ArtifactTemplate
      * The parent boilerplate object of the artifact template
      *
      * @type {ArtifactsBoilerplate}
-     * @memberof ArtifactTemplate
+ 
      */
     readonly boilerplate: ArtifactsBoilerplate;
     /**
      * The name of the artifact template
      *
      * @type {string}
-     * @memberof ArtifactTemplate
+ 
      */
     readonly name: string;
     /**
      * The type of the artifact template
      *
      * @type {string}
-     * @memberof ArtifactTemplate
+ 
      */
     readonly type: string;
     /**
      * The area of the artifact.
      *
      * @type {string}
-     * @memberof ArtifactTemplate
+ 
      */
     readonly area: string;
     /**
      * The description of the artifact template
      *
      * @type {string}
-     * @memberof ArtifactTemplate
+ 
      */
     readonly description: string;
     /**
      * Gets the dependencies of the template
      *
      * @type {Dependency[]}
-     * @memberof ArtifactTemplate
+ 
      */
     readonly dependencies: IDependency[];
     /**
      * The list of files that needs to be templated
      *
      * @type {string[]}
-     * @memberof ArtifactTemplate
+ 
      */
     readonly includedFiles: string[];
     /**
      * Gets the path of the template file
      *
      * @type {string}
-     * @memberof ArtifactTemplate
+ 
      */
     readonly path: string;
     
@@ -132,14 +132,14 @@ export class ArtifactTemplate
      * Gets all the dependencies needed to create this artifact
      *
      * @returns {Dependency[]}
-     * @memberof ArtifactTemplate
+ 
      */
     get allDependencies(): IDependency[] {return this._allDependencies;}
     /**
      * Gets a list of the files that needs to be created
      *
      * @returns {string[]}
-     * @memberof ArtifactTemplate
+ 
      */
     get filesToCreate(): string[] {return this._filesToCreate;}
 }

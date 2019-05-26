@@ -3,42 +3,41 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { BaseBoilerplate } from "./internal";
+import { Boilerplate } from "./index";
 
 /**
- * Responsible for loading the boilerplates into the boilerplates system
+ * Defines a system that's responsible for loading the boilerplates into the boilerplates system
  *
  * @export
  * @interface IBoilerplatesLoader
  */
 export interface IBoilerplatesLoader {
+
     /**
      * Loads all boilerplates into the boilerplates system
      *
-     * @returns {BaseBoilerplate[]}
-     * @memberof IBoilerplatesLoader
+     * @returns {Boilerplate[]}
      */
-    load(): BaseBoilerplate[]
+    load(): Boilerplate[]
     
     /**
      * The loaded boilerplates
      *
-     * @type {BaseBoilerplate[]}
-     * @memberof IBoilerplatesLoader
+     * @type {Boilerplate[]}
      */
-    loadedBoilerplates: BaseBoilerplate[]
+    loaded: Boilerplate[]
+
     /**
      * The path of the boilerplates configuration
      *
      * @type {string}
-     * @memberof IBoilerplatesLoader
      */
-    boilerplatesPath: string
+    boilerplatesConfigurationPath: string
+
     /**
      * Whether the loader needs to load the boiler plates again
      *
      * @type {boolean}
-     * @memberof IBoilerplatesLoader
      */
     needsReload: boolean
 }

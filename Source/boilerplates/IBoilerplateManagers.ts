@@ -3,63 +3,61 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { BaseBoilerplate, Boilerplate, ICanManageBoilerplates } from "./internal";
+import { Boilerplate, NonArtifactsBoilerplate, ICanManageBoilerplates } from "./index";
 
 /**
- * Responsible for the boilerplate managers
+ * Defines a system that's responsible for the boilerplate managers
  *
  * @export
  * @interface IBoilerplateManagers
  */
 export interface IBoilerplateManagers {
+    
     /**
      * The boilerplate managers
      *
      * @type {ICanManageBoilerplates[]}
-     * @memberof IBoilerplateManagers
      */
     readonly managers: ICanManageBoilerplates[] 
+
     /**
      * Get all boiler plates
      *
-     * @type {BaseBoilerplate[]}
-     * @memberof IBoilerplateManagers
+     * @type {Boilerplate[]}
      */
-    readonly boilerplates: BaseBoilerplate[];
+    readonly boilerplates: Boilerplate[]
+
     /**
      * Adds managers
      *
      * @param {...ICanManageBoilerplates[]} managers
-     * @memberof IBoilerplateManagers
      */
-    addManagers(...managers: ICanManageBoilerplates[]): void
+    add(...managers: ICanManageBoilerplates[]): void
+
     /**
      * Get all available boiler plates for a specific language
      * @param {string} language
      * @param {string} [namespace=undefined]
-     * @returns {BaseBoilerplate[]} Available boiler plates for the language
-     * @memberof IBoilerplateManagers
+     * @returns {Boilerplate[]} Available boiler plates for the language
      */
-    boilerplatesByLanguage(language: string, namespace?: string): BaseBoilerplate[];
+    boilerplatesByLanguage(language: string, namespace?: string): Boilerplate[]
 
     /**
      * Get all available boiler plates for a specific type
      * @param {string} type
      * @param {string} [namespace=undefined]
-     * @returns {BaseBoilerplate[]} Available boiler plates for the type
-     * @memberof IBoilerplateManagers
+     * @returns {Boilerplate[]} Available boiler plates for the type
      */
-    boilerplatesByType(type: string, namespace?: string): BaseBoilerplate[];
+    boilerplatesByType(type: string, namespace?: string): Boilerplate[]
 
     /**
      * Get all available boiler plates for a specific language
      * @param {string} language
      * @param {string} type
      * @param {string} [namespace=undefined]
-     * @returns {BaseBoilerplate[]} Available boiler plates for the language
-     * @memberof IBoilerplateManagers
+     * @returns {Boilerplate[]} Available boiler plates for the language
      */
-    boilerplatesByLanguageAndType(language: string, type: string, namespace?: string): BaseBoilerplate[];
+    boilerplatesByLanguageAndType(language: string, type: string, namespace?: string): Boilerplate[]
 
      /**
      * Gets the adornment boilerplates that has a parent with the given fields
@@ -68,16 +66,15 @@ export interface IBoilerplateManagers {
      * @param {string} [parentLanguage=undefined]
      * @param {string} [parentName=undefined]
      * @param {string} [namespace=undefined]
-     * @returns {Boilerplate[]}
-     * @memberof IBoilerplateManagers
+     * @returns {NonArtifactsBoilerplate[]}
      */
-    getAdornments(parentType: string, parentLanguage?: string, parentName?: string, namespace?: string): Boilerplate[]
+    getAdornments(parentType: string, parentLanguage?: string, parentName?: string, namespace?: string): NonArtifactsBoilerplate[]
+
      /**
      * Gets the adornment boilerplates that has a parent with the given fields
      *
-     * @param {BaseBoilerplate} boilerplate
-     * @returns {Boilerplate[]}
-     * @memberof IBoilerplateManagers
+     * @param {Boilerplate} boilerplate
+     * @returns {NonArtifactsBoilerplate[]}
      */
-    getAdornmentsForBoilerplate(boilerplate: BaseBoilerplate, namespace?: string): Boilerplate[]
+    getAdornmentsForBoilerplate(boilerplate: Boilerplate, namespace?: string): NonArtifactsBoilerplate[]
 }

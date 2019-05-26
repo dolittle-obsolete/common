@@ -19,7 +19,7 @@ export class ArtifactTemplatesManager implements IArtifactTemplatesManager {
      * Creates an instance of ArtifactsManager.
      * @param {IBoilerplateManagers} boilerplateManagers
      * @param {Logger} logger
-     * @memberof ArtifactsManager
+ 
      */
     constructor(private _boilerplateManagers: IBoilerplateManagers, private _artifactTemplateCreator: IArtifactTemplateCreator, private _logger: Logger) {
         this._boilerplates = [];

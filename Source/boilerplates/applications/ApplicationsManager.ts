@@ -7,7 +7,7 @@ import { Application, applicationFilename } from '@dolittle/tooling.common.confi
 import * as FsExtra from 'fs-extra';
 import path from 'path';
 import { Logger } from 'winston';
-import { IApplicationsManager, Boilerplate, IBoilerplateManagers, IBoilerplatesCreator, CreatedApplicationDetails, ExpectedBoilerplateError } from '../internal';
+import { IApplicationsManager, NonArtifactsBoilerplate, IBoilerplateManagers, IBoilerplatesCreator, CreatedApplicationDetails, ExpectedBoilerplateError } from '../internal';
 
 
 export const applicationBoilerplateType = 'application';
@@ -19,20 +19,20 @@ export const applicationBoilerplateType = 'application';
  * @class ArtifactsManager
  */
 export class ApplicationsManager implements IApplicationsManager {
-    private _boilerplates: Boilerplate[];
+    private _boilerplates: NonArtifactsBoilerplate[];
     /**
      *Creates an instance of ApplicationsManager.
      * @param {IBoilerplateManagers} boilerplateManagers
      * @param {typeof FsExtra} fileSystem
      * @param {Logger} logger
-     * @memberof ApplicationsManager
+ 
      */
     constructor(private _boilerplateManagers: IBoilerplateManagers, private _boilerplatesCreator: IBoilerplatesCreator, private _fileSystem: typeof FsExtra,
         private _logger: Logger) {
         this._boilerplates = []
         this.loadAllBoilerplates();
     }
-    get boilerplates(): Boilerplate[] {
+    get boilerplates(): NonArtifactsBoilerplate[] {
         this.loadAllBoilerplates();
         return this._boilerplates;
     }
@@ -50,14 +50,14 @@ export class ApplicationsManager implements IApplicationsManager {
         return this._fileSystem.existsSync(filePath);
     }
 
-    boilerplatesByLanguage(language: string, namespace?: string): Boilerplate[] {
+    boilerplatesByLanguage(language: string, namespace?: string): NonArtifactsBoilerplate[] {
         let boilerplates = this.boilerplates;
         return boilerplates.filter( _ => {
             if (namespace && _.namespace) return _.namespace === namespace && _.language === language;
             return _.language && language; 
         });
     }
-    createApplication(context: any, destinationPath: string, boilerplate: Boilerplate): CreatedApplicationDetails[] {
+    createApplication(context: any, destinationPath: string, boilerplate: NonArtifactsBoilerplate): CreatedApplicationDetails[] {
         let destination = destinationPath;
         this._logger.info(`Creating an application of language '${boilerplate.language}' at destination ${destinationPath}`);
         this._boilerplatesCreator.createBoilerplate(boilerplate, destination, context);
@@ -66,8 +66,8 @@ export class ApplicationsManager implements IApplicationsManager {
 
     private loadAllBoilerplates()  {
         this._boilerplates = this._boilerplateManagers.boilerplatesByType(applicationBoilerplateType).map(_ => {
-            if (_ instanceof Boilerplate) return _;
-            else throw new ExpectedBoilerplateError(`Expected boilerplate of type '${Boilerplate.name}' but got a '${_.constructor.name}'`);
+            if (_ instanceof NonArtifactsBoilerplate) return _;
+            else throw new ExpectedBoilerplateError(`Expected boilerplate of type '${NonArtifactsBoilerplate.name}' but got a '${_.constructor.name}'`);
         });
     }
 }

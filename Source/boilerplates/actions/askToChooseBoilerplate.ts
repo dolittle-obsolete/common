@@ -4,14 +4,14 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { PromptDependency, IDependencyResolvers, chooseOneUserInputType } from '@dolittle/tooling.common.dependencies';
-import { BaseBoilerplate } from '../internal';
+import { Boilerplate } from '../internal';
 
 /**
  * Prompts the user to choose a boilerplate
- * @param {BaseBoilerplate[]} boilerplates
+ * @param {Boilerplate[]} boilerplates
  * @param {IDependencyResolvers} resolvers
  */
-export async function chooseBoilerplate(boilerplates: BaseBoilerplate[], resolvers: IDependencyResolvers) {
+export async function chooseBoilerplate(boilerplates: Boilerplate[], resolvers: IDependencyResolvers) {
     if (boilerplates.length && boilerplates.length > 0) {
         let boilerplate = await askWhichBoilerplate(boilerplates, resolvers);
         return boilerplate;
@@ -19,9 +19,9 @@ export async function chooseBoilerplate(boilerplates: BaseBoilerplate[], resolve
     return null;
 }
 
-async function askWhichBoilerplate(boilerplates: BaseBoilerplate[], resolvers: IDependencyResolvers) {
+async function askWhichBoilerplate(boilerplates: Boilerplate[], resolvers: IDependencyResolvers) {
     let choices = boilerplates.map(boilerplate => new Object({name: `${boilerplate.namespace? `${boilerplate.namespace}::`: ''}${boilerplate.name} language: ${boilerplate.language}`, value: boilerplate}));
     let dep = new PromptDependency('boilerplate', 'Choose a boilerplate', chooseOneUserInputType, 'Choose boilerplate:', choices);
     let answer = await resolvers.resolve({}, [dep]);
-    return <BaseBoilerplate>answer['boilerplate'];
+    return <Boilerplate>answer['boilerplate'];
 }

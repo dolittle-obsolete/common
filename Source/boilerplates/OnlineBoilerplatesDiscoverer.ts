@@ -5,11 +5,9 @@
 
 import semver from 'semver';
 import { Logger } from 'winston';
-import { BoilerplatePackageJson, ICanFindOnlineBoilerplatePackages } from './internal';
+import { BoilerplatePackageJson, ICanFindOnlineBoilerplatePackages } from './index';
 
 const toolingPkg = require('../package.json');
-
-const boilerplatesDiscoverer = require('@dolittle/boilerplates-discoverer');
 
 /**
  * Deals with finding boilerplates online by going through the npm registry
@@ -21,19 +19,13 @@ const boilerplatesDiscoverer = require('@dolittle/boilerplates-discoverer');
 export class OnlineBoilerplatesDiscoverer implements ICanFindOnlineBoilerplatePackages {
     
     /**
-     * Initializes a new instance of {OnlineBoiler}
+     * Instantiates an instance of {OnlineBoiler}
      * @param {Logger} logger
      */
     
-    constructor(private _logger: Logger) {
-    }
+    constructor(private _logger: Logger) {}
     
-    /**
-     * @inheritdoc
-     *
-     * @memberof OnlineBoilerPlatesDiscoverer
-     */
-    async discoverLatestOnlineBoilerplates(keywords: string[] = [], limit: number = 250): Promise<BoilerplatePackageJson[]> {
+    async latestOnline(keywords: string[] = [], limit: number = 250): Promise<BoilerplatePackageJson[]> {
         this._logger.info(`Attempting to find online boilerplates`);
         let boilerplates: BoilerplatePackageJson[] = [];  
         let boilerplatePackageNames = await boilerplatesDiscoverer(keywords, limit);
@@ -45,12 +37,8 @@ export class OnlineBoilerplatesDiscoverer implements ICanFindOnlineBoilerplatePa
         }
         return boilerplates;
     }
-    /**
-     * @inheritdoc
-     * 
-     * @memberof OnlineBoilerPlatesDiscoverer
-     */
-    async discoverLatestOnlineDolittleBoilerplates(): Promise<BoilerplatePackageJson[]> {
+
+    async latestOnlineDolittle(): Promise<BoilerplatePackageJson[]> {
         this._logger.info(`Attempting to find online dolittle boilerplates`);
         let boilerplates: BoilerplatePackageJson[] = [];
         let dolittleBoilerplates = await boilerplatesDiscoverer.dolittle();
@@ -62,12 +50,8 @@ export class OnlineBoilerplatesDiscoverer implements ICanFindOnlineBoilerplatePa
         }
         return boilerplates;
     }
-    /**
-     * @inheritdoc
-     *
-     * @memberof OnlineBoilerPlatesDiscoverer
-     */
-    async latestCompatibleBoilerplate(boilerplatePackageName: string): Promise<BoilerplatePackageJson> {
+
+    async latestCompatible(boilerplatePackageName: string): Promise<BoilerplatePackageJson> {
         this._logger.info(`Getting latest compatible boilerplate package of ${boilerplatePackageName}`);
         let boilerplate: BoilerplatePackageJson = await boilerplatesDiscoverer.latestCompatible(boilerplatePackageName, (pkgJson: any) => pkgJson.dolittle.tooling === semver.major(toolingPkg.version).toString());
         if (boilerplate) this._logger.info(`Latest version: '${boilerplate.version}'`);

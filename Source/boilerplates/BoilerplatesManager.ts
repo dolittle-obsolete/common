@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { BaseBoilerplate, Boilerplate, IBoilerplatesLoader, ICanManageBoilerplates } from './internal';
+import { Boilerplate, NonArtifactsBoilerplate, IBoilerplatesLoader, ICanManageBoilerplates } from './internal';
 
 /**
  * Represents the manager of boiler plates
@@ -11,14 +11,14 @@ export class BoilerplatesManager implements ICanManageBoilerplates {
     /**
      * Creates an instance of BoilerplatesManager.
      * @param {IBoilerplatesLoader} boilerplatesLoader
-     * @memberof BoilerplatesManager
+ 
      */
     constructor(private _boilerplatesLoader: IBoilerplatesLoader) {
     } 
     /**
      * @inheritdoc
      */
-    get boilerplates(): BaseBoilerplate[] {
+    get boilerplates(): Boilerplate[] {
         return this._boilerplatesLoader.loadedBoilerplates;
     }
     /**
@@ -30,7 +30,7 @@ export class BoilerplatesManager implements ICanManageBoilerplates {
     /**
      * @inheritdoc
      */
-    boilerplatesByLanguage(language: string, namespace?: string): BaseBoilerplate[] {
+    boilerplatesByLanguage(language: string, namespace?: string): Boilerplate[] {
         return this.boilerplates.filter(_ => {
             if (_.namespace) return _.namespace === namespace && _.language === language;
             return _.language === language
@@ -39,7 +39,7 @@ export class BoilerplatesManager implements ICanManageBoilerplates {
     /**
      * @inheritdoc
      */
-    boilerplatesByType(type: string, namespace?: string): BaseBoilerplate[] {
+    boilerplatesByType(type: string, namespace?: string): Boilerplate[] {
         return this.boilerplates.filter(_ => {
             if (_.namespace) return _.namespace === namespace && _.type === type;
             return _.type === type;
@@ -49,7 +49,7 @@ export class BoilerplatesManager implements ICanManageBoilerplates {
     /**
      * @inheritdoc
      */
-    boilerplatesByLanguageAndType(language: string, type: string, namespace?: string): BaseBoilerplate[] {
+    boilerplatesByLanguageAndType(language: string, type: string, namespace?: string): Boilerplate[] {
         return this.boilerplates.filter(_ => {
             if (_.namespace) return _.namespace === namespace && _.language == language && _.type == type;
             return _.language == language && _.type == type;
@@ -58,12 +58,12 @@ export class BoilerplatesManager implements ICanManageBoilerplates {
 
     /**
      * @inheritdoc
-     * @memberof BoilerplatesManager
+ 
      */
-    getAdornments(parentType: string, parentLanguage?: string, parentName?: string, namespace?: string): Boilerplate[] {
-        let boilerplates: Boilerplate[] = [];
+    getAdornments(parentType: string, parentLanguage?: string, parentName?: string, namespace?: string): NonArtifactsBoilerplate[] {
+        let boilerplates: NonArtifactsBoilerplate[] = [];
         this.boilerplates.forEach(_ => {
-            if (_ instanceof Boilerplate)
+            if (_ instanceof NonArtifactsBoilerplate)
                 boilerplates.push(_);
         });
         
@@ -85,9 +85,9 @@ export class BoilerplatesManager implements ICanManageBoilerplates {
     /**
      * @inheritdoc
      *
-     * @memberof BoilerplatesManager
+ 
      */
-    getAdornmentsForBoilerplate(boilerplate: BaseBoilerplate, namespace?: string): Boilerplate[] {
+    getAdornmentsForBoilerplate(boilerplate: Boilerplate, namespace?: string): NonArtifactsBoilerplate[] {
         return this.getAdornments(boilerplate.type, boilerplate.language, boilerplate.name, namespace);
     }
 }
