@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import isOnline from 'is-online';
 import { OnStdCallback } from './OnStdCallback';
-
+import {NotConnectedToInternet} from './NotConnectedToInternet';
 
 /**
  * Checks whether or not the user is connected to the internet.
@@ -20,18 +20,6 @@ export async function requireInternet(onStdOut?: OnStdCallback, onNoInternet?: O
     let hasInternet = await isOnline();
     if (!hasInternet) {
         if (onNoInternet) onNoInternet('Not connected to the internet');
-        let error = NotConnectedError.new;
-        throw error;
+        NotConnectedToInternet.throw('Could not establish an internet connection');
     }
-}
-
-export class NotConnectedError extends Error {
-    constructor(...args: any[]) {
-        super(...args);
-        Error.captureStackTrace(this, NotConnectedError);
-    }
-
-    static get new() {
-        return new NotConnectedError('Internet connection is required');
-    } 
 }
