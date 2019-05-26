@@ -27,7 +27,8 @@ export async function getLatestVersionFromNpm(pkgName: string, onStdOut?: OnStdC
         if (onStdErr) onStdErr(`Failed to get the latest version of ${pkgName}. Error: ${error.message? error.message : error}`);
         throw error;
     }
-} 
+}
+
 /**
  * Checks whether or not the 'to' version is greater than 'from' 
  *
@@ -39,6 +40,7 @@ export async function getLatestVersionFromNpm(pkgName: string, onStdOut?: OnStdC
 export function isGreaterVersion(to: string, from: string) {
     return semver.gt(to, from);
 }
+
 /**
  * Checks whether the upgrade 'to' 'from' is a compatible upgrade, meaning that both versions have the same major version number but 'to' is an upgrade in minor or patch compared to 'from'
  *

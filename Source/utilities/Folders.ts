@@ -14,8 +14,8 @@ export class Folders
      * Initializes a new instance of {folders}
      * @param {typeof FsExtra)} fileSystem 
      */
-    
     constructor(private _fileSystem: typeof FsExtra) {}
+
     /**
      * Creates a feature from the current working directory. 
      *
@@ -24,7 +24,6 @@ export class Folders
      * @param {string} boundedContextPath The path to the bounded-context.json configuration file
      * @param {*} dolittleConfig
      * @param {string} coreLanguage 
-     * @memberof Folders
      */
     createFeature(cwd: string, feature: string, boundedContextPath: string, dolittleConfig: any, coreLanguage: string) {
         areas.forEach(area => this.makeFolderIfNotExists(determineDestination(area, coreLanguage, feature + '.', cwd, boundedContextPath, dolittleConfig).destination));
@@ -34,7 +33,6 @@ export class Folders
      * Copy one folder and its content recursively to a specified destination
      * @param {string} destination Destination path to copy to
      * @param {string} source Source path to copy from
-     * @memberof Folders
      */
     copy(destination: string, source: string)
     {
@@ -46,7 +44,6 @@ export class Folders
     /**
      * Create a folder if it does not exist
      * @param {string} folderPath Name of the folder to make sure exists
-     * @memberof Folders
      */
     makeFolderIfNotExists(folderPath: string)
     {
@@ -69,7 +66,6 @@ export class Folders
      * Get top level folders in a given path
      * @param {string} folder The directory to search
      * @returns {string[]}
-     * @memberof Folders
      */
     getFoldersIn(folder: string): string[] {
         folder = path.normalize(folder);
@@ -89,8 +85,7 @@ export class Folders
      * Get top level folders in a given path
      * @param {string} folder The directory to search 
      * @param {RegExp} regularExp
-     * @returns {string[]} 
-     * @memberof Folders
+     * @returns {string[]}
      */
     getFoldersInRegex(folder: string, regularExp: RegExp): string[] {
         folder = path.normalize(folder);
@@ -111,7 +106,6 @@ export class Folders
      * Get all files within a specific folder recursively
      * @param {string} folder Path of the folder to get from
      * @returns {string[]} Array of files
-     * @memberof Folders
      */
     getFilesRecursivelyIn(folder: string): string[] {
         folder = path.normalize(folder);
@@ -136,7 +130,6 @@ export class Folders
      * @param {string} folder Path of the folder to get from
      * @param {string[]} templateFileNames The template file names
      * @returns {string[]} Array of files
-     * @memberof Folders
      */
     getArtifactTemplateFilesRecursivelyIn(folder: string, templateFileNames: string[]): string[] {
         folder = path.normalize(folder);
@@ -162,7 +155,6 @@ export class Folders
      * Get all folders and files within a specific folder recursively
      * @param {string} folder Path of the folder to get from
      * @returns {string[]} Array of files and folders
-     * @memberof Folders
      */
     getFoldersAndFilesRecursivelyIn(folder: string): string[] {
         folder = path.normalize(folder);
@@ -185,7 +177,6 @@ export class Folders
      * @param {string} folder Folder to search from
      * @param {string} pattern Pattern of files to look for
      * @returns {string[]}
-     * @memberof Folders
      */
     searchFolder(folder: string, pattern: string): string[] {
         folder = path.normalize(folder);
@@ -202,12 +193,12 @@ export class Folders
 
         return results;
     }
+
     /**
      * Search for a specific file pattern within a folder with regex
      * @param {string} folder Folder to search from
      * @param {RegExp} regularExp The regex pattern of files to look for
      * @returns {string[]}
-     * @memberof Folders
      */
     searchFolderRegex(folder: string, regularExp: RegExp): string[] {
         folder = path.normalize(folder);
@@ -225,12 +216,12 @@ export class Folders
 
         return results;
     }
+
     /**
      * Search for a specific file pattern within a folder, recursively
      * @param {string} folder Folder to search from
      * @param {string} pattern Pattern of files to look for
      * @returns {string[]} The paths of the matching files
-     * @memberof Folders
      */
     searchRecursive(folder: string, pattern: string): string[] {
         folder = path.normalize(folder);
@@ -251,12 +242,12 @@ export class Folders
 
         return results;
     }
+
     /**
      * Search for a specific file with regular expression, recursively
      * @param {string} folder to search from
      * @param {string} regularExp Pattern of the files to look for
      * @returns {string[]} the paths of the matching files
-     * @memberof Folders
      */
     searchRecursiveRegex(folder: string, regularExp: RegExp | string): string[] {
         folder = path.normalize(folder);
@@ -278,12 +269,12 @@ export class Folders
 
         return results;
     }
+
     /**
      * Gets the paths of the nearest directories matching the regular expression, searching upwards
      * @param {string} folder the start folder
      * @param {RegExp} regularExp
      * @returns {string[]} paths
-     * @memberof Folders
      */
     getNearestDirsSearchingUpwards(folder: string, regularExp: RegExp): string[] {
         folder = path.normalize(folder);
@@ -298,12 +289,12 @@ export class Folders
         }
         return results;
     }
+
     /**
      * Gets the path of the nearest file matching the regular expression, searching upwards
      * @param {string} folder the start folder
      * @param {RegExp} regularExp
      * @returns {string} path
-     * @memberof Folders
      */
     getNearestFileSearchingUpwards(folder: string, regularExp: RegExp): string {
         folder = path.normalize(folder);
@@ -316,12 +307,12 @@ export class Folders
         }
         return '';
     }
+    
     /**
      * Whether or not the folder at path 'folder' is empty or not
      *
      * @param {string} folder
      * @returns {boolean}
-     * @memberof Folders
      */
     isNotEmptyFolder(folder: string): boolean {
         return folder !== null && folder !== '' && folder !== path.sep; 

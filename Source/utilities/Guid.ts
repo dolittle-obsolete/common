@@ -17,7 +17,6 @@ export class Guid {
      * @readonly 
      * @static
      * @returns {string}
-     * @memberof Guid
      */
     static get empty(): string {
         return '00000000-0000-0000-0000-000000000000';
@@ -28,7 +27,6 @@ export class Guid {
      *
      * @static
      * @returns {string} String representation of {Guid}
-     * @memberof Guid
      */
     static create(): string {
         let S4 = () => {
