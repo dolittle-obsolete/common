@@ -3,22 +3,25 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { Exception } from '@dolittle/exceptions';
-
 /**
  * The exception that gets thrown when no connection to the internet could be established
  *
  * @export
  * @class NotConnectedToInternet
- * @extends {Exception}
+ * @extends {Error}
  */
-export class NotConnectedToInternet extends Exception {
+export class NotConnectedToInternet extends Error {
     /**
      * Instantiates an instance of {NotConnectedToInternet}.
-     * @param {string} message
+     * @param {...any} args
      * @memberof NotConnectedToInternet
      */
-    constructor(message: string) {
-        super(message);
+    constructor(...args: any[]) {
+        super(...args);
+        Error.captureStackTrace(this, NotConnectedToInternet);
     }
+
+    static get new() {
+        return new NotConnectedToInternet('Could not establish internet connection');
+    } 
 }

@@ -20,6 +20,6 @@ export async function requireInternet(onStdOut?: OnStdCallback, onNoInternet?: O
     let hasInternet = await isOnline();
     if (!hasInternet) {
         if (onNoInternet) onNoInternet('Not connected to the internet');
-        NotConnectedToInternet.throw('Could not establish an internet connection');
+        throw NotConnectedToInternet.new;
     }
 }
