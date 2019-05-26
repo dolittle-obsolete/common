@@ -5,7 +5,6 @@
 
 import { ProjectConfig } from '@dolittle/tooling.common.configurations';
 import { Guid, dolittleConfigDefault, folders, fileSystem, logger } from '@dolittle/tooling.common.utilities';
-import spawn from 'cross-spawn'; 
 import Handlebars from 'handlebars';
 
 import {
@@ -39,10 +38,6 @@ function setupHandlebars() {
 setupHandlebars();
 
 
-
-let npmRootSpawn = spawn.sync('npm', ['root', '-g']);
-if (npmRootSpawn.error) throw npmRootSpawn.error;
-export const nodeModulesPath = npmRootSpawn.stdout.toString().replace(/\n$/, '');
 
 export const projectConfig = new ProjectConfig(nodeModulesPath);
 export const boilerplatesConfig = new BoilerplatesConfig(nodeModulesPath); 

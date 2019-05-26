@@ -4,13 +4,18 @@
  *--------------------------------------------------------------------------------------------*/
 import * as _fsExtra from 'fs-extra';
 import { Folders } from './Folders';
-const rc = require('rc');
-const winston = require('winston');
-
+import rc from 'rc';
+import winston from 'winston';
+import spawn from 'cross-spawn';
 export * from './Guid';
 export * from './Folders';
 export * from './helpers';
 export * from './actions';
+
+
+let npmRootSpawn = spawn.sync('npm', ['root', '-g']);
+if (npmRootSpawn.error) throw npmRootSpawn.error;
+export const nodeModulesPath = npmRootSpawn.stdout.toString().replace(/\n$/, '');
 
 export const dolittleConfigDefault = {
     any: {
