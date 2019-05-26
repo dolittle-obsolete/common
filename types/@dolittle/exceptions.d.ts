@@ -8,14 +8,12 @@ declare module '@dolittle/exceptions' {
         /**
          * Initializes an instance of {Exception}.
          * @param {string} message
-         * @memberof Exception
          */
         constructor(message: string);
         /**
          * Get the message for the exception
          *
          * @type {string}
-         * @memberof Exception
          */
         readonly message: string;
         /**
@@ -23,7 +21,7 @@ declare module '@dolittle/exceptions' {
          *
          * @static
          */
-        static throw(): void
+        static throw(...constructorParams: any[]): void
     }
 } 
 
