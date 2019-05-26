@@ -14,7 +14,6 @@ export class NotConnectedToInternet extends Error {
     /**
      * Instantiates an instance of {NotConnectedToInternet}.
      * @param {...any} args
-     * @memberof NotConnectedToInternet
      */
     constructor(...args: any[]) {
         super(...args);
