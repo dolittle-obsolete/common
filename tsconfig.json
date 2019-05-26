@@ -1,10 +1,10 @@
 {
     "files": [],
     "references": [
-        {"path": "packages/boilerplates"},
-        {"path": "packages/configuration"},
-        {"path": "packages/dependencies"},
-        {"path": "packages/utilities"},
+        {"path": "Source/boilerplates"},
+        {"path": "Source/configurations"},
+        {"path": "Source/dependencies"},
+        {"path": "Source/utilities"}
     ]
 }
   

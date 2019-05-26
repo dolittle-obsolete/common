@@ -11,7 +11,7 @@ module.exports = (config) => {
         frameworks: ['mocha', 'chai', 'chai-as-promised'],
         
         files: [
-            'packages/**/*.ts'
+            'Source/**/*.ts'
         ]
     })
 };

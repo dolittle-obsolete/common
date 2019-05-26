@@ -7,20 +7,20 @@ const path = require('path');
 
 module.exports = function (w) {
 
-  process.env.NODE_PATH += path.delimiter + path.join(w.projectCacheDir, 'packages');
+  process.env.NODE_PATH += path.delimiter + path.join(w.projectCacheDir, 'Source');
     return {
       files: [
         { pattern: 'node_modules/chai/chai.js'},
         { pattern: 'chai-as-promised/chai-as-promised.js', instrument: false },
         { pattern: 'sinon/pkg/sinon.js', instrument: false },
         { pattern: 'sinon-chai/lib/sinon-chai.js', instrument: false },
-        { pattern: 'packages/**/lib', ignore: true },
-        { pattern: 'packages/**/for_*/**/*.spec.ts', ignore: true },
-        { pattern: 'packages/**/for_*/**/*.given.ts'},
-        { pattern: 'packages/**/*.ts' }
+        { pattern: 'Source/**/lib', ignore: true },
+        { pattern: 'Source/**/for_*/**/*.spec.ts', ignore: true },
+        { pattern: 'Source/**/for_*/**/*.given.ts'},
+        { pattern: 'Source/**/*.ts' }
       ],
       tests: [
-          { pattern: 'packages/**/for_*/**/*.spec.ts'}
+          { pattern: 'Source/**/for_*/**/*.spec.ts'}
       ],
       testFramework: 'mocha',
 
@@ -30,7 +30,7 @@ module.exports = function (w) {
       },
 
       compilers: {
-        'packages/**/*.ts': w.compilers.typeScript()
+        'Source/**/*.ts': w.compilers.typeScript()
       },
       setup: () => {
         global.expect = chai.expect;
