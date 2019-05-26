@@ -5,11 +5,11 @@
 
 import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir, Folders } from "@dolittle/tooling.common.utilities";
 import * as FsExtra from 'fs-extra';
-import {Logger} from 'winston';
-import {MissingDestinationPath, MissingCoreLanguage, namespaceDiscoverType, multipleFilesDiscoverType, IDependencyDiscoverResolver, DependencyMissingFieldError, DependencyDiscoverResult, IDiscoverDependency } from "./internal";
+import { Logger } from 'winston';
+import { MissingDestinationPath, MissingCoreLanguage, namespaceDiscoverType, multipleFilesDiscoverType, IDependencyDiscoverResolver, DependencyMissingField, DependencyDiscoverResult, IDiscoverDependency } from '../index';
 
 /**
- * Resolves a dependency's 'discover' field
+ * Represents an implementation of {IDependencyDiscoverResolver} for resolving a dependency's 'discover' field
  *
  * @export
  * @class DependencyDiscoverResolver
@@ -18,12 +18,11 @@ import {MissingDestinationPath, MissingCoreLanguage, namespaceDiscoverType, mult
 export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
     
     /**
-     *Creates an instance of DependencyDiscoverResolver.
+     * Instantiates an instance of {DependencyDiscoverResolver}.
      * @param {Folders} _folders
      * @param {typeof FsExtra} _fileSystem
      * @param {*} _dolittleConfig
      * @param {Logger} _logger
-     * @memberof DependencyDiscoverResolver
      */
     constructor(private _folders: Folders, private _fileSystem: typeof FsExtra, private _dolittleConfig: any, private _logger: Logger) {}
 
@@ -43,12 +42,12 @@ export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
     private discoverMultipleFiles(dependency: IDiscoverDependency, location: string, language: string, dolittleConfig: any): string[] | { value: string, namespace: string }[] {
         let filePaths: string[] = [];
         if (dependency.fromArea === undefined) {
-            if (!dependency.fileMatch) throw DependencyMissingFieldError.new(dependency.name, 'fileMatch');
+            if (!dependency.fileMatch) throw DependencyMissingField.new(dependency.name, 'fileMatch');
             filePaths = this._folders.searchRecursiveRegex(location, dependency.fileMatch);
         }
         else {
             const folders = this._folders.getNearestDirsSearchingUpwards(location, new RegExp(dolittleConfig[language][dependency.fromArea]));
-            if (!dependency.fileMatch) throw DependencyMissingFieldError.new(dependency.name, 'fileMatch');
+            if (!dependency.fileMatch) throw DependencyMissingField.new(dependency.name, 'fileMatch');
             folders.forEach(folder => filePaths.push(...this._folders.searchRecursiveRegex(folder, <RegExp>dependency.fileMatch)));
         }
         let results: any[] = [];
@@ -67,7 +66,7 @@ export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
         else {
             filePaths.forEach(filePath => {
                 let content = this._fileSystem.readFileSync(filePath, 'utf8');
-                if (!dependency.contentMatch) throw DependencyMissingFieldError.new(dependency.name, 'contentMatch');
+                if (!dependency.contentMatch) throw DependencyMissingField.new(dependency.name, 'contentMatch');
                 let theMatch = content.match(dependency.contentMatch);
                 if (theMatch !== null && theMatch.length > 0) {
                     let namespace = '';
@@ -85,7 +84,7 @@ export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
 
     private createNamespace(dependency: IDiscoverDependency, location: string): string {
         let milestoneRegexp = dependency.milestone;
-        if (!milestoneRegexp) throw DependencyMissingFieldError.new(dependency.name, 'milestone');
+        if (!milestoneRegexp) throw DependencyMissingField.new(dependency.name, 'milestone');
         const milestonePath = this._folders.getNearestFileSearchingUpwards(location, milestoneRegexp);
         if (milestonePath === null || milestonePath === '') {
             this._logger.warn('Could not discover the namespace');

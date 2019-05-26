@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import {IDependency} from './internal';
+import {IDependency} from './index';
 
 /**
- * Represents the configuration of a discover dependency
+ * Defines the configuration of a discover dependency
  *
  * @export
  * @interface IDiscoverDependency
@@ -37,24 +37,28 @@ export interface IDiscoverDependency extends IDependency {
      * @readonly
      */
     readonly withNamespace?: boolean;
+
     /**
      * The regex that represents the filename of a milestone that's used to determine a namespace.
      *
      * @readonly
      */
     readonly milestone?: RegExp;
+
     /**
      * The regex that represents the filename pattern of the file to match
      *
      * @readonly
      */
     readonly fileMatch?: RegExp;
+
     /**
      * The regex that represents the content pattern of the file to match
      *
      * @readonly
      */
     readonly contentMatch?: RegExp;
+
     /**
      * The area a file discovery should start searching from.
      *

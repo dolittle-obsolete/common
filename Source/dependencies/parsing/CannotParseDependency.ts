@@ -4,19 +4,24 @@
  *--------------------------------------------------------------------------------------------*/
 
 /**
- * The error that gets throw when the given arguments doesn't match up with the argument dependencies
+ * The exception that gets throw when there aren't any dependency parsers that can parse a dependency
  *
  * @export
- * @class ArgumentsNotMatchingDependenciesError
+ * @class CannotParseDependency
  * @extends {Error}
  */
-export class ArgumentsNotMatchingDependenciesError extends Error {
+export class CannotParseDependency extends Error {
+
+    /**
+     * Instantiates an instance of {CannotParseDependency}.
+     * @param {...any[]} args
+     */
     constructor(...args: any[]) {
         super(...args);
-        Error.captureStackTrace(this, ArgumentsNotMatchingDependenciesError);
+        Error.captureStackTrace(this, CannotParseDependency);
     }
 
     static get new() {
-        return new ArgumentsNotMatchingDependenciesError('Given arguments not matching dependencies');
+        return new CannotParseDependency('Cannot parse given dependency');
     } 
 }

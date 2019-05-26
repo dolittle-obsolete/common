@@ -4,19 +4,24 @@
  *--------------------------------------------------------------------------------------------*/
 
 /**
- * The error that gets thrown when multiple dependency resolvers are found for a dependency
+ * The exception that gets thrown when multiple dependency parsers are found for a dependency
  *
  * @export
- * @class MultipleResolversError
+ * @class MultipleParsersForDependency
  * @extends {Error}
  */
-export class MultipleResolversError extends Error {
+export class MultipleParsersForDependency extends Error {
+    
+    /**
+     *Instantiates an instance of {MultipleParsersForDependency}.
+     * @param {...any[]} args
+     */
     constructor(...args: any[]) {
         super(...args);
-        Error.captureStackTrace(this, MultipleResolversError);
+        Error.captureStackTrace(this, MultipleParsersForDependency);
     }
 
     static get new() {
-        return new MultipleResolversError('Found multiple resolvers');
+        return new MultipleParsersForDependency('Found multiple dependency parsers');
     } 
 }

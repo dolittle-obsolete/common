@@ -3,22 +3,26 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { IDependencyParsers, IDependency, ICanParseDependencies, MultipleDependencyParsersError, CannotParseDependencyError  } from "./internal";
+import { IDependencyParsers, IDependency, ICanParseDependencies, MultipleParsersForDependency, CannotParseDependency  } from '../index';
 
 
 /**
- * Responsible for parsing an object into a Dependency
+ * Represents an implementation of {IDependencyParsers} responsible for parsing an object into a Dependency
  *
  * @export
  * @interface IDependencyParser
  */
 export class DependencyParsers implements IDependencyParsers {
     
+    /**
+     * Instantiates an instance of {DependencyParsers}.
+     * @param {ICanParseDependencies[]} _parsers
+     */
     constructor(private _parsers: ICanParseDependencies[]) {}
     
     get parsers() {return this._parsers;}
 
-    addParsers(...parsers: ICanParseDependencies[]) {
+    add(...parsers: ICanParseDependencies[]) {
         this._parsers.push(...parsers);
     }
     
@@ -27,11 +31,11 @@ export class DependencyParsers implements IDependencyParsers {
 
         this._parsers.forEach(_ => {
             if (_.canParse(obj)) {
-                if (parser !== null) throw MultipleDependencyParsersError.new;
+                if (parser !== null) throw MultipleParsersForDependency.new;
                 parser = _;
             }
         });
-        if (parser === null) throw CannotParseDependencyError.new;
+        if (parser === null) throw CannotParseDependency.new;
         
         return (<ICanParseDependencies>parser).parse(obj, name);
     }

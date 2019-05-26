@@ -3,22 +3,25 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { IDependencyResolvers, ICanResolveDependencies, IDependency, MultipleResolversError, CannotResolveDependencyError  } from "./internal";
+import { IDependencyResolvers, ICanResolveDependencies, IDependency, MultipleResolversForDependency, CannotResolveDependency  } from '../index';
 
  /**
-  * Can resolve all dependencies
+  * Represents an implementation of {IDependencyResolvers} for resolving dependencies
   *
   * @export
   * @class DependencyResolvers
   * @implements {IDependencyResolvers}
   */
  export class DependencyResolvers implements IDependencyResolvers {
-     
+    /**
+     * Instantiates an instance of {DependencyResolvers}.
+     * @param {ICanResolveDependencies[]} _resolvers
+     */
     constructor(private _resolvers: ICanResolveDependencies[]) {}
 
     get resolvers() { return this._resolvers; }
 
-    addResolvers(...resolvers: ICanResolveDependencies[]): void {
+    add(...resolvers: ICanResolveDependencies[]): void {
         this._resolvers.push(...resolvers);
     }
     
@@ -31,6 +34,7 @@ import { IDependencyResolvers, ICanResolveDependencies, IDependency, MultipleRes
 
         return context;
     }
+
     private getResolverToDependenciesMap(dependencies: IDependency[]) {
         let resolverToDependenciesMap = new Map<ICanResolveDependencies, IDependency[]>();
         dependencies.forEach(dep => {
@@ -42,8 +46,8 @@ import { IDependencyResolvers, ICanResolveDependencies, IDependency, MultipleRes
                     resolver = _;
                 }
             });
-            if (!resolver) throw new CannotResolveDependencyError(`Cannot resolve dependency with name '${dep.name}'`);
-            if (resolvers > 1) throw new MultipleResolversError(`Found multiple resolvers for dependency '${dep.name}'`);
+            if (!resolver) throw new CannotResolveDependency(`Cannot resolve dependency with name '${dep.name}'`);
+            if (resolvers > 1) throw new MultipleResolversForDependency(`Found multiple resolvers for dependency '${dep.name}'`);
             
             let deps = resolverToDependenciesMap.get(resolver);
             if (deps) resolverToDependenciesMap.set(resolver, [...deps, dep]);

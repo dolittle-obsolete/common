@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import {areas} from '@dolittle/tooling.common.utilities';
-import {Dependency, IDiscoverDependency} from './internal';
+import {Dependency, IDiscoverDependency} from './index';
 
 export const namespaceDiscoverType = 'namespace';
 export const fileDiscoverType = 'file';
@@ -21,7 +21,7 @@ export const dependencyDiscoverTypes = [
 ];
 
 /**
- * Represents the configuration of a dependency with only a 'discover' element
+ * Represents an implementation of {IDiscoverDependency} for the configuration of a dependency with only a 'discover' element
  *
  * @export
  * @class DiscoverDependency
@@ -54,7 +54,17 @@ export class DiscoverDependency extends Dependency implements IDiscoverDependenc
             throw new Error(`Invalid dependency. Errors:\n\t${errors.join('\n\t')}`);
         }
     }
-    
+    /**
+     * Instantiates an instance of {DiscoverDependency}.
+     * @param {string} name
+     * @param {string} description
+     * @param {string} discoverType
+     * @param {boolean} [withNamespace]
+     * @param {string} [milestone]
+     * @param {string} [fileMatch]
+     * @param {string} [contentMatch]
+     * @param {string} [fromArea]
+     */
     constructor (name: string, description: string, discoverType: string, withNamespace?: boolean, milestone?: string, fileMatch?: string, 
             contentMatch?: string, fromArea?: string ) {
         super(name, description, 'discover');
@@ -69,10 +79,15 @@ export class DiscoverDependency extends Dependency implements IDiscoverDependenc
         this.throwIfInvalidArea();
     }
     readonly discoverType: string;
+
     readonly withNamespace?: boolean;
+    
     readonly milestone?: RegExp;
+    
     readonly fileMatch?: RegExp;
+    
     readonly contentMatch?: RegExp;
+    
     readonly fromArea?: string;
 
     private throwIfInvalidArea() {

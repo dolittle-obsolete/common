@@ -3,10 +3,10 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { ICanParseDependencies, discoverDependencyType, IDiscoverDependency, DiscoverDependency, CannotParseDependencyError } from "./internal";
+import { ICanParseDependencies, discoverDependencyType, IDiscoverDependency, DiscoverDependency, CannotParseDependency } from '../index';
 
 /**
- * Handles the parsing of {DiscoverDependency} objects
+ * Represents an implementation of {ICanParseDependencies} for handling the parsing of {DiscoverDependency} objects
  *
  * @export
  * @class DiscoverDependencyParser
@@ -19,7 +19,7 @@ export class DiscoverDependencyParser implements ICanParseDependencies {
     }
 
     parse(obj: any, name: string): IDiscoverDependency {
-        if (!this.canParse(obj)) throw CannotParseDependencyError.new;
+        if (!this.canParse(obj)) throw CannotParseDependency.new;
         return new DiscoverDependency(name, obj.description, obj.discoverType, obj.withNamespace,
             obj.milestone, obj.fileMatch, obj.contentMatch, obj.fromArea);
     }

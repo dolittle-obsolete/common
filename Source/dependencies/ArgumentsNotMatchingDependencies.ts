@@ -4,24 +4,24 @@
  *--------------------------------------------------------------------------------------------*/
 
 /**
- * The exception that gets thrown when a the invocation of an operation is missing the core language parameter
+ * The exception that gets throw when the given arguments doesn't match up with the argument dependencies
  *
  * @export
- * @class MissingCoreLanguage
+ * @class ArgumentsNotMatchingDependencies
  * @extends {Error}
  */
-export class MissingCoreLanguage extends Error {
+export class ArgumentsNotMatchingDependencies extends Error {
 
     /**
-     * Instantiates an instance of {MissingCoreLanguage}.
+     * Instantiates an instance of {ArgumentsNotMatchingDependencies}.
      * @param {...any[]} args
      */
     constructor(...args: any[]) {
         super(...args);
-        Error.captureStackTrace(this, MissingCoreLanguage);
+        Error.captureStackTrace(this, ArgumentsNotMatchingDependencies);
     }
 
     static get new() {
-        return new MissingCoreLanguage('Missing core language');
+        return new ArgumentsNotMatchingDependencies('Given arguments not matching dependencies');
     } 
 }

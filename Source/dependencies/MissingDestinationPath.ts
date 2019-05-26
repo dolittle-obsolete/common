@@ -4,13 +4,18 @@
  *--------------------------------------------------------------------------------------------*/
 
 /**
- * The error that gets thrown when a the invocation of an operation is missing the core language parameter
+ * The exception that gets thrown when a the invocation of an operation is missing the core language parameter
  *
  * @export
  * @class MissingDestinationPath
  * @extends {Error}
  */
 export class MissingDestinationPath extends Error {
+
+    /**
+     * Instantiates an instance of {MissingDestinationPath}.
+     * @param {...any[]} args
+     */
     constructor(...args: any[]) {
         super(...args);
         Error.captureStackTrace(this, MissingDestinationPath);

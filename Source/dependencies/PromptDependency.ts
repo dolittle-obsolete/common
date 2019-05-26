@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import {IPromptDependency, Dependency} from './internal';
+import {IPromptDependency, Dependency} from './index';
 
 export const argumentUserInputType = 'argument';
 export const inputUserInputType = 'input';
@@ -20,7 +20,7 @@ export const dependencyUserInputTypes = [
 ];
 
 /**
- * Represents the configuration of a dependency with only the 'prompt' element
+ * Represents an implementation of {IPromptDependency} for the configuration of a dependency with only the 'prompt' element
  *
  * @export
  * @class PromptDependency
@@ -28,6 +28,16 @@ export const dependencyUserInputTypes = [
  * @implements {IPromptDependency}
  */
 export class PromptDependency extends Dependency implements IPromptDependency {
+
+    /**
+     * Instantiates an instance of {PromptDependency}.
+     * @param {string} name
+     * @param {string} description
+     * @param {string} userInputType
+     * @param {string} promptMessage
+     * @param {any[]} [choices]
+     * @param {string} [customInput]
+     */
     constructor (name: string, description: string, userInputType: string, promptMessage: string, choices?: any[], 
             customInput?: string) {
         super(name, description, 'userInput');
@@ -38,9 +48,13 @@ export class PromptDependency extends Dependency implements IPromptDependency {
 
         PromptDependency.throwIfInvalidPromptDependency(userInputType, userInputType);
     }
+
     readonly userInputType: string;
+    
     readonly promptMessage: string;
+    
     readonly choices?: any[];
+    
     readonly customInput?: string;
 
     static throwIfInvalidPromptDependency(userInputType: string, promptMessage: string) {

@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { discoverDependencyType, ICanResolveSyncDependencies, IDependency, IDependencyDiscoverResolver, MissingDestinationPath, MissingCoreLanguage, CannotResolveDependencyError } from "./internal";
+import { discoverDependencyType, ICanResolveSyncDependencies, IDependency, IDependencyDiscoverResolver, MissingDestinationPath, MissingCoreLanguage, CannotResolveDependency } from "../index";
 
 /**
  * Resolves {DiscoverDependency}
@@ -13,14 +13,18 @@ import { discoverDependencyType, ICanResolveSyncDependencies, IDependency, IDepe
  * @implements {ICanResolveSyncDependencies}
  */
 export class DiscoverDependencyResolver implements ICanResolveSyncDependencies {
-    
+    /**
+     * Instantiates an instance of {DiscoverDependencyResolver}.
+     * @param {IDependencyDiscoverResolver} _discoverResolver
+     * @param {*} _dolittleConfig
+     */
     constructor(private _discoverResolver: IDependencyDiscoverResolver, private _dolittleConfig: any) {}
 
     resolve(context: any, dependencies: IDependency[], destinationPath?: string, coreLanguage?: string, args?: string[]) {
         if (!destinationPath) throw MissingDestinationPath.new;
         if (!coreLanguage) throw MissingCoreLanguage.new;
         dependencies.forEach(dep => {
-            if (!this.canResolve(dep)) throw new CannotResolveDependencyError(`Could not resolve dependency with name '${dep.name}'`);
+            if (!this.canResolve(dep)) throw new CannotResolveDependency(`Could not resolve dependency with name '${dep.name}'`);
             context[dep.name] = this._discoverResolver.resolve(<any>dep, destinationPath, coreLanguage, this._dolittleConfig);
         });
         return context;

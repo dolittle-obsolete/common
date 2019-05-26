@@ -4,19 +4,19 @@
  *--------------------------------------------------------------------------------------------*/
 
 /**
- * The error that gets throw when there aren't any dependency parsers that can parse a dependency
+ * The exception that gets thrown when multiple dependency resolvers are found for a dependency
  *
  * @export
- * @class CannotParseDependencyError
+ * @class MultipleResolversForDependency
  * @extends {Error}
  */
-export class CannotParseDependencyError extends Error {
+export class MultipleResolversForDependency extends Error {
     constructor(...args: any[]) {
         super(...args);
-        Error.captureStackTrace(this, CannotParseDependencyError);
+        Error.captureStackTrace(this, MultipleResolversForDependency);
     }
 
     static get new() {
-        return new CannotParseDependencyError('Cannot parse given dependency');
+        return new MultipleResolversForDependency('Found multiple resolvers');
     } 
 }

@@ -4,19 +4,23 @@
  *--------------------------------------------------------------------------------------------*/
 
 /**
- * The error that gets thrown when multiple dependency parsers are found for a dependency
+ * The exception that gets throw when there aren't any dependency resolvers that can resolve a dependency
  *
  * @export
- * @class MultipleDependencyParsersError
+ * @class CannotResolveDependency
  * @extends {Error}
  */
-export class MultipleDependencyParsersError extends Error {
+export class CannotResolveDependency extends Error {
+    /**
+     * Instantiates an instance of {CannotResolveDependency}.
+     * @param {...any[]} args
+     */
     constructor(...args: any[]) {
         super(...args);
-        Error.captureStackTrace(this, MultipleDependencyParsersError);
+        Error.captureStackTrace(this, CannotResolveDependency);
     }
 
     static get new() {
-        return new MultipleDependencyParsersError('Found multiple dependency parsers');
+        return new CannotResolveDependency('Cannot resolve given dependency');
     } 
 }

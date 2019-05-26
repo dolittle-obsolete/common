@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.dependencies",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "Common dependency system for dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -31,6 +31,8 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@dolittle/tooling.common.utilities": "5.0.*"
+    "@dolittle/tooling.common.utilities": "5.0.*",
+    "fs-extra": "^8.0.1",
+    "winston": "^3.2.1"
   }
 }

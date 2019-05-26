@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import {IDependency, DependencyMissingFieldError} from './internal';
+import {IDependency, DependencyMissingField} from './index';
 
 export const discoverDependencyType = 'discover';
 export const promptDependencyType = 'userInput';
@@ -14,12 +14,19 @@ export const dependencyTypes = [
 ];
 
 /**
- * Represents the abstract base configuration class of a dependency
+ * Represents an abstract implementation of {IDependency} for the abstract base configuration class of a dependency
  *
  * @export
  * @class Dependency
  */
 export abstract class Dependency implements IDependency {
+    
+    /**
+     * Instantiates an instance of Dependency.
+     * @param {string} name
+     * @param {string} description
+     * @param {string} type
+     */
     constructor (name: string, description: string, type: string) {
         this.description = description;
         this.name = name;
@@ -27,11 +34,14 @@ export abstract class Dependency implements IDependency {
 
         this.throwIfInvalidName();
     }
+
     readonly name: string;
+
     readonly description: string;
+
     readonly type: string;
 
     private throwIfInvalidName() {
-        if (this.name === undefined || this.name.trim() === '') throw DependencyMissingFieldError.new(this.name, 'name');
+        if (this.name === undefined || this.name.trim() === '') throw DependencyMissingField.new(this.name, 'name');
     }
 }
