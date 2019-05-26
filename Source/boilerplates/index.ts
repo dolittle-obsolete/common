@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { ProjectConfig } from '@dolittle/tooling.common.configurations';
-import { Guid, dolittleConfigDefault, folders, fileSystem, logger } from '@dolittle/tooling.common.utilities';
+import { Guid, dolittleConfigDefault, folders, fileSystem, logger, nodeModulesPath } from '@dolittle/tooling.common.utilities';
 import Handlebars from 'handlebars';
 
 import {
