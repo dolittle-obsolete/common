@@ -4,13 +4,13 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { OnStdCallback } from '@dolittle/tooling.common.utilities';
-import { IBoilerplateManagers } from '../internal';
+import { IBoilerplates } from '../index';
 
 
 /**
  * Lists the boilerplates used by the tooling
  *
- * 
+ * @param {IBoilerplate} _boilerplates 
  * @param {OnStdCallback} [onStdOut] Optional callback for dealing with the standard text output  
  * @param {OnStdCallback} [onSuccess] Optional callback for dealing the text output when the operation was successful
  * @param {OnStdCallback} [onEachBoilerplate] Optional callback for dealing the text output for each boilerplate in the listing
@@ -19,7 +19,7 @@ import { IBoilerplateManagers } from '../internal';
  * @export
  * 
  */
-export async function listBoilerplatesInUse(boilerplateManagers: IBoilerplateManagers, onStdOut?: OnStdCallback, onSuccess?: OnStdCallback, onEachBoilerplate?: OnStdCallback, onNoBoilerplates?: OnStdCallback, onStdErr?: OnStdCallback) {
+export async function listBoilerplatesInUse(_boilerplates: IBoilerplates, onStdOut?: OnStdCallback, onSuccess?: OnStdCallback, onEachBoilerplate?: OnStdCallback, onNoBoilerplates?: OnStdCallback, onStdErr?: OnStdCallback) {
     let ifStdOut = (data: string) => onStdOut? onStdOut(data) : {};
     let ifSuccess = (data: string) => onSuccess? onSuccess(data) : {};
     let ifEachBoilerplate = (data: string) => onEachBoilerplate? onEachBoilerplate(data) : {};
@@ -27,7 +27,7 @@ export async function listBoilerplatesInUse(boilerplateManagers: IBoilerplateMan
     let ifStdErr = (data: string) => onStdErr? onStdErr(data) : {};
     ifStdOut('Listing boilerplates in use:\n');
     try {
-        let boilerplates = boilerplateManagers.boilerplates;
+        let boilerplates = _boilerplates.boilerplates;
         let numBoilerplates = boilerplates.length;
         if (numBoilerplates > 0) {
             ifSuccess(`There are ${numBoilerplates} in use`);

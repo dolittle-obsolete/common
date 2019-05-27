@@ -4,24 +4,23 @@
 *--------------------------------------------------------------------------------------------*/
 
 /**
- * The exception that gets throw when an application configuration was expected but not found
+ * The exception that gets thrown when there are multiple instances of {ICanParseBoilerplates} that can parse a given boilerplate
  *
  * @export
- * @class ApplicationConfigurationNotFound
+ * @class CannotParseBoilerplate
  * @extends {Error}
  */
-export class ApplicationConfigurationNotFound extends Error {
-    
+export class CannotParseBoilerplate extends Error {
     /**
-     * Instantiates an instance of {ApplicationConfigurationNotFound}.
+     * Instantiates an instance of {CannotParseBoilerplate}.
      * @param {...any[]} args
      */
     constructor(...args: any[]) {
         super(...args);
-        Error.captureStackTrace(this, ApplicationConfigurationNotFound);
+        Error.captureStackTrace(this, CannotParseBoilerplate);
     }
 
     static get new() {
-        return new ApplicationConfigurationNotFound('Could not find application configuration');
+        return new CannotParseBoilerplate('Cannot parse boilerplate');
     } 
 }

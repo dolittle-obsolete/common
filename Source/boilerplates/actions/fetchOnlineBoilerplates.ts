@@ -4,25 +4,25 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { requireInternet, OnStdCallback } from '@dolittle/tooling.common.utilities';
-import { ICanFindOnlineBoilerplatePackages } from '../internal';
+import { OnlineBoilerplatesDiscoverer } from '../index';
 
 /**
  * Fetches the online boilerplates
  *
- * @param {ICanFindOnlineBoilerplatePackages} onlineBoilerplatesDiscoverer
+ * @param {OnlineBoilerplatesDiscoverer} onlineBoilerplatesDiscoverer
  * @param {string[]} [keywords=[]]
  * @param {number} [limit=250]
  * @param {OnStdCallback} [onStdOut] Optional callback for dealing with the standard text output  
  * @param {OnStdCallback} [onStdErr] Optional callback for dealing with the text output when an error occurs  
  * @returns
  */
-export async function fetchOnlineBoilerplates(onlineBoilerplatesDiscoverer: ICanFindOnlineBoilerplatePackages, keywords: string[] = [], limit: number = 250, 
+export async function fetchOnlineBoilerplates(onlineBoilerplatesDiscoverer: OnlineBoilerplatesDiscoverer, keywords: string[] = [], limit: number = 250, 
     onStdOut?: OnStdCallback, onStdErr?: OnStdCallback) {
     let ifStdOut = (data: string) => onStdOut? onStdOut(data) : {};
     let ifStdErr = (data: string) => onStdErr? onStdErr(data) : {};
     await requireInternet(onStdOut, onStdErr);
     ifStdOut('Getting boilerplates (this might take a while, depending on your internet connection): ');
-    let boilerplates = await onlineBoilerplatesDiscoverer.discoverLatestOnlineBoilerplates(keywords, limit)
+    let boilerplates = await onlineBoilerplatesDiscoverer.findLatest(keywords, limit)
         .then(boilerplates => {
             ifStdOut(`Found ${boilerplates.length} boilerplates`);
             return boilerplates;

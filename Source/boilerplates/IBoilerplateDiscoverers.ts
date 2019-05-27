@@ -3,10 +3,10 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { BoilerplatePackageJson, ICanDiscoverBoilerplates } from "./index";
+import { BoilerplatePackage, ICanDiscoverBoilerplates } from "./index";
 
 /**
- * Defines a system that's responsible for discovering boilerplates
+ * Defines a system that knows about {ICanDiscoverBoilerplate} boilerplates discoverers
  *
  * @export
  * @interface ICanDiscoverBoilerplates
@@ -36,9 +36,9 @@ export interface IBoilerplateDiscoverers {
     /**
      * The discovered boilerplates
      *
-     * @type {BoilerplatePackageJson[]}
+     * @type {BoilerplatePackage[]}
      */
-    discovered: BoilerplatePackageJson[]
+    discovered: BoilerplatePackage[]
 
     /**
     * Gets the paths of the Dolittle boilerplates

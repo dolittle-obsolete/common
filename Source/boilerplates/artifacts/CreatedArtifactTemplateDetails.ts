@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { ArtifactsBoilerplate, ArtifactTemplate } from '../internal';
+import { ArtifactsBoilerplate, ArtifactTemplate } from '../index';
 
  export type CreatedArtifactTemplateDetails = {
     /**

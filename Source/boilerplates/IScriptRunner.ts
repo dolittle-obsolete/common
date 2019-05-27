@@ -4,15 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { Script } from './index';
 
-
-/**
- * @callback StdCallback
- * @param {string} data
- * @returns {void}
- */
-
 export type ScriptStdOut = (data: string) => void 
-
 export type ScriptOnError = (error: Error | string) => void
 
 /**
@@ -29,7 +21,7 @@ export interface IScriptRunner
      * @param {StdCallback} onStdout
      * @param {OnErrorCallback} onError
      */
-    runScriptsSync(scripts: Script[] | string[], cwd: string, 
+    runSync(scripts: Script[] | string[], cwd: string, 
         onStderr: ScriptStdOut, onStdout: ScriptStdOut, 
         onError: ScriptOnError
         ): void
@@ -45,7 +37,7 @@ export interface IScriptRunner
      * @param {OnErrorCallback} onError
      * @param {OnErrorCallback} onUncaughtException
      */
-    runScripts(scripts: Script[] | string[], cwd: string, 
+    run(scripts: Script[] | string[], cwd: string, 
         onStderr: ScriptStdOut, onStdout: ScriptStdOut, 
         onError: ScriptOnError,
         onUncaughtException: ScriptOnError): Promise<void>

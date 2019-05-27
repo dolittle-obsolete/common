@@ -6,7 +6,7 @@
 import { Boilerplate, NonArtifactsBoilerplate } from "./index";
 
 /**
- * Defines a system that's responsible for managing boilerplates and creating them
+ * Defines a system that knows about {Boilerplate} and can create {NonArtifactsBoilerplate}
  *
  * @export
  * @interface IBoilerplates
@@ -29,6 +29,7 @@ export interface IBoilerplates {
 
     /**
      * Get all available boiler plates for a specific language
+     * 
      * @param {string} language
      * @param {string} [namespace=undefined]
      * @returns {Boilerplate[]} Available boiler plates for the language
@@ -37,6 +38,7 @@ export interface IBoilerplates {
 
     /**
      * Get all available boiler plates for a specific type
+     * 
      * @param {string} type
      * @param {string} [namespace=undefined]
      * @returns {Boilerplate[]} Available boiler plates for the type
@@ -45,6 +47,7 @@ export interface IBoilerplates {
 
     /**
      * Get all available boiler plates for a specific language
+     * 
      * @param {string} language
      * @param {string} type
      * @param {string} [namespace=undefined]

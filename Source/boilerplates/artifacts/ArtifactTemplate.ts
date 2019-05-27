@@ -5,8 +5,7 @@
 import { dependencyParsers, IDependency } from '@dolittle/tooling.common.dependencies';
 import { areas, getFileDirPath } from '@dolittle/tooling.common.utilities';
 import * as _path from 'path';
-import { ArtifactsBoilerplate } from '../internal';
-
+import { ArtifactsBoilerplate } from '../index';
 
 function throwIfInvalidArea(area: string): void {
     if (!areas.includes(area)) {
@@ -14,8 +13,8 @@ function throwIfInvalidArea(area: string): void {
     }
 }
 /**
-  * Represents an artifact template
-  */
+ * Represents an artifact template
+ */
 export class ArtifactTemplate
 {
     /**
@@ -27,7 +26,6 @@ export class ArtifactTemplate
      * @param {string[]} includedFiles The files that needs to be created by the template
      * @param {ArtifactsBoilerplate} boilerplate
      * @returns
- 
      */
     static fromJson(obj: any, path: string, includedFiles: string[], boilerplate: ArtifactsBoilerplate) {
         return new ArtifactTemplate(boilerplate, obj.name, obj.type, obj.area, obj.description,
@@ -38,8 +36,9 @@ export class ArtifactTemplate
 
     private _allDependencies: IDependency[];
     private _filesToCreate: string[];
+
     /**
-     * Creates an instance of {ArtifactTemplate}.
+     * Instantiates an instance of {ArtifactTemplate}.
      * @param {ArtifactsBoilerplate} boilerplate
      * @param {string} name
      * @param {string} type
@@ -48,7 +47,6 @@ export class ArtifactTemplate
      * @param {Dependency[]} dependencies
      * @param {string[]} includedFiles
      * @param {string} path
- 
      */
     constructor (boilerplate: ArtifactsBoilerplate, name: string, type: string, area: string, description: string,
         dependencies: IDependency[], includedFiles: string[], path: string) {
@@ -75,56 +73,55 @@ export class ArtifactTemplate
      * The parent boilerplate object of the artifact template
      *
      * @type {ArtifactsBoilerplate}
- 
      */
     readonly boilerplate: ArtifactsBoilerplate;
+
     /**
      * The name of the artifact template
      *
      * @type {string}
- 
      */
     readonly name: string;
+
     /**
      * The type of the artifact template
      *
      * @type {string}
- 
      */
     readonly type: string;
+
     /**
      * The area of the artifact.
      *
      * @type {string}
- 
      */
     readonly area: string;
+
     /**
      * The description of the artifact template
      *
      * @type {string}
- 
      */
     readonly description: string;
+
     /**
      * Gets the dependencies of the template
      *
      * @type {Dependency[]}
- 
      */
     readonly dependencies: IDependency[];
+
     /**
      * The list of files that needs to be templated
      *
      * @type {string[]}
- 
      */
     readonly includedFiles: string[];
+
     /**
      * Gets the path of the template file
      *
      * @type {string}
- 
      */
     readonly path: string;
     
@@ -132,14 +129,13 @@ export class ArtifactTemplate
      * Gets all the dependencies needed to create this artifact
      *
      * @returns {Dependency[]}
- 
      */
     get allDependencies(): IDependency[] {return this._allDependencies;}
+
     /**
      * Gets a list of the files that needs to be created
      *
      * @returns {string[]}
- 
      */
     get filesToCreate(): string[] {return this._filesToCreate;}
 }

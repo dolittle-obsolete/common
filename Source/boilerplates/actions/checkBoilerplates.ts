@@ -3,11 +3,11 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { ICanFindOnlineBoilerplatePackages, IBoilerplateDiscoverers } from '@dolittle/tooling.common.boilerplates';
 import { requireInternet, OnStdCallback } from '@dolittle/tooling.common.utilities';
 import * as FsExtra from 'fs-extra';
 import semver from 'semver';
 import path from 'path';
+import { ILatestCompatibleBoilerplateFinder, IBoilerplateDiscoverers } from '../index';
 
 export type OutOfDatePackage = {
     name: string, version: string, latest: string
@@ -17,7 +17,7 @@ export type OutOfDatePackage = {
  *
  * @export
  * @param {IBoilerplateDiscoverers} boilerplateDiscoverers
- * @param {ICanFindOnlineBoilerplatePackages} onlineBoilerplatesDiscoverer
+ * @param {ILatestCompatibleBoilerplateFinder} latestBoilerplateFinder
  * @param {typeof FsExtra} fileSystem
  * @param {OnStdCallback} [onStdOut] Optional callback for dealing with the standard text output
  * @param {OnStdCallback} [onNoBoilerplates] Optional callback for dealing with the text output when there were no boilerplates found
@@ -25,7 +25,7 @@ export type OutOfDatePackage = {
  * @param {OnStdCallback} [onStdErr] Optional callback for dealing with the text output when an error occurs
  * @returns
  */
-export async function checkBoilerplates(boilerplateDiscoverers: IBoilerplateDiscoverers, onlineBoilerplatesDiscoverer: ICanFindOnlineBoilerplatePackages,
+export async function checkBoilerplates(boilerplateDiscoverers: IBoilerplateDiscoverers, latestBoilerplateFinder: ILatestCompatibleBoilerplateFinder,
     fileSystem: typeof FsExtra, onStdOut?: OnStdCallback, onNoBoilerplates?: OnStdCallback, onPackageUpgrade?: OnStdCallback, onStdErr?: OnStdCallback) {
     let ifStdOut = (data: string) => onStdOut? onStdOut(data) : {};
     let ifNoBoilerplates = (data: string) => onNoBoilerplates? onNoBoilerplates(data) : {};
@@ -49,12 +49,15 @@ export async function checkBoilerplates(boilerplateDiscoverers: IBoilerplateDisc
         let outOfDatePackages: OutOfDatePackage[] = [];
         for (let pkg of locallyInstalled) {
             ifStdOut(`Checking ${pkg.name}`);
-            await onlineBoilerplatesDiscoverer.latestCompatibleBoilerplate(pkg.name)
+            await latestBoilerplateFinder.find(pkg.name)
                 .then(packageJson => {
-                    let latestVersion = packageJson.version;
-                    if (semver.gt(latestVersion, pkg.version)) {
-                        outOfDatePackages.push({name: pkg.name, version: pkg.version, latest: latestVersion});
-                        ifPackageUpgrade(`${pkg.name}@${pkg.version} ==> ${latestVersion}`);
+                    if (packageJson === null) ifStdErr(`'${pkg.name}' is not a boilerplate`);
+                    else {
+                        let latestVersion = packageJson.version;
+                        if (semver.gt(latestVersion, pkg.version)) {
+                            outOfDatePackages.push({name: pkg.name, version: pkg.version, latest: latestVersion});
+                            ifPackageUpgrade(`${pkg.name}@${pkg.version} ==> ${latestVersion}`);
+                        }
                     }
                 }).catch(_ => ifStdErr(`Failed to fetch ${pkg.name}`));
         }

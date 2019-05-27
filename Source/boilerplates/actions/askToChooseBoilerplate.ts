@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { PromptDependency, IDependencyResolvers, chooseOneUserInputType } from '@dolittle/tooling.common.dependencies';
-import { Boilerplate } from '../internal';
+import { Boilerplate } from '../index';
 
 /**
  * Prompts the user to choose a boilerplate

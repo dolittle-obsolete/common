@@ -5,7 +5,7 @@
 import { IDependency } from '@dolittle/tooling.common.dependencies';
 import { Folders, getFileDirPath, getFileNameAndExtension } from '@dolittle/tooling.common.utilities';
 import * as FsExtra from 'fs-extra';
-import { ArtifactTemplate, Boilerplate, Scripts } from './index';
+import { ArtifactTemplate, Boilerplate, Scripts } from '../index';
 
 export const artifactsBoilerplateContentFolderName = 'Templates';
 
@@ -14,6 +14,8 @@ export const artifactsBoilerplateContentFolderName = 'Templates';
  */
 export class ArtifactsBoilerplate extends Boilerplate {
 
+    readonly contentDirectoryName = 'Templates';
+    
     private _artifactTemplates!: ArtifactTemplate[];
     
     /**
@@ -37,7 +39,6 @@ export class ArtifactsBoilerplate extends Boilerplate {
      * Gets the artifact templates belonging under this boilerplate
      * @type {ArtifactTemplate[]}
      * @readonly
- 
      */
     get artifactTemplates() {
         if (! this._artifactTemplates) this.loadArtifactTemplates();
@@ -49,9 +50,8 @@ export class ArtifactsBoilerplate extends Boilerplate {
      *
      * @param {string} artifactType
      * @returns {ArtifactTemplate[]} Artifact templates with given type 
- 
      */
-    artifactTemplatesByType(artifactType: string): ArtifactTemplate[] {
+    artifactTemplatesByType(artifactType: string) {
         return this.artifactTemplates.filter(_ => _.type === artifactType);
     }
 
@@ -65,7 +65,8 @@ export class ArtifactsBoilerplate extends Boilerplate {
         });
     }
     
-    private getIncludedFiles(folderPath: string): string[] {
+    private getIncludedFiles(folderPath: string) {
         return this._folders.searchFolderRegex(folderPath, /.*/).map(filePath => getFileNameAndExtension(filePath)).filter(file => file !== 'template.json');
     }
 }
+

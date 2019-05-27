@@ -5,15 +5,14 @@
 import { IDependency } from '@dolittle/tooling.common.dependencies';
 import { Boilerplate, Scripts } from './index';
 
-export const boilerplateContentFolderName = 'Content';
-
 /**
  * Represents the standard, non-artifacts, boilerplate 
  */
 export class NonArtifactsBoilerplate extends Boilerplate {
 
+    readonly contentDirectoryName = 'Content';
     /**
-     * Instantiates an instance of {NonArtifactBoilerplate}
+     * Instantiates an instance of {NonArtifactsBoilerplate}
      * @param {string} language 
      * @param {string} name 
      * @param {string} description 

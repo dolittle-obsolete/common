@@ -5,16 +5,15 @@
 
 import { ProjectConfig } from '@dolittle/tooling.common.configurations';
 import { Guid, dolittleConfigDefault, folders, fileSystem, logger, nodeModulesPath } from '@dolittle/tooling.common.utilities';
+import { dependencyParsers } from '@dolittle/tooling.common.dependencies';
 import Handlebars from 'handlebars';
 
 import {
-    BoilerplatesConfig, IBoilerplatesCreator, BoilerplatesCreator, IBoilerplatesLoader, BoilerplatesLoader, ICanManageBoilerplates, BoilerplatesManager, 
-    IBoilerplateManagers, BoilerplateManagers, ICanDiscoverBoilerplates, BoilerplateDiscoverers, BoilerplatesDiscoverer, IBoilerplateDiscoverers, 
-    ICanFindOnlineBoilerplatePackages, OnlineBoilerplatesDiscoverer, IApplicationsManager, ApplicationsManager, IBoundedContextsManager, BoundedContextsManager, 
-    IArtifactTemplateCreator, ArtifactTemplateCreator, IArtifactTemplatesManager, ArtifactTemplatesManager
-} from './internal';
-
-export * from './internal';
+    BoilerplatesConfig, IBoilerplatesLoader, BoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplateDiscoverers, LocalBoilerplatesDiscoverer, IBoilerplateDiscoverers, 
+    OnlineBoilerplatesDiscoverer, IApplicationsManager, ApplicationsManager, IBoundedContextsManager, BoundedContextsManager, 
+    IArtifactTemplates, ArtifactTemplates, IBoilerplateParsers, BoilerplateParsers, ICanParseBoilerplates, NonArtifactsBoilerplateParser, ArtifactsBoilerplateParser,
+    Boilerplates, ILatestCompatibleBoilerplateFinder,LatestCompatibleBoilerplateFinder, IBoilerplates, OnlineDolittleBoilerplatesFinder
+} from './index';
 
 /**
  * Sets up the handlebars system with custom helpers
@@ -33,80 +32,35 @@ function setupHandlebars() {
                                                     .map((_: any) => `using ${_};`).join('\n');
     });
 }
-// Setup the boilerplates system with default configuration
-
 setupHandlebars();
-
-
 
 export const projectConfig = new ProjectConfig(nodeModulesPath);
 export const boilerplatesConfig = new BoilerplatesConfig(nodeModulesPath); 
 
-
-export let boilerplatesCreator: IBoilerplatesCreator = new BoilerplatesCreator(folders, fileSystem, logger, Handlebars);
-/**
- * Sets the internal IBoilerplatesCreator
- *
- * @export
- * @param {IBoilerplatesCreator} creator
- */
-export function setBoilerplatesCreator(creator: IBoilerplatesCreator) { boilerplatesCreator = creator; };
-
-export let boilerplatesLoader: IBoilerplatesLoader = new BoilerplatesLoader(boilerplatesConfig, folders, fileSystem, logger);
-/**
- * Sets the internal IBoilerplatesLoader
- *
- * @export
- * @param {IBoilerplatesLoader} loader
- */
-export function setBoilerplatesLoader(loader: IBoilerplatesLoader) { boilerplatesLoader = loader; };
-
-let instancesOfICanManageBoilerplates: ICanManageBoilerplates[] = [
-    new BoilerplatesManager(boilerplatesLoader)
+let instancesOfICanParseBoilerplates: ICanParseBoilerplates[] = [
+    new NonArtifactsBoilerplateParser(dependencyParsers, folders, fileSystem),
+    new ArtifactsBoilerplateParser(dependencyParsers, folders, fileSystem)
 ];
-export let boilerplateManagers: IBoilerplateManagers = new BoilerplateManagers(instancesOfICanManageBoilerplates);
 
+export const boilerplateParsers: IBoilerplateParsers = new BoilerplateParsers(instancesOfICanParseBoilerplates);
+export const boilerplatesLoader: IBoilerplatesLoader = new BoilerplatesLoader(boilerplateParsers, boilerplatesConfig, folders, fileSystem, logger);
 let instancesOfICanDiscoverBoilerplates: ICanDiscoverBoilerplates[] = [
-    new BoilerplatesDiscoverer(boilerplatesConfig, nodeModulesPath, boilerplatesLoader, fileSystem, logger)
+    new LocalBoilerplatesDiscoverer(boilerplatesConfig, nodeModulesPath, boilerplatesLoader, fileSystem, logger)
 ];
-export let boilerplateDiscoverers: IBoilerplateDiscoverers = new BoilerplateDiscoverers(instancesOfICanDiscoverBoilerplates);
 
-export let onlineBoilerplateFinders: ICanFindOnlineBoilerplatePackages[] = [
-    new OnlineBoilerplatesDiscoverer(logger)
-]; 
+export const boilerplateDiscoverers: IBoilerplateDiscoverers = new BoilerplateDiscoverers(instancesOfICanDiscoverBoilerplates);
 
-export let applicationsManager: IApplicationsManager = new ApplicationsManager(boilerplateManagers, boilerplatesCreator, fileSystem, logger);
-/**
- * Sets the internal IApplicationsManager
- *
- * @export
- * @param {IApplicationsManager} manager
- */
-export function setApplicationsManager(manager: IApplicationsManager) { applicationsManager = manager; };
+export const boilerplates: IBoilerplates = new Boilerplates(boilerplatesLoader, folders, fileSystem, logger, Handlebars);
 
-export let boundedContextsManager: IBoundedContextsManager = new BoundedContextsManager(boilerplateManagers, boilerplatesCreator, applicationsManager, folders, fileSystem, logger);
-/**
- * Sets the internal IBoundedContextsManager
- *
- * @export
- * @param {IBoundedContextsManager} manager
- */
-export function setBoundedContextsManager(manager: IBoundedContextsManager) { boundedContextsManager = manager; };
+export const latestCompatibleBoilerplateFinder: ILatestCompatibleBoilerplateFinder = new LatestCompatibleBoilerplateFinder();
 
-export let artifactTemplateCreator: IArtifactTemplateCreator = new ArtifactTemplateCreator(folders, fileSystem, logger, Handlebars);
-/**
- * Sets the internal IArtifactTemplateCreator
- *
- * @export
- * @param {IArtifactTemplateCreator} creator
- */
-export function setArtifactTemplateCreator(creator: IArtifactTemplateCreator) { artifactTemplateCreator = creator; };
+export const onlineBoilerplatesFinder = new OnlineBoilerplatesDiscoverer(latestCompatibleBoilerplateFinder, logger);
 
-export let artifactTemplatesManager: IArtifactTemplatesManager = new ArtifactTemplatesManager(boilerplateManagers, artifactTemplateCreator, logger);
-/**
- * Sets the internal IArtifactTemplatesManager
- *
- * @export
- * @param {IArtifactTemplatesManager} manager
- */
-export function setArtifactTemplatesCreator(manager: IArtifactTemplatesManager) { artifactTemplatesManager = manager; };
+export const onlineDolittleBoilerplatesFinder = new OnlineDolittleBoilerplatesFinder(latestCompatibleBoilerplateFinder, logger);
+
+export const applicationsManager: IApplicationsManager = new ApplicationsManager(boilerplates, fileSystem, logger);
+
+export const artifactTemplates: IArtifactTemplates = new ArtifactTemplates(boilerplates, folders, fileSystem, Handlebars, logger);
+
+export const boundedContextsManager: IBoundedContextsManager = new BoundedContextsManager(boilerplates, applicationsManager, folders, fileSystem, logger);
+

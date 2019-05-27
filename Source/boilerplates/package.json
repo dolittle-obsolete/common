@@ -39,11 +39,15 @@
     "fs-extra": "^8.0.1",
     "handlebars": "^4.0.12",
     "lodash": "^4.17.11",
-    "semver": "^6.0.0",
+    "npm-keyword": "^6.1.0",
+    "npm-user-packages": "^3.0.0",
+    "package-json": "^6.3.0",
+    "semver": "^6.1.0",
     "winston": "^3.2.1"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.125",
+    "@types/npm-user-packages": "^3.0.0",
     "@types/semver": "^6.0.0"
   }
 }

@@ -3,10 +3,10 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import {requireInternet, OnStdCallback} from '@dolittle/tooling.common.utilities';
 import spawn from 'cross-spawn';
-import { IBoilerplateDiscoverers, initBoilerplatesSystem } from '../internal';
+import {requireInternet, OnStdCallback} from '@dolittle/tooling.common.utilities';
 import { PromptDependency, IDependencyResolvers, confirmUserInputType, chooseMultipleUserInputType } from '@dolittle/tooling.common.dependencies';
+import { IBoilerplateDiscoverers, initBoilerplatesSystem } from '../index';
 
 export type BoilerplatePackageInfo = {
     name: string, version: string, latest?: string
@@ -38,11 +38,13 @@ export async function askToDownloadOrUpdateBoilerplates(boilerplates: Boilerplat
         }
     }
 }
+
 async function askToDownload(resolvers: IDependencyResolvers) {
     let dep = new PromptDependency('download', 'Asks whether to download boilerplates', confirmUserInputType, "Download latest boilerplates?");
     let answers = await resolvers.resolve({}, [dep]);
     return answers['download'];
 }
+
 async function askWhichBoilerplates(boilerplates: BoilerplatePackageInfo[], resolvers: IDependencyResolvers) {
     let downloadAllDep = new PromptDependency('downloadAll', 'Download all boilerplates?' , confirmUserInputType, 'Download all?');
 

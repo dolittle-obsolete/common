@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { IDependencyResolvers, PromptDependency, chooseOneUserInputType } from '@dolittle/tooling.common.dependencies';
-import { ArtifactTemplate } from '../internal';
+import { ArtifactTemplate } from '../index';
 
 /**
  * Prompts the user to choose a template

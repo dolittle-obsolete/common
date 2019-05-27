@@ -4,41 +4,34 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Application } from '@dolittle/tooling.common.configurations';
-import { NonArtifactsBoilerplate, CreatedApplicationDetails } from "../internal";
+import { NonArtifactsBoilerplate, CreatedApplicationDetails } from "../index";
 
 /**
- * Manages the application boiler plates
+ * Defines a system that can manage the application boilerplates
  *
  * @export
  * @interface IApplicationsManager
  */
 export interface IApplicationsManager {
+
     /**
      * Gets all the application boilerplates 
      *
      * @type {NonArtifactsBoilerplate[]}
- 
      */
     boilerplates: NonArtifactsBoilerplate[]
-    /**
-     * Whether or not there are any application boilerplates
-     *
-     * @type {boolean}
- 
-     */
-    hasBoilerplate: boolean
+
     /**
      * Gets the application configuration from the given folder
      * @param {string} folder path 
      * @returns {Application | null} application config or null if not found
- 
      */
     getApplicationFrom(folder: string): Application | null
+
     /**
      * Check if an application has been setup in the given folder.
      * @param {string} folder path
      * @returns {boolean} whether or not the application configuration is set up
- 
      */
     hasApplication(folder: string): boolean
 
@@ -47,17 +40,16 @@ export interface IApplicationsManager {
      * @param {string} language 
      * @param {string} [namespace=undefined]
      * @return {NonArtifactsBoilerplate[]} The application {Boilerplate} with of the given language
- 
      */
     boilerplatesByLanguage(language: string, namespace?: string): NonArtifactsBoilerplate[]
+
     /**
-     * Creates a dolittle application based
+     * Creates a dolittle application
      *
      * @param {any} context The template context 
      * @param {string} destinationPath The absolute path of the destination of the application
      * @param {NonArtifactsBoilerplate} boilerplate The boilerplate to create the application from
      * @returns {CreatedApplicationDetails[]} Boilerplates created with the destination
- 
      */
-    createApplication(context: any, destinationPath: string, boilerplate: NonArtifactsBoilerplate): CreatedApplicationDetails[]
+    create(context: any, destinationPath: string, boilerplate: NonArtifactsBoilerplate): CreatedApplicationDetails[]
 }

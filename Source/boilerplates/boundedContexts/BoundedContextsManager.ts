@@ -8,8 +8,8 @@ import { Folders, getFileDirPath, groupBy } from '@dolittle/tooling.common.utili
 import * as FsExtra from 'fs-extra';
 import path from 'path';
 import { Logger } from 'winston';
-import { IApplicationsManager, NonArtifactsBoilerplate, ExpectedBoilerplateError, IBoilerplatesCreator, ApplicationConfigurationNotFound, 
-    CreatedBoundedContextDetails, IBoundedContextsManager, IBoilerplateManagers } from '../internal';
+import { IApplicationsManager, NonArtifactsBoilerplate, WrongBoilerplateType, ApplicationConfigurationNotFound, 
+    CreatedBoundedContextDetails, IBoundedContextsManager, IBoilerplates } from '../index';
 
 
 export const boundedContextBoilerplateType = 'boundedContext';
@@ -22,7 +22,8 @@ const boundedContextAdornmentDependencyName = 'boundedContextAdornment'
  * @class BoundedContextsManager
  */
 export class BoundedContextsManager implements IBoundedContextsManager {
-    private _boilerplates: NonArtifactsBoilerplate[]
+    private _loadedBoilerplates: NonArtifactsBoilerplate[]
+
     /**
      *Creates an instance of BoundedContextsManager.
      * @param {IBoilerplateManagers} boilerplateManager
@@ -31,27 +32,18 @@ export class BoundedContextsManager implements IBoundedContextsManager {
      * @param {Folders} folders
      * @param {typeof FsExtra} fileSystem
      * @param {Logger} logger
- 
      */
-    constructor(private _boilerplateManagers: IBoilerplateManagers, private _boilerplatesCreator: IBoilerplatesCreator, private _applicationsManager: IApplicationsManager,
+    constructor(private _boilerplates: IBoilerplates, private _applicationsManager: IApplicationsManager,
         private _folders: Folders, private _filesystem: typeof FsExtra, private _logger: Logger) {
-        this._boilerplates = [];
+        this._loadedBoilerplates = [];
+    }
+    
+    get boilerplates() {
+        this.loadAllBoilerplates();
+        return this._loadedBoilerplates;
+    }
 
-        this.loadAllBoilerplates();
-        
-    }
-    get boilerplates(): NonArtifactsBoilerplate[] {
-        this.loadAllBoilerplates();
-        return this._boilerplates;
-    }
-    get hasBoilerplate(): boolean {
-        let boilerplates = this.boilerplates;
-        return boilerplates && boilerplates.length > 0;
-    }
-    /**
-     * @inheritdoc
-     */
-    getNearestBoundedContextConfig(startPath: string): BoundedContext | null {
+    getNearestBoundedContextConfig(startPath: string) {
         let regex =  new RegExp('\\b'+boundedContextFileName+'\\b');
         const boundedContextConfigPath = this._folders.getNearestFileSearchingUpwards(startPath, regex);
         if (boundedContextConfigPath === undefined || boundedContextConfigPath === '') return null;
@@ -62,73 +54,39 @@ export class BoundedContextsManager implements IBoundedContextsManager {
         
         return boundedContext;
     }
-    /**
-     * Check if a bounded context configuration can be found in the given directory.
-     * @param {string} folder The directory path to search
-     * @returns {boolean} Whether or not the bounded context configuration was found
-     */
-    hasBoundedContext(folder: string): boolean {
+
+    hasBoundedContext(folder: string) {
         const filePath = path.join(folder, boundedContextFileName);
         return this._filesystem.existsSync(filePath);
     }
 
-    /**
-     * Retrieves the boilerplate configurations for bounded context with the given language
-     * @param {string} language 
-     * @param {string} [namespace=undefined]
-     * @return {NonArtifactsBoilerplate[]} The bounded context {Boilerplate} with of the given language
-     */
-    boilerplatesByLanguage(language: string, namespace?: string): NonArtifactsBoilerplate[] {
+    boilerplatesByLanguage(language: string, namespace?: string) {
         let boilerplates = this.boilerplates;
         return boilerplates.filter( _ => {
             if (namespace && _.namespace) return _.namespace === namespace && _.language === language;
             return _.language && language; 
         })
     }
-    /**
-     * Gets the adornment boilerplates for a bounded context based on language and boilerplate name
-     *
-     * @param {string} [language=undefined] The language of the bounded context boilerplate
-     * @param {string} [boilerplateName=undefined] The name of the boilerplate
-     * @param {string} [namespace=undefined] The namespace of the boilerplate
-     * @returns {NonArtifactsBoilerplate[]}
- 
-     */
-    getAdornments(language?: string, boilerplateName?: string, namespace?: string): NonArtifactsBoilerplate[] {
-        let adornments: NonArtifactsBoilerplate[] = this._boilerplateManagers.getAdornments(boundedContextBoilerplateType, language, boilerplateName, namespace)
+
+    getAdornments(language?: string, boilerplateName?: string, namespace?: string) {
+        let adornments: NonArtifactsBoilerplate[] = this._boilerplates.adornmentsFor(boundedContextBoilerplateType, language, boilerplateName, namespace)
             .map(_ => {
                 if (_ instanceof NonArtifactsBoilerplate) return _;
-                else throw new ExpectedBoilerplateError(`Expected boilerplate of type '${NonArtifactsBoilerplate.name}' but got a '${(<any>_).constructor.name}'`);
+                else throw new WrongBoilerplateType(`Expected boilerplate of type '${NonArtifactsBoilerplate.name}' but got a '${(<any>_).constructor.name}'`);
             });
         return adornments.filter(_ => _.type === 'adornment');
     }
-    /**
-     * Gets the interaction adornment boilerplates for a bounded context based on language and boilerplate name
-     *
-     * @param {string} [language=undefined] The language of the bounded context boilerplate
-     * @param {string} [boilerplateName=undefined] The name of the boilerplate
-     * @param {string} [namespace=undefined] The namespace of the boilerplate
-     * @returns {NonArtifactsBoilerplate[]}
- 
-     */
-    getInteractionLayers(language?: string, boilerplateName?: string, namespace?: string): NonArtifactsBoilerplate[] {
-        let adornments: NonArtifactsBoilerplate[] = this._boilerplateManagers.getAdornments(boundedContextBoilerplateType, language, boilerplateName, namespace)
+    
+    getInteractionLayers(language?: string, boilerplateName?: string, namespace?: string) {
+        let adornments: NonArtifactsBoilerplate[] = this._boilerplates.adornmentsFor(boundedContextBoilerplateType, language, boilerplateName, namespace)
             .map(_ => {
                 if (_ instanceof NonArtifactsBoilerplate) return _;
-                else throw new ExpectedBoilerplateError(`Expected boilerplate of type '${NonArtifactsBoilerplate.name}' but got a '${(<any>_).constructor.name}'`);
+                else throw new WrongBoilerplateType(`Expected boilerplate of type '${NonArtifactsBoilerplate.name}' but got a '${(<any>_).constructor.name}'`);
             });
         return adornments.filter(_ => _.type === 'interaction');
      }
-    /**
-     * Create dependencies used for prompting the user for bounded context adornment
-     *
-     * @param {string} [language=undefined] The language of the bounded context boilerplate
-     * @param {string} [boilerplateName=undefined] The name of the boilerplate
-     * @param {string} [namespace=undefined] The namespace of the boilerplate
-     * @returns {Dependency[]}
- 
-     */
-    createAdornmentDependencies(language?: string, boilerplateName?: string, namespace?: string): PromptDependency[] {
+    
+    createAdornmentDependencies(language?: string, boilerplateName?: string, namespace?: string) {
         let adornments = this.getAdornments(language, boilerplateName, namespace);
         if (adornments.length === 0) return [];
         let boundedContextAdornment = new PromptDependency(
@@ -141,16 +99,8 @@ export class BoundedContextsManager implements IBoundedContextsManager {
 
         return [boundedContextAdornment];
     }
-    /**
-     * Create dependencies used for prompting the user for interaction layers
-     *
-     * @param {string} [language=undefined] The language of the bounded context boilerplate
-     * @param {string} [boilerplateName=undefined] The name of the boilerplate
-     * @param {string} [namespace=undefined] The namespace of the boilerplate
-     * @returns {Dependency[]}
- 
-     */
-    createInteractionDependencies(language?: string, boilerplateName?: string, namespace?: string): PromptDependency[] {
+    
+    createInteractionDependencies(language?: string, boilerplateName?: string, namespace?: string) {
         let interactionLayers = this.getInteractionLayers(language, boilerplateName, namespace);
         let interactionLayerTypes = groupBy('target')(interactionLayers);
         return Object.keys(interactionLayerTypes)
@@ -162,18 +112,8 @@ export class BoundedContextsManager implements IBoundedContextsManager {
                 interactionLayers.map(_ => _.name).concat('None')
             ));
     }
-    /**
-     * Creates a dolittle bounded context.
-     * 
-     * Interaction layers will be created as well if the dependencies are supplied in the context object.
-     *
-     * @param {any} context The template context
-     * @param {NonArtifactsBoilerplate} boilerplate The Bounded Context Boilerplate
-     * @param {string} destinationPath The absolute path of the destination of the bounded context
-     * @param {string} [namespace=undefined]
-     * @returns {{boilerplate: NonArtifactsBoilerplate, destination: string}[]} Returns the created boilerplates with destination
-     */
-    createBoundedContext(context: any, boilerplate: NonArtifactsBoilerplate, destinationPath: string, namespace?: string): CreatedBoundedContextDetails[] {
+
+    create(context: any, boilerplate: NonArtifactsBoilerplate, destinationPath: string, namespace?: string) {
         let application = this._applicationsManager.getApplicationFrom(destinationPath);
         if (!application) throw ApplicationConfigurationNotFound.new;
         context.applicationId = application.id;
@@ -183,7 +123,7 @@ export class BoundedContextsManager implements IBoundedContextsManager {
 
         let createdBoilerplates = [{boilerplate, destination: boundedContextPath}];
         
-        this._boilerplatesCreator.createBoilerplate(boilerplate, boundedContextPath, context);
+        this._boilerplates.create(boilerplate, boundedContextPath, context);
 
         let boundedContextJson = this._filesystem.readJsonSync(boundedContextConfigPath);
 
@@ -193,7 +133,7 @@ export class BoundedContextsManager implements IBoundedContextsManager {
             const adornmentBoilerplateName = context[boundedContextAdornmentDependencyName];
             let adornmentBoilerplate = this.getAdornments(boilerplate.language, boilerplate.name, namespace).find(_ => _.name === adornmentBoilerplateName);
             if (adornmentBoilerplate) {
-                this._boilerplatesCreator.createBoilerplate(adornmentBoilerplate, boundedContextPath, context);
+                this._boilerplates.create(adornmentBoilerplate, boundedContextPath, context);
                 createdBoilerplates.push({boilerplate: adornmentBoilerplate, destination: boundedContextPath});
             }
         }
@@ -210,7 +150,7 @@ export class BoundedContextsManager implements IBoundedContextsManager {
                 interactionLayers.push(
                     new InteractionLayer(boilerplate.type, boilerplate.language, boilerplate.framework, entryPoint)
                 );
-                this._boilerplatesCreator.createBoilerplate(boilerplate, path.join(boundedContextPath, entryPoint), context);
+                this._boilerplates.create(boilerplate, path.join(boundedContextPath, entryPoint), context);
                 createdBoilerplates.push({boilerplate, destination: boundedContextPath});
             });
         }
@@ -220,36 +160,17 @@ export class BoundedContextsManager implements IBoundedContextsManager {
         this._filesystem.writeJsonSync(boundedContextConfigPath, boundedContext.toJson(), {spaces: 4});
         return createdBoilerplates;
     }
-    /**
-     * Creates an interaction layer and adds it to the bounded context by finding it in the folder.
-     * 
-     * Use addInteractionLayerToBoundedContext if you need to add multiple interaction layers
-     *
-     * @param {*} context
-     * @param {NonArtifactsBoilerplate} boilerplate
-     * @param {string} boundedContextFolder
-     * @param {string} entryPoint
- 
-     */
+
     addInteractionLayer(context: any , boilerplate: NonArtifactsBoilerplate, boundedContextFolder: string, entryPoint: string) {
         let boundedContext = this.getNearestBoundedContextConfig(boundedContextFolder);
         if (!boundedContext) throw new Error('Could not discover the bounded context');
-        this._boilerplatesCreator.createBoilerplate(boilerplate, path.join(getFileDirPath(boundedContext.path), entryPoint), context);
+        this._boilerplates.create(boilerplate, path.join(getFileDirPath(boundedContext.path), entryPoint), context);
         boundedContext.addInteractionLayer(new InteractionLayer(boilerplate.type, boilerplate.language, boilerplate.framework, entryPoint));
         this._filesystem.writeJsonSync(boundedContext.path, boundedContext.toJson(), {spaces: 4});
     }
-    /**
-     * Creates an interaction layer, adds it to the bounded context and returns the bounded context object
-     *
-     * @param {*} context
-     * @param {NonArtifactsBoilerplate} boilerplate
-     * @param {BoundedContext} boundedContext
-     * @param {string} entryPoint
-     * @returns {BoundedContext}
- 
-     */
+    
     addInteractionLayerToBoundedContext(context: any, boilerplate: NonArtifactsBoilerplate, boundedContext: BoundedContext, entryPoint: string): BoundedContext {
-        this._boilerplatesCreator.createBoilerplate(boilerplate, path.join(getFileDirPath(boundedContext.path), entryPoint), context);
+        this._boilerplates.create(boilerplate, path.join(getFileDirPath(boundedContext.path), entryPoint), context);
         boundedContext.addInteractionLayer(new InteractionLayer(boilerplate.type, boilerplate.language, boilerplate.framework, entryPoint));
         this._filesystem.writeJsonSync(boundedContext.path, boundedContext.toJson(), {spaces: 4});
 
@@ -257,9 +178,9 @@ export class BoundedContextsManager implements IBoundedContextsManager {
     }
 
     private loadAllBoilerplates()  {
-        this._boilerplates = this._boilerplateManagers.boilerplatesByType(boundedContextBoilerplateType).map(_ => {
+        this._loadedBoilerplates = this._boilerplates.byType(boundedContextBoilerplateType).map(_ => {
             if (_ instanceof NonArtifactsBoilerplate) return _;
-            else throw new ExpectedBoilerplateError(`Expected boilerplate of type '${NonArtifactsBoilerplate.name}' but got a '${_.constructor.name}'`)
+            else throw new WrongBoilerplateType(`Expected boilerplate of type '${NonArtifactsBoilerplate.name}' but got a '${_.constructor.name}'`)
         });
     }
     

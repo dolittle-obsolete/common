@@ -5,10 +5,10 @@
 
 import { BoundedContext } from "@dolittle/tooling.common.configurations";
 import { Dependency } from "@dolittle/tooling.common.dependencies";
-import { NonArtifactsBoilerplate, CreatedBoundedContextDetails } from "../internal";
+import { NonArtifactsBoilerplate, CreatedBoundedContextDetails } from "../index";
 
 /**
- * Responsible for managing bounded contexts boilerplates
+ * Defines a system for managing bounded contexts boilerplates
  *
  * @export
  * @interface BoundedContextsManager
@@ -19,21 +19,13 @@ export interface IBoundedContextsManager {
      * Gets all the application boilerplates 
      *
      * @type {NonArtifactsBoilerplate[]}
- 
      */
     boilerplates: NonArtifactsBoilerplate[]
-    /**
-     * Whether or not there are any application boilerplates
-     *
-     * @type {boolean}
- 
-     */
-    hasBoilerplate: boolean
+
     /**
      * Searches the file hierarchy for bounded-context.json and returns the BoundedContext
      * @param {string} startPath to search from
      * @returns {BoundedContext | null} the bounded context
- 
      */
     getNearestBoundedContextConfig(startPath: string): BoundedContext | null
 
@@ -41,7 +33,6 @@ export interface IBoundedContextsManager {
      * Check if a bounded context configuration can be found in the given directory.
      * @param {string} folder The directory path to search
      * @returns {boolean} Whether or not the bounded context configuration was found
- 
      */
     hasBoundedContext(folder: string): boolean
 
@@ -50,9 +41,9 @@ export interface IBoundedContextsManager {
      * @param {string} language 
      * @param {string} [namespace=undefined]
      * @return {NonArtifactsBoilerplate[]} The bounded context {Boilerplate} with of the given language
- 
      */
     boilerplatesByLanguage(language: string, namespace?: string): NonArtifactsBoilerplate[]
+
     /**
      * Gets the adornment boilerplates for a bounded context based on language and boilerplate name
      *
@@ -60,9 +51,9 @@ export interface IBoundedContextsManager {
      * @param {string} [boilerplateName=undefined] The name of the boilerplate
      * @param {string} [namespace=undefined] The namespace of the boilerplate
      * @returns {NonArtifactsBoilerplate[]}
- 
      */
     getAdornments(language?: string , boilerplateName?: string, namespace?: string): NonArtifactsBoilerplate[]
+
     /**
      * Gets the interaction adornment boilerplates for a bounded context based on language and boilerplate name
      *
@@ -70,9 +61,9 @@ export interface IBoundedContextsManager {
      * @param {string} [boilerplateName=undefined] The name of the boilerplate
      * @param {string} [namespace=undefined] The namespace of the boilerplate
      * @returns {NonArtifactsBoilerplate[]}
- 
      */
     getInteractionLayers(language?: string, boilerplateName?: string, namespace?: string): NonArtifactsBoilerplate[]
+
     /**
      * Create dependencies used for prompting the user for bounded context adornment
      *
@@ -80,9 +71,9 @@ export interface IBoundedContextsManager {
      * @param {string} [boilerplateName=undefined] The name of the boilerplate
      * @param {string} [namespace=undefined] The namespace of the boilerplate
      * @returns {Dependency[]}
- 
      */
     createAdornmentDependencies(language?: string, boilerplateName?: string, namespace?: string): Dependency[]
+    
     /**
      * Create dependencies used for prompting the user for interaction layers
      *
@@ -90,9 +81,9 @@ export interface IBoundedContextsManager {
      * @param {string} [boilerplateName=undefined] The name of the boilerplate
      * @param {string} [namespace=undefined] The namespace of the boilerplate
      * @returns {Dependency[]}
- 
      */
     createInteractionDependencies(language: string, boilerplateName?: string, namespace?: string): Dependency[]
+
     /**
      * Creates a dolittle bounded context.
      * 
@@ -103,9 +94,9 @@ export interface IBoundedContextsManager {
      * @param {string} destinationPath The absolute path of the destination of the bounded context
      * @param {string} [namespace=undefined]
      * @returns {CreatedBoundedContextDetails[]} Returns the created boilerplates with destination
- 
      */
-    createBoundedContext(context: any, boilerplate: NonArtifactsBoilerplate, destinationPath: string, namespace?: string): CreatedBoundedContextDetails[]
+    create(context: any, boilerplate: NonArtifactsBoilerplate, destinationPath: string, namespace?: string): CreatedBoundedContextDetails[]
+
     /**
      * Creates an interaction layer and adds it to the bounded context by finding it in the folder.
      * 
@@ -115,9 +106,9 @@ export interface IBoundedContextsManager {
      * @param {NonArtifactsBoilerplate} boilerplate
      * @param {string} boundedContextFolder
      * @param {string} entryPoint
- 
      */
     addInteractionLayer(context: any, boilerplate: NonArtifactsBoilerplate, boundedContextFolder: string, entryPoint: string): void
+
     /**
      * Creates an interaction layer, adds it to the bounded context and returns the bounded context object
      *
@@ -126,7 +117,6 @@ export interface IBoundedContextsManager {
      * @param {BoundedContext} boundedContext
      * @param {string} entryPoint
      * @returns {BoundedContext}
- 
      */
     addInteractionLayerToBoundedContext(context: any, boilerplate: NonArtifactsBoilerplate, boundedContext: BoundedContext, entryPoint: string): BoundedContext
     

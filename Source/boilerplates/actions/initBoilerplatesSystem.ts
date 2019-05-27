@@ -1,5 +1,5 @@
 import { OnStdCallback } from '@dolittle/tooling.common.utilities';
-import { IBoilerplateDiscoverers } from '../internal';
+import { IBoilerplateDiscoverers } from '../index';
 
 /*---------------------------------------------------------------------------------------------
 *  Copyright (c) Dolittle. All rights reserved.
@@ -9,6 +9,7 @@ import { IBoilerplateDiscoverers } from '../internal';
 /**
  * Initializes the boilerplates system in the common tooling
  * 
+ * @param {IBoilerplateDiscoverers} boilerplateDiscoverers
  * @param {OnStdCallback} [onStdOut] Optional callback for dealing with the standard text output  
  * @param {OnStdCallback} [onStdErr] Optional callback for dealing with the text output when an error occurs  
  */

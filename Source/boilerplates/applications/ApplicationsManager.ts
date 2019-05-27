@@ -7,67 +7,64 @@ import { Application, applicationFilename } from '@dolittle/tooling.common.confi
 import * as FsExtra from 'fs-extra';
 import path from 'path';
 import { Logger } from 'winston';
-import { IApplicationsManager, NonArtifactsBoilerplate, IBoilerplateManagers, IBoilerplatesCreator, CreatedApplicationDetails, ExpectedBoilerplateError } from '../internal';
-
+import { IBoilerplates, IApplicationsManager, NonArtifactsBoilerplate, CreatedApplicationDetails, WrongBoilerplateType } from '../index';
 
 export const applicationBoilerplateType = 'application';
 
 /**
- * 
+ * Represents an implementation of {IApplicationsManager} for managing 
  *
  * @export
  * @class ArtifactsManager
  */
 export class ApplicationsManager implements IApplicationsManager {
-    private _boilerplates: NonArtifactsBoilerplate[];
+    private _loadedBoilerplates: NonArtifactsBoilerplate[];
+
     /**
-     *Creates an instance of ApplicationsManager.
+     * Instantiates an instance of {ApplicationsManager}.
      * @param {IBoilerplateManagers} boilerplateManagers
      * @param {typeof FsExtra} fileSystem
      * @param {Logger} logger
- 
      */
-    constructor(private _boilerplateManagers: IBoilerplateManagers, private _boilerplatesCreator: IBoilerplatesCreator, private _fileSystem: typeof FsExtra,
-        private _logger: Logger) {
-        this._boilerplates = []
+    constructor(private _boilerplates: IBoilerplates, private _fileSystem: typeof FsExtra, private _logger: Logger) {
+        this._loadedBoilerplates = []
+    }
+
+    get boilerplates() {
         this.loadAllBoilerplates();
+        return this._loadedBoilerplates;
     }
-    get boilerplates(): NonArtifactsBoilerplate[] {
-        this.loadAllBoilerplates();
-        return this._boilerplates;
-    }
-    get hasBoilerplate(): boolean {
-        let boilerplates = this.boilerplates;
-        return boilerplates && boilerplates.length > 0;
-    }
-    getApplicationFrom(folder: string): Application | null {
+
+    getApplicationFrom(folder: string) {
         if (! this.hasApplication(folder)) return null;
         const filePath = path.join(folder, applicationFilename);
         return Application.fromJson(JSON.parse(this._fileSystem.readFileSync(filePath, 'utf8')), filePath);
     }
-    hasApplication(folder: string): boolean {
+
+    hasApplication(folder: string) {
         const filePath = path.join(folder, applicationFilename);
         return this._fileSystem.existsSync(filePath);
     }
 
-    boilerplatesByLanguage(language: string, namespace?: string): NonArtifactsBoilerplate[] {
+    boilerplatesByLanguage(language: string, namespace?: string) {
         let boilerplates = this.boilerplates;
         return boilerplates.filter( _ => {
             if (namespace && _.namespace) return _.namespace === namespace && _.language === language;
             return _.language && language; 
         });
     }
-    createApplication(context: any, destinationPath: string, boilerplate: NonArtifactsBoilerplate): CreatedApplicationDetails[] {
+
+    create(context: any, destinationPath: string, boilerplate: NonArtifactsBoilerplate): CreatedApplicationDetails[] {
         let destination = destinationPath;
         this._logger.info(`Creating an application of language '${boilerplate.language}' at destination ${destinationPath}`);
-        this._boilerplatesCreator.createBoilerplate(boilerplate, destination, context);
+        this._boilerplates.create(boilerplate, destination, context);
         return [{boilerplate, destination}];
     }
 
     private loadAllBoilerplates()  {
-        this._boilerplates = this._boilerplateManagers.boilerplatesByType(applicationBoilerplateType).map(_ => {
+        this._loadedBoilerplates = this._boilerplates.byType(applicationBoilerplateType).map(_ => {
             if (_ instanceof NonArtifactsBoilerplate) return _;
-            else throw new ExpectedBoilerplateError(`Expected boilerplate of type '${NonArtifactsBoilerplate.name}' but got a '${_.constructor.name}'`);
+            else throw new WrongBoilerplateType(`Expected boilerplate of type '${NonArtifactsBoilerplate.name}' but got a '${_.constructor.name}'`);
         });
     }
 }

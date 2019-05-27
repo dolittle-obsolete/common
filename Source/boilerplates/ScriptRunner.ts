@@ -11,7 +11,7 @@ import { Script, ScriptStdOut, ScriptOnError, ScriptFailed, IScriptRunner } from
  */
 export class ScriptRunner implements IScriptRunner {
     
-    runScriptsSync(scripts: Script[] | string[], cwd: string, 
+    runSync(scripts: Script[] | string[], cwd: string, 
         onStderr: ScriptStdOut, onStdout: ScriptStdOut, 
         onError: ScriptOnError
         ) 
@@ -37,7 +37,7 @@ export class ScriptRunner implements IScriptRunner {
         });
     }
     
-    async runScripts(scripts: Script[] | string[], cwd: string, 
+    async run(scripts: Script[] | string[], cwd: string, 
         onStderr: ScriptStdOut, onStdout: ScriptStdOut, 
         onError: ScriptOnError,
         onUncaughtException: ScriptOnError) 
@@ -66,15 +66,17 @@ export class ScriptRunner implements IScriptRunner {
     }
     }
 
-
     private scriptOnStderr(data: string) {
         if (data && data !== '') console.error(data);
     }
+
     private scriptOnStdout(data?: string) {
     }
+
     private scriptOnError(error: Error | string) {
         if (error) throw new ScriptFailed(error);
     }
+    
     private scriptOnUncaughtException(error: Error) {
         if (error) throw new ScriptFailed(error);
     }

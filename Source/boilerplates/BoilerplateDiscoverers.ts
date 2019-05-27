@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { BoilerplatePackageJson, ICanDiscoverBoilerplates, IBoilerplateDiscoverers } from './internal';
+import { BoilerplatePackage, ICanDiscoverBoilerplates, IBoilerplateDiscoverers } from './index';
 
 /**
- * Represents a system for dealing with all boilerplate discoverers
+ * Represents an implementation of {IBoilerplateDiscoverers}
  *
  * @export
  * @class BoilerplateDiscoverers
@@ -15,49 +15,32 @@ import { BoilerplatePackageJson, ICanDiscoverBoilerplates, IBoilerplateDiscovere
 export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
     
     /**
-     * Creates an instance of BoilerplateDiscoverers.
+     * Instantiates an instance of {BoilerplateDiscoverers}.
      * @param {ICanDiscoverBoilerplates[]} boilerplateDiscoverers
- 
      */
     constructor(boilerplateDiscoverers: ICanDiscoverBoilerplates[]) {
-        this.boilerplateDiscoverers = boilerplateDiscoverers;
+        this.discoverers = boilerplateDiscoverers;
     }
     
-    readonly boilerplateDiscoverers: ICanDiscoverBoilerplates[];
+    readonly discoverers: ICanDiscoverBoilerplates[];
     
-    /**
-     * @inheritdoc
-     *
-     * @readonly
-     * @type {string[]}
- 
-     */
     get boilerplatePaths() {
         let paths: string[] = [];
-        this.boilerplateDiscoverers.forEach(_ => paths.push(..._.boilerplatePaths));
+        this.discoverers.forEach(_ => paths.push(..._.boilerplatePaths));
         return paths;
     }
-    /**
-     * @inheritdoc
-     *
-     * @readonly
-     * @type {BoilerplatePackageJson[]}
- 
-     */
-    get discoveredBoilerplates(): BoilerplatePackageJson[] {
-        let boilerplates: BoilerplatePackageJson[] = [];
-        this.boilerplateDiscoverers.forEach(_ => boilerplates.push(..._.discoveredBoilerplates));
+
+    get discovered() {
+        let boilerplates: BoilerplatePackage[] = [];
+        this.discoverers.forEach(_ => boilerplates.push(..._.discovered));
         return boilerplates;
     }
 
-    addDiscoverers(...boilerplateDiscoverers: ICanDiscoverBoilerplates[]): void {
-        this.boilerplateDiscoverers.push(...boilerplateDiscoverers);
+    add(...boilerplateDiscoverers: ICanDiscoverBoilerplates[]) {
+        this.discoverers.push(...boilerplateDiscoverers);
     }
-    /**
-     * @inheritdoc
- 
-     */
+
     discover() {
-        this.boilerplateDiscoverers.forEach(_ => _.discover());
+        this.discoverers.forEach(_ => _.discover());
     }
 }

@@ -6,11 +6,12 @@
 import { OnStdCallback } from '@dolittle/tooling.common.utilities';
 import * as FsExtra from 'fs-extra';
 import path from 'path';
-import { IBoilerplateDiscoverers } from '../internal';
+import { IBoilerplateDiscoverers } from '../index';
 
 /**
  * Finds and gets the boilerplates installed on the local machine
  *
+ * @param {IBoilerplateDiscoverers} boilerplateDiscoverers
  * @param {OnStdCallback} [onStdOut] Optional callback for dealing with the standard text output  
  * @param {OnStdCallback} [onNoBoilerplates] Optional callback for dealing the text output when there are no boilerplates
  * @param {OnStdCallback} [onStdErr] Optional callback for dealing with the text output when an error occurs  

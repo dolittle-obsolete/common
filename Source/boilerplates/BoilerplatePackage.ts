@@ -3,7 +3,19 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-export type BoilerplatePackageJson =  {
+export const dolittleBoilerplatePackageKeywords = ['dolittle', 'boilerplates']; 
+
+/**
+ * Whether or not the package object represents a dolittle tooling boilerplate package
+ *
+ * @export
+ * @param {*} packageJson
+ */
+export function packageIsBoilerplate(packageJson: any) {
+    return packageJson.keywords && dolittleBoilerplatePackageKeywords.every(val => packageJson.keywords.includes(val));
+}
+
+export type BoilerplatePackage =  {
     /**
      * The name of the package
      *

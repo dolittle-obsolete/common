@@ -12,10 +12,10 @@ import { CacheConfig } from '@dolittle/tooling.common.configurations'
  * @extends {CacheConfig}
  */
 export class BoilerplatesConfig extends CacheConfig {
+    
     /**
-     * Creates an instance of {BoilerplatesConfig}.
+     * Instantiates an instance of {BoilerplatesConfig}.
      * @param {string} nodeModulesFolder
- 
      */
     constructor(nodeModulesFolder: string) {
         super('boilerplates', nodeModulesFolder, {});

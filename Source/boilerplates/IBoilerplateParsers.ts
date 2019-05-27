@@ -3,18 +3,25 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { Boilerplate } from "./index";
+import { Boilerplate, ICanParseBoilerplates } from "./index";
 
 /**
- * Defines a system that can parse boilerplates
+ * Defines a system that knows about boilerplate parsers {ICanParseBoilerplates}
  *
  * @export
- * @interface ICanParseBoilerplates
+ * @interface IBoilerplateParsers
  */
-export interface ICanParseBoilerplates {
+export interface IBoilerplateParsers {
 
     /**
-     * Whether or not this boilerplate parser can parse this boilerplate object.
+     * The instances of {ICanParseBoilerplates}
+     *
+     * @type {ICanParseBoilerplates[]}
+     */
+    readonly parsers: ICanParseBoilerplates[]
+
+    /**
+     * Whether or not this boilerplate object can be parsed
      *
      * @param {*} boilerplate
      * @returns {boolean}
@@ -29,4 +36,11 @@ export interface ICanParseBoilerplates {
      * @returns {Boilerplate}
      */
     parse(boilerplate: any, boilerplatePath: string): Boilerplate
+
+    /**
+     * Add boilerplate parsers
+     *
+     * @param {...ICanParseBoilerplates[]} parsers
+     */
+    add(...parsers: ICanParseBoilerplates[]): void
 }

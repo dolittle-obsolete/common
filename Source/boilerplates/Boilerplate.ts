@@ -8,7 +8,7 @@ import _path from 'path';
 import { artifactsBoilerplateType, Scripts } from './index';
 
 /**
- * Represents the base representation of a boilerplate
+ * Represents the abstract base of a boilerplate
  */
 export abstract class Boilerplate {
     
@@ -37,9 +37,9 @@ export abstract class Boilerplate {
                 'Templates' 
                 : 'Content');
     }
-    abstract static folderContentName: string;
+
     /**
-     * The name of the {BaseBoilerplate}
+     * The name of the {Boilerplate}
      *
      * @type {string}
  
@@ -47,43 +47,42 @@ export abstract class Boilerplate {
     readonly name: string;
 
     /**
-     * The language of the {BaseBoilerplate}
+     * The language of the {Boilerplate}
      *
      * @type {string}
      */
     readonly language: string;
 
     /**
-     * The description of the {BaseBoilerplate}
+     * The description of the {Boilerplate}
      *
      * @type {string}
      */
     readonly description: string;
 
     /**
-     * The type of {BaseBoilerplate}
+     * The type of {Boilerplate}
      *
      * @type {string}
      */
-
     readonly type: string;
 
     /**
-     * The dependencies of the {BaseBoilerplate}
+     * The dependencies of the {Boilerplate}
      *
      * @type {IDependency[]}
      */
     readonly dependencies: IDependency[];
 
     /**
-     * The namespace of the {BaseBoilerplate}
+     * The namespace of the {Boilerplate}
      *
      * @type {string}
      */
     readonly namespace: string;
 
     /**
-     * The scripts of the {BaseBoilerplate}
+     * The scripts of the {Boilerplate}
      *
      * @type {Scripts}
      */
@@ -108,7 +107,7 @@ export abstract class Boilerplate {
      *
      * @returns {boolean} 
      */
-    isInteractionLayer(): boolean {
+    isInteractionLayer() {
         return this.type === 'interaction';
     }   
 
@@ -117,9 +116,8 @@ export abstract class Boilerplate {
      *
      * @param {Boilerplate} boilerplate
      * @returns {boolean}
- 
      */
-    equals(boilerplate: Boilerplate): boolean {
+    equals(boilerplate: Boilerplate) {
         return this.language === boilerplate.language
                 && this.name === boilerplate.name
                 && this.type === boilerplate.type;
