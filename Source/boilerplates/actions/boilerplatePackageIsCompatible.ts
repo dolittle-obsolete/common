@@ -5,7 +5,6 @@
 import semver from 'semver';
 import { BoilerplatePackage } from "../index";
 
-const toolingPkg = require('../../package.json')
 
 /**
  * Whether or not this boilerplate package is compatible with the tooling version
@@ -13,6 +12,6 @@ const toolingPkg = require('../../package.json')
  * @export
  * @param {BoilerplatePackage} pkgJson
  */
-export function boilerplatePackageIsCompatible(pkgJson: BoilerplatePackage) {
-    return pkgJson.dolittle.tooling === semver.major(toolingPkg.version).toString()
+export function boilerplatePackageIsCompatible(pkgJson: BoilerplatePackage, toolingPackage: any) {
+    return pkgJson.dolittle.tooling === semver.major(toolingPackage.version).toString()
 } 

@@ -9,8 +9,6 @@ import semver from 'semver';
 import { Logger } from 'winston';
 import { BoilerplatePackage, IBoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplatesConfig, packageIsBoilerplate } from './index';
 
-const toolingPkg = require('../package.json');
-
 /**
  * Represents an implementation of {ICanDiscoverBoilerplates} for discovering locally installed boilerplates
  */
@@ -21,13 +19,14 @@ export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
 
     /**
      * Initializes a new instance of {BoilerplatesDiscoverer}
-     * @param {BoilerplatesConfig} boilerplateConfig
-     * @param {string} nodeModulesPath
-     * @param {IBoilerplatesLoader} boilerplatesLoader
-     * @param {typeof FsExtra} fileSystem
-     * @param {Logger} logger
+     * @param {BoilerplatesConfig} _boilerplateConfig
+     * @param {string} _toolingPackage
+     * @param {string} _nodeModulesPath
+     * @param {IBoilerplatesLoader} _boilerplatesLoader
+     * @param {typeof FsExtra} _fileSystem
+     * @param {Logger} _logger
      */
-    constructor(private _boilerplatesConfig: BoilerplatesConfig, private _nodeModulesPath: string, private _boilerplatesLoader: IBoilerplatesLoader, 
+    constructor(private _boilerplatesConfig: BoilerplatesConfig, private _toolingPackage: any, private _nodeModulesPath: string, private _boilerplatesLoader: IBoilerplatesLoader, 
         private _fileSystem: typeof FsExtra, private _logger: Logger) {
         this._discovered = [];
         this._boilerplatePaths = [];
@@ -44,7 +43,7 @@ export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
 
         this.boilerplatePaths.forEach(folderPath => {
             let packageJson: BoilerplatePackage = this._fileSystem.readJsonSync(path.join(folderPath, 'package.json'));
-            if (packageJson.dolittle.tooling === semver.major(toolingPkg.version).toString()) {
+            if (packageJson.dolittle.tooling === semver.major(this._toolingPackage.version).toString()) {
                 if (boilerplatesConfigObject[packageJson.name]) {
                     this._logger.warn(`Discovered a boilerplate with an already in-use name '${packageJson.name}'.`);
                     throw new Error(`Found two boilerplates with the same package name targeting the same tooling version.`);
