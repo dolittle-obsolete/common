@@ -12,6 +12,8 @@ let npmRootSpawn = spawn.sync('npm', ['root', '-g']);
 if (npmRootSpawn.error) throw npmRootSpawn.error;
 export const nodeModulesPath = npmRootSpawn.stdout.toString().replace(/\n$/, '');
 
+export const toolingPackage = _fsExtra.existsSync('./package.json')? require('./package.json') : require('../package.json');
+
 export const dolittleConfigDefault = {
     any: {
         concepts: 'Concepts',
