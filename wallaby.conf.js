@@ -10,10 +10,10 @@ module.exports = function (w) {
   process.env.NODE_PATH += path.delimiter + path.join(w.projectCacheDir, 'Source');
     return {
       files: [
-        { pattern: 'node_modules/chai/chai.js'},
-        { pattern: 'chai-as-promised/chai-as-promised.js', instrument: false },
-        { pattern: 'sinon/pkg/sinon.js', instrument: false },
-        { pattern: 'sinon-chai/lib/sinon-chai.js', instrument: false },
+        { pattern: 'node_modules/chai'},
+        { pattern: 'node_modules/chai-as-promised', instrument: false },
+        { pattern: 'node_modules/sinon/pkg', instrument: false },
+        { pattern: 'node_modules/sinon-chai', instrument: false },
         { pattern: 'Source/**/lib', ignore: true },
         { pattern: 'Source/**/for_*/**/*.spec.ts', ignore: true },
         { pattern: 'Source/**/for_*/**/*.given.ts'},
@@ -23,14 +23,18 @@ module.exports = function (w) {
           { pattern: 'Source/**/for_*/**/*.spec.ts'}
       ],
       testFramework: 'mocha',
-
       env: {
         type: 'node',
         runner: 'node'
       },
-
       compilers: {
-        'Source/**/*.ts': w.compilers.typeScript()
+        'Source/**/*.ts': w.compilers.typeScript({module: 'es2015'})
+      },
+      preprocessors: {
+        'Source/**/*.js': file => require('@babel/core').transform(
+          file.content,
+          {sourceMap: true, plugins: ['@babel/plugin-transform-modules-commonjs']}
+        )
       },
       setup: () => {
         global.expect = chai.expect;
