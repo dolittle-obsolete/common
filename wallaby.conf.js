@@ -10,10 +10,12 @@ module.exports = function (w) {
   process.env.NODE_PATH += path.delimiter + path.join(w.projectCacheDir, 'Source');
     return {
       files: [
+        { pattern: 'Source/**/package.json', instrument: false} ,
         { pattern: 'node_modules/chai'},
         { pattern: 'node_modules/chai-as-promised', instrument: false },
         { pattern: 'node_modules/sinon/pkg', instrument: false },
         { pattern: 'node_modules/sinon-chai', instrument: false },
+        { pattern: 'Source/**/*.d.ts', ignore: true },
         { pattern: 'Source/**/lib', ignore: true },
         { pattern: 'Source/**/for_*/**/*.spec.@(ts|js)', ignore: true },
         { pattern: 'Source/**/for_*/**/*.given.@(ts|js)'},
@@ -28,15 +30,11 @@ module.exports = function (w) {
         runner: 'node'
       },
       compilers: {
-        'Source/**/*.ts': w.compilers.typeScript({module: 'es2015'})
-      },
-      preprocessors: {
-        'Source/**/*.js': file => require('@babel/core').transform(
-          file.content,
-          {sourceMap: true, plugins: ['@babel/plugin-transform-modules-commonjs']}
-        )
+        // 'Source/**/*.ts': w.compilers.typeScript({module: 'es6'})
+        'Source/**/*.@(ts|js)': w.compilers.babel(JSON.parse(require('fs').readFileSync('.babelrc'))),
       },
       setup: () => {
+        process.env.WALLABY_TESTING = true;
         global.expect = chai.expect;
         let should = chai.should();
         global.sinon = require('sinon');
