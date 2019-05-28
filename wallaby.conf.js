@@ -15,12 +15,12 @@ module.exports = function (w) {
         { pattern: 'node_modules/sinon/pkg', instrument: false },
         { pattern: 'node_modules/sinon-chai', instrument: false },
         { pattern: 'Source/**/lib', ignore: true },
-        { pattern: 'Source/**/for_*/**/*.spec.ts', ignore: true },
-        { pattern: 'Source/**/for_*/**/*.given.ts'},
-        { pattern: 'Source/**/*.ts' }
+        { pattern: 'Source/**/for_*/**/*.spec.@(ts|js)', ignore: true },
+        { pattern: 'Source/**/for_*/**/*.given.@(ts|js)'},
+        { pattern: 'Source/**/*.@(ts|js)' }
       ],
       tests: [
-          { pattern: 'Source/**/for_*/**/*.spec.ts'}
+          { pattern: 'Source/**/for_*/**/*.spec.@(ts|js)'}
       ],
       testFramework: 'mocha',
       env: {
