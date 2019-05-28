@@ -13,7 +13,15 @@ import { ILatestCompatibleBoilerplateFinder, boilerplatePackageIsCompatible } fr
  * @class LatestCompatibleBoilerplateFinder
  * @implements 
  */
-export class LatestCompatibleBoilerplateFinder implements ILatestCompatibleBoilerplateFinder{
+export class LatestCompatibleBoilerplateFinder implements ILatestCompatibleBoilerplateFinder {
+
+    /**
+     * Instantiates an instance of {LatestCompatibleBoilerplateFinder}.
+     * @param {*} _toolingPackage
+     */
+    constructor(private _toolingPackage: any) {
+        
+    }
     /**
      * Gets the package.json of the latest compatible boilerplate with the given package name
      *
@@ -25,7 +33,7 @@ export class LatestCompatibleBoilerplateFinder implements ILatestCompatibleBoile
         let versionsObj = packageObj.versions;
         
         for (let version of Object.keys(versionsObj).reverse()) {
-            if (boilerplatePackageIsCompatible(<any>versionsObj[version])) {
+            if (boilerplatePackageIsCompatible(<any>versionsObj[version], this._toolingPackage)) {
                 return versionsObj[version];
             }
         } 

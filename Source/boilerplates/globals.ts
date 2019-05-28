@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { ProjectConfig } from '@dolittle/tooling.common.configurations';
-import { Guid, dolittleConfigDefault, folders, fileSystem, logger, nodeModulesPath } from '@dolittle/tooling.common.utilities';
+import { Guid, dolittleConfigDefault, folders, fileSystem, logger, nodeModulesPath, toolingPackage } from '@dolittle/tooling.common.utilities';
 import { dependencyParsers } from '@dolittle/tooling.common.dependencies';
 import Handlebars from 'handlebars';
 
@@ -45,14 +45,14 @@ let instancesOfICanParseBoilerplates: ICanParseBoilerplates[] = [
 export const boilerplateParsers: IBoilerplateParsers = new BoilerplateParsers(instancesOfICanParseBoilerplates);
 export const boilerplatesLoader: IBoilerplatesLoader = new BoilerplatesLoader(boilerplateParsers, boilerplatesConfig, folders, fileSystem, logger);
 let instancesOfICanDiscoverBoilerplates: ICanDiscoverBoilerplates[] = [
-    new LocalBoilerplatesDiscoverer(boilerplatesConfig, nodeModulesPath, boilerplatesLoader, fileSystem, logger)
+    new LocalBoilerplatesDiscoverer(boilerplatesConfig, toolingPackage, nodeModulesPath, boilerplatesLoader, fileSystem, logger)
 ];
 
 export const boilerplateDiscoverers: IBoilerplateDiscoverers = new BoilerplateDiscoverers(instancesOfICanDiscoverBoilerplates);
 
 export const boilerplates: IBoilerplates = new Boilerplates(boilerplatesLoader, folders, fileSystem, logger, Handlebars);
 
-export const latestCompatibleBoilerplateFinder: ILatestCompatibleBoilerplateFinder = new LatestCompatibleBoilerplateFinder();
+export const latestCompatibleBoilerplateFinder: ILatestCompatibleBoilerplateFinder = new LatestCompatibleBoilerplateFinder(toolingPackage);
 
 export const onlineBoilerplatesFinder = new OnlineBoilerplatesDiscoverer(latestCompatibleBoilerplateFinder, logger);
 
