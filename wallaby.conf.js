@@ -5,18 +5,19 @@
 
 const path = require('path');
 
+
 module.exports = function (w) {
 
   process.env.NODE_PATH += path.delimiter + path.join(w.projectCacheDir, 'Source');
     return {
       files: [
         { pattern: 'Source/**/package.json', instrument: false} ,
-        { pattern: 'node_modules/chai'},
+        { pattern: 'node_modules/chai', instrument: false},
         { pattern: 'node_modules/chai-as-promised', instrument: false },
         { pattern: 'node_modules/sinon/pkg', instrument: false },
         { pattern: 'node_modules/sinon-chai', instrument: false },
         { pattern: 'Source/**/*.d.ts', ignore: true },
-        { pattern: 'Source/**/lib', ignore: true },
+        { pattern: 'Source/**/lib/**', ignore: true },
         { pattern: 'Source/**/for_*/**/*.spec.@(ts|js)', ignore: true },
         { pattern: 'Source/**/for_*/**/*.given.@(ts|js)'},
         { pattern: 'Source/**/*.@(ts|js)' }
@@ -33,7 +34,13 @@ module.exports = function (w) {
         // 'Source/**/*.ts': w.compilers.typeScript({module: 'es6'})
         'Source/**/*.@(ts|js)': w.compilers.babel(JSON.parse(require('fs').readFileSync('.babelrc'))),
       },
-      setup: () => {
+      setup: (w) => {
+        require('module-alias').addAliases({
+          '@dolittle/tooling.common.utilities': w.projectCacheDir + '/Source/utilities',
+          '@dolittle/tooling.common.configurations': w.projectCacheDir + '/Source/configurations',
+          '@dolittle/tooling.common.dependencies': w.projectCacheDir + '/Source/dependencies',
+          '@dolittle/tooling.common.boilerplates': w.projectCacheDir + '/Source/boilerplates'
+        });
         process.env.WALLABY_TESTING = true;
         global.expect = chai.expect;
         let should = chai.should();
