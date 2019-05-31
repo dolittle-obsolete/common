@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 const path = require('path');
+
 /**
  * Stolen from https://gist.github.com/JamieMason/0566f8412af9fe6a1d470aa1e089a752
  * Returns a function that returns a function that groups an array of object by a property name, key 
@@ -14,42 +15,6 @@ export const groupBy = (key: string) => (array: any[]) =>
         objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
         return objectsByKeyValue;
     }, {});
-/**
- * Gets the full directory path
- * @param {string} filePath
- * @returns {string} directory path
- */
-export function getFileDirPath(filePath: string): string {
-    filePath = path.normalize(filePath);
-    return path.parse(filePath).dir;
-}
-/**
- * Gets the filename without extension
- * @param {string} filePath
- * @returns {string} filename
- */
-export function getFileName(filePath: string): string {
-    filePath = path.normalize(filePath);
-    return path.parse(filePath).name;
-}
-/**
- * Gets the filename with extension
- * @param {string} filePath
- * @returns {string} filename
- */
-export function getFileNameAndExtension(filePath: string): string {
-    filePath = path.normalize(filePath);
-    return path.parse(filePath).base;
-}
-/**
-  * Gets the directory name
-  * @param {string} filePath
-  * @returns {string} file dirname
-  */
-export function getFileDir(filePath: string): string {
-    filePath = path.normalize(filePath);
-    return path.dirname(filePath);
-}
 /**
  * Determines the destination of an artifact given the area, the core language, the input name of artifact, cwd and path of the bounded context
  * 

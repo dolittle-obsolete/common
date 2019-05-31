@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.utilities",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "description": "Common utilities for dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -29,16 +29,5 @@
     "build": "yarn clean && yarn ts:all",
     "clean": "rimraf dist && yarn ts:clean",
     "prepublishOnly": "yarn build"
-  },
-  "dependencies": {
-    "cross-spawn": "^6.0.5",
-    "fs-extra": "^8.0.1",
-    "is-online": "^8.2.0",
-    "latest-version": "^5.1.0",
-    "rc": "^1.2.8",
-    "winston": "^3.2.1"
-  },
-  "devDependencies": {
-    "@types/rc": "^1.1.0"
   }
 }
