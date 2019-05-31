@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.configurations",
-  "version": "5.0.3",
+  "version": "5.1.0",
   "description": "Common configuration system for dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -31,7 +31,8 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "conf": "^3.0.0"
+    "conf": "^3.0.0",
+    "rc": "^1.2.8"
   },
   "devDependencies": {
     "@types/conf": "^3.0.0"

@@ -7,3 +7,5 @@ export * from './ProjectConfig';
 
 export * from './applications'
 export * from './boundedContexts';
+
+export * from './globals';
