@@ -3,9 +3,12 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import spawn from 'cross-spawn';
+import { LatestCompatiblePackageFinder, ILatestCompatiblePackageFinder } from './index';
 
 let npmRootSpawn = spawn.sync('npm', ['root', '-g']);
 if (npmRootSpawn.error) throw npmRootSpawn.error;
 export const nodeModulesPath = npmRootSpawn.stdout.toString().replace(/\n$/, '');
 
 export const toolingPackage = process.env.WALLABY_TESTING? require('./package.json') : require('../package.json');
+
+export let latestCompatiblePackageFinder: ILatestCompatiblePackageFinder = new LatestCompatiblePackageFinder(toolingPackage);
