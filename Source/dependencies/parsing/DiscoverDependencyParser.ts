@@ -19,7 +19,7 @@ export class DiscoverDependencyParser implements ICanParseDependencies {
     }
 
     parse(obj: any, name: string): IDiscoverDependency {
-        if (!this.canParse(obj)) throw CannotParseDependency.new;
+        if (!this.canParse(obj)) throw new CannotParseDependency(name);
         return new DiscoverDependency(name, obj.description, obj.discoverType, obj.withNamespace,
             obj.milestone, obj.fileMatch, obj.contentMatch, obj.fromArea);
     }

@@ -46,8 +46,8 @@ import { IDependencyResolvers, ICanResolveDependencies, IDependency, MultipleRes
                     resolver = _;
                 }
             });
-            if (!resolver) throw new CannotResolveDependency(`Cannot resolve dependency with name '${dep.name}'`);
-            if (resolvers > 1) throw new MultipleResolversForDependency(`Found multiple resolvers for dependency '${dep.name}'`);
+            if (!resolver) throw new CannotResolveDependency(dep);
+            if (resolvers > 1) throw new MultipleResolversForDependency(dep);
             
             let deps = resolverToDependenciesMap.get(resolver);
             if (deps) resolverToDependenciesMap.set(resolver, [...deps, dep]);

@@ -2,26 +2,21 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
+import {Exception} from '@dolittle/tooling.common.utilities';
 /**
  * The exception that gets thrown when a the invocation of an operation is missing the core language parameter
  *
  * @export
  * @class MissingDestinationPath
- * @extends {Error}
+ * @extends {Exception}
  */
-export class MissingDestinationPath extends Error {
+export class MissingDestinationPath extends Exception {
 
     /**
      * Instantiates an instance of {MissingDestinationPath}.
-     * @param {...any[]} args
+     * @param {string} message 
      */
-    constructor(...args: any[]) {
-        super(...args);
-        Error.captureStackTrace(this, MissingDestinationPath);
+    constructor(message?: string) {
+        super(message? message : 'Missing destination path');
     }
-
-    static get new() {
-        return new MissingDestinationPath('Missing destination path');
-    } 
 }

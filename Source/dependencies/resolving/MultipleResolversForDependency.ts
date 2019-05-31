@@ -1,22 +1,24 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+*  Copyright (c) Dolittle. All rights reserved.
+*  Licensed under the MIT License. See LICENSE in the project root for license information.
+*--------------------------------------------------------------------------------------------*/
+import { Exception } from "@dolittle/tooling.common.utilities";
+import { IDependency } from "../index";
 
 /**
  * The exception that gets thrown when multiple dependency resolvers are found for a dependency
  *
  * @export
  * @class MultipleResolversForDependency
- * @extends {Error}
+ * @extends {Exception}
  */
-export class MultipleResolversForDependency extends Error {
-    constructor(...args: any[]) {
-        super(...args);
-        Error.captureStackTrace(this, MultipleResolversForDependency);
+export class MultipleResolversForDependency extends Exception {
+    
+    /**
+     * Instantiates an instance of {MultipleResolversForDependency}.
+     * @param {IDependency} dependency
+     */
+    constructor(dependency: IDependency) {
+        super(`Found multiple resolvers for dependency '${dependency.name}'`);
     }
-
-    static get new() {
-        return new MultipleResolversForDependency('Found multiple resolvers');
-    } 
 }

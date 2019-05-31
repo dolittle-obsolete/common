@@ -3,8 +3,13 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { folders, logger, fileSystem, dolittleConfig } from '@dolittle/tooling.common.utilities';
-import { IDependencyDiscoverResolver, DependencyDiscoverResolver, IDependencyResolvers, ICanResolveSyncDependencies, ArgumentDependencyResolver, DiscoverDependencyResolver, ICanResolveDependencies, DependencyResolvers, ICanParseDependencies, DiscoverDependencyParser, PromptDependencyParser, DiscoverAndPromptDependencyParser, IDependencyParsers, DependencyParsers } from './index';
+import { folders, fileSystem } from '@dolittle/tooling.common.files';
+import { dolittleConfig } from '@dolittle/tooling.common.configurations';
+import { logger } from '@dolittle/tooling.common.logging';
+import { 
+    IDependencyDiscoverResolver, DependencyDiscoverResolver, IDependencyResolvers, ICanResolveSyncDependencies, ArgumentDependencyResolver, DiscoverDependencyResolver, 
+    ICanResolveDependencies, DependencyResolvers, ICanParseDependencies, DiscoverDependencyParser, PromptDependencyParser, DiscoverAndPromptDependencyParser, IDependencyParsers, DependencyParsers 
+} from './index';
 
 export let dependencyDiscoverResolver: IDependencyDiscoverResolver = new DependencyDiscoverResolver(folders, fileSystem, dolittleConfig, logger);
 export function setDependencyDiscoverResolver(resolver: IDependencyDiscoverResolver) { dependencyDiscoverResolver = resolver; }

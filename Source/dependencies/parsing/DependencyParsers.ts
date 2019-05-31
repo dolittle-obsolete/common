@@ -31,11 +31,11 @@ export class DependencyParsers implements IDependencyParsers {
 
         this._parsers.forEach(_ => {
             if (_.canParse(obj)) {
-                if (parser !== null) throw MultipleParsersForDependency.new;
+                if (parser !== null) throw new MultipleParsersForDependency(name);
                 parser = _;
             }
         });
-        if (parser === null) throw CannotParseDependency.new;
+        if (parser === null) throw new CannotParseDependency(name);
         
         return (<ICanParseDependencies>parser).parse(obj, name);
     }

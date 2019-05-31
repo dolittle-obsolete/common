@@ -42,6 +42,6 @@ export abstract class Dependency implements IDependency {
     readonly type: string;
 
     private throwIfInvalidName() {
-        if (this.name === undefined || this.name.trim() === '') throw DependencyMissingField.new(this.name, 'name');
+        if (this.name === undefined || this.name.trim() === '') throw new DependencyMissingField(this, 'name');
     }
 }

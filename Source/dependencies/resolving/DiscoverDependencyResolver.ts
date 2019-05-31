@@ -21,10 +21,10 @@ export class DiscoverDependencyResolver implements ICanResolveSyncDependencies {
     constructor(private _discoverResolver: IDependencyDiscoverResolver, private _dolittleConfig: any) {}
 
     resolve(context: any, dependencies: IDependency[], destinationPath?: string, coreLanguage?: string, args?: string[]) {
-        if (!destinationPath) throw MissingDestinationPath.new;
-        if (!coreLanguage) throw MissingCoreLanguage.new;
+        if (!destinationPath) throw new MissingDestinationPath();
+        if (!coreLanguage) throw new MissingCoreLanguage();
         dependencies.forEach(dep => {
-            if (!this.canResolve(dep)) throw new CannotResolveDependency(`Could not resolve dependency with name '${dep.name}'`);
+            if (!this.canResolve(dep)) throw new CannotResolveDependency(dep);
             context[dep.name] = this._discoverResolver.resolve(<any>dep, destinationPath, coreLanguage, this._dolittleConfig);
         });
         return context;

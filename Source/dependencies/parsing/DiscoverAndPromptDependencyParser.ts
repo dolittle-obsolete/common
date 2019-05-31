@@ -19,7 +19,7 @@ export class DiscoverAndPromptDependencyParser implements ICanParseDependencies 
     }   
       
     parse(obj: any, name: string): IDiscoverDependency & IPromptDependency {
-        if (!this.canParse(obj)) throw CannotParseDependency.new;
+        if (!this.canParse(obj)) throw new CannotParseDependency(name);
         return new DiscoverAndPromptDependency(name, obj.description, obj.discoverType, obj.userInputType, obj.promptMessage, obj.choices,
             obj.customInput, obj.withNamespace, obj.milestone, obj.fileMatch, obj.contentMatch, obj.fromArea);
     }

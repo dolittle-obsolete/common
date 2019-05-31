@@ -1,26 +1,23 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+*  Copyright (c) Dolittle. All rights reserved.
+*  Licensed under the MIT License. See LICENSE in the project root for license information.
+*--------------------------------------------------------------------------------------------*/
+import { Exception } from "@dolittle/tooling.common.utilities";
+import { IDependency } from "../index";
 
 /**
  * The exception that gets throw when there aren't any dependency resolvers that can resolve a dependency
  *
  * @export
  * @class CannotResolveDependency
- * @extends {Error}
+ * @extends {Exception}
  */
-export class CannotResolveDependency extends Error {
+export class CannotResolveDependency extends Exception {
     /**
      * Instantiates an instance of {CannotResolveDependency}.
-     * @param {...any[]} args
+     * @param {IDependency} dependency
      */
-    constructor(...args: any[]) {
-        super(...args);
-        Error.captureStackTrace(this, CannotResolveDependency);
+    constructor(dependency: IDependency) {
+        super(`Cannot resolve dependency with name '${dependency.name}'`);
     }
-
-    static get new() {
-        return new CannotResolveDependency('Cannot resolve given dependency');
-    } 
 }

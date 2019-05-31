@@ -18,15 +18,15 @@ export class ArgumentDependencyResolver implements ICanResolveSyncDependencies {
         if (args === undefined && dependencies.length === 0) return context;
         else if (args !== undefined) {
             if (args.length !== dependencies.length) {
-                throw ArgumentsNotMatchingDependencies.new;
+                throw new ArgumentsNotMatchingDependencies();
             }
             dependencies.forEach((dep, i) => {
-                if (!this.canResolve(dep)) throw new CannotResolveDependency(`Could not resolve dependency with name '${dep.name}'`);
+                if (!this.canResolve(dep)) throw new CannotResolveDependency(dep);
                 context[dep.name] = args[i];        
             });
             return context;
         }
-        throw ArgumentsNotMatchingDependencies.new;
+        throw new ArgumentsNotMatchingDependencies();
     }    
     
     canResolve(dependency: IDependency): boolean {

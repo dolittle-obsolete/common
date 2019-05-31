@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir, Folders } from "@dolittle/tooling.common.utilities";
-import * as FsExtra from 'fs-extra';
-import { Logger } from 'winston';
+import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir, Folders } from "@dolittle/tooling.common.files";
+import {FileSystem} from '@dolittle/tooling.common.files';
+import { Logger } from '@dolittle/tooling.common.logging';
 import { MissingDestinationPath, MissingCoreLanguage, namespaceDiscoverType, multipleFilesDiscoverType, IDependencyDiscoverResolver, DependencyMissingField, DependencyDiscoverResult, IDiscoverDependency } from '../index';
 
 /**
@@ -24,11 +24,11 @@ export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
      * @param {*} _dolittleConfig
      * @param {Logger} _logger
      */
-    constructor(private _folders: Folders, private _fileSystem: typeof FsExtra, private _dolittleConfig: any, private _logger: Logger) {}
+    constructor(private _folders: Folders, private _fileSystem: FileSystem, private _dolittleConfig: any, private _logger: Logger) {}
 
     resolve(dependency: IDiscoverDependency, startLocation: string, coreLanguage: string, dolittleConfig: any = this._dolittleConfig ): DependencyDiscoverResult {
-        if (!startLocation) throw MissingDestinationPath.new;
-        if (!coreLanguage) throw MissingCoreLanguage.new;
+        if (!startLocation) throw new MissingDestinationPath();
+        if (!coreLanguage) throw new MissingCoreLanguage();
         if (dependency.discoverType === namespaceDiscoverType) {
             return this.createNamespace(dependency, startLocation);
         }
@@ -42,12 +42,12 @@ export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
     private discoverMultipleFiles(dependency: IDiscoverDependency, location: string, language: string, dolittleConfig: any): string[] | { value: string, namespace: string }[] {
         let filePaths: string[] = [];
         if (dependency.fromArea === undefined) {
-            if (!dependency.fileMatch) throw DependencyMissingField.new(dependency.name, 'fileMatch');
+            if (!dependency.fileMatch) throw new DependencyMissingField(dependency, 'fileMatch');
             filePaths = this._folders.searchRecursiveRegex(location, dependency.fileMatch);
         }
         else {
             const folders = this._folders.getNearestDirsSearchingUpwards(location, new RegExp(dolittleConfig[language][dependency.fromArea]));
-            if (!dependency.fileMatch) throw DependencyMissingField.new(dependency.name, 'fileMatch');
+            if (!dependency.fileMatch) throw new DependencyMissingField(dependency, 'fileMatch');
             folders.forEach(folder => filePaths.push(...this._folders.searchRecursiveRegex(folder, <RegExp>dependency.fileMatch)));
         }
         let results: any[] = [];
@@ -66,7 +66,7 @@ export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
         else {
             filePaths.forEach(filePath => {
                 let content = this._fileSystem.readFileSync(filePath, 'utf8');
-                if (!dependency.contentMatch) throw DependencyMissingField.new(dependency.name, 'contentMatch');
+                if (!dependency.contentMatch) throw new DependencyMissingField(dependency, 'contentMatch');
                 let theMatch = content.match(dependency.contentMatch);
                 if (theMatch !== null && theMatch.length > 0) {
                     let namespace = '';
@@ -84,7 +84,7 @@ export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
 
     private createNamespace(dependency: IDiscoverDependency, location: string): string {
         let milestoneRegexp = dependency.milestone;
-        if (!milestoneRegexp) throw DependencyMissingField.new(dependency.name, 'milestone');
+        if (!milestoneRegexp) throw new DependencyMissingField(dependency, 'milestone');
         const milestonePath = this._folders.getNearestFileSearchingUpwards(location, milestoneRegexp);
         if (milestonePath === null || milestonePath === '') {
             this._logger.warn('Could not discover the namespace');

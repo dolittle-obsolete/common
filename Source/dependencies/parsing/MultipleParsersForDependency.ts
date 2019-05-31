@@ -1,27 +1,23 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+*  Copyright (c) Dolittle. All rights reserved.
+*  Licensed under the MIT License. See LICENSE in the project root for license information.
+*--------------------------------------------------------------------------------------------*/
+import { Exception } from "@dolittle/tooling.common.utilities";
 
 /**
  * The exception that gets thrown when multiple dependency parsers are found for a dependency
  *
  * @export
  * @class MultipleParsersForDependency
- * @extends {Error}
+ * @extends {Exception}
  */
-export class MultipleParsersForDependency extends Error {
+export class MultipleParsersForDependency extends Exception {
     
     /**
      *Instantiates an instance of {MultipleParsersForDependency}.
-     * @param {...any[]} args
+     * @param {string} dependencyName
      */
-    constructor(...args: any[]) {
-        super(...args);
-        Error.captureStackTrace(this, MultipleParsersForDependency);
+    constructor(dependencyName: string) {
+        super(`Found multiple parsers for dependency with name '${dependencyName}'`);
     }
-
-    static get new() {
-        return new MultipleParsersForDependency('Found multiple dependency parsers');
-    } 
 }
