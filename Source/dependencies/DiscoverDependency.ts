@@ -30,7 +30,43 @@ export const dependencyDiscoverTypes = [
  */
 export class DiscoverDependency extends Dependency implements IDiscoverDependency  {
     
-    static throwIfInvalidDiscoverDependency(discoverType: string, withNamespace?: boolean, milestone?: RegExp, fileMatch?: RegExp) {
+    /**
+     * Instantiates an instance of {DiscoverDependency}.
+     * @param {string} name
+     * @param {string} description
+     * @param {string} discoverType
+     * @param {boolean} [withNamespace]
+     * @param {string} [milestone]
+     * @param {string} [fileMatch]
+     * @param {string} [contentMatch]
+     * @param {string} [fromArea]
+     */
+    constructor (name: string, description: string, discoverType: string, withNamespace?: boolean, milestone?: string, fileMatch?: string, 
+            contentMatch?: string, fromArea?: string ) {
+        super(name, description, 'discover');
+        this.discoverType = discoverType;
+        this.withNamespace = withNamespace;
+        this.milestone = milestone? new RegExp(milestone) : undefined;
+        this.fileMatch = fileMatch? new RegExp(fileMatch) : undefined;
+        this.contentMatch = contentMatch? new RegExp(contentMatch) : undefined;
+        this.fromArea = fromArea;
+
+        this.throwIfInvalidDiscoverDependency(discoverType, withNamespace, this.milestone, this.fileMatch);
+        this.throwIfInvalidArea();
+    }
+    readonly discoverType: string;
+
+    readonly withNamespace?: boolean;
+    
+    readonly milestone?: RegExp;
+    
+    readonly fileMatch?: RegExp;
+    
+    readonly contentMatch?: RegExp;
+    
+    readonly fromArea?: string;
+    
+    private throwIfInvalidDiscoverDependency(discoverType: string, withNamespace?: boolean, milestone?: RegExp, fileMatch?: RegExp) {
         let throwError = false;
         let errors = [];
 
@@ -54,42 +90,6 @@ export class DiscoverDependency extends Dependency implements IDiscoverDependenc
             throw new Error(`Invalid dependency. Errors:\n\t${errors.join('\n\t')}`);
         }
     }
-    /**
-     * Instantiates an instance of {DiscoverDependency}.
-     * @param {string} name
-     * @param {string} description
-     * @param {string} discoverType
-     * @param {boolean} [withNamespace]
-     * @param {string} [milestone]
-     * @param {string} [fileMatch]
-     * @param {string} [contentMatch]
-     * @param {string} [fromArea]
-     */
-    constructor (name: string, description: string, discoverType: string, withNamespace?: boolean, milestone?: string, fileMatch?: string, 
-            contentMatch?: string, fromArea?: string ) {
-        super(name, description, 'discover');
-        this.discoverType = discoverType;
-        this.withNamespace = withNamespace;
-        this.milestone = milestone? new RegExp(milestone) : undefined;
-        this.fileMatch = fileMatch? new RegExp(fileMatch) : undefined;
-        this.contentMatch = contentMatch? new RegExp(contentMatch) : undefined;
-        this.fromArea = fromArea;
-
-        DiscoverDependency.throwIfInvalidDiscoverDependency(discoverType, withNamespace, this.milestone, this.fileMatch);
-        this.throwIfInvalidArea();
-    }
-    readonly discoverType: string;
-
-    readonly withNamespace?: boolean;
-    
-    readonly milestone?: RegExp;
-    
-    readonly fileMatch?: RegExp;
-    
-    readonly contentMatch?: RegExp;
-    
-    readonly fromArea?: string;
-
     private throwIfInvalidArea() {
         if (this.fromArea !== undefined && !areas.includes(this.fromArea)) {
             throw new Error(`Invalid fromArea '${this.fromArea}'`);
