@@ -28,7 +28,12 @@ export class LatestCompatiblePackageFinder implements ILatestCompatiblePackageFi
      * @returns {Promise<BoilerplatePackage | null>}
      */
     async find(packageName: string, ...additionalKeywords: string[]) {
-        let packageObj = await packageJson(packageName, {allVersions: true, fullMetadata: true});
+        let packageObj: packageJson.FullMetadata;
+        try {
+            packageObj = await packageJson(packageName, {allVersions: true, fullMetadata: true});
+        } catch (error) {
+            return null;
+        }
         let versionsObj = packageObj.versions;
         
         for (let version of Object.keys(versionsObj).reverse()) {
