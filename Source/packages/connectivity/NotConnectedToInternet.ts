@@ -18,6 +18,5 @@ export class NotConnectedToInternet extends Exception {
      */
     constructor(message?: string) {
         super(message? message : 'Could not establish an internet connection');
-        Error.captureStackTrace(this, NotConnectedToInternet);
     }
 }
