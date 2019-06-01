@@ -16,7 +16,7 @@ import {requireInternet, OnStdCallback, DownloadPackageInfo } from '../index';
  * @param {OnStdCallback} [onStdErr] Optional callback for dealing with the text output when an error occurs  
  * @export
  */
-export async function downloadPackagesSync(packages: DownloadPackageInfo[], onStdOut?: OnStdCallback, onStdErr?: OnStdCallback) {
+export async function downloadPackagesFromNpmSync(packages: DownloadPackageInfo[], onStdOut?: OnStdCallback, onStdErr?: OnStdCallback) {
     await requireInternet(onStdOut, onStdErr);
     spawn.sync('npm', ['i', '-g', ...packages.map(_ => _.version? `${_.name}@${_.version}` : _.name)], {cwd: process.cwd(), stdio: 'inherit'});
                 
@@ -30,7 +30,7 @@ export async function downloadPackagesSync(packages: DownloadPackageInfo[], onSt
  * @param {OnStdCallback} [onStdErr] Optional callback for dealing with the text output when an error occurs  
  * @export
  */
-export async function downloadPackages(packages: DownloadPackageInfo[], onStdOut?: OnStdCallback, onStdErr?: OnStdCallback) {
+export async function downloadPackagesFromNpm(packages: DownloadPackageInfo[], onStdOut?: OnStdCallback, onStdErr?: OnStdCallback) {
     await requireInternet(onStdOut, onStdErr);
     await spawn('npm', ['i', '-g', ...packages.map(_ => _.version? `${_.name}@${_.version}` : _.name)], {cwd: process.cwd(), stdio: 'inherit'});         
 }
