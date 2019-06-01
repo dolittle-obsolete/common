@@ -4,6 +4,9 @@
         {"path": "Source/boilerplates"},
         {"path": "Source/configurations"},
         {"path": "Source/dependencies"},
+        {"path": "Source/files"},
+        {"path": "Source/packages"},
+        {"path": "Source/logging"},
         {"path": "Source/utilities"}
     ]
 }

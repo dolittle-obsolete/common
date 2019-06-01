@@ -40,6 +40,9 @@ module.exports = function (w) {
       setup: (w) => {
         require('module-alias').addAliases({
           '@dolittle/tooling.common.utilities': w.projectCacheDir + '/Source/utilities',
+          '@dolittle/tooling.common.files': w.projectCacheDir + '/Source/files',
+          '@dolittle/tooling.common.packages': w.projectCacheDir + '/Source/packages',
+          '@dolittle/tooling.common.logging': w.projectCacheDir + '/Source/logging',
           '@dolittle/tooling.common.configurations': w.projectCacheDir + '/Source/configurations',
           '@dolittle/tooling.common.dependencies': w.projectCacheDir + '/Source/dependencies',
           '@dolittle/tooling.common.boilerplates': w.projectCacheDir + '/Source/boilerplates'
