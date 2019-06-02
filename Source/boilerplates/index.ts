@@ -33,8 +33,8 @@ export * from './initBoilerplatesSystem';
 export * from './listBoilerplatesInUse';
 export * from './listInstalledBoilerplates';
 
-export * from './content/index'
-export * from './templates/index';
+export * from './contentBoilerplate/index'
+export * from './templatesBoilerplate/index';
 export * from './online/index';
 export * from './applications/index';
 export * from './boundedContexts/index';

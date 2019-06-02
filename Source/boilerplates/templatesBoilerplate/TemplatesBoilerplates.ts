@@ -5,7 +5,7 @@
 import { FileSystem, Folders, getFileNameAndExtension } from '@dolittle/tooling.common.files';
 import { Logger } from '@dolittle/tooling.common.logging';
 import path from 'path';
-import { ITemplatesBoilerplate, ITemplate, CreatedTemplateDetails, ITemplatesBoilerplates, IBoilerplates, Handlebars, boilerplateIsTemplatesBoilerplate } from '../index';
+import { ITemplatesBoilerplate, ITemplate, CreatedTemplateDetails, ITemplatesBoilerplates, IBoilerplates, Handlebars, boilerplateIsTemplatesBoilerplate, Boilerplates, IBoilerplatesLoader } from '../index';
 
 /**
  * Manages the artifacts
@@ -13,7 +13,7 @@ import { ITemplatesBoilerplate, ITemplate, CreatedTemplateDetails, ITemplatesBoi
  * @export
  * @class ArtifactsManager
  */
-export class TemplatesBoilerplates implements ITemplatesBoilerplates {
+export class TemplatesBoilerplates extends Boilerplates implements ITemplatesBoilerplates {
 
     private _loadedBoilerplates: ITemplatesBoilerplate[] = [];
     private _templates: ITemplate[] = [];
@@ -25,47 +25,21 @@ export class TemplatesBoilerplates implements ITemplatesBoilerplates {
      * @param {Handlebars} _handlebars
      * @param {Logger} _logger
      */
-    constructor(private _boilerplates: IBoilerplates, private _folders: Folders, private _fileSystem: FileSystem, private _handlebars: Handlebars, private _logger: Logger) {}
+    constructor(boilerplatesLoader: IBoilerplatesLoader, private _folders: Folders, private _fileSystem: FileSystem, private _handlebars: Handlebars, private _logger: Logger) {
+        super(boilerplatesLoader);
+    }
 
     get boilerplates() {
-        this.reload();
-        return this._loadedBoilerplates;
+        return super.boilerplates.filter(boilerplateIsTemplatesBoilerplate);
     }
     get templates() {
-        this.reload();
-        return this._templates;
+        return this.boilerplates.map(_ => _.templates).reduce((a, b) => a.concat(b), []);
     }
 
-    byNamespace(namespace: string | undefined) {
-        return this.boilerplates.filter(_ => {
-            if (namespace && _.namespace) return _.namespace === namespace;
-            return true;
-        });
-    }
-
-    byLanguage(language: string, namespace?: string) {
-        let boilerplates = this.byNamespace(namespace);
-        return boilerplates.filter( _ => {
-            return _.language && language; 
-        });
-    }
-
-    byType(type: string, namespace?: string) {
-        let boilerplates = this.byNamespace(namespace);
-        return boilerplates.filter( _ => {
-            return _.type && type; 
-        });
-    }
-    byLanguageAndType(language: string, type: string, namespace?: string) {
-        let boilerplates = this.byNamespace(namespace);
-        return boilerplates.filter( _ => {
-            return _.language === language && _.type === type; 
-        });
-    }
 
     templatesByType(templateType: string, namespace?: string) {
         return this.byNamespace(namespace)
-                    .map(_ => _.templatesByType(templateType)).reduce((a, b) => a.concat(b), []);
+                    .map((_: any) => (_ as ITemplatesBoilerplate).templatesByType(templateType)).reduce((a, b) => a.concat(b), []);
     }
     
     create(context: any, template: ITemplate, boilerplate: ITemplatesBoilerplate, destinationPath: string): CreatedTemplateDetails {
@@ -88,10 +62,5 @@ export class TemplatesBoilerplates implements ITemplatesBoilerplates {
         });
 
         return {template: template, boilerplate: boilerplate, destination: destinationPath};
-    }
-
-    private reload()  {
-        this._loadedBoilerplates = this._boilerplates.boilerplates.filter(boilerplateIsTemplatesBoilerplate);
-        this._templates = this._loadedBoilerplates.map(_ => _.templates).reduce((a, b) => a.concat(b), []);
     }
 }

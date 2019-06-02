@@ -5,54 +5,32 @@
 import { Folders, FileSystem } from '@dolittle/tooling.common.files';
 import { Logger } from '@dolittle/tooling.common.logging';
 import path from 'path';
-import { Handlebars, IContentBoilerplates, IBoilerplates, IContentBoilerplate, boilerplateIsContentBoilerplate} from '../index';
+import { Handlebars, IContentBoilerplates, IContentBoilerplate, boilerplateIsContentBoilerplate, Boilerplates} from '../index';
+import { IBoilerplatesLoader } from 'IBoilerplatesLoader';
 
 /**
  * Represents an implementation of {IContentBoilerplates}
  */
-export class ContentBoilerplates implements IContentBoilerplates {
+export class ContentBoilerplates extends Boilerplates implements IContentBoilerplates {
 
     /**
      * Instantiates an instance of {ContentBoilerplates}.
-     * @param {IBoilerplates} _boilerplates
+     * @param {IBoilerplatesLoader} boilerplatesLoader
      * @param {Folders} _folders
      * @param {FileSystem} _fileSystem
      * @param {Logger} _logger
      * @param {Handlebars} _handlebars
      */
-    constructor(private _boilerplates: IBoilerplates, private _folders: Folders, private _fileSystem: FileSystem, private _logger: Logger, private _handlebars: Handlebars) {}
+    constructor(boilerplatesLoader: IBoilerplatesLoader, private _folders: Folders, private _fileSystem: FileSystem, private _logger: Logger, private _handlebars: Handlebars) {
+        super(boilerplatesLoader);
+    }
     
     get boilerplates() {
-        return this._boilerplates.boilerplates.filter(boilerplateIsContentBoilerplate);
-    }
-
-    byNamespace(namespace: string | undefined) {
-        return this.boilerplates.filter(_ => {
-            if (_.namespace) return _.namespace === namespace;
-            return true;
-        })
-    }
-
-    byLanguage(language: string, namespace?: string) {
-        return this.byNamespace(namespace).filter(_ => {
-            return _.language === language
-        });
-    }
-
-    byType(type: string, namespace?: string) {
-        return this.byNamespace(namespace).filter(_ => {
-            return _.type === type;
-        });
-    }
-
-    byLanguageAndType(language: string, type: string, namespace?: string) {
-        return this.byNamespace(namespace).filter(_ => {
-            return _.language == language && _.type == type;
-        });
+        return super.boilerplates.filter(boilerplateIsContentBoilerplate);
     }
 
     adornmentsFor(parentType: string, parentLanguage?: string, parentName?: string, namespace?: string) {
-        let boilerplates = this.byNamespace(namespace).filter(_ => {
+        let boilerplates = (this.byNamespace(namespace) as IContentBoilerplate[]).filter(_ => {
             return _.parent && _.parent.type === parentType;
         });
         if (parentLanguage) boilerplates = boilerplates.filter(_ => {
