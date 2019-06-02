@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { argumentUserInputType, promptDependencyType, ICanResolveSyncDependencies, IDependency, ArgumentsNotMatchingDependencies, CannotResolveDependency } from "../index";
+import { argumentUserInputType, ICanResolveSyncDependencies, IDependency, ArgumentsNotMatchingDependencies, CannotResolveDependency, dependencyIsPromptDependency } from "../index";
 
 /**
  * Represents an implementation of {ICanResolveSyncDependencies} for resolving argument dependencies
@@ -30,7 +30,7 @@ export class ArgumentDependencyResolver implements ICanResolveSyncDependencies {
     }    
     
     canResolve(dependency: IDependency): boolean {
-        return dependency.type === promptDependencyType && (<any>dependency).userInputType === argumentUserInputType;
+        return dependencyIsPromptDependency(dependency) && dependency.userInputType === argumentUserInputType;
     }
 
 }

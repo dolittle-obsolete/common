@@ -37,7 +37,7 @@ export class DependencyParsers implements IDependencyParsers {
         });
         if (parser === null) throw new CannotParseDependency(name);
         
-        return (<ICanParseDependencies>parser).parse(obj, name);
+        return (parser as ICanParseDependencies).parse(obj, name);
     }
 
 }

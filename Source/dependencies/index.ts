@@ -13,6 +13,8 @@ export * from './IDependency';
 export * from './IDiscoverDependency';
 export * from './InvalidDependencyType'
 export * from './IPromptDependency';
+export * from './dependencyIsPromptDependency';
+export * from './dependencyIsDiscoverDependency';
 export * from './MissingCoreLanguage';
 export * from './MissingDestinationPath';
 export * from './PromptDependency';

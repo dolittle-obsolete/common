@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { discoverDependencyType, ICanResolveSyncDependencies, IDependency, IDependencyDiscoverResolver, MissingDestinationPath, MissingCoreLanguage, CannotResolveDependency } from "../index";
+import { dependencyIsDiscoverDependency } from "../dependencyIsDiscoverDependency";
 
 /**
  * Resolves {DiscoverDependency}
@@ -31,6 +32,6 @@ export class DiscoverDependencyResolver implements ICanResolveSyncDependencies {
     }    
     
     canResolve(dependency: IDependency): boolean {
-        return dependency.type === discoverDependencyType && (<any>dependency).userInputType === undefined;
+        return dependencyIsDiscoverDependency(dependency) && (dependency as any).userInputType === undefined;
     }
 }
