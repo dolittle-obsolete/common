@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { ITemplatesBoilerplate, templatesBoilerplateType } from "../index";
+import { ITemplatesBoilerplate, templatesBoilerplateType, IBoilerplate } from "../index";
 
 /**
  * Type-guard for {ITemplatesBoilerplate}
@@ -10,6 +10,6 @@ import { ITemplatesBoilerplate, templatesBoilerplateType } from "../index";
  * @export
  * @param {IBoilerplate} boilerplate
  */
-export function boilerplateIsTemplatesBoilerplate(boilerplate: any): boilerplate is ITemplatesBoilerplate {
+export function boilerplateIsTemplatesBoilerplate(boilerplate: IBoilerplate): boilerplate is ITemplatesBoilerplate {
     return boilerplate.type === templatesBoilerplateType;
 }

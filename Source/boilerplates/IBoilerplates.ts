@@ -20,6 +20,14 @@ export interface IBoilerplates {
     readonly boilerplates: IBoilerplate[];
 
     /**
+     * Get all boilerplates for a namespace
+     * 
+     * @param {string | undefined} namespace
+     * @returns {IBoilerplate[]}
+     */
+    byNamespace(namespace: string | undefined): IBoilerplate[];
+
+    /**
      * Get all boilerplates for a specific language
      * 
      * @param {string} language

@@ -3,8 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { IDependency } from '@dolittle/tooling.common.dependencies';
-import { getFileDirPath, getFileNameAndExtension } from '@dolittle/tooling.common.files';
-import { Template, Boilerplate, Scripts, templatesBoilerplateContentDirectoryName, ITemplate, templatesBoilerplateType, ITemplatesBoilerplate } from '../index';
+import { Boilerplate, Scripts, templatesBoilerplateContentDirectoryName, ITemplate, templatesBoilerplateType, ITemplatesBoilerplate } from '../index';
 
 /**
  * Represents an implementation of {ITemplatesBoilerplate}

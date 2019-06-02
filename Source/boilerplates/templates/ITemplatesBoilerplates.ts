@@ -18,32 +18,15 @@ export interface ITemplatesBoilerplates extends IBoilerplates {
      * @type {ITemplate[]}
      */
     readonly templates: ITemplate[]
-
-    /**
-     * Gets all templates for a specific language
-     *
-     * @param {string} language
-     * @returns {ITemplate[]}
-     */
-    templatesByLanguage(language: string): ITemplate[]
-
-
+    
     /**
      * Gets all templates for a specific template type
      *
      * @param {string} templateType
+     * @param {string} [namespace]
      * @returns {ITemplate[]}
      */
-    templatesByType(templateType: string): ITemplate[]
-
-    /**
-     * Gets all templates for a specific language and type
-     *
-     * @param {string} language
-     * @param {string} templateType
-     * @returns {ITemplate[]}
-     */
-    templatesByLanguageAndType(language: string, templateType: string): ITemplate[]
+    templatesByType(templateType: string, namespace?: string): ITemplate[]
     
     /**
      * Creates a template base on the {ITemplate} at the given destination

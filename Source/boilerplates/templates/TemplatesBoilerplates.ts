@@ -5,8 +5,7 @@
 import { FileSystem, Folders, getFileNameAndExtension } from '@dolittle/tooling.common.files';
 import { Logger } from '@dolittle/tooling.common.logging';
 import path from 'path';
-import { ITemplatesBoilerplate, ITemplate, CreatedTemplateDetails, ITemplatesBoilerplates, IBoilerplates, WrongBoilerplateType, Handlebars } from '../index';
-import { templatesBoilerplateType } from './templatesBoilerplateType';
+import { ITemplatesBoilerplate, ITemplate, CreatedTemplateDetails, ITemplatesBoilerplates, IBoilerplates, Handlebars, boilerplateIsTemplatesBoilerplate } from '../index';
 
 /**
  * Manages the artifacts
@@ -17,7 +16,7 @@ import { templatesBoilerplateType } from './templatesBoilerplateType';
 export class TemplatesBoilerplates implements ITemplatesBoilerplates {
 
     private _loadedBoilerplates: ITemplatesBoilerplate[] = [];
-
+    private _templates: ITemplate[] = [];
     /**
      * Instantiates an instance of {ArtifactTemplatesManager}.
      * @param {IBoilerplates} _boilerplates
@@ -29,19 +28,47 @@ export class TemplatesBoilerplates implements ITemplatesBoilerplates {
     constructor(private _boilerplates: IBoilerplates, private _folders: Folders, private _fileSystem: FileSystem, private _handlebars: Handlebars, private _logger: Logger) {}
 
     get boilerplates() {
-        this.loadAllBoilerplates();
+        this.reload();
         return this._loadedBoilerplates;
     }
+    get templates() {
+        this.reload();
+        return this._templates;
+    }
 
-    boilerplatesByLanguage(language: string, namespace?: string) {
-        let boilerplates = this.boilerplates;
+    byNamespace(namespace: string | undefined) {
+        return this.boilerplates.filter(_ => {
+            if (namespace && _.namespace) return _.namespace === namespace;
+            return true;
+        });
+    }
+
+    byLanguage(language: string, namespace?: string) {
+        let boilerplates = this.byNamespace(namespace);
         return boilerplates.filter( _ => {
-            if (namespace && _.namespace) return _.namespace === namespace && _.language === language;
             return _.language && language; 
         });
     }
+
+    byType(type: string, namespace?: string) {
+        let boilerplates = this.byNamespace(namespace);
+        return boilerplates.filter( _ => {
+            return _.type && type; 
+        });
+    }
+    byLanguageAndType(language: string, type: string, namespace?: string) {
+        let boilerplates = this.byNamespace(namespace);
+        return boilerplates.filter( _ => {
+            return _.language === language && _.type === type; 
+        });
+    }
+
+    templatesByType(templateType: string, namespace?: string) {
+        return this.byNamespace(namespace)
+                    .map(_ => _.templatesByType(templateType)).reduce((a, b) => a.concat(b), []);
+    }
     
-    createTemplate(context: any, template: ITemplate, boilerplate: ITemplatesBoilerplate, destinationPath: string): CreatedTemplateDetails {
+    create(context: any, template: ITemplate, boilerplate: ITemplatesBoilerplate, destinationPath: string): CreatedTemplateDetails {
         this._logger.info(`Creating a template of type '${template.type}' and language '${boilerplate.language}' at destination ${destinationPath}`);
         
         this._folders.makeFolderIfNotExists(destinationPath);
@@ -63,10 +90,8 @@ export class TemplatesBoilerplates implements ITemplatesBoilerplates {
         return {template: template, boilerplate: boilerplate, destination: destinationPath};
     }
 
-    private loadAllBoilerplates()  {
-        this._loadedBoilerplates = this._boilerplates.byType(templatesBoilerplateType).map(_ => {
-            if (_ instanceof TemplatesBoilerplate) return _;
-            else throw new WrongBoilerplateType(`Expected boilerplate of type '${TemplatesBoilerplate.name}' but got a '${_.constructor.name}'`)
-        });
+    private reload()  {
+        this._loadedBoilerplates = this._boilerplates.boilerplates.filter(boilerplateIsTemplatesBoilerplate);
+        this._templates = this._loadedBoilerplates.map(_ => _.templates).reduce((a, b) => a.concat(b), []);
     }
 }

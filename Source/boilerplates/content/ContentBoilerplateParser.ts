@@ -5,7 +5,7 @@
 import { IDependencyParsers } from "@dolittle/tooling.common.dependencies";
 import { Folders, FileSystem } from "@dolittle/tooling.common.files";
 import path from 'path';
-import { ICanParseBoilerplates, templatesBoilerplateType, Scripts, ContentBoilerplate, contentBoilerplateContentDirectoryName, CannotParseBoilerplate } from "../index";
+import { ICanParseBoilerplates, Scripts, ContentBoilerplate, contentBoilerplateContentDirectoryName, CannotParseBoilerplate, boilerplateIsContentBoilerplate, contentBoilerplateContentDirectoryFromPath } from "../index";
 
 const binaryFiles = [
     '.jpg',
@@ -33,7 +33,7 @@ export class ContentBoilerplateParser implements ICanParseBoilerplates {
     constructor (private _dependencyParsers: IDependencyParsers, private _folders: Folders, private _fileSystem: FileSystem) {}
     
     canParse(boilerplate: any) {
-        return boilerplate.type !== templatesBoilerplateType;
+        return boilerplateIsContentBoilerplate(boilerplate);
     }
     
     parse(boilerplate: any, boilerplatePath: string) {
@@ -52,12 +52,12 @@ export class ContentBoilerplateParser implements ICanParseBoilerplates {
             boilerplate.target,
             boilerplate.framework,
             boilerplate.parent,
-            boilerplatePath,
+            contentBoilerplateContentDirectoryFromPath(boilerplatePath),
             bindings.pathsNeedingBinding,
             bindings.filesNeedingBinding
         );
     }
-    
+
     /**
      * Gets the path and file bindings for a boilerplate
      * 

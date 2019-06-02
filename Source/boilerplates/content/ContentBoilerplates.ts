@@ -26,30 +26,33 @@ export class ContentBoilerplates implements IContentBoilerplates {
         return this._boilerplates.boilerplates.filter(boilerplateIsContentBoilerplate);
     }
 
-    byLanguage(language: string, namespace?: string) {
+    byNamespace(namespace: string | undefined) {
         return this.boilerplates.filter(_ => {
-            if (_.namespace) return _.namespace === namespace && _.language === language;
+            if (_.namespace) return _.namespace === namespace;
+            return true;
+        })
+    }
+
+    byLanguage(language: string, namespace?: string) {
+        return this.byNamespace(namespace).filter(_ => {
             return _.language === language
         });
     }
 
     byType(type: string, namespace?: string) {
-        return this.boilerplates.filter(_ => {
-            if (_.namespace) return _.namespace === namespace && _.type === type;
+        return this.byNamespace(namespace).filter(_ => {
             return _.type === type;
         });
     }
 
     byLanguageAndType(language: string, type: string, namespace?: string) {
-        return this.boilerplates.filter(_ => {
-            if (_.namespace) return _.namespace === namespace && _.language == language && _.type == type;
+        return this.byNamespace(namespace).filter(_ => {
             return _.language == language && _.type == type;
         });
     }
 
     adornmentsFor(parentType: string, parentLanguage?: string, parentName?: string, namespace?: string) {
-        let boilerplates = this.boilerplates.filter(_ => {
-            if (_.namespace) return _.namespace === namespace && (_.parent && _.parent.type === parentType)
+        let boilerplates = this.byNamespace(namespace).filter(_ => {
             return _.parent && _.parent.type === parentType;
         });
         if (parentLanguage) boilerplates = boilerplates.filter(_ => {
