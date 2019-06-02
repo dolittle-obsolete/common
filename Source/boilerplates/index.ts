@@ -28,14 +28,17 @@ export * from './ICanDiscoverBoilerplates';
 export * from './IScriptRunner';
 export * from './ScriptRunner';
 
-
+export * from './askToChooseBoilerplate';
+export * from './initBoilerplatesSystem';
+export * from './listBoilerplatesInUse';
+export * from './listInstalledBoilerplates';
 
 export * from './content/index'
 export * from './templates/index';
 export * from './online/index';
-export * from './actions/index';
 export * from './applications/index';
 export * from './boundedContexts/index';
 export * from './configurations/index';
+
 
 export * from './globals';

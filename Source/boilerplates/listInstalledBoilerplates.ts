@@ -5,7 +5,7 @@
 import { OnStdCallback } from '@dolittle/tooling.common.packages';
 import {FileSystem} from '@dolittle/tooling.common.files';
 import path from 'path';
-import { IBoilerplateDiscoverers } from '../index';
+import { IBoilerplateDiscoverers } from './index';
 
 /**
  * Finds and gets the boilerplates installed on the local machine
