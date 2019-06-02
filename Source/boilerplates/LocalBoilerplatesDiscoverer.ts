@@ -2,19 +2,19 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
-import * as FsExtra from 'fs-extra';
+import {FileSystem} from '@dolittle/tooling.common.files';
+import { Logger } from '@dolittle/tooling.common.logging';
+import { ToolingPackage } from '@dolittle/tooling.common.packages';
 import path from 'path';
 import semver from 'semver';
-import { Logger } from 'winston';
-import { BoilerplatePackage, IBoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplatesConfig, packageIsBoilerplate } from './index';
+import { IBoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplatesConfig, packageIsBoilerplatePackage } from './index';
 
 /**
  * Represents an implementation of {ICanDiscoverBoilerplates} for discovering locally installed boilerplates
  */
 export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
 
-    private _discovered: BoilerplatePackage[];
+    private _discovered: ToolingPackage[];
     private _boilerplatePaths: string[];
 
     /**
@@ -23,18 +23,18 @@ export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
      * @param {string} _toolingPackage
      * @param {string} _nodeModulesPath
      * @param {IBoilerplatesLoader} _boilerplatesLoader
-     * @param {typeof FsExtra} _fileSystem
+     * @param {FileSystem} _fileSystem
      * @param {Logger} _logger
      */
     constructor(private _boilerplatesConfig: BoilerplatesConfig, private _toolingPackage: any, private _nodeModulesPath: string, private _boilerplatesLoader: IBoilerplatesLoader, 
-        private _fileSystem: typeof FsExtra, private _logger: Logger) {
+        private _fileSystem: FileSystem, private _logger: Logger) {
         this._discovered = [];
         this._boilerplatePaths = [];
     }
 
     get boilerplatePaths() {return this._boilerplatePaths; }
     
-    get discovered(): BoilerplatePackage[] {return this._discovered;}
+    get discovered(): ToolingPackage[] {return this._discovered;}
     
     discover() {
         this._boilerplatePaths = this.getLocalPaths(this._nodeModulesPath);
@@ -42,7 +42,7 @@ export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
         let boilerplatesConfigObject: any = {};
 
         this.boilerplatePaths.forEach(folderPath => {
-            let packageJson: BoilerplatePackage = this._fileSystem.readJsonSync(path.join(folderPath, 'package.json'));
+            let packageJson: ToolingPackage = this._fileSystem.readJsonSync(path.join(folderPath, 'package.json'));
             if (packageJson.dolittle.tooling === semver.major(this._toolingPackage.version).toString()) {
                 if (boilerplatesConfigObject[packageJson.name]) {
                     this._logger.warn(`Discovered a boilerplate with an already in-use name '${packageJson.name}'.`);
@@ -65,7 +65,7 @@ export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
                     filePath = path.normalize(filePath);
                     if (path.parse(filePath).base === 'package.json') {
                         let packageJson = this._fileSystem.readJsonSync(filePath);
-                        if (packageIsBoilerplate(packageJson)) {
+                        if (packageIsBoilerplatePackage(packageJson)) {
                             let folderPath = path.parse(filePath).dir;
                             pluginPackagePaths.push(folderPath);
                         }

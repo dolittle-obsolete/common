@@ -2,8 +2,8 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
-import { BoilerplatePackage, ICanDiscoverBoilerplates, IBoilerplateDiscoverers } from './index';
+import { ToolingPackage } from '@dolittle/tooling.common.packages';
+import { ICanDiscoverBoilerplates, IBoilerplateDiscoverers } from './index';
 
 /**
  * Represents an implementation of {IBoilerplateDiscoverers}
@@ -31,7 +31,7 @@ export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
     }
 
     get discovered() {
-        let boilerplates: BoilerplatePackage[] = [];
+        let boilerplates: ToolingPackage[] = [];
         this.discoverers.forEach(_ => boilerplates.push(..._.discovered));
         return boilerplates;
     }

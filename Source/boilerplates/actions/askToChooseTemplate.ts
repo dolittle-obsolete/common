@@ -4,14 +4,14 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { IDependencyResolvers, PromptDependency, chooseOneUserInputType } from '@dolittle/tooling.common.dependencies';
-import { ArtifactTemplate } from '../index';
+import { Template } from '../index';
 
 /**
  * Prompts the user to choose a template
- * @param {ArtifactTemplate[]} templates
+ * @param {Template[]} templates
  * @param {IDependencyResolvers} resolvers
  */
-export async function chooseTemplate(templates: ArtifactTemplate[], resolvers: IDependencyResolvers) {
+export async function chooseTemplate(templates: Template[], resolvers: IDependencyResolvers) {
     if (templates.length && templates.length > 0) {
         let template = await askWhichTemplate(templates, resolvers);
         return template;
@@ -19,9 +19,9 @@ export async function chooseTemplate(templates: ArtifactTemplate[], resolvers: I
     return null;
 }
 
-async function askWhichTemplate(templates: ArtifactTemplate[], resolvers: IDependencyResolvers) {
+async function askWhichTemplate(templates: Template[], resolvers: IDependencyResolvers) {
     let choices = templates.map(_ => new Object({name: `${_.name} language: ${_.boilerplate.language}`, value: _}));
     let dep = new PromptDependency('artifactTemplate','Choose an artifact template', chooseOneUserInputType, 'Choose template:', choices);
     let answer = await resolvers.resolve({}, [dep]);
-    return <ArtifactTemplate>answer['artifactTemplate'];
+    return <Template>answer['artifactTemplate'];
 }

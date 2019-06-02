@@ -3,19 +3,19 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { NonArtifactsBoilerplate } from '../index';
+import { ContentBoilerplate } from '../index';
 
  export type CreatedApplicationDetails = {
     
     /**
-     * The boiler plate that was created
+     * The boilerplate that was created
      *
-     * @type {NonArtifactsBoilerplate}
+     * @type {ContentBoilerplate}
      */
-    boilerplate: NonArtifactsBoilerplate;
+    boilerplate: ContentBoilerplate;
 
     /**
-     * The destination of of the created boiler plate
+     * The destination of of the created boilerplate
      *
      * @type {string}
      */

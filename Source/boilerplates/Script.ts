@@ -10,14 +10,14 @@ export class Script
 {
     /**
      * Instantiates an instance of {Script}
-     * @param {string} cmd 
-     * @param {string[]} args
-     * @param {string} cwd
+     * @param {string} command 
+     * @param {string[]} arguments
+     * @param {string} currentWorkingDirectory
      */
-    constructor (cmd: string, args: string[], cwd: string) {
-        this.cmd = cmd;
-        this.args = args;
-        this.cwd = cwd;  
+    constructor (command: string, _arguments: string[], currentWorkingDirectory: string) {
+        this.command = command;
+        this.arguments = _arguments;
+        this.currentWorkingDirectory = currentWorkingDirectory;  
     }
 
     /**
@@ -25,27 +25,27 @@ export class Script
      * @returns {string}
      * @readonly
      */
-    readonly cmd: string;
+    readonly command: string;
 
     /**
      * Gets the arguments
      * @returns {string[]}
      * @readonly
      */
-    readonly args: string[];
+    readonly arguments: string[];
 
     /**
-     * Gets the cwd the script shall be run from
+     * Gets the current working directory the script shall be run from
      * @returns {string}
      * @readonly
      */
-    readonly cwd: string;
+    readonly currentWorkingDirectory: string;
     
     toJson() {
         return {
-            cmd: this.cmd,
-            args: this.args,
-            cwd: this.cwd
+            cmd: this.command,
+            args: this.arguments,
+            cwd: this.currentWorkingDirectory
         };
     }
 }

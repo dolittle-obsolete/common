@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { requireInternet, OnStdCallback } from '@dolittle/tooling.common.utilities';
+import { requireInternet, OnStdCallback } from '@dolittle/tooling.common.packages';
 import { OnlineDolittleBoilerplatesFinder } from '../index';
 
 /**

@@ -6,7 +6,6 @@
 export * from './askToChooseBoilerplate';
 export * from './askToChooseTemplate';
 export * from './askToDownloadOrUpdateBoilerplates';
-export * from './boilerplatePackageIsCompatible';
 export * from './checkBoilerplates';
 export * from './fetchDolittleBoilerplates';
 export * from './fetchOnlineBoilerplates';

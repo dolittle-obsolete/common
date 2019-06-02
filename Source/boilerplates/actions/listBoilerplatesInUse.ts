@@ -2,10 +2,8 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-
-import { OnStdCallback } from '@dolittle/tooling.common.utilities';
+import { OnStdCallback } from '@dolittle/tooling.common.packages';
 import { IBoilerplates } from '../index';
-
 
 /**
  * Lists the boilerplates used by the tooling

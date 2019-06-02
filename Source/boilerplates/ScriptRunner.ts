@@ -19,14 +19,14 @@ export class ScriptRunner implements IScriptRunner {
         onStderr = onStderr || this.scriptOnStderr;
         onStdout = onStdout || this.scriptOnStdout;
         onError = onError || this.scriptOnError;
-        scripts.forEach((script: any) => {
+        scripts.forEach((script: Script | string) => {
             let cmd;
             let args;
             let _cwd = cwd;
-            if (script.cmd) {
-                cmd = script.cmd;
-                args = script.args;
-                _cwd = script.cwd? path.join(cwd, script.cwd): cwd;
+            if (script instanceof Script) {
+                cmd = script.command;
+                args = script.arguments;
+                _cwd = script.currentWorkingDirectory? path.join(cwd, script.currentWorkingDirectory): cwd;
             } else {
                 [cmd, ...args] = script.split(' ');
             }
@@ -52,9 +52,9 @@ export class ScriptRunner implements IScriptRunner {
         let args;
         let _cwd = cwd;
         if (script instanceof Script) {
-            cmd = script.cmd;
-            args = script.args;
-            _cwd = script.cwd? path.join(cwd, script.cwd): cwd;
+            cmd = script.command;
+            args = script.arguments;
+            _cwd = script.currentWorkingDirectory? path.join(cwd, script.currentWorkingDirectory): cwd;
         } else {
             [cmd, ...args] = script.split(' ');
         }

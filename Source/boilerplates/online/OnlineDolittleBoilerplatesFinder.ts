@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+import { Logger } from '@dolittle/tooling.common.logging';
+import { ILatestCompatiblePackageFinder, ToolingPackage } from '@dolittle/tooling.common.packages';
 import npmUserPackages from 'npm-user-packages';
-import { FullVersion } from 'package-json';
-import { Logger } from 'winston';
-import { BoilerplatePackage, ICanFindOnlineBoilerplatePackages, ILatestCompatibleBoilerplateFinder, packageIsBoilerplate } from './index';
+import { ICanFindOnlineBoilerplatePackages, packageIsBoilerplatePackage } from '../index';
 
 const dolittleUser = 'woksin';
 /**
@@ -20,19 +20,19 @@ export class OnlineDolittleBoilerplatesFinder implements ICanFindOnlineBoilerpla
     
     /**
      * Instantiates an instance of {OnlineBoilerplatesDiscoverer}
+     * @param {ILatestCompatiblePackageFinder} _latestCompatibleFinder
      * @param {Logger} _logger
      */
-    constructor(private _latestCompatibleFinder: ILatestCompatibleBoilerplateFinder, private _logger: Logger) {}
+    constructor(private _latestCompatibleFinder: ILatestCompatiblePackageFinder, private _logger: Logger) {}
     
-    async findLatest(keywords: string[] = [], limit: number = 250): Promise<BoilerplatePackage[]> {
+    async findLatest(keywords: string[] = [], limit: number = 250): Promise<ToolingPackage[]> {
         this._logger.info(`Attempting to find online dolittle boilerplates`);
-        let boilerplates: BoilerplatePackage[] = [];  
-        let boilerplatePackageData = (await npmUserPackages(dolittleUser)).filter(packageJson => packageIsBoilerplate(packageJson));
+        let boilerplates: ToolingPackage[] = [];  
+        let boilerplatePackageData = (await npmUserPackages(dolittleUser)).filter(packageJson => packageIsBoilerplatePackage(packageJson));
 
         for (let name of boilerplatePackageData.map(_ => _.name)) {
-            let latestCompatibleBoilerplate: FullVersion | null = (await this._latestCompatibleFinder.find(name)
-                                                .catch((_: any) => null));
-            if (latestCompatibleBoilerplate) boilerplates.push(<BoilerplatePackage><any>latestCompatibleBoilerplate);
+            let latestCompatibleBoilerplate = await this._latestCompatibleFinder.find(name, 'boilerplates');
+            if (latestCompatibleBoilerplate) boilerplates.push(<ToolingPackage><any>latestCompatibleBoilerplate);
         }
         return boilerplates;
     }

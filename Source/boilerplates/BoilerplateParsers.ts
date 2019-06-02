@@ -3,6 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { ICanParseBoilerplates, IBoilerplateParsers, MultipleParsersForBoilerplate, CannotParseBoilerplate } from "./index";
+
 /**
  * Represents an implementation of {IBoilerplateParsers}
  *
@@ -19,12 +20,12 @@ export class BoilerplateParsers implements IBoilerplateParsers {
 
     get parsers() { return this._parsers;}
 
-    canParse(boilerplate: any) {
+    canParse(boilerplate: any, boilerplatePath: string) {
         let parser: ICanParseBoilerplates | null = null;
 
         for (let _ of this._parsers) {
             if (_.canParse(boilerplate)) {
-                if (parser !== null) throw MultipleParsersForBoilerplate.new;
+                if (parser !== null) throw new MultipleParsersForBoilerplate(boilerplatePath);
                 parser = _;
             }
         }
@@ -33,7 +34,7 @@ export class BoilerplateParsers implements IBoilerplateParsers {
     }
     
     parse(boilerplate: any, boilerplatePath: string) {
-        if (! this.canParse(boilerplate)) throw CannotParseBoilerplate.new;
+        if (! this.canParse(boilerplate, boilerplatePath)) throw new CannotParseBoilerplate(boilerplatePath);
         return this._parsers.find(parser => parser.canParse(boilerplate))!.parse(boilerplate, boilerplatePath);
     }
 

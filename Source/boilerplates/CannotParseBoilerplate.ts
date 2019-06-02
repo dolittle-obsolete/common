@@ -2,25 +2,22 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
+import { Exception } from "@dolittle/tooling.common.utilities";
 
 /**
  * The exception that gets thrown when there are multiple instances of {ICanParseBoilerplates} that can parse a given boilerplate
  *
  * @export
  * @class CannotParseBoilerplate
- * @extends {Error}
+ * @extends {Exception}
  */
-export class CannotParseBoilerplate extends Error {
+export class CannotParseBoilerplate extends Exception {
+
     /**
      * Instantiates an instance of {CannotParseBoilerplate}.
-     * @param {...any[]} args
+     * @param {string} boilerplatePath
      */
-    constructor(...args: any[]) {
-        super(...args);
-        Error.captureStackTrace(this, CannotParseBoilerplate);
+    constructor(boilerplatePath: string) {
+        super(`Cannot parse boilerplate from path '${boilerplatePath}'`);
     }
-
-    static get new() {
-        return new CannotParseBoilerplate('Cannot parse boilerplate');
-    } 
 }

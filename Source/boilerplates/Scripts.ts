@@ -5,7 +5,6 @@
 import lodash from 'lodash';
 import { Script } from './index';
 
-
 /**
  * Represents a Boilerplate's scripts
  */
@@ -24,9 +23,9 @@ export class Scripts
         let runScriptObject = scripts && scripts.run || [];
 
         return new Scripts(
-            creationScriptObjects.map((_: any) => _.cmd? new Script(_.cmd, _.args, _.cwd) : _),
-            buildScriptObjects.map((_: any) => _.cmd? new Script(_.cmd, _.args, _.cwd) : _),
-            runScriptObject.map((_: any) => _.cmd? new Script(_.cmd, _.args, _.cwd) : _), 
+            creationScriptObjects.map((_: any) => _.command? new Script(_.command, _.arguments, _.currentWorkingDirectory) : _),
+            buildScriptObjects.map((_: any) => _.command? new Script(_.command, _.arguments, _.currentWorkingDirectory) : _),
+            runScriptObject.map((_: any) => _.command? new Script(_.command, _.arguments, _.currentWorkingDirectory) : _), 
             scripts? lodash.omit(scripts, ['creation', 'build', 'run']) : {});
     }
 

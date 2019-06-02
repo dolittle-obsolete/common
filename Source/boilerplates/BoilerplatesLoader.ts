@@ -3,10 +3,9 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Folders } from '@dolittle/tooling.common.utilities';
-import * as FsExtra from 'fs-extra';
+import { FileSystem } from '@dolittle/tooling.common.files';
+import { Logger } from '@dolittle/tooling.common.logging';
 import path from 'path';
-import { Logger } from 'winston';
 import { Boilerplate, IBoilerplatesLoader, BoilerplatesConfig, IBoilerplateParsers } from './index';
 
 
@@ -18,13 +17,12 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
 
     /**
      * Instantiates an instance of {BoilerplatesLoader}
-     * @param {BoilerplatesConfig} boilerplatesConfig
-     * @param {Folders} folders
-     * @param {typeof FsExtra} fileSystem
-     * @param {Logger} logger
-     * @param {typeof Handlebars} handlebars
+     * @param {IBoilerplateParsers} _boilerplateParsers
+     * @param {BoilerplatesConfig} _boilerplatesConfig
+     * @param {FileSystem} _fileSystem
+     * @param {Logger} _logger
      */
-    constructor(private _boilerplateParsers: IBoilerplateParsers, private _boilerplatesConfig: BoilerplatesConfig, private _folders: Folders, private _fileSystem: typeof FsExtra, private _logger: Logger) {
+    constructor(private _boilerplateParsers: IBoilerplateParsers, private _boilerplatesConfig: BoilerplatesConfig, private _fileSystem: FileSystem, private _logger: Logger) {
         if (! this._fileSystem.existsSync(this._boilerplatesConfig.path)) {
             this._boilerplatesConfig.store = this._boilerplatesConfig.store;
         }

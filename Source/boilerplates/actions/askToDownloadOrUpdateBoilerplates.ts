@@ -3,8 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import spawn from 'cross-spawn';
-import {requireInternet, OnStdCallback} from '@dolittle/tooling.common.utilities';
+import {requireInternet, OnStdCallback, downloadPackagesFromNpmSync, DownloadPackageInfo} from '@dolittle/tooling.common.packages';
 import { PromptDependency, IDependencyResolvers, confirmUserInputType, chooseMultipleUserInputType } from '@dolittle/tooling.common.dependencies';
 import { IBoilerplateDiscoverers, initBoilerplatesSystem } from '../index';
 
@@ -26,13 +25,9 @@ export async function askToDownloadOrUpdateBoilerplates(boilerplates: Boilerplat
     if (boilerplates.length && boilerplates.length > 0) {
         const shouldDownload = await askToDownload(resolvers);
         if (shouldDownload) {
-            let useYarn = false;
-            let packageNames = await askWhichBoilerplates(boilerplates, resolvers);
-            if (packageNames.length > 0) {
-                if (!useYarn) 
-                    spawn.sync('npm', ['i', '-g', ...packageNames], {cwd: process.cwd(), stdio: 'inherit'});
-                else 
-                    spawn.sync('yarn', ['global', 'add', ...packageNames], {cwd: process.cwd(), stdio: 'inherit'});
+            let packagesToDownload = await askWhichBoilerplates(boilerplates, resolvers);
+            if (packagesToDownload.length > 0) {
+                downloadPackagesFromNpmSync(packagesToDownload, onStdOut, onStdErr);
                 await initBoilerplatesSystem(boilerplateDiscoverers, onStdOut, onStdErr);
             }
         }
@@ -45,17 +40,27 @@ async function askToDownload(resolvers: IDependencyResolvers) {
     return answers['download'];
 }
 
-async function askWhichBoilerplates(boilerplates: BoilerplatePackageInfo[], resolvers: IDependencyResolvers) {
+async function askWhichBoilerplates(boilerplates: BoilerplatePackageInfo[], resolvers: IDependencyResolvers): Promise<DownloadPackageInfo[]> {
     let downloadAllDep = new PromptDependency('downloadAll', 'Download all boilerplates?' , confirmUserInputType, 'Download all?');
 
     let answers = await resolvers.resolve({}, [downloadAllDep]);
     
     if (!answers['downloadAll']) {
 
-        let choices = boilerplates.map(_ => new Object({name: `${_.name}`, value: `${_.name}@${_.latest? _.latest : _.version}`}));
+        let choices = boilerplates.map(_ => new Object(
+            {
+                name: `${_.name}`, 
+                value: [
+                    { 
+                        name: _.name,
+                        version: _.latest || _.version
+                    }
+                ]
+            })
+        );
         let chooseBoilerplatesDependency = new PromptDependency('boilerplates', 'Which boilerplates to download', chooseMultipleUserInputType, 'Choose boilerplates:', choices)
         answers = await resolvers.resolve({}, [chooseBoilerplatesDependency]);
-        return answers['boilerplates'];
+        return <DownloadPackageInfo[]>answers['boilerplates'];
     }
-    return boilerplates.map(_ => `${_.name}@${_.latest || _.version}`);
+    return <DownloadPackageInfo[]>boilerplates.map(_ => new Object({name: _.name, version: _.latest || _.version}));
 }

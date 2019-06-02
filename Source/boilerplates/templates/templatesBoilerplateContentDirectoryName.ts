@@ -4,9 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 
 /**
- * The {NonArtifactsBoilerplate} content directory name
+ * The {ITemplatesBoilerplate} content directory name
  *
  * @static
  * @type {string}
  */
-export const nonArtifactsBoilerplateContentDirectoryName = 'Content';
+export const templatesBoilerplateContentDirectoryName = 'Templates';

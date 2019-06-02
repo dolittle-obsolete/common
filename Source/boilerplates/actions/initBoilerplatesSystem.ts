@@ -1,10 +1,9 @@
-import { OnStdCallback } from '@dolittle/tooling.common.utilities';
-import { IBoilerplateDiscoverers } from '../index';
-
 /*---------------------------------------------------------------------------------------------
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
+import { OnStdCallback } from '@dolittle/tooling.common.packages';
+import { IBoilerplateDiscoverers } from '../index';
 
 /**
  * Initializes the boilerplates system in the common tooling

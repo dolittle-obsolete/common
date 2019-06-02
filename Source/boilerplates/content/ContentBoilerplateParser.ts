@@ -2,12 +2,10 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import * as FsExtra from 'fs-extra';
-import path from 'path';
 import { IDependencyParsers } from "@dolittle/tooling.common.dependencies";
-import { Folders } from "@dolittle/tooling.common.utilities";
-import { ICanParseBoilerplates, artifactsBoilerplateType, Scripts, NonArtifactsBoilerplate, nonArtifactsBoilerplateContentDirectoryName } from "./index";
-
+import { Folders, FileSystem } from "@dolittle/tooling.common.files";
+import path from 'path';
+import { ICanParseBoilerplates, templatesBoilerplateType, Scripts, ContentBoilerplate, contentBoilerplateContentDirectoryName, CannotParseBoilerplate } from "../index";
 
 const binaryFiles = [
     '.jpg',
@@ -19,28 +17,29 @@ const binaryFiles = [
     '.ttf'
 ];
 /**
- * Represents an implementation of {ICanParseBoilerplates} for parsing {ArtifactsBoilerplate} boilerplates
+ * Represents an implementation of {ICanParseBoilerplates} for parsing {ContentBoilerplate} boilerplates
  *
  * @export
  * @class NonArtifactsBoilerplateParser
  */
-export class NonArtifactsBoilerplateParser implements ICanParseBoilerplates {
+export class ContentBoilerplateParser implements ICanParseBoilerplates {
 
     /**
-     * Instantiates an instance of {NonArtifactsBoilerplateParser}.
+     * Instantiates an instance of {ContentBoilerplateParser}.
      * @param {IDependencyParsers} _dependencyParsers
      * @param {Folders} _folders
-     * @param {typeof FsExtra} _fileSystem
+     * @param {FileSystem} _fileSystem
      */
-    constructor (private _dependencyParsers: IDependencyParsers, private _folders: Folders, private _fileSystem: typeof FsExtra) {}
+    constructor (private _dependencyParsers: IDependencyParsers, private _folders: Folders, private _fileSystem: FileSystem) {}
     
     canParse(boilerplate: any) {
-        return boilerplate.type !== artifactsBoilerplateType;
+        return boilerplate.type !== templatesBoilerplateType;
     }
     
     parse(boilerplate: any, boilerplatePath: string) {
+        if (!this.canParse(boilerplate)) throw new CannotParseBoilerplate(boilerplatePath);
         let bindings = this.getBindingsFor(boilerplatePath);
-        return new NonArtifactsBoilerplate(
+        return new ContentBoilerplate(
             boilerplate.language || 'any',
             boilerplate.name,
             boilerplate.description,
@@ -58,6 +57,7 @@ export class NonArtifactsBoilerplateParser implements ICanParseBoilerplates {
             bindings.filesNeedingBinding
         );
     }
+    
     /**
      * Gets the path and file bindings for a boilerplate
      * 
@@ -67,9 +67,9 @@ export class NonArtifactsBoilerplateParser implements ICanParseBoilerplates {
     private getBindingsFor(boilerplatePath: string): { pathsNeedingBinding: string[]; filesNeedingBinding: string[]; } {
         let pathsNeedingBinding: string[] = [];
         let filesNeedingBinding: string[] = [];
-        const contentFolder = path.join(path.dirname(boilerplatePath), nonArtifactsBoilerplateContentDirectoryName);
+        const contentFolder = path.join(path.dirname(boilerplatePath), contentBoilerplateContentDirectoryName);
         if (! this._fileSystem.existsSync(contentFolder)) {
-            throw new Error(`Missing folder with name ${nonArtifactsBoilerplateContentDirectoryName} at root level when parsing boilerplate at path ${boilerplatePath}`);
+            throw new Error(`Missing folder with name ${contentBoilerplateContentDirectoryName} at root level when parsing boilerplate at path ${boilerplatePath}`);
         }
         
         let paths = this._folders.getFoldersAndFilesRecursivelyIn(contentFolder);

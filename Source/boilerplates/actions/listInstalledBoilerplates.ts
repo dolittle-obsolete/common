@@ -2,9 +2,8 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-
-import { OnStdCallback } from '@dolittle/tooling.common.utilities';
-import * as FsExtra from 'fs-extra';
+import { OnStdCallback } from '@dolittle/tooling.common.packages';
+import {FileSystem} from '@dolittle/tooling.common.files';
 import path from 'path';
 import { IBoilerplateDiscoverers } from '../index';
 
@@ -12,13 +11,14 @@ import { IBoilerplateDiscoverers } from '../index';
  * Finds and gets the boilerplates installed on the local machine
  *
  * @param {IBoilerplateDiscoverers} boilerplateDiscoverers
+ * @param {FileSystem} filesystem
  * @param {OnStdCallback} [onStdOut] Optional callback for dealing with the standard text output  
  * @param {OnStdCallback} [onNoBoilerplates] Optional callback for dealing the text output when there are no boilerplates
  * @param {OnStdCallback} [onStdErr] Optional callback for dealing with the text output when an error occurs  
  * @export
  * @returns A list of the boilerplate and package configurations for each boilerplate
  */
-export async function listInstalledBoilerplates(boilerplateDiscoverers: IBoilerplateDiscoverers, filesystem: typeof FsExtra, onStdOut?: OnStdCallback, onNoBoilerplates?: OnStdCallback, onStdErr?: OnStdCallback) {
+export async function listInstalledBoilerplates(boilerplateDiscoverers: IBoilerplateDiscoverers, filesystem: FileSystem, onStdOut?: OnStdCallback, onNoBoilerplates?: OnStdCallback, onStdErr?: OnStdCallback) {
     let ifStdOut = (data: string) => onStdOut? onStdOut(data) : {};
     let ifNoBoilerplates = (data: string) => onNoBoilerplates? onNoBoilerplates(data) : {};
     let ifStdErr = (data: string) => onStdErr? onStdErr(data) : {};

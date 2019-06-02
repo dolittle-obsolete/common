@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Application, applicationFilename } from '@dolittle/tooling.common.configurations';
-import * as FsExtra from 'fs-extra';
+import {FileSystem} from '@dolittle/tooling.common.files';
+import { Logger } from '@dolittle/tooling.common.logging';
 import path from 'path';
-import { Logger } from 'winston';
-import { IBoilerplates, IApplicationsManager, NonArtifactsBoilerplate, CreatedApplicationDetails, WrongBoilerplateType } from '../index';
+import { IBoilerplates, IApplicationsManager, ContentBoilerplate, CreatedApplicationDetails, WrongBoilerplateType } from '../index';
 
 export const applicationBoilerplateType = 'application';
 
@@ -18,15 +18,15 @@ export const applicationBoilerplateType = 'application';
  * @class ArtifactsManager
  */
 export class ApplicationsManager implements IApplicationsManager {
-    private _loadedBoilerplates: NonArtifactsBoilerplate[];
+    private _loadedBoilerplates: ContentBoilerplate[];
 
     /**
      * Instantiates an instance of {ApplicationsManager}.
      * @param {IBoilerplateManagers} boilerplateManagers
-     * @param {typeof FsExtra} fileSystem
+     * @param {FileSystem} fileSystem
      * @param {Logger} logger
      */
-    constructor(private _boilerplates: IBoilerplates, private _fileSystem: typeof FsExtra, private _logger: Logger) {
+    constructor(private _boilerplates: IBoilerplates, private _fileSystem: FileSystem, private _logger: Logger) {
         this._loadedBoilerplates = []
     }
 
@@ -54,7 +54,7 @@ export class ApplicationsManager implements IApplicationsManager {
         });
     }
 
-    create(context: any, destinationPath: string, boilerplate: NonArtifactsBoilerplate): CreatedApplicationDetails[] {
+    create(context: any, destinationPath: string, boilerplate: ContentBoilerplate): CreatedApplicationDetails[] {
         let destination = destinationPath;
         this._logger.info(`Creating an application of language '${boilerplate.language}' at destination ${destinationPath}`);
         this._boilerplates.create(boilerplate, destination, context);
@@ -63,8 +63,8 @@ export class ApplicationsManager implements IApplicationsManager {
 
     private loadAllBoilerplates()  {
         this._loadedBoilerplates = this._boilerplates.byType(applicationBoilerplateType).map(_ => {
-            if (_ instanceof NonArtifactsBoilerplate) return _;
-            else throw new WrongBoilerplateType(`Expected boilerplate of type '${NonArtifactsBoilerplate.name}' but got a '${_.constructor.name}'`);
+            if (_ instanceof ContentBoilerplate) return _;
+            else throw new WrongBoilerplateType(`Expected boilerplate of type '${ContentBoilerplate.name}' but got a '${_.constructor.name}'`);
         });
     }
 }

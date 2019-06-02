@@ -5,25 +5,25 @@
 import { Folders, FileSystem } from '@dolittle/tooling.common.files';
 import { Logger } from '@dolittle/tooling.common.logging';
 import path from 'path';
-import { Boilerplate, ContentBoilerplate, IBoilerplatesLoader, IBoilerplates , Handlebars} from './index';
+import { Handlebars, IContentBoilerplates, IBoilerplates, IContentBoilerplate, boilerplateIsContentBoilerplate} from '../index';
 
 /**
- * Represents an implementation of {IBoilerplates}
+ * Represents an implementation of {IContentBoilerplates}
  */
-export class Boilerplates implements IBoilerplates {
+export class ContentBoilerplates implements IContentBoilerplates {
 
     /**
-     * Instantiates an instance of {Boilerplates}.
-     * @param {IBoilerplatesLoader} _boilerplatesLoader
+     * Instantiates an instance of {ContentBoilerplates}.
+     * @param {IBoilerplates} _boilerplates
      * @param {Folders} _folders
      * @param {FileSystem} _fileSystem
      * @param {Logger} _logger
-     * @param {typeof Handlebars} _handlebars
+     * @param {Handlebars} _handlebars
      */
-    constructor(private _boilerplatesLoader: IBoilerplatesLoader, private _folders: Folders, private _fileSystem: FileSystem, private _logger: Logger, private _handlebars: Handlebars) {}
+    constructor(private _boilerplates: IBoilerplates, private _folders: Folders, private _fileSystem: FileSystem, private _logger: Logger, private _handlebars: Handlebars) {}
     
     get boilerplates() {
-        return this._boilerplatesLoader.loaded;
+        return this._boilerplates.boilerplates.filter(boilerplateIsContentBoilerplate);
     }
 
     byLanguage(language: string, namespace?: string) {
@@ -48,13 +48,7 @@ export class Boilerplates implements IBoilerplates {
     }
 
     adornmentsFor(parentType: string, parentLanguage?: string, parentName?: string, namespace?: string) {
-        let boilerplates: ContentBoilerplate[] = [];
-        this.boilerplates.forEach(_ => {
-            if (_ instanceof ContentBoilerplate)
-                boilerplates.push(_);
-        });
-        
-        boilerplates =  boilerplates.filter(_ => {
+        let boilerplates = this.boilerplates.filter(_ => {
             if (_.namespace) return _.namespace === namespace && (_.parent && _.parent.type === parentType)
             return _.parent && _.parent.type === parentType;
         });
@@ -70,13 +64,12 @@ export class Boilerplates implements IBoilerplates {
         return boilerplates;
     }
 
-    adornmentsForBoilerplate(boilerplate: Boilerplate, namespace?: string) {
+    adornmentsForBoilerplate(boilerplate: IContentBoilerplate, namespace?: string) {
         return this.adornmentsFor(boilerplate.type, boilerplate.language, boilerplate.name, namespace);
     }
 
-    create(boilerplate: ContentBoilerplate, destination: string, context: object) {
+    create(boilerplate: IContentBoilerplate, destination: string, context: object) {
         this._logger.info(`Creating boilerplate with name '${boilerplate.name}' at destination '${destination}'`);
-
         this._folders.makeFolderIfNotExists(destination);
         this._folders.copy(destination, boilerplate.contentDirectory);
         boilerplate.pathsNeedingBinding.forEach(_ => {
@@ -96,5 +89,6 @@ export class Boilerplates implements IBoilerplates {
         });
 
         this._logger.info(`Boilerplate created`);
+        return {boilerplate, destination};
     }
 }

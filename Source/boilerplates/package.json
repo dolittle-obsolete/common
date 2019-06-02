@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.boilerplates",
-  "version": "5.0.3",
+  "version": "5.1.0",
   "description": "The boilerplates system for common dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -31,19 +31,17 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@dolittle/boilerplates-discoverer": "^2.0.0-alpha.7",
-    "@dolittle/tooling.common.configurations": "5.0.*",
-    "@dolittle/tooling.common.dependencies": "5.0.*",
-    "@dolittle/tooling.common.utilities": "5.0.*",
+    "@dolittle/tooling.common.configurations": "5.1.*",
+    "@dolittle/tooling.common.dependencies": "5.1.*",
+    "@dolittle/tooling.common.files": "5.1.*",
+    "@dolittle/tooling.common.utilities": "5.1.*",
+    "@dolittle/tooling.common.logging": "5.1.*",
     "cross-spawn": "^6.0.5",
-    "fs-extra": "^8.0.1",
     "handlebars": "^4.0.12",
     "lodash": "^4.17.11",
     "npm-keyword": "^6.1.0",
     "npm-user-packages": "^3.0.0",
-    "package-json": "^6.3.0",
-    "semver": "^6.1.0",
-    "winston": "^3.2.1"
+    "semver": "^6.1.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.125",

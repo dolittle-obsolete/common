@@ -2,8 +2,8 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
+import { ToolingPackage } from "@dolittle/tooling.common.packages";
 
-import { BoilerplatePackage } from "./index";
 
 /**
  * Defines a system that's responsible for discovering boilerplates
@@ -22,9 +22,9 @@ export interface ICanDiscoverBoilerplates {
     /**
      * The discovered boilerplates
      *
-     * @type {BoilerplatePackage[]}
+     * @type {ToolingPackage[]}
      */
-    discovered: BoilerplatePackage[]
+    discovered: ToolingPackage[]
 
     /**
     * The paths of the Dolittle boilerplates

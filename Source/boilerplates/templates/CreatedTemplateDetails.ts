@@ -2,26 +2,26 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
+import { ITemplatesBoilerplate, ITemplate } from '../index';
 
-import { ArtifactsBoilerplate, ArtifactTemplate } from '../index';
+ export type CreatedTemplateDetails = {
 
- export type CreatedArtifactTemplateDetails = {
     /**
-     * The parent boiler plate of the created artifact template
+     * The parent boilerplate of the created artifact template
      *
-     * @type {ArtifactsBoilerplate}
+     * @type {ITemplatesBoilerplate}
      */
-    boilerplate: ArtifactsBoilerplate;
+    boilerplate: ITemplatesBoilerplate;
     
     /**
      * The artifact template that was created
      *
-     * @type {ArtifactTemplate}
+     * @type {ITemplate}
      */
-    artifactTemplate: ArtifactTemplate;
+    template: ITemplate;
 
     /**
-     * The destination of of the created boiler plate
+     * The destination of of the created {ITemplate}
      *
      * @type {string}
      */
