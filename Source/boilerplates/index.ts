@@ -40,5 +40,4 @@ export * from './applications/index';
 export * from './boundedContexts/index';
 export * from './configurations/index';
 
-
 export * from './globals';
