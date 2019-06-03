@@ -2,7 +2,6 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ProjectConfig } from '@dolittle/tooling.common.configurations';
 import { dependencyParsers } from '@dolittle/tooling.common.dependencies';
 import { nodeModulesPath, toolingPackage, latestCompatiblePackageFinder } from '@dolittle/tooling.common.packages';
 import { fileSystem, folders } from '@dolittle/tooling.common.files';
@@ -11,7 +10,7 @@ import {
     BoilerplatesConfig, IBoilerplatesLoader, BoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplateDiscoverers, LocalBoilerplatesDiscoverer, IBoilerplateDiscoverers, 
     OnlineBoilerplatesDiscoverer, IApplicationsManager, ApplicationsManager, IBoundedContextsManager, BoundedContextsManager, 
     ITemplatesBoilerplates, TemplatesBoilerplates, IBoilerplateParsers, BoilerplateParsers, ICanParseBoilerplates, ContentBoilerplateParser, TemplatesBoilerplateParser,
-    Boilerplates, IBoilerplates, OnlineDolittleBoilerplatesFinder, handlebars, IContentBoilerplates, ContentBoilerplates
+    Boilerplates, IBoilerplates, OnlineDolittleBoilerplatesFinder, handlebars, IContentBoilerplates, ContentBoilerplates, ProjectConfig
 } from './index';
 
 export const projectConfig = new ProjectConfig(nodeModulesPath);
