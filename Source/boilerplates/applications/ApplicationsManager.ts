@@ -7,7 +7,7 @@ import { Application, applicationFilename } from '@dolittle/tooling.common.confi
 import {FileSystem} from '@dolittle/tooling.common.files';
 import { Logger } from '@dolittle/tooling.common.logging';
 import path from 'path';
-import { IBoilerplates, IApplicationsManager, ContentBoilerplate, CreatedApplicationDetails, WrongBoilerplateType } from '../index';
+import { IApplicationsManager, ContentBoilerplate, CreatedContentBoilerplateDetails, IContentBoilerplates } from '../index';
 
 export const applicationBoilerplateType = 'application';
 
@@ -22,17 +22,16 @@ export class ApplicationsManager implements IApplicationsManager {
 
     /**
      * Instantiates an instance of {ApplicationsManager}.
-     * @param {IBoilerplateManagers} boilerplateManagers
-     * @param {FileSystem} fileSystem
-     * @param {Logger} logger
+     * @param {IContentBoilerplates} _boilerplates
+     * @param {FileSystem} _fileSystem
+     * @param {Logger} _logger
      */
-    constructor(private _boilerplates: IBoilerplates, private _fileSystem: FileSystem, private _logger: Logger) {
+    constructor(private _boilerplates: IContentBoilerplates, private _fileSystem: FileSystem, private _logger: Logger) {
         this._loadedBoilerplates = []
     }
 
     get boilerplates() {
-        this.loadAllBoilerplates();
-        return this._loadedBoilerplates;
+        return this._boilerplates.byType(applicationBoilerplateType);
     }
 
     getApplicationFrom(folder: string) {
@@ -54,17 +53,14 @@ export class ApplicationsManager implements IApplicationsManager {
         });
     }
 
-    create(context: any, destinationPath: string, boilerplate: ContentBoilerplate): CreatedApplicationDetails[] {
-        let destination = destinationPath;
-        this._logger.info(`Creating an application of language '${boilerplate.language}' at destination ${destinationPath}`);
-        this._boilerplates.create(boilerplate, destination, context);
-        return [{boilerplate, destination}];
-    }
-
-    private loadAllBoilerplates()  {
-        this._loadedBoilerplates = this._boilerplates.byType(applicationBoilerplateType).map(_ => {
-            if (_ instanceof ContentBoilerplate) return _;
-            else throw new WrongBoilerplateType(`Expected boilerplate of type '${ContentBoilerplate.name}' but got a '${_.constructor.name}'`);
-        });
+    create(context: any, destinationPath: string, boilerplate: ContentBoilerplate): CreatedContentBoilerplateDetails[] {
+        this._logger.info(`Creating an application with language '${boilerplate.language}' at destination ${destinationPath}`);
+        
+        let createdDetails: CreatedContentBoilerplateDetails[] = [];
+        let createdApplicationDetails = this._boilerplates.create(boilerplate, destinationPath, context);
+        
+        createdDetails.push(createdApplicationDetails);
+        
+        return createdDetails;
     }
 }

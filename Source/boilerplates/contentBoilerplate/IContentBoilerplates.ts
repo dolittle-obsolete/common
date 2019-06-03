@@ -10,6 +10,49 @@ import { IContentBoilerplate, IBoilerplates, CreatedContentBoilerplateDetails} f
 export interface IContentBoilerplates extends IBoilerplates {
     
     /**
+     * Get all boilerplates
+     *
+     * @type {IContentBoilerplate[]}
+     */
+    readonly boilerplates: IContentBoilerplate[];
+
+    /**
+     * Get all boilerplates for a namespace
+     * 
+     * @param {string | undefined} namespace
+     * @returns {IContentBoilerplate[]}
+     */
+    byNamespace(namespace: string | undefined): IContentBoilerplate[];
+
+    /**
+     * Get all boilerplates for a specific language
+     * 
+     * @param {string} language
+     * @param {string} [namespace]
+     * @returns {IContentBoilerplate[]}
+     */
+    byLanguage(language: string, namespace?: string): IContentBoilerplate[];
+
+    /**
+     * Get all boilerplates for a specific type
+     * 
+     * @param {string} type
+     * @param {string} [namespace]
+     * @returns {IContentBoilerplate[]}
+     */
+    byType(type: string, namespace?: string): IContentBoilerplate[];
+
+    /**
+     * Get all boilerplates for a specific language and type
+     * 
+     * @param {string} language
+     * @param {string} type
+     * @param {string} [namespace]
+     * @returns {IContentBoilerplate[]} 
+     */
+    byLanguageAndType(language: string, type: string, namespace?: string): IContentBoilerplate[];
+
+    /**
      * Gets the adornment boilerplates for a parent boilerplate 
      *
      * @param {string} parentType

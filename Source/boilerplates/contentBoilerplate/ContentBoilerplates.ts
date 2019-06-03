@@ -28,6 +28,22 @@ export class ContentBoilerplates extends Boilerplates implements IContentBoilerp
     get boilerplates() {
         return super.boilerplates.filter(boilerplateIsContentBoilerplate);
     }
+    
+    byNamespace(namespace: string | undefined) {
+        return super.byNamespace(namespace) as IContentBoilerplate[];
+    }
+
+    byLanguage(language: string, namespace?: string) {
+        return super.byLanguage(language, namespace) as IContentBoilerplate[];
+    }
+
+    byType(type: string, namespace?: string) {
+        return super.byType(type, namespace) as IContentBoilerplate[];
+    }
+
+    byLanguageAndType(language: string, type: string, namespace?: string)  {
+        return super.byLanguageAndType(language, type, namespace) as IContentBoilerplate[];
+    }
 
     adornmentsFor(parentType: string, parentLanguage?: string, parentName?: string, namespace?: string) {
         let boilerplates = (this.byNamespace(namespace) as IContentBoilerplate[]).filter(_ => {

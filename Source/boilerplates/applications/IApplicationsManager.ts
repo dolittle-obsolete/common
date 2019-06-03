@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { Application } from '@dolittle/tooling.common.configurations';
-import { ContentBoilerplate, CreatedApplicationDetails } from "../index";
+import { IContentBoilerplate, CreatedContentBoilerplateDetails } from "../index";
 
 /**
  * Defines a system that can manage the application boilerplates
@@ -17,9 +17,9 @@ export interface IApplicationsManager {
     /**
      * Gets all the application boilerplates 
      *
-     * @type {ContentBoilerplate[]}
+     * @type {IContentBoilerplate[]}
      */
-    boilerplates: ContentBoilerplate[]
+    boilerplates: IContentBoilerplate[]
 
     /**
      * Gets the application configuration from the given folder
@@ -39,17 +39,17 @@ export interface IApplicationsManager {
      * Retrieves the boilerplate configurations for application with the given language
      * @param {string} language 
      * @param {string} [namespace=undefined]
-     * @return {ContentBoilerplate[]} The application {Boilerplate} with of the given language
+     * @return {IContentBoilerplate[]} The application {Boilerplate} with of the given language
      */
-    boilerplatesByLanguage(language: string, namespace?: string): ContentBoilerplate[]
+    boilerplatesByLanguage(language: string, namespace?: string): IContentBoilerplate[]
 
     /**
      * Creates a dolittle application
      *
      * @param {any} context The template context 
      * @param {string} destinationPath The absolute path of the destination of the application
-     * @param {ContentBoilerplate} boilerplate The boilerplate to create the application from
-     * @returns {CreatedApplicationDetails[]} Boilerplates created with the destination
+     * @param {IContentBoilerplate} boilerplate The boilerplate to create the application from
+     * @returns {CreatedContentBoilerplateDetails[]}
      */
-    create(context: any, destinationPath: string, boilerplate: ContentBoilerplate): CreatedApplicationDetails[]
+    create(context: any, destinationPath: string, boilerplate: IContentBoilerplate): CreatedContentBoilerplateDetails[]
 }

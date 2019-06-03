@@ -60,7 +60,7 @@ async function askWhichBoilerplates(boilerplates: BoilerplatePackageInfo[], reso
         );
         let chooseBoilerplatesDependency = new PromptDependency('boilerplates', 'Which boilerplates to download', chooseMultipleUserInputType, 'Choose boilerplates:', choices)
         answers = await resolvers.resolve({}, [chooseBoilerplatesDependency]);
-        return <DownloadPackageInfo[]>answers['boilerplates'];
+        return answers['boilerplates'] as DownloadPackageInfo[];
     }
-    return <DownloadPackageInfo[]>boilerplates.map(_ => new Object({name: _.name, version: _.latest || _.version}));
+    return boilerplates.map(_ => new Object({name: _.name, version: _.latest || _.version})) as DownloadPackageInfo[];
 }

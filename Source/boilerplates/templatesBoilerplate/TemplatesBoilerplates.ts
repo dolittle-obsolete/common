@@ -5,21 +5,19 @@
 import { FileSystem, Folders, getFileNameAndExtension } from '@dolittle/tooling.common.files';
 import { Logger } from '@dolittle/tooling.common.logging';
 import path from 'path';
-import { ITemplatesBoilerplate, ITemplate, CreatedTemplateDetails, ITemplatesBoilerplates, IBoilerplates, Handlebars, boilerplateIsTemplatesBoilerplate, Boilerplates, IBoilerplatesLoader } from '../index';
+import { ITemplatesBoilerplate, ITemplate, CreatedTemplateDetails, ITemplatesBoilerplates, Handlebars, boilerplateIsTemplatesBoilerplate, Boilerplates, IBoilerplatesLoader } from '../index';
 
 /**
- * Manages the artifacts
+ * Represents an implementation of {ITemplatesBoilerplates}
  *
  * @export
  * @class ArtifactsManager
  */
 export class TemplatesBoilerplates extends Boilerplates implements ITemplatesBoilerplates {
 
-    private _loadedBoilerplates: ITemplatesBoilerplate[] = [];
-    private _templates: ITemplate[] = [];
     /**
      * Instantiates an instance of {ArtifactTemplatesManager}.
-     * @param {IBoilerplates} _boilerplates
+     * @param {IBoilerplatesLoader} boilerplatesLoader
      * @param {Folders} _folders
      * @param {FileSystem} _fileSystem
      * @param {Handlebars} _handlebars
@@ -32,8 +30,25 @@ export class TemplatesBoilerplates extends Boilerplates implements ITemplatesBoi
     get boilerplates() {
         return super.boilerplates.filter(boilerplateIsTemplatesBoilerplate);
     }
+
     get templates() {
         return this.boilerplates.map(_ => _.templates).reduce((a, b) => a.concat(b), []);
+    }
+    
+    byNamespace(namespace: string | undefined) {
+        return super.byNamespace(namespace) as ITemplatesBoilerplate[];
+    }
+
+    byLanguage(language: string, namespace?: string) {
+        return super.byLanguage(language, namespace) as ITemplatesBoilerplate[];
+    }
+
+    byType(type: string, namespace?: string) {
+        return super.byType(type, namespace) as ITemplatesBoilerplate[];
+    }
+
+    byLanguageAndType(language: string, type: string, namespace?: string)  {
+        return super.byLanguageAndType(language, type, namespace) as ITemplatesBoilerplate[];
     }
 
 

@@ -31,7 +31,7 @@ export class OnlineBoilerplatesDiscoverer implements ICanFindOnlineBoilerplatePa
 
         for (let name of boilerplatePackageNames.map(_ => _.name)) {
             let latestCompatibleBoilerplate= await this._latestCompatibleFinder.find(name, 'boilerplates');
-            if (latestCompatibleBoilerplate) boilerplates.push(<ToolingPackage><any>latestCompatibleBoilerplate);
+            if (latestCompatibleBoilerplate) boilerplates.push(latestCompatibleBoilerplate as any as ToolingPackage);
         }
         return boilerplates;
     }
