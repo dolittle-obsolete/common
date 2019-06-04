@@ -3,8 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { discoverDependencyType, ICanResolveSyncDependencies, IDependency, IDependencyDiscoverResolver, MissingDestinationPath, MissingCoreLanguage, CannotResolveDependency } from "../index";
-import { dependencyIsDiscoverDependency } from "../dependencyIsDiscoverDependency";
+import { dependencyIsDiscoverDependency, ICanResolveSyncDependencies, IDependency, IDependencyDiscoverResolver, MissingDestinationPath, MissingCoreLanguage, CannotResolveDependency } from "../index";
 
 /**
  * Resolves {DiscoverDependency}

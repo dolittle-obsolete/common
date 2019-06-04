@@ -26,7 +26,8 @@ import { IDependencyResolvers, ICanResolveDependencies, IDependency, MultipleRes
     }
     
     async resolve(context: any, dependencies: IDependency[], destinationPath?: string, coreLanguage?: string, args?: string[]): Promise<any> {
-        for (let entry of this.getResolverToDependenciesMap(dependencies).entries()) {
+        let resolversMap = this.getResolverToDependenciesMap(dependencies).entries();
+        for (let entry of resolversMap) {
             let resolver = entry[0];
             let deps = entry[1];
             context = await Promise.resolve(resolver.resolve(context, deps, destinationPath, coreLanguage, args));
