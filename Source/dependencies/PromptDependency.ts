@@ -45,8 +45,7 @@ export class PromptDependency extends Dependency implements IPromptDependency {
         this.choices = choices;
         this.promptMessage = promptMessage;
         this.customInput = customInput;
-
-        PromptDependency.throwIfInvalidPromptDependency(userInputType, userInputType);
+        PromptDependency.throwIfInvalidPromptDependency(this.userInputType, this.promptMessage);
     }
 
     readonly userInputType: string;
@@ -60,7 +59,8 @@ export class PromptDependency extends Dependency implements IPromptDependency {
     static throwIfInvalidPromptDependency(userInputType: string, promptMessage: string) {
         let throwError = false;
         let errors = [];
-        if (userInputType !== undefined && !dependencyUserInputTypes.includes(userInputType)) {
+
+        if (userInputType === undefined || !dependencyUserInputTypes.includes(userInputType)) {
             throwError = true;
             errors.push(`Invalid user input type '${userInputType}'`);
         }
@@ -68,7 +68,6 @@ export class PromptDependency extends Dependency implements IPromptDependency {
             throwError = true;
             errors.push('A prompt message must be given on a prompt dependency');
         }
-    
         if (throwError) {
             throw new Error(`Invalid dependency. Errors:\n\t${errors.join('\n\t')}`);
         }
