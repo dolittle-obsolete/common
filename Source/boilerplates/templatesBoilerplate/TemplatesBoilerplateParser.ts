@@ -6,7 +6,7 @@ import { IDependencyParsers } from "@dolittle/tooling.common.dependencies";
 import { Folders, FileSystem, getFileDirPath, getFileNameAndExtension } from "@dolittle/tooling.common.files";
 import { 
     TemplatesBoilerplate, ICanParseBoilerplates, Scripts, CannotParseBoilerplate, templatesBoilerplateContentDirectoryFromPath, ITemplate, 
-    templateFromJson, templateConfigurationName, boilerplateIsTemplatesBoilerplate, ITemplatesBoilerplate
+    templateFromJson, templateConfigurationName, boilerplateIsTemplatesBoilerplate
 } from "../index";
 
 /**
