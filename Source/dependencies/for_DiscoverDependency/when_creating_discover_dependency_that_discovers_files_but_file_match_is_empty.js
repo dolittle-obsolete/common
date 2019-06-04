@@ -5,15 +5,16 @@
 import { DiscoverDependency } from '../index';
 import { a_valid_configuration_for_discover_dependency } from './given/a_valid_configuration_for_discover_dependency';
 
-describe('when creating discover dependency with invalid discover type', () => {
+describe('when creating discover dependency that discovers files but file match is empty', () => {
     let context = new a_valid_configuration_for_discover_dependency();
-    let discoverType = 'something invalid';
+    let discoverType = 'file';
+    let fileMMatch = '';
     let error = null;
     try {
-        new DiscoverDependency(context.name, context.description, discoverType)
+        new DiscoverDependency(name, context.description, discoverType, undefined, undefined, fileMMatch);
     } catch(e) {
         error = e;
     }
     it('Should throw an exception', () => error.should.not.be.null);
-    it('Should throw an Error exception', () => error.should.be.an.instanceof(Error))
+    it('Should throw an exception that is an instance of Error', () => error.should.be.an.instanceof(Error));
 });

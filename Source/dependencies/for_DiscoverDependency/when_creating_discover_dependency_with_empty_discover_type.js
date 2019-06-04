@@ -15,5 +15,5 @@ describe('when creating discover dependency with empty discover type', () => {
         error = e;
     }
     it('Should throw an exception', () => error.should.not.be.null);
-    it('Should throw an DependencyMissingField exception', () => error.should.be.an.instanceof(Error))
+    it('Should throw an Error exception', () => error.should.be.an.instanceof(Error))
 });

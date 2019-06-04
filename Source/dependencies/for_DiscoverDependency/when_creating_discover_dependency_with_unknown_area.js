@@ -5,12 +5,13 @@
 import { DiscoverDependency } from '../index';
 import { a_valid_configuration_for_discover_dependency } from './given/a_valid_configuration_for_discover_dependency';
 
-describe('when creating discover dependency with invalid discover type', () => {
+describe('when creating discover dependency with unknown area', () => {
     let context = new a_valid_configuration_for_discover_dependency();
-    let discoverType = 'something invalid';
+    let area = 'unknown';
     let error = null;
     try {
-        new DiscoverDependency(context.name, context.description, discoverType)
+        new DiscoverDependency(context.name, context.description, context.discoverType, context.withNamespace, context.milestone,
+            context.fileMatch, context.contentMatch, area);
     } catch(e) {
         error = e;
     }
