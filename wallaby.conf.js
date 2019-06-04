@@ -12,6 +12,7 @@ module.exports = function (w) {
     return {
       files: [
         { pattern: 'Source/**/package.json', instrument: false} ,
+        { pattern: 'Source/**/node_modules/**/*', instrument: false},
         { pattern: 'node_modules/chai', instrument: false},
         { pattern: 'node_modules/chai-as-promised', instrument: false },
         { pattern: 'node_modules/sinon/pkg', instrument: false },
@@ -20,7 +21,7 @@ module.exports = function (w) {
         { pattern: 'Source/**/lib/**', ignore: true },
         { pattern: 'Source/**/for_*/**/!(given)/*.@(ts|js)', ignore: true },
         { pattern: 'Source/**/for_*/*.@(ts|js)', ignore: true },
-        { pattern: 'Source/**/for_*/**/given/**/*.@(ts|js)' },
+        { pattern: 'Source/**/for_*/**/given/**/*.@(ts|js)'},
         { pattern: 'Source/**/*.@(ts|js)' }
       ],
       tests: [
