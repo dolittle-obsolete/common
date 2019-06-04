@@ -2,11 +2,13 @@
     "files": [],
     "references": [
         {"path": "Source/boilerplates"},
+        {"path": "Source/commands"},
         {"path": "Source/configurations"},
         {"path": "Source/dependencies"},
         {"path": "Source/files"},
         {"path": "Source/packages"},
         {"path": "Source/logging"},
+        {"path": "Source/plugins"},
         {"path": "Source/utilities"}
     ]
 }
