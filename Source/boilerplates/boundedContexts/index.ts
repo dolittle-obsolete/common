@@ -4,5 +4,4 @@
  *--------------------------------------------------------------------------------------------*/
 export * from './ApplicationConfigurationNotFound';
 export * from './BoundedContextsManager';
-export * from './CreatedBoundedContextDetails';
 export * from './IBoundedContextsManager';
