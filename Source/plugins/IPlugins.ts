@@ -17,7 +17,7 @@ export interface IPlugins {
      *
      * @returns {Promise<IPlugin[]>}
      */
-    getPlugins: Promise<IPlugin[]>
+    getPlugins(): Promise<IPlugin[]>
 
     /**
      * Triggers the tooling to discover new plugins and load them

@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { Logger } from '@dolittle/tooling.common.logging';
-import { IPlugin, IPluginDiscoverers, IPluginLoader } from './index';
+import { IPlugin, IPluginDiscoverers, IPluginLoader, IPlugins } from './index';
 
 /**
  * Represents an implementation of {IPlugins}
@@ -11,7 +11,7 @@ import { IPlugin, IPluginDiscoverers, IPluginLoader } from './index';
  * @export
  * @class Plugins
  */
-export class Plugins {
+export class Plugins implements IPlugins {
     private _plugins: IPlugin[] = [];
 
     /**
