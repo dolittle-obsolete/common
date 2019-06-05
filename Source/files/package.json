@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.files",
-  "version": "5.1.0",
+  "version": "5.1.0-alpha.3",
   "description": "Common utilities for files",
   "publishConfig": {
     "access": "public"
@@ -18,6 +18,11 @@
   "engines": {
     "node": ">=8.0.0"
   },
+  "files": [
+    "lib",
+    "package.json",
+    "**/*.d.ts"
+  ],
   "main": "lib/index.js",
   "types": "index.d.ts",
   "typings": "index.d.ts",

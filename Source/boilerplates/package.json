@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.boilerplates",
-  "version": "5.1.0",
+  "version": "5.1.0-alpha.3",
   "description": "The boilerplates system for common dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -18,6 +18,11 @@
   "engines": {
     "node": ">=8.0.0"
   },
+  "files": [
+    "lib",
+    "package.json",
+    "**/*.d.ts"
+  ],
   "main": "lib/index.js",
   "types": "index.d.ts",
   "typings": "index.d.ts",
@@ -31,11 +36,11 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@dolittle/tooling.common.configurations": "5.1.*",
-    "@dolittle/tooling.common.dependencies": "5.1.*",
-    "@dolittle/tooling.common.files": "5.1.*",
-    "@dolittle/tooling.common.utilities": "5.1.*",
-    "@dolittle/tooling.common.logging": "5.1.*",
+    "@dolittle/tooling.common.configurations": "alpha",
+    "@dolittle/tooling.common.dependencies": "alpha",
+    "@dolittle/tooling.common.files": "alpha",
+    "@dolittle/tooling.common.utilities": "alpha",
+    "@dolittle/tooling.common.logging": "alpha",
     "cross-spawn": "^6.0.5",
     "handlebars": "^4.0.12",
     "lodash": "^4.17.11",

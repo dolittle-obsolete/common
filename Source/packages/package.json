@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.packages",
-  "version": "5.1.0",
+  "version": "5.1.0-alpha.3",
   "description": "Utilities related to packages for dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -18,6 +18,11 @@
   "engines": {
     "node": ">=8.0.0"
   },
+  "files": [
+    "lib",
+    "package.json",
+    "**/*.d.ts"
+  ],
   "main": "lib/index.js",
   "types": "index.d.ts",
   "typings": "index.d.ts",
@@ -31,7 +36,7 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@dolittle/tooling.common.utilities": "5.1.*",
+    "@dolittle/tooling.common.utilities": "alpha",
     "cross-spawn": "^6.0.5",
     "is-online": "^8.2.0",
     "latest-version": "^5.1.0",
