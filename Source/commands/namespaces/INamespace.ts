@@ -2,9 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-
-import { ICommandGroup } from "./ICommandGroup";
-import { ICommand } from './ICommand'
+import { ICommandGroup, ICommand } from "../index";
 
 /**
  * Represents a namespace

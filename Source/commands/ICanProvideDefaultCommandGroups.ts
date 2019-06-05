@@ -3,14 +3,20 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { ICommandGroup } from "./ICommandGroup";
+import { ICommandGroup } from "./index";
 
 /**
- * Represents a system that can provide the default command groups
+ * Defines a system that can provide default command groups
  *
  * @export
  * @interface ICanProvideDefaultCommandGroups
  */
 export interface ICanProvideDefaultCommandGroups {
+
+    /**
+     * Provides default command groups
+     *
+     * @returns {ICommandGroup[]}
+     */
     provide(): ICommandGroup[]
 }

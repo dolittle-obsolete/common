@@ -8,9 +8,8 @@ export * from './CommandContext';
 export * from './ICommand';
 export * from './ICommandGroup';
 export * from './IDiscoverableCommandGroup';
-export * from './INamespace';
-export * from './ICanProvideNamespaces';
 export * from './ICanProvideDefaultCommandGroups';
 export * from './ICanProvideDefaultCommands';
-export * from './INamespaces'
 export * from './ICommandManager'
+
+export * from './namespaces';

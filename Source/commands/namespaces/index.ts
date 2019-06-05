@@ -1,16 +1,10 @@
+
 /*---------------------------------------------------------------------------------------------
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { INamespace } from "./INamespace";
-
-/**
- * Represents a system that can provide namespaces
- *
- * @export
- * @interface ICanProvideNamespaces
- */
-export interface ICanProvideNamespaces {
-    provide(): INamespace[]
-}
+export * from './INamespace';
+export * from './ICanProvideNamespaces';
+export * from './INamespaces';
+export * from './Namespaces'

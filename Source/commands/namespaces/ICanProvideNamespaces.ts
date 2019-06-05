@@ -3,20 +3,14 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { ICommand } from "./index";
+import { INamespace } from "../index";
 
 /**
- * Defines a system that can provide default commands
+ * Represents a system that can provide namespaces
  *
  * @export
- * @interface ICanProvideDefaultCommands
+ * @interface ICanProvideNamespaces
  */
-export interface ICanProvideDefaultCommands {
-    
-    /**
-     * Provides default commands
-     *
-     * @returns {ICommand[]}
-     */
-    provide(): ICommand[]
+export interface ICanProvideNamespaces {
+    provide(): INamespace[]
 }

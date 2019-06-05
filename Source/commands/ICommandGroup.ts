@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { ICommand } from "./ICommand";
+import { ICommand } from "./index";
 
 /**
  * Represents the the bare minimum of a command group
@@ -36,6 +36,7 @@ export interface ICommandGroup {
      * @memberof ICommandGroup
      */
     readonly shortDescription: string;
+    
     /**
      * Adds commands to the command group
      *

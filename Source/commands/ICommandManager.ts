@@ -4,9 +4,8 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { ICanOutputMessages } from "@dolittle/tooling.common.utilities";
-import { INamespaces } from "./INamespaces";
-import { CommandContext } from "./CommandContext";
+import {ICanOutputMessages} from '@dolittle/tooling.common.utilities';
+import { INamespaces, CommandContext } from "./index";
 
 /**
  * Represents a manager for commands

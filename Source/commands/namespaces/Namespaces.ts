@@ -3,9 +3,9 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { ICanProvideNamespaces } from "./ICanProvideNamespaces";
-import { INamespaces } from "./INamespaces";
-import { INamespace } from "./INamespace";
+import { ICanProvideNamespaces, INamespaces, INamespace } from "../index";
+
+
 
 /**
  * Represents all namespaces

@@ -3,10 +3,10 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { BoilerplatesConfig, IApplicationsManager, IArtifactTemplatesManager, IBoilerplateDiscoverers, IBoilerplateManagers, IBoundedContextsManager, ICanFindOnlineBoilerplatePackages } from "@dolittle/tooling.common.boilerplates";
-import { ProjectConfig } from '@dolittle/tooling.common.configurations';
+import { BoilerplatesConfig, IApplicationsManager, IBoilerplateDiscoverers, IBoundedContextsManager, ICanFindOnlineBoilerplatePackages, ProjectConfig, IBoilerplates, ITemplatesBoilerplates, IContentBoilerplates } from "@dolittle/tooling.common.boilerplates";
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
-import { Folders } from "@dolittle/tooling.common.utilities";
+import { Folders } from "@dolittle/tooling.common.files";
+import { ICanOutputMessages } from "@dolittle/tooling.common.utilities";
 import * as FsExtra from 'fs-extra';
 
 /**
@@ -19,6 +19,7 @@ export class CommandContext {
 
     /**
      * Creates an instance of CommandContext.
+     * @param {ICanOutputMessages} outputter
      * @param {*} dolittleConfig
      * @param {ProjectConfig} projectConfig
      * @param {BoilerplatesConfig} boilerplatesConfig
@@ -29,70 +30,86 @@ export class CommandContext {
      * @param {IBoilerplateManagers} boilerplateManagers
      * @param {Folders} folders
      * @param {typeof FsExtra} fileSystem
-     * @memberof CommandContext
      */
-    constructor(dolittleConfig: any, projectConfig: ProjectConfig, boilerplatesConfig: BoilerplatesConfig,
-        applicationsManager: IApplicationsManager, artifactTemplatesManager: IArtifactTemplatesManager, boundedContextsManager: IBoundedContextsManager,
-        dependencyResolvers: IDependencyResolvers, boilerplateManagers: IBoilerplateManagers, boilerplateDiscoverers: IBoilerplateDiscoverers, 
+    constructor(outputter: ICanOutputMessages, dolittleConfig: any, projectConfig: ProjectConfig, boilerplatesConfig: BoilerplatesConfig,
+            boilerplates: IBoilerplates, templatesBoilerplates: ITemplatesBoilerplates, contentBoilerplates: IContentBoilerplates,
+        dependencyResolvers: IDependencyResolvers, boilerplateDiscoverers: IBoilerplateDiscoverers, 
         onlineBoilerplateDiscoverer: ICanFindOnlineBoilerplatePackages, folders: Folders, fileSystem: typeof FsExtra) {
-        
+        this.outputter = outputter;
         this.dolittleConfig = dolittleConfig;
         this.projectConfig = projectConfig;
         this.boilerplatesConfig = boilerplatesConfig;
-        this.applicationsManager = applicationsManager;
-        this.artifactTemplatesManager = artifactTemplatesManager;
-        this.boundedContextsManager = boundedContextsManager;
+        this.boilerplates = boilerplates;
+        this.templatesBoilerplates = templatesBoilerplates;
+        this.contentBoilerplates = contentBoilerplates;
         this.dependencyResolvers = dependencyResolvers;
-        this.boilerplateManagers = boilerplateManagers;
         this.boilerplateDiscoverers = boilerplateDiscoverers;
         this.onlineBoilerplateDiscoverer = onlineBoilerplateDiscoverer;
         this.folders = folders;
-        this.fileSystem = fileSystem;   
+        this.fileSystem = fileSystem;
     }
+
+    /**
+     * The system that can output messages
+     */
+    readonly outputter: ICanOutputMessages
+
     /**
      * The dolittle config
      */
     readonly dolittleConfig: any
+
     /**
      * The project configuration object
      */
     readonly projectConfig: ProjectConfig
+
     /**
      * The boilerplates configuration object
      */
     readonly boilerplatesConfig: BoilerplatesConfig
+
     /**
-     * The applications manager
+     * The boilerplates
+     *
+     * @type {IBoilerplates}
      */
-    readonly applicationsManager: IApplicationsManager
+    readonly boilerplates: IBoilerplates
+
     /**
-     * The artifact templates manager
+     * The templates boilerplates
+     *
+     * @type {ITemplatesBoilerplates}
      */
-    readonly artifactTemplatesManager: IArtifactTemplatesManager
+    readonly templatesBoilerplates: ITemplatesBoilerplates
+
     /**
-     * The bounded contexts manager
+     * The content boilerplates
+     *
+     * @type {IContentBoilerplates}
      */
-    readonly boundedContextsManager: IBoundedContextsManager
+    readonly contentBoilerplates: IContentBoilerplates
+
     /**
      * The dependency resolvers
      */
     readonly dependencyResolvers: IDependencyResolvers 
-    /**
-     * The boilerplate managers
-     */
-    readonly boilerplateManagers: IBoilerplateManagers 
+
     /**
      * The boilerplate discoverers
      */
     readonly boilerplateDiscoverers: IBoilerplateDiscoverers
+
     /**
      * The instance that can find online boilerplates
      */
     readonly onlineBoilerplateDiscoverer: ICanFindOnlineBoilerplatePackages
+    
     /**
      * The filesystem
      */
     readonly fileSystem: typeof FsExtra 
+
     /**
      * The folders object
      */
