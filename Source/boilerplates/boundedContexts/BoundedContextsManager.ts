@@ -9,8 +9,7 @@ import { groupBy } from '@dolittle/tooling.common.utilities';
 import { Logger } from '@dolittle/tooling.common.logging';
 import path from 'path';
 import { IApplicationsManager, ContentBoilerplate, ApplicationConfigurationNotFound, 
-    IBoundedContextsManager, IContentBoilerplates, IContentBoilerplate } from '../index';
-import { CreatedContentBoilerplateDetails } from 'contentBoilerplate';
+    IBoundedContextsManager, IContentBoilerplates, IContentBoilerplate, CreatedContentBoilerplateDetails } from '../index';
 
 
 export const boundedContextBoilerplateType = 'boundedContext';
