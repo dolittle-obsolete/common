@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { BoilerplatesConfig, IApplicationsManager, IBoilerplateDiscoverers, IBoundedContextsManager, ICanFindOnlineBoilerplatePackages, ProjectConfig, IBoilerplates, ITemplatesBoilerplates, IContentBoilerplates } from "@dolittle/tooling.common.boilerplates";
+import { BoilerplatesConfig, IBoilerplateDiscoverers, ICanFindOnlineBoilerplatePackages, ProjectConfig, IBoilerplates, ITemplatesBoilerplates, IContentBoilerplates } from "@dolittle/tooling.common.boilerplates";
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
 import { Folders } from "@dolittle/tooling.common.files";
 import { ICanOutputMessages } from "@dolittle/tooling.common.utilities";
@@ -33,8 +33,8 @@ export class CommandContext {
      */
     constructor(outputter: ICanOutputMessages, dolittleConfig: any, projectConfig: ProjectConfig, boilerplatesConfig: BoilerplatesConfig,
             boilerplates: IBoilerplates, templatesBoilerplates: ITemplatesBoilerplates, contentBoilerplates: IContentBoilerplates,
-        dependencyResolvers: IDependencyResolvers, boilerplateDiscoverers: IBoilerplateDiscoverers, 
-        onlineBoilerplateDiscoverer: ICanFindOnlineBoilerplatePackages, folders: Folders, fileSystem: typeof FsExtra) {
+            dependencyResolvers: IDependencyResolvers, boilerplateDiscoverers: IBoilerplateDiscoverers, 
+            onlineBoilerplateDiscoverer: ICanFindOnlineBoilerplatePackages, folders: Folders, fileSystem: typeof FsExtra) {
         this.outputter = outputter;
         this.dolittleConfig = dolittleConfig;
         this.projectConfig = projectConfig;

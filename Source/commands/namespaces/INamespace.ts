@@ -5,36 +5,38 @@
 import { ICommandGroup, ICommand } from "../index";
 
 /**
- * Represents a namespace
+ * Defines a namespace
  *
  * @export
  * @interface INamespace
  */
 export interface INamespace {
+
     /**
-     * Whether or not default commands and command groups a are excluded from this namespace
+     * Whether or not default commands and command groups are included in this namespace
      *
      * @type {boolean}
-     * @memberof INamespace
      */
-    readonly excludeDefault: boolean
+    readonly includeDefault: boolean
+    
     /**
      * The name of the namespace
      *
      * @type {string}
-     * @memberof INamespace
      */
     readonly name: string
     
     /**
      * The description of the namespace.
-     * @memberof ICommand
+     * 
+     * @type {string}
      */
     readonly description: string
 
     /**
      * The short description of the namespace. If none is specified the short description is the normal description
-     * @memberof ICommand
+     * 
+     * @type {string}
      */
     readonly shortDescription: string
 
@@ -42,14 +44,13 @@ export interface INamespace {
      * The commands belonging to this namespace
      *
      * @type {ICommand[]}
-     * @memberof INamespace
      */
     readonly commands: ICommand[]
+
     /**
      * The command groups belonging to this namespace
      *
      * @type {ICommandGroup[]}
-     * @memberof INamespace
      */
     readonly commandGroups: ICommandGroup[]    
     

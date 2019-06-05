@@ -3,12 +3,10 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-
-import {ICanOutputMessages} from '@dolittle/tooling.common.utilities';
 import { INamespaces, CommandContext } from "./index";
 
 /**
- * Represents a manager for commands
+ * Defines a manager for commands
  */
 export interface ICommandManager {
     
@@ -23,15 +21,14 @@ export interface ICommandManager {
     /**
      * Executes a command
      *
-     * @param {ICanOutputMessages} outputter
-     * @param {string} cwd
+     * @param {string} currentWorkingDirectory
      * @param {string} coreLanguage
-     * @param {string} commandOrGroup
+     * @param {string} commandOrGroupName
      * @param {CommandContext} context
      * @param {string[]} [commandArguments]
      * @param {string} [namespace]
      * @returns {Promise<void>}
      * @memberof ICommandManager
      */
-    execute(outputter: ICanOutputMessages, cwd: string, coreLanguage: string, commandOrGroup: string, context: CommandContext, commandArguments?: string[], namespace?: string): Promise<void>
+    execute(currentWorkingDirectory: string, coreLanguage: string, commandOrGroupName: string, context: CommandContext, commandArguments?: string[], namespace?: string): Promise<void>
 }

@@ -6,11 +6,17 @@
 import { INamespace } from "../index";
 
 /**
- * Represents a system that can provide namespaces
+ * Defines a system that can provide namespaces
  *
  * @export
  * @interface ICanProvideNamespaces
  */
 export interface ICanProvideNamespaces {
+
+    /**
+     * Provides a set of {INamespace}
+     *
+     * @returns {INamespace[]}
+     */
     provide(): INamespace[]
 }

@@ -5,31 +5,31 @@
 import { ICanProvideNamespaces, INamespace } from "../index";
 
 /**
- * Represents all namespaces
+ * Defines a system that knows about {INamespace} all namespaces
  *
  * @export
  * @interface INamespaces
  */
 export interface INamespaces {
+
     /**
-     * The instances of {ICanProvideNamespaces}
+     * The instances of {ICanProvideNamespaces} providers
      *
      * @type {ICanProvideNamespaces[]}
-     * @memberof INamespaces
      */
     readonly providers: ICanProvideNamespaces[]
+
     /**
      * All the provided namespaces
      *
      * @type {INamespace[]}
-     * @memberof INamespaces
      */
     readonly namespaces: INamespace[]
+    
     /**
      * Adds {ICanProvideNamespaces} providers
      *
-     * @param {...[ICanProvideNamespaces[]]} providers
-     * @memberof INamespaces
+     * @param {...ICanProvideNamespaces[]} providers
      */
     addProviders(...providers: ICanProvideNamespaces[]): void
 

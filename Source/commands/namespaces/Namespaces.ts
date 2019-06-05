@@ -3,12 +3,11 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
+import { Logger } from "@dolittle/tooling.common.logging";
 import { ICanProvideNamespaces, INamespaces, INamespace } from "../index";
 
-
-
 /**
- * Represents all namespaces
+ * Represents an implementation of {INamespaces}
  *
  * @export
  * @interface Namespaces
@@ -17,7 +16,7 @@ export class Namespaces implements INamespaces {
     
     private _namespaces: INamespace[] = []
 
-    constructor (private _providers: ICanProvideNamespaces[]) {}
+    constructor (private _providers: ICanProvideNamespaces[], private _logger: Logger) {}
 
     get providers() {return this._providers; }
 
@@ -31,6 +30,8 @@ export class Namespaces implements INamespaces {
     }
 
     private loadNamespaces() {
+        this._logger.info('Providing namespaces');
+        this._namespaces = [];
         this.providers.forEach(_ => this._namespaces.push(..._.provide()));
     }
 

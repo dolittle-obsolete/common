@@ -6,7 +6,7 @@
 import { ICommand } from "./index";
 
 /**
- * Represents the the bare minimum of a command group
+ * Defines the structure of a Command Group
  *
  * @export
  * @interface ICommandGroup
@@ -36,13 +36,13 @@ export interface ICommandGroup {
      * @memberof ICommandGroup
      */
     readonly shortDescription: string;
-    
+
     /**
      * Adds commands to the command group
      *
      * @param {...ICommand[]} command
      * @memberof ICommandGroup
      */
-    addCommands(...command: ICommand[]): void;
+    addCommand(...command: ICommand[]): void;
     
 }

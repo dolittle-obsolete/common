@@ -5,16 +5,15 @@
 import { ICommandGroup } from "./index";
 
 /**
- * Represents the a discoverable command group
+ * Defines a discoverable Command Group
  *
  * @export
  * @interface IDiscoverableCommandGroup
  */
 export interface IDiscoverableCommandGroup extends ICommandGroup {
+
     /**
      * Loads the commands
-     *
-     * @memberof IDiscoverableCommandGroup
      */
     loadCommands(): void
     
