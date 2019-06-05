@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.utilities",
-  "version": "5.1.0-alpha.3",
+  "version": "5.1.0-alpha.4",
   "description": "Common utilities for dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -34,5 +34,6 @@
     "build": "yarn clean && yarn ts:all",
     "clean": "rimraf dist && yarn ts:clean",
     "prepublishOnly": "yarn build"
-  }
+  },
+  "dependencies": {}
 }

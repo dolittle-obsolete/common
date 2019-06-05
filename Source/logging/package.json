@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.logging",
-  "version": "5.1.0-alpha.3",
+  "version": "5.1.0-alpha.4",
   "description": "Utilities related to logging for dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -36,6 +36,7 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
+    "@types/winston": "^2.4.4",
     "winston": "^3.2.1"
   }
 }

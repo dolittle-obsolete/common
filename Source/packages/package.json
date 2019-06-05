@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.packages",
-  "version": "5.1.0-alpha.3",
+  "version": "5.1.0-alpha.4",
   "description": "Utilities related to packages for dolittle tooling",
   "publishConfig": {
     "access": "public"
