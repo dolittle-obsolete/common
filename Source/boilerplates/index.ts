@@ -36,8 +36,6 @@ export * from './listInstalledBoilerplates';
 export * from './contentBoilerplate/index'
 export * from './templatesBoilerplate/index';
 export * from './online/index';
-export * from './applications/index';
-export * from './boundedContexts/index';
 export * from './configurations/index';
 
 export * from './globals';

@@ -7,7 +7,7 @@ import { Application, applicationFilename } from '@dolittle/tooling.common.confi
 import {FileSystem} from '@dolittle/tooling.common.files';
 import { Logger } from '@dolittle/tooling.common.logging';
 import path from 'path';
-import { IApplicationsManager, ContentBoilerplate, CreatedContentBoilerplateDetails, IContentBoilerplates } from '../index';
+import { IApplicationsManager, ContentBoilerplate, CreatedContentBoilerplateDetails, IContentBoilerplates } from '../Source/boilerplates/index';
 
 export const applicationBoilerplateType = 'application';
 
