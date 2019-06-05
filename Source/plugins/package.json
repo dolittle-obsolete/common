@@ -31,6 +31,10 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
+    "@dolittle/tooling.common.logging": "5.1.*",
+    "@dolittle/tooling.common.files": "5.1.*",
+    "@dolittle/tooling.common.utilities": "5.1.*",
+    "@dolittle/tooling.common.packages": "5.1.*",
     "@dolittle/tooling.common.commands": "5.1.*",
     "@dolittle/tooling.common.configurations": "5.1.*"
   },

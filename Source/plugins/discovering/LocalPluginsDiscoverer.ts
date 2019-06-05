@@ -2,36 +2,34 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
-import * as FsExtra from 'fs-extra';
+import { FileSystem } from '@dolittle/tooling.common.files';
+import { Logger } from '@dolittle/tooling.common.logging';
+import { ToolingPackage, packageIsCompatible } from '@dolittle/tooling.common.packages';
 import path from 'path';
-import semver from 'semver';
-import { Logger } from 'winston';
-import { ICanDiscoverPlugins } from './ICanDiscoverPlugins';
-import { PluginPackage, PluginPackageJson } from './PluginPackage';
-import { PluginsConfig } from 'configurations';
-import { IPluginLoader } from './IPluginLoader';
-
-const toolingPkg = require('../package.json');
-
-const dolittlePluginKeywords = ['dolittle', 'tooling', 'plugin'];
+import { ICanDiscoverPlugins, PluginPackage, PluginsConfig, IPluginLoader, PluginAlreadyInUse, packageIsPluginPackage } from '../index';
 
 /**
- * Represents a system for discovering locally installed tooling plugins
+ * Represents an implementation of {ICanDiscoverPlugins} for discovering plugins under npm's global node_modules folder
+ * 
+ * @class LocalPluginsDiscoverer
+ * @implements ICanDiscoverPlugins
  */
 export class LocalPluginsDiscoverer implements ICanDiscoverPlugins {
+
     private _discoveredPlugins: PluginPackage[];
     private _pluginPaths!: string[];
+
     /**
-     * Initializes a new instance of {LocalPluginsDiscoverer}
+     * Instantiates an instance of {LocalPluginsDiscoverer}
+     * @param {*} toolingPackage
      * @param {PluginsConfig} boilerplateConfig
      * @param {string} nodeModulesPath
      * @param {IBoilerplatesLoader} boilerplatesLoader
      * @param {typeof FsExtra} fileSystem
      * @param {Logger} logger
      */
-    constructor(private _pluginsConfig: PluginsConfig, private _nodeModulesPath: string, private _pluginsLoader: IPluginLoader, 
-        private _fileSystem: typeof FsExtra, private _logger: Logger) {
+    constructor(private _toolingPackage: any, private _pluginsConfig: PluginsConfig, private _nodeModulesPath: string, private _pluginsLoader: IPluginLoader, 
+        private _fileSystem: FileSystem, private _logger: Logger) {
         this._discoveredPlugins = []; 
     }
 
@@ -40,12 +38,10 @@ export class LocalPluginsDiscoverer implements ICanDiscoverPlugins {
         return this._pluginPaths;
     }
     
-    get discoveredPlugins() {return this._discoveredPlugins;}
-    /**
-     * @inheritdoc
-     * @memberof BoilerplatesManager
-     */
+    get discovered() {return this._discoveredPlugins;}
+    
     discover() {
+        this._logger.info('Discovering plugins');
         this._pluginPaths = this.discoverLocalPlugins(this._nodeModulesPath);
         this._discoveredPlugins = [];
         let pluginsConfigObject: any = {};
@@ -60,21 +56,24 @@ export class LocalPluginsDiscoverer implements ICanDiscoverPlugins {
             pluginJavascriptFiles.forEach(pluginPath => {
                 if (this._fileSystem.existsSync(pluginPath)) {
                     foundPlugin = true;
-                    let packageJson: PluginPackageJson = this._fileSystem.readJsonSync(path.join(folderPath, 'package.json'));
-                    if (packageJson.dolittle.tooling === semver.major(toolingPkg.version).toString()) {
-                        if (pluginsConfigObject[packageJson.name]) {
-                            this._logger.warn(`Discovered a plugin with an already in-use name '${packageJson.name}'.`);
-                            throw new Error(`Found two plugins with the same package name targeting the same tooling version.`);
+                    let packageObject: ToolingPackage = this._fileSystem.readJsonSync(path.join(folderPath, 'package.json'));
+                    if (packageIsCompatible(packageObject, this._toolingPackage)) {
+                        if (pluginsConfigObject[packageObject.name]) {
+                            this._logger.warn(`Discovered a plugin with an already in-use name '${packageObject.name}'.`);
+                            throw new PluginAlreadyInUse(packageObject.name);
                         }
+                        this._logger.info(`Discovered compatible plugin at '${folderPath}'`);
                         this._pluginsLoader.needsReload = true;
-                        pluginsConfigObject[packageJson.name] = folderPath;
-                        this._discoveredPlugins.push(new PluginPackage(packageJson, pluginPath));
+
+                        let pluginPackage = new PluginPackage(packageObject, pluginPath);
+                        pluginsConfigObject[packageObject.name] = {pluginPath: pluginPackage.pluginFilePath, packagePath: folderPath};
+                        this._discoveredPlugins.push(new PluginPackage(packageObject, pluginPath));
                     }
                 };   
             });
 
             if (!foundPlugin) {
-                this._logger.info(`Plugin package did not have well-known index.js file. Expected to be in one of the paths:
+                this._logger.warn(`Plugin package did not have well-known index.js file. Expected to be in one of the paths:
 '${pluginJavascriptFiles.join('\n')}'`); 
             }
         });
@@ -89,7 +88,7 @@ export class LocalPluginsDiscoverer implements ICanDiscoverPlugins {
                     filePath = path.normalize(filePath);
                     if (path.parse(filePath).base === 'package.json') {
                         let packageJson = this._fileSystem.readJsonSync(filePath);
-                        if (this.packageIsDolittlePlugin(packageJson)) {
+                        if (packageIsPluginPackage(packageJson)) {
                             let folderPath = path.parse(filePath).dir;
                             pluginPackagePaths.push(folderPath);
                         }
@@ -108,9 +107,5 @@ export class LocalPluginsDiscoverer implements ICanDiscoverPlugins {
         });
 
         return pluginPaths.filter((v, i) => pluginPaths.indexOf(v) === i);
-    }
-
-    private packageIsDolittlePlugin(packageJson: any) {
-        return packageJson.keywords && dolittlePluginKeywords.every(val => packageJson.keywords.includes(val));
     }
 }

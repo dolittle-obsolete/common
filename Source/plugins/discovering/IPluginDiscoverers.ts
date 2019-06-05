@@ -3,52 +3,47 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { ICanDiscoverPlugins } from "./ICanDiscoverPlugins";
-import { PluginPackageJson } from "./PluginPackageJson";
+import { ICanDiscoverPlugins, PluginPackage } from "../index";
 
 /**
- * Responsible for discovering boilerplates
+ * Defines a system that knows about {ICanDiscoverPlugins} plugin discoverers
  *
  * @export
  * @interface IPluginDiscoverers
  */
 export interface IPluginDiscoverers {
+
     /**
      * The plugin discoverers
      *
      * @type {ICanDiscoverPlugins[]}
-     * @memberof IPluginDiscoverers
      */
     readonly pluginDiscoverers: ICanDiscoverPlugins[]
+
     /**
      * Adds discoverers
      *
      * @param {...ICanDiscoverPlugins[]} pluginDiscoverers
-     * @memberof IPluginDiscoverers
      */
-    addDiscoverers(...pluginDiscoverers: ICanDiscoverPlugins[]): void
+    add(...pluginDiscoverers: ICanDiscoverPlugins[]): void
 
     /**
      * Discovers plugins
-     *
-     * @memberof IPluginDiscoverers
      */
     discover(): void
 
     /**
      * The discovered plugin packages
      *
-     * @type {PluginPackageJson[]}
-     * @memberof IPluginDiscoverers
+     * @type {PluginPackage[]}
      */
-    discoveredPlugins: PluginPackageJson[]
+    discoveredPlugins: PluginPackage[]
 
     /**
     * Gets the paths of the Dolittle plugins
     *
     * @readonly
     * @type {string[]} Filesystem paths of the Dolittle boilerplates installed on the system
-    * @memberof IPluginDiscoverers
     */
     pluginPaths: string[]
 }

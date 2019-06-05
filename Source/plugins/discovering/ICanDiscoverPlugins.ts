@@ -2,36 +2,32 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-
-import { PluginPackageJson } from "./PluginPackageJson";
+import { PluginPackage } from "../index";
 
 /**
- * Responsible for discovering boilerplates
+ * Defines a system that can discovering plugins
  *
  * @export
  * @interface ICanDiscoverPlugins
  */
 export interface ICanDiscoverPlugins {
+
     /**
      * Discovers plugins and writes them to the plugins configuration so they can be loaded.
-     *
-     * @memberof ICanDiscoverPlugins
      */
     discover(): void
+
     /**
      * The discovered plugins
      *
-     * @type {PluginPackageJson[]}
-     * @memberof ICanDiscoverPlugins
+     * @type {PluginPackage[]}
      */
-    discoveredPlugins: PluginPackageJson[]
+    discovered: PluginPackage[]
 
     /**
     * Gets the paths of the Dolittle plugins
     *
-    * @readonly
     * @type {string[]} Filesystem paths of the Dolittle plugins installed on the system
-    * @memberof ICanDiscoverPlugins
     */
     pluginPaths: string[]
 }

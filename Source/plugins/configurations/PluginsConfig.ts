@@ -6,6 +6,12 @@ import { CacheConfig } from '@dolittle/tooling.common.configurations'
 
 /**
  * Represents the cached plugins configuration file for the tooling
+ * 
+ * Definition:
+ * "<plugin package name>": {
+ *      "pluginPath": "<path to module (index, plugin)>",
+ *      "packagePath": "<path to package folder>"
+ * }
  *
  * @export
  * @class PluginsConfig
