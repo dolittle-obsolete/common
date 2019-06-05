@@ -31,8 +31,8 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@dolittle/tooling.common.boilerplates": "5.0.*",
-    "@dolittle/tooling.common.configurations": "5.0.*",
-    "@dolittle/tooling.common.utilities": "5.0.*"
+    "@dolittle/tooling.common.boilerplates": "5.1.*",
+    "@dolittle/tooling.common.configurations": "5.1.*",
+    "@dolittle/tooling.common.utilities": "5.1.*"
   }
 }

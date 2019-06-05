@@ -1,7 +1,7 @@
 {
   "name": "@dolittle/tooling.common.plugins",
   "description": "The aggregated package for dolittle tooling",
-  "version": "5.0.2",
+  "version": "5.1.0",
   "publishConfig": {
     "access": "public"
   },
@@ -31,8 +31,8 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@dolittle/tooling.common.commands": "5.0.*",
-    "@dolittle/tooling.common.configurations": "5.0.*"
+    "@dolittle/tooling.common.commands": "5.1.*",
+    "@dolittle/tooling.common.configurations": "5.1.*"
   },
   "devDependencies": {
   }
