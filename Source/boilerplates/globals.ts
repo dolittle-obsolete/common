@@ -8,8 +8,7 @@ import { fileSystem, folders } from '@dolittle/tooling.common.files';
 import { logger } from '@dolittle/tooling.common.logging';
 import {
     BoilerplatesConfig, IBoilerplatesLoader, BoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplateDiscoverers, LocalBoilerplatesDiscoverer, IBoilerplateDiscoverers, 
-    OnlineBoilerplatesDiscoverer, IApplicationsManager, ApplicationsManager, IBoundedContextsManager, BoundedContextsManager, 
-    ITemplatesBoilerplates, TemplatesBoilerplates, IBoilerplateParsers, BoilerplateParsers, ICanParseBoilerplates, ContentBoilerplateParser, TemplatesBoilerplateParser,
+    OnlineBoilerplatesDiscoverer, ITemplatesBoilerplates, TemplatesBoilerplates, IBoilerplateParsers, BoilerplateParsers, ICanParseBoilerplates, ContentBoilerplateParser, TemplatesBoilerplateParser,
     Boilerplates, IBoilerplates, OnlineDolittleBoilerplatesFinder, handlebars, IContentBoilerplates, ContentBoilerplates, ProjectConfig
 } from './index';
 
@@ -36,7 +35,3 @@ export const contentBoilerplates: IContentBoilerplates = new ContentBoilerplates
 export const onlineBoilerplatesFinder = new OnlineBoilerplatesDiscoverer(latestCompatiblePackageFinder, logger);
 
 export const onlineDolittleBoilerplatesFinder = new OnlineDolittleBoilerplatesFinder(latestCompatiblePackageFinder, logger);
-
-export const applicationsManager: IApplicationsManager = new ApplicationsManager(contentBoilerplates, fileSystem, logger);
-export const boundedContextsManager: IBoundedContextsManager = new BoundedContextsManager(contentBoilerplates, applicationsManager, folders, fileSystem, logger);
-
