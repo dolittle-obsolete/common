@@ -27,7 +27,7 @@ export async function askToDownloadOrUpdateBoilerplates(boilerplates: Boilerplat
         if (shouldDownload) {
             let packagesToDownload = await askWhichBoilerplates(boilerplates, resolvers);
             if (packagesToDownload.length > 0) {
-                downloadPackagesFromNpmSync(packagesToDownload, onStdOut, onStdErr);
+                await downloadPackagesFromNpmSync(packagesToDownload, onStdOut, onStdErr);
                 await initBoilerplatesSystem(boilerplateDiscoverers, onStdOut, onStdErr);
             }
         }
