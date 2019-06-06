@@ -36,13 +36,5 @@ export interface ICommandGroup {
      * @memberof ICommandGroup
      */
     readonly shortDescription: string;
-
-    /**
-     * Adds commands to the command group
-     *
-     * @param {...ICommand[]} command
-     * @memberof ICommandGroup
-     */
-    addCommand(...command: ICommand[]): void;
     
 }
