@@ -50,12 +50,10 @@ async function askWhichPlugins(plugins: PluginPackageInfo[], resolvers: IDepende
         let choices = plugins.map(_ => new Object(
             {
                 name: `${_.name}`, 
-                value: [
-                    { 
-                        name: _.name,
-                        version: _.latest || _.version
-                    }
-                ]
+                value: { 
+                    name: _.name,
+                    version: _.latest || _.version
+                }
             })
         );
         let choosePluginsDependency = new PromptDependency('plugins', 'Which plugins to download', chooseMultipleUserInputType, 'Choose plugins:', choices)
