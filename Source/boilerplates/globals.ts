@@ -9,7 +9,7 @@ import { logger } from '@dolittle/tooling.common.logging';
 import {
     BoilerplatesConfig, IBoilerplatesLoader, BoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplateDiscoverers, LocalBoilerplatesDiscoverer, IBoilerplateDiscoverers, 
     OnlineBoilerplatesDiscoverer, ITemplatesBoilerplates, TemplatesBoilerplates, IBoilerplateParsers, BoilerplateParsers, ICanParseBoilerplates, ContentBoilerplateParser, TemplatesBoilerplateParser,
-    Boilerplates, IBoilerplates, OnlineDolittleBoilerplatesFinder, handlebars, IContentBoilerplates, ContentBoilerplates, ProjectConfig
+    Boilerplates, IBoilerplates, OnlineDolittleBoilerplatesFinder, handlebars, IContentBoilerplates, ContentBoilerplates, ProjectConfig, IScriptRunner, ScriptRunner
 } from './index';
 
 export const projectConfig = new ProjectConfig(nodeModulesPath);
@@ -35,3 +35,5 @@ export const contentBoilerplates: IContentBoilerplates = new ContentBoilerplates
 export const onlineBoilerplatesFinder = new OnlineBoilerplatesDiscoverer(latestCompatiblePackageFinder, logger);
 
 export const onlineDolittleBoilerplatesFinder = new OnlineDolittleBoilerplatesFinder(latestCompatiblePackageFinder, logger);
+
+export const scriptRunner: IScriptRunner = new ScriptRunner(); 
