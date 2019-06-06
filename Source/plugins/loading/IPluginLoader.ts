@@ -2,6 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
+import { ToolingPackage } from '@dolittle/tooling.common.packages';
 import { IPlugin } from '../index';
 
 /**
@@ -22,16 +23,23 @@ export interface IPluginLoader {
     /**
      * Gets the loaded plugins
      *
-     * @type {Plugin[]}
+     * @returns {Promise<Plugin[]>}
      */
     getLoaded(): Promise<IPlugin[]>
     
+    /**
+     * The packages of the plugins found in the plugins configuration
+     *
+     * @returns {Promise<ToolingPackage[]>}
+     */
+    getPluginPackages(): Promise<ToolingPackage[]>
+
     /**
      * The path of the plugins configuration
      *
      * @type {string}
      */
-    pluginsConfigurationPath: string
+    readonly pluginsConfigurationPath: string
 
     /**
      * Whether the loader needs to load the plugins again

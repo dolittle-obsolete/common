@@ -21,12 +21,12 @@ export class LocalPluginsDiscoverer implements ICanDiscoverPlugins {
 
     /**
      * Instantiates an instance of {LocalPluginsDiscoverer}
-     * @param {*} toolingPackage
-     * @param {PluginsConfig} boilerplateConfig
-     * @param {string} nodeModulesPath
-     * @param {IBoilerplatesLoader} boilerplatesLoader
-     * @param {typeof FsExtra} fileSystem
-     * @param {Logger} logger
+     * @param {*} _toolingPackage
+     * @param {PluginsConfig} _pluginsConfig
+     * @param {string} _nodeModulesPath
+     * @param {IsLoader} _pluginsLoader
+     * @param {typeof FsExtra} _fileSystem
+     * @param {Logger} _logger
      */
     constructor(private _toolingPackage: any, private _pluginsConfig: PluginsConfig, private _nodeModulesPath: string, private _pluginsLoader: IPluginLoader, 
         private _fileSystem: FileSystem, private _logger: Logger) {

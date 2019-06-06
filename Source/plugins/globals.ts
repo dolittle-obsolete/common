@@ -5,8 +5,8 @@
 
 import { fileSystem } from '@dolittle/tooling.common.files';
 import { logger } from '@dolittle/tooling.common.logging';
-import { nodeModulesPath, toolingPackage } from '@dolittle/tooling.common.packages'
-import { LocalPluginsDiscoverer, IPluginLoader, PluginLoader, PluginsConfig, IPluginDiscoverers, PluginDiscoverers, IPlugins, Plugins } from './index';
+import { nodeModulesPath, toolingPackage, latestCompatiblePackageFinder } from '@dolittle/tooling.common.packages'
+import { LocalPluginsDiscoverer, IPluginLoader, PluginLoader, PluginsConfig, IPluginDiscoverers, PluginDiscoverers, IPlugins, Plugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder } from './index';
 
 export const pluginsConfig = new PluginsConfig(nodeModulesPath);
 export const pluginLoader: IPluginLoader = new PluginLoader(pluginsConfig, fileSystem, logger);
@@ -15,3 +15,7 @@ let localPluginsDiscoverer = new LocalPluginsDiscoverer(toolingPackage, pluginsC
 export const pluginDiscoverers: IPluginDiscoverers = new PluginDiscoverers([localPluginsDiscoverer])
 
 export const plugins: IPlugins = new Plugins(pluginDiscoverers, pluginLoader, logger);
+
+export const onlinePluginsFinder = new OnlinePluginsFinder(latestCompatiblePackageFinder, logger);
+
+export const onlineDolittlePluginsFinder = new OnlineDolittlePluginsFinder(latestCompatiblePackageFinder, logger);

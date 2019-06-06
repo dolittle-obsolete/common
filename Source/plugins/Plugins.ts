@@ -27,6 +27,11 @@ export class Plugins implements IPlugins {
         await this.loadPlugins();
         return this._plugins; 
     }
+    async getPluginPackages() { 
+        this._logger.info('Getting plugins');
+        let pluginPackages = await this._pluginLoader.getPluginPackages();
+        return pluginPackages; 
+    }
 
     discoverNewPlugins() {
         this._pluginDiscoverers.discover();
