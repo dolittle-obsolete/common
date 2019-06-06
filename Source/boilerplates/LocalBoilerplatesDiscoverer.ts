@@ -4,9 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 import {FileSystem} from '@dolittle/tooling.common.files';
 import { Logger } from '@dolittle/tooling.common.logging';
-import { ToolingPackage } from '@dolittle/tooling.common.packages';
+import { ToolingPackage, packageIsCompatible, toolingPackage } from '@dolittle/tooling.common.packages';
 import path from 'path';
-import semver from 'semver';
 import { IBoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplatesConfig, packageIsBoilerplatePackage } from './index';
 
 /**
@@ -43,7 +42,7 @@ export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
 
         this.boilerplatePaths.forEach(folderPath => {
             let packageJson: ToolingPackage = this._fileSystem.readJsonSync(path.join(folderPath, 'package.json'));
-            if (packageJson.dolittle.tooling === semver.major(this._toolingPackage.version).toString()) {
+            if (packageIsCompatible(packageJson, toolingPackage)) {
                 if (boilerplatesConfigObject[packageJson.name]) {
                     this._logger.warn(`Discovered a boilerplate with an already in-use name '${packageJson.name}'.`);
                     throw new Error(`Found two boilerplates with the same package name targeting the same tooling version.`);
