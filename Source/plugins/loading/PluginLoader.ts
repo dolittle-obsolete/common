@@ -34,7 +34,7 @@ export class PluginLoader implements IPluginLoader {
     get pluginsConfigurationPath() { return this._pluginsConfig.path; }
 
     async getPluginPackages() { 
-        if (! this._loadedPluginPackages || this.needsReload) await this.load;
+        if (! this._loadedPluginPackages || this.needsReload) await this.load();
         return this._loadedPluginPackages;
     }
 
