@@ -50,12 +50,10 @@ async function askWhichBoilerplates(boilerplates: BoilerplatePackageInfo[], reso
         let choices = boilerplates.map(_ => new Object(
             {
                 name: `${_.name}`, 
-                value: [
-                    { 
+                value: { 
                         name: _.name,
                         version: _.latest || _.version
                     }
-                ]
             })
         );
         let chooseBoilerplatesDependency = new PromptDependency('boilerplates', 'Which boilerplates to download', chooseMultipleUserInputType, 'Choose boilerplates:', choices)
