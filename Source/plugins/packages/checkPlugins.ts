@@ -3,8 +3,9 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { requireInternet, OnStdCallback, ILatestCompatiblePackageFinder } from '@dolittle/tooling.common.packages';
+import { requireInternet, ILatestCompatiblePackageFinder } from '@dolittle/tooling.common.packages';
 import {FileSystem} from '@dolittle/tooling.common.files';
+import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import semver from 'semver';
 import path from 'path';
 import {IPluginDiscoverers, pluginPackageKeyword } from '../index';
@@ -19,24 +20,16 @@ export type OutOfDatePackage = {
  * @param {IPluginDiscoverers} pluginsDiscoverers
  * @param {ILatestCompatiblePackageFinder} latestPackageFinder
  * @param {FileSystem} fileSystem
- * @param {OnStdCallback} [onStdOut] Optional callback for dealing with the standard text output
- * @param {OnStdCallback} [onNoPlugins] Optional callback for dealing with the text output when there were no plugins found
- * @param {OnStdCallback} [onPackageUpgrade] Optional callback for dealing with the text output for each time there is a package that can be updated
- * @param {OnStdCallback} [onStdErr] Optional callback for dealing with the text output when an error occurs
+ * @param {IBusyIndicator} busyIndicator
  * @returns
  */
 export async function checkPlugins(pluginDiscoverers: IPluginDiscoverers, latestPackageFinder: ILatestCompatiblePackageFinder,
-    fileSystem: FileSystem, onStdOut?: OnStdCallback, onNoPlugins?: OnStdCallback, onPackageUpgrade?: OnStdCallback, onStdErr?: OnStdCallback) {
-    let ifStdOut = (data: string) => onStdOut? onStdOut(data) : {};
-    let ifNoPlugins = (data: string) => onNoPlugins? onNoPlugins(data) : {};
-    let ifPackageUpgrade = (data: string) => onPackageUpgrade? onPackageUpgrade(data) : {};
-    let ifStdErr = (data: string) => onStdErr? onStdErr(data) : {};
-    
-    await requireInternet(onStdOut, onStdErr);
-    ifStdOut('Checking versions:\n');
+    fileSystem: FileSystem, busyIndicator: IBusyIndicator) {
+    await requireInternet(busyIndicator);
+    busyIndicator = busyIndicator.createNew().start('Checking versions:\n')
     let paths = pluginDiscoverers.pluginPaths;
     if (paths.length < 1) {
-        ifNoPlugins('No plugins installed');
+        busyIndicator.info('No plugins installed');
         return [];
     }
     let locallyInstalled: {name: string, version: string}[] = [];
@@ -48,18 +41,22 @@ export async function checkPlugins(pluginDiscoverers: IPluginDiscoverers, latest
     return new Promise(async (resolve) => {
         let outOfDatePackages: OutOfDatePackage[] = [];
         for (let pkg of locallyInstalled) {
-            ifStdOut(`Checking ${pkg.name}`);
+            busyIndicator.text = (`Checking ${pkg.name}`);
             await latestPackageFinder.find(pkg.name, pluginPackageKeyword)
                 .then(packageJson => {
-                    if (packageJson === null) ifStdErr(`'${pkg.name}' is not a Plugin`);
+                    if (packageJson === null) {
+                        busyIndicator.fail(`'${pkg.name}' is not a Plugin`);
+                        busyIndicator = busyIndicator.createNew();
+                    }
                     else {
                         let latestVersion = packageJson.version;
                         if (semver.gt(latestVersion, pkg.version)) {
                             outOfDatePackages.push({name: pkg.name, version: pkg.version, latest: latestVersion});
-                            ifPackageUpgrade(`${pkg.name}@${pkg.version} ==> ${latestVersion}`);
+                            busyIndicator.warn(`${pkg.name}@${pkg.version} ==> ${latestVersion}`);
+                            busyIndicator = busyIndicator.createNew().start();
                         }
                     }
-                }).catch(_ => ifStdErr(`Failed to fetch ${pkg.name}`));
+                }).catch(_ => busyIndicator.fail(`Failed to fetch ${pkg.name}`));
         }
         resolve(outOfDatePackages);
 

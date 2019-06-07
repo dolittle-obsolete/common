@@ -2,8 +2,9 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { OnStdCallback, ToolingPackage } from '@dolittle/tooling.common.packages';
+import { ToolingPackage } from '@dolittle/tooling.common.packages';
 import {FileSystem} from '@dolittle/tooling.common.files';
+import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import path from 'path';
 import { IPluginDiscoverers } from './index';
 
@@ -11,20 +12,16 @@ import { IPluginDiscoverers } from './index';
  * Finds and gets the plugins installed on the local machine
  *
  * @param {IPluginDiscoverers} pluginDiscoverers
- * @param {FileSystem} filesystem
- * @param {OnStdCallback} [onStdOut] Optional callback for dealing with the standard text output  
- * @param {OnStdCallback} [onNoPlugins] Optional callback for dealing the text output when there are no plugins
- * @param {OnStdCallback} [onStdErr] Optional callback for dealing with the text output when an error occurs  
+ * @param {FileSystem} filesystem  
+ * @param {IBusyIndicator} busyIndicator
+ * 
  * @export
  * @returns A list of the package configurations for each plugin
  */
 
  
-export async function listInstalledPlugins(pluginDiscoverers: IPluginDiscoverers, filesystem: FileSystem, onStdOut?: OnStdCallback, onNoPlugins?: OnStdCallback, onStdErr?: OnStdCallback) {
-    let ifStdOut = (data: string) => onStdOut? onStdOut(data) : {};
-    let ifNoPlugins = (data: string) => onNoPlugins? onNoPlugins(data) : {};
-    let ifStdErr = (data: string) => onStdErr? onStdErr(data) : {};
-    ifStdOut('Getting installed plugins:\n');
+export async function listInstalledPlugins(pluginDiscoverers: IPluginDiscoverers, filesystem: FileSystem, busyIndicator: IBusyIndicator) {
+    busyIndicator = busyIndicator.createNew().start('Getting installed plugins:\n');
 
     try {
         let paths = pluginDiscoverers.pluginPaths;
@@ -34,13 +31,13 @@ export async function listInstalledPlugins(pluginDiscoverers: IPluginDiscoverers
             return packageJson as ToolingPackage;
         });
         let numPlugins = pluginPackages.length;
-        if (numPlugins > 0) ifStdOut(`Found ${numPlugins} installed plugins`);
-        else ifNoPlugins('Could not find any installed plugins.');
+        if (numPlugins > 0) busyIndicator.succeed(`Found ${numPlugins} installed plugins`);
+        else busyIndicator.info('Could not find any installed plugins.');
         
         return pluginPackages;
         
     } catch (error) {
-        ifStdErr(`An error occurred: ${error.message? error.message : error}`);
+        busyIndicator.fail(`An error occurred: ${error.message? error.message : error}`);
         throw error;
     }
 }

@@ -3,9 +3,11 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import {requireInternet, OnStdCallback, downloadPackagesFromNpmSync, DownloadPackageInfo} from '@dolittle/tooling.common.packages';
+import {requireInternet, downloadPackagesFromNpmSync, DownloadPackageInfo} from '@dolittle/tooling.common.packages';
 import { PromptDependency, IDependencyResolvers, confirmUserInputType, chooseMultipleUserInputType } from '@dolittle/tooling.common.dependencies';
-import { IPluginDiscoverers, initPluginSystem } from '../index';
+import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
+
+import { initPluginSystem, IPlugins } from '../index';
 
 export type PluginPackageInfo = {
     name: string, version: string, latest?: string
@@ -14,21 +16,20 @@ export type PluginPackageInfo = {
 /**
  * Performs the action that asks the user whether or not to download or update plugin packages 
  *
- * @param {OnStdCallback} [onStdOut] Optional callback for dealing with the standard text output  
- * @param {OnStdCallback} [onStdErr] Optional callback for dealing with the text output when an error occurs  
+ * @param {PluginPackageInfo[]} pluginsPackages
+ * 
  * @export
- * @param {PluginPackageInfo[]} plugins
  */
-export async function askToDownloadOrUpdatePlugins(plugins: PluginPackageInfo[], pluginDiscoverers: IPluginDiscoverers, resolvers: IDependencyResolvers, 
-    onStdOut?: OnStdCallback, onStdErr?: OnStdCallback) {
-    await requireInternet(onStdOut, onStdErr);
-    if (plugins.length && plugins.length > 0) {
+export async function askToDownloadOrUpdatePlugins(pluginsPackages: PluginPackageInfo[], plugins: IPlugins, resolvers: IDependencyResolvers, 
+    busyIndicator: IBusyIndicator) {
+    await requireInternet(busyIndicator);
+    if (pluginsPackages.length && pluginsPackages.length > 0) {
         const shouldDownload = await askToDownload(resolvers);
         if (shouldDownload) {
-            let packagesToDownload = await askWhichPlugins(plugins, resolvers);
+            let packagesToDownload = await askWhichPlugins(pluginsPackages, resolvers);
             if (packagesToDownload.length > 0) {
-                await downloadPackagesFromNpmSync(packagesToDownload, onStdOut, onStdErr);
-                await initPluginSystem(pluginDiscoverers, onStdOut, onStdErr);
+                await downloadPackagesFromNpmSync(packagesToDownload, busyIndicator);
+                await initPluginSystem(plugins, busyIndicator);
             }
         }
     }
