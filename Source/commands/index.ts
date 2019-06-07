@@ -9,5 +9,10 @@ export * from './IDiscoverableCommandGroup';
 export * from './ICanProvideDefaultCommandGroups';
 export * from './ICanProvideDefaultCommands';
 export * from './ICommandManager'
+export * from './IDefaultCommandGroups';
+export * from './IDefaultCommands';
+export * from './DefaultCommandGroups';
+export * from './DefaultCommands';
+
 
 export * from './namespaces';

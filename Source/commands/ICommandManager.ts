@@ -4,10 +4,10 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { ICanOutputMessages } from "@dolittle/tooling.common.utilities";
-import { INamespaces } from "./index";
+import { INamespaces, IDefaultCommands, IDefaultCommandGroups, ICanProvideDefaultCommands, ICanProvideDefaultCommandGroups, ICanProvideNamespaces } from "./index";
 
 /**
- * Defines a manager for commands
+ * Defines the manager for the commands
  */
 export interface ICommandManager {
     
@@ -15,9 +15,22 @@ export interface ICommandManager {
      * The namespaces
      *
      * @type {INamespaces}
-     * @memberof ICommandManager
      */
     readonly namespaces: INamespaces
+    
+    /**
+     * The commands 
+     *
+     * @type {IDefaultCommands}
+     */
+    readonly commands: IDefaultCommands
+
+    /**
+     * The command groups
+     *
+     * @type {IDefaultCommandGroups}
+     */
+    readonly commandGroups: IDefaultCommandGroups
 
     /**
      * Executes a command
@@ -32,4 +45,13 @@ export interface ICommandManager {
      * @memberof ICommandManager
      */
     execute(currentWorkingDirectory: string, coreLanguage: string, commandOrGroupName: string, outputter: ICanOutputMessages, commandArguments?: string[], namespace?: string): Promise<void>
+
+    /**
+     * Loads the tooling command system with the given providers
+     *
+     * @param {ICanProvideDefaultCommands[]} defaultCommandProviders
+     * @param {ICanProvideDefaultCommandGroups[]} defaultCommandGroupsProviders
+     * @param {ICanProvideNamespaces} namespaceProviders
+     */
+    load(defaultCommandProviders: ICanProvideDefaultCommands[], defaultCommandGroupsProviders: ICanProvideDefaultCommandGroups[], namespaceProviders: ICanProvideNamespaces[]): void
 }
