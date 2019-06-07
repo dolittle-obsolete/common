@@ -4,25 +4,26 @@
  *--------------------------------------------------------------------------------------------*/
 import latestVersion from 'latest-version';
 import semver from 'semver';
-import { requireInternet, OnStdCallback } from '../index';
+import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
+import { requireInternet } from '../index';
 
 /**
  * Gets the latest version of a package from npmjs.com
  *
  * @export
  * @param {string} pkgName The name of the package
- * @param {OnStdCallback} [onStdOut] Optional callback for handling outgoing text 
- * @param {OnStdCallback} [onNoInternet] Optional callback for handling error messages 
+ * @param {IBusyIndicator} busyIndicator
  * @returns The latest version
  */
-export async function getLatestVersionFromNpm(pkgName: string, onStdOut?: OnStdCallback, onStdErr?: OnStdCallback) {
-    await requireInternet(onStdOut);
-    if (onStdOut) onStdOut(`Getting latest version of ${pkgName}`);
+export async function getLatestVersionFromNpm(pkgName: string, busyIndicator: IBusyIndicator) {
+    await requireInternet(busyIndicator);
+    busyIndicator.createNew().start(`Getting latest version of ${pkgName}`);
     try {
         const version = await latestVersion(pkgName);
+        busyIndicator.stop();
         return version;
     } catch (error) {
-        if (onStdErr) onStdErr(`Failed to get the latest version of ${pkgName}. Error: ${error.message? error.message : error}`);
+        busyIndicator.fail(`Failed to get the latest version of ${pkgName}. Error: ${error.message? error.message : error}`);
         throw error;
     }
 }
