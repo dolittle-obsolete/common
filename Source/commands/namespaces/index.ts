@@ -5,6 +5,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 export * from './INamespace';
+export * from './Namespace';
 export * from './ICanProvideNamespaces';
 export * from './INamespaces';
-export * from './Namespaces'
+export * from './Namespaces';

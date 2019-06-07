@@ -14,5 +14,9 @@ export * from './IDefaultCommands';
 export * from './DefaultCommandGroups';
 export * from './DefaultCommands';
 
+export * from './Command';
+export * from './CommandGroup';
+export * from './DiscoverableCommandGroup';
+
 
 export * from './namespaces';
