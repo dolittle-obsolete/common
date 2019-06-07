@@ -15,7 +15,7 @@ import { NotConnectedToInternet } from '../index';
  * @export
  */
 export async function requireInternet(busyIndicator: IBusyIndicator ) {
-    busyIndicator.createNew().start('Checking for internet connection')
+    busyIndicator = busyIndicator.createNew().start('Checking for internet connection')
     let hasInternet = await isOnline();
     if (!hasInternet) {
         busyIndicator.warn('Not connected to the internet');

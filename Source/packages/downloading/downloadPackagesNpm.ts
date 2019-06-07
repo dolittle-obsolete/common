@@ -15,8 +15,7 @@ import {requireInternet, DownloadPackageInfo } from '../index';
  */
 export async function downloadPackagesFromNpmSync(packages: DownloadPackageInfo[], busyIndicator: IBusyIndicator) {
     await requireInternet(busyIndicator);
-    spawn.sync('npm', ['i', '-g', ...packages.map(_ => _.version? `${_.name}@${_.version}` : _.name)], {cwd: process.cwd(), stdio: 'inherit'});
-                
+    spawn.sync('npm', ['i', '-g', ...packages.map(_ => _.version? `${_.name}@${_.version}` : _.name)], {cwd: process.cwd(), stdio: 'inherit'});        
 }
 
 /**

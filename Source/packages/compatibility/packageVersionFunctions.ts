@@ -17,7 +17,7 @@ import { requireInternet } from '../index';
  */
 export async function getLatestVersionFromNpm(pkgName: string, busyIndicator: IBusyIndicator) {
     await requireInternet(busyIndicator);
-    busyIndicator.createNew().start(`Getting latest version of ${pkgName}`);
+    busyIndicator = busyIndicator.createNew().start(`Getting latest version of ${pkgName}`);
     try {
         const version = await latestVersion(pkgName);
         busyIndicator.stop();
