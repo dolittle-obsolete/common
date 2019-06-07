@@ -5,4 +5,6 @@
 export * from './Guid';
 export * from './Exception';
 export * from './ICanOutputMessages';
+export * from './IBusyIndicator';
+export * from './NullBusyIndicator';
 export * from './helpers';
