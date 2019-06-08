@@ -3,7 +3,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ICanOutputMessages } from "@dolittle/tooling.common.utilities";
+import { ICanOutputMessages, NullMessageOutputter, NullBusyIndicator, IBusyIndicator } from "@dolittle/tooling.common.utilities";
 import { Logger } from "@dolittle/tooling.common.logging";
 import { INamespaces, IDefaultCommands, IDefaultCommandGroups, ICanProvideDefaultCommands, ICanProvideDefaultCommandGroups, ICanProvideNamespaces, ICommandManager, Namespaces, DefaultCommandGroups, DefaultCommands } from "./index";
 
@@ -28,8 +28,9 @@ export class CommandManager implements ICommandManager {
     get commandGroups() { return this._defaultCommandGroups.commandGroups; }
 
     
-    async execute(currentWorkingDirectory: string, coreLanguage: string, commandOrGroupName: string, outputter: ICanOutputMessages, commandArguments?: string[], namespace?: string) {
+    async execute(allArguments: string[], currentWorkingDirectory: string, coreLanguage: string, commandOptions?: Map<string, string>, outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         console.log('Execute command');
+        console.log(allArguments);
     }
 
     clear() {

@@ -40,12 +40,13 @@ export interface ICommand {
     /**
      * The action performed when the command is invoked
      *
-     * @param {string} cwd The current working directory 
+     * @param {string} currentWorkingDirectory The current working directory 
      * @param {string} coreLanguage The core language
-     * @param {string[]} [commandArguments] The arguments for the command
+     * @param {string[]} [commandArguments] The non-optional arguments for the command
+     * @param {Map<string, string>} [commandOptions] The optional arguments/options for the command
      * @param {string} [namespace] The namespace of the command, if applicable
      * @param {ICanOutputMessages} [outputter] The system that can output messages
      * @param {IBusyIndicator} [busyIndicator]
      */
-    action(cwd: string, coreLanguage: string, commandArguments?: string[], namespace?: string, outputter?: ICanOutputMessages, busyIndicator?: IBusyIndicator): Promise<void>
+    action(currentWorkingDirectory: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, outputter?: ICanOutputMessages, busyIndicator?: IBusyIndicator): Promise<void>
 }
