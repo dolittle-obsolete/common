@@ -35,18 +35,22 @@ export class PromptDependency extends Dependency implements IPromptDependency {
      * @param {string} description
      * @param {string} userInputType
      * @param {string} promptMessage
+     * @param {boolean} [optional=false]
      * @param {any[]} [choices]
      * @param {string} [customInput]
      */
-    constructor (name: string, description: string, userInputType: string, promptMessage: string, choices?: any[], 
+    constructor (name: string, description: string, userInputType: string, promptMessage: string, optional: boolean = false, choices?: any[], 
             customInput?: string) {
         super(name, description, 'userInput');
         this.userInputType = userInputType;
-        this.choices = choices;
         this.promptMessage = promptMessage;
+        this.optional = optional;
+        this.choices = choices;
         this.customInput = customInput;
         PromptDependency.throwIfInvalidPromptDependency(this.userInputType, this.promptMessage);
     }
+
+    readonly optional: boolean;
 
     readonly userInputType: string;
     

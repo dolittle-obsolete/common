@@ -6,13 +6,13 @@
 import { argumentUserInputType, ICanResolveSyncDependencies, IDependency, ArgumentsNotMatchingDependencies, CannotResolveDependency, dependencyIsPromptDependency } from "../index";
 
 /**
- * Represents an implementation of {ICanResolveSyncDependencies} for resolving argument dependencies
+ * Represents an implementation of {ICanResolveSyncDependencies} for resolving non-optional argument dependencies
  *
  * @export
- * @class ArgumentDependencyResolver
+ * @class NonOptionalArgumentDependencyResolver
  * @implements {ICanResolveSyncDependencies}
  */
-export class ArgumentDependencyResolver implements ICanResolveSyncDependencies {
+export class NonOptionalArgumentDependencyResolver implements ICanResolveSyncDependencies {
     
     resolve(context: any, dependencies: IDependency[], destinationPath?: string, coreLanguage?: string, args?: string[]) {
         if (args === undefined && dependencies.length === 0) return context;
@@ -30,7 +30,7 @@ export class ArgumentDependencyResolver implements ICanResolveSyncDependencies {
     }    
     
     canResolve(dependency: IDependency): boolean {
-        return dependencyIsPromptDependency(dependency) && dependency.userInputType === argumentUserInputType;
+        return dependencyIsPromptDependency(dependency) && dependency.userInputType === argumentUserInputType && !dependency.optional;
     }
 
 }

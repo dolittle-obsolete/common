@@ -15,6 +15,13 @@ import { IDependency, DependencyChoice } from './index';
 export interface IPromptDependency extends IDependency {
    
     /**
+     * Whether or not this dependency is optional. Default value is false
+     *
+     * @type {boolean}
+     */
+    readonly optional: boolean;
+    
+    /**
      * The user input type of the dependency, it defines how the user should be prompted.
      * 
      * The 'argument' user input type is a CLI specific thing defining user input that should be arguments in a command
