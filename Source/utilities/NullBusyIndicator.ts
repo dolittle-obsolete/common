@@ -13,7 +13,7 @@ import { IBusyIndicator } from "./index";
  */
 export class NullBusyIndicator implements IBusyIndicator {
 
-    text= ''
+    text = ''
    
     readonly isBusy = false;
 
