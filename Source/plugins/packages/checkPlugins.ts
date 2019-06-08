@@ -56,7 +56,10 @@ export async function checkPlugins(pluginDiscoverers: IPluginDiscoverers, latest
                             busyIndicator = busyIndicator.createNew().start();
                         }
                     }
-                }).catch(_ => busyIndicator.fail(`Failed to fetch ${pkg.name}`));
+                }).catch(_ => {
+                    busyIndicator.fail(`Failed to fetch ${pkg.name}`);
+                    busyIndicator = busyIndicator.createNew().start();
+                });
         }
         resolve(outOfDatePackages);
 
