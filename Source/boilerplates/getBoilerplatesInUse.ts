@@ -13,7 +13,7 @@ import { IBoilerplates } from './index';
  * @export
  * 
  */
-export async function listBoilerplatesInUse(_boilerplates: IBoilerplates, busyIndicator: IBusyIndicator) {
+export async function getBoilerplatesInUse(_boilerplates: IBoilerplates, busyIndicator: IBusyIndicator) {
     busyIndicator = busyIndicator.createNew().start('Listing boilerplates in use:\n');
     try {
         let boilerplates = _boilerplates.boilerplates;

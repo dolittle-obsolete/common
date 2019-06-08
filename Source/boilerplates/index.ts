@@ -30,8 +30,8 @@ export * from './ScriptRunner';
 
 export * from './askToChooseBoilerplate';
 export * from './initBoilerplatesSystem';
-export * from './listBoilerplatesInUse';
-export * from './listInstalledBoilerplates';
+export * from './getBoilerplatesInUse';
+export * from './getInstalledBoilerplates';
 
 export * from './contentBoilerplate/index'
 export * from './templatesBoilerplate/index';

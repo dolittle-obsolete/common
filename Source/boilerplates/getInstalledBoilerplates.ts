@@ -16,7 +16,7 @@ import { IBoilerplateDiscoverers } from './index';
  * @export
  * @returns A list of the boilerplate and package configurations for each boilerplate
  */
-export async function listInstalledBoilerplates(boilerplateDiscoverers: IBoilerplateDiscoverers, filesystem: FileSystem, busyIndicator: IBusyIndicator) {
+export async function getInstalledBoilerplates(boilerplateDiscoverers: IBoilerplateDiscoverers, filesystem: FileSystem, busyIndicator: IBusyIndicator) {
     busyIndicator = busyIndicator.createNew().start('Getting installed boilerplates:\n');
     try {
         let paths = boilerplateDiscoverers.boilerplatePaths;
