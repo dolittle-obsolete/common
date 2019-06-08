@@ -46,7 +46,7 @@ export async function checkPlugins(pluginDiscoverers: IPluginDiscoverers, latest
                 .then(packageJson => {
                     if (packageJson === null) {
                         busyIndicator.fail(`'${pkg.name}' is not a Plugin`);
-                        busyIndicator = busyIndicator.createNew();
+                        busyIndicator = busyIndicator.createNew().start();
                     }
                     else {
                         let latestVersion = packageJson.version;
