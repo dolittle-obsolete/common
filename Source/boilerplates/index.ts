@@ -37,5 +37,6 @@ export * from './contentBoilerplate/index'
 export * from './templatesBoilerplate/index';
 export * from './online/index';
 export * from './configurations/index';
+export * from './commands/index';
 
 export * from './globals';

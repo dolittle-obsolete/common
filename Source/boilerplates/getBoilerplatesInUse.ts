@@ -14,8 +14,8 @@ import { IBoilerplates } from './index';
  * 
  */
 export async function getBoilerplatesInUse(_boilerplates: IBoilerplates, busyIndicator: IBusyIndicator) {
-    busyIndicator = busyIndicator.createNew().start('Listing boilerplates in use:\n');
     try {
+        busyIndicator = busyIndicator.createNew().start('Listing boilerplates in use:\n');
         let boilerplates = _boilerplates.boilerplates;
         let numBoilerplates = boilerplates.length;
         if (numBoilerplates > 0) busyIndicator.succeed(`There are ${numBoilerplates} in use`);
