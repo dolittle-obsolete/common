@@ -4,6 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import {FileSystem} from '@dolittle/tooling.common.files';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
+import { ToolingPackage } from '@dolittle/tooling.common.packages';
 import path from 'path';
 import { IBoilerplateDiscoverers } from './index';
 
@@ -23,7 +24,7 @@ export async function getInstalledBoilerplates(boilerplateDiscoverers: IBoilerpl
     
         let boilerplatesAndPackages = paths.map(boilerplatePaths => {
             let boilerplate = filesystem.readJSONSync(path.join(boilerplatePaths, 'boilerplate.json'));
-            let packageJson = filesystem.readJsonSync(path.join(boilerplatePaths, 'package.json'));
+            let packageJson = filesystem.readJsonSync(path.join(boilerplatePaths, 'package.json')) as ToolingPackage;
             return {boilerplate, packageJson};
         });
         let numBoilerplates = boilerplatesAndPackages.length;

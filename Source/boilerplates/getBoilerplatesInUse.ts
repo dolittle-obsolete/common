@@ -20,6 +20,7 @@ export async function getBoilerplatesInUse(_boilerplates: IBoilerplates, busyInd
         let numBoilerplates = boilerplates.length;
         if (numBoilerplates > 0) busyIndicator.succeed(`There are ${numBoilerplates} in use`);
         else busyIndicator.info(`There are no boilerplates in use.`);
+        return boilerplates;
 
     } catch(error) {
         busyIndicator.fail(`An error occurred: ${error.message? error.message : error}`);
