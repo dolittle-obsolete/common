@@ -3,7 +3,8 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { requireInternet, OnStdCallback } from '@dolittle/tooling.common.packages';
+import { requireInternet } from '@dolittle/tooling.common.packages';
+import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { OnlineBoilerplatesDiscoverer } from '../index';
 
 /**
@@ -16,18 +17,15 @@ import { OnlineBoilerplatesDiscoverer } from '../index';
  * @param {OnStdCallback} [onStdErr] Optional callback for dealing with the text output when an error occurs  
  * @returns
  */
-export async function fetchOnlineBoilerplates(onlineBoilerplatesDiscoverer: OnlineBoilerplatesDiscoverer, keywords: string[] = [], limit: number = 250, 
-    onStdOut?: OnStdCallback, onStdErr?: OnStdCallback) {
-    let ifStdOut = (data: string) => onStdOut? onStdOut(data) : {};
-    let ifStdErr = (data: string) => onStdErr? onStdErr(data) : {};
-    await requireInternet(onStdOut, onStdErr);
-    ifStdOut('Getting boilerplates (this might take a while, depending on your internet connection): ');
+export async function fetchOnlineBoilerplates(onlineBoilerplatesDiscoverer: OnlineBoilerplatesDiscoverer, busyIndicator: IBusyIndicator, keywords: string[] = [], limit: number = 250) {
+    await requireInternet(busyIndicator);
+    busyIndicator = busyIndicator.createNew().start('Getting boilerplates (this might take a while, depending on your internet connection): ');
     let boilerplates = await onlineBoilerplatesDiscoverer.findLatest(keywords, limit)
         .then(boilerplates => {
-            ifStdOut(`Found ${boilerplates.length} boilerplates`);
+            busyIndicator.succeed(`Found ${boilerplates.length} boilerplates`);
             return boilerplates;
         }).catch(error => {
-            ifStdErr(`An error occurred: ${error.message? error.message : error}`);
+            busyIndicator.fail(`An error occurred: ${error.message? error.message : error}`);
             throw error;
         });
     return boilerplates;

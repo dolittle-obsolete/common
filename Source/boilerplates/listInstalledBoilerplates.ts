@@ -2,8 +2,8 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { OnStdCallback } from '@dolittle/tooling.common.packages';
 import {FileSystem} from '@dolittle/tooling.common.files';
+import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import path from 'path';
 import { IBoilerplateDiscoverers } from './index';
 
@@ -12,17 +12,12 @@ import { IBoilerplateDiscoverers } from './index';
  *
  * @param {IBoilerplateDiscoverers} boilerplateDiscoverers
  * @param {FileSystem} filesystem
- * @param {OnStdCallback} [onStdOut] Optional callback for dealing with the standard text output  
- * @param {OnStdCallback} [onNoBoilerplates] Optional callback for dealing the text output when there are no boilerplates
- * @param {OnStdCallback} [onStdErr] Optional callback for dealing with the text output when an error occurs  
+ * @param {IBusyIndicator} busyIndicator
  * @export
  * @returns A list of the boilerplate and package configurations for each boilerplate
  */
-export async function listInstalledBoilerplates(boilerplateDiscoverers: IBoilerplateDiscoverers, filesystem: FileSystem, onStdOut?: OnStdCallback, onNoBoilerplates?: OnStdCallback, onStdErr?: OnStdCallback) {
-    let ifStdOut = (data: string) => onStdOut? onStdOut(data) : {};
-    let ifNoBoilerplates = (data: string) => onNoBoilerplates? onNoBoilerplates(data) : {};
-    let ifStdErr = (data: string) => onStdErr? onStdErr(data) : {};
-    ifStdOut('Getting installed boilerplates:\n');
+export async function listInstalledBoilerplates(boilerplateDiscoverers: IBoilerplateDiscoverers, filesystem: FileSystem, busyIndicator: IBusyIndicator) {
+    busyIndicator = busyIndicator.createNew().start('Getting installed boilerplates:\n');
     try {
         let paths = boilerplateDiscoverers.boilerplatePaths;
     
@@ -32,16 +27,13 @@ export async function listInstalledBoilerplates(boilerplateDiscoverers: IBoilerp
             return {boilerplate, packageJson};
         });
         let numBoilerplates = boilerplatesAndPackages.length;
-        if (numBoilerplates > 0) ifStdOut(`Found ${numBoilerplates} installed boilerplates`);
-        else ifNoBoilerplates(`Could not find any installed boilerplates.
-
-Use 'dolittle boilerplates online' to discover what's available on npm.
-Or use 'dolittle boilerplates dolittle' to discover boilerplates that the Dolittle team has made available on npm`);
+        if (numBoilerplates > 0) busyIndicator.succeed(`Found ${numBoilerplates} installed boilerplates`);
+        else busyIndicator.info(`Could not find any installed boilerplates`);
         
         return boilerplatesAndPackages;
         
     } catch (error) {
-        ifStdErr(`An error occurred: ${error.message? error.message : error}`);
+        busyIndicator.fail(`An error occurred: ${error.message? error.message : error}`);
         throw error;
     }
 }
