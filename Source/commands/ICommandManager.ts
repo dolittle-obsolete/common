@@ -4,7 +4,8 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { ICanOutputMessages } from "@dolittle/tooling.common.utilities";
-import { INamespaces, IDefaultCommands, IDefaultCommandGroups, ICanProvideDefaultCommands, ICanProvideDefaultCommandGroups, ICanProvideNamespaces } from "./index";
+import { ICanProvideDefaultCommands, ICanProvideDefaultCommandGroups, ICanProvideNamespaces, INamespace, ICommand, ICommandGroup } from "./index";
+
 
 /**
  * Defines the manager for the commands
@@ -16,21 +17,21 @@ export interface ICommandManager {
      *
      * @type {INamespaces}
      */
-    readonly namespaces: INamespaces
+    readonly namespaces: INamespace[]
     
     /**
      * The commands 
      *
      * @type {IDefaultCommands}
      */
-    readonly commands: IDefaultCommands
+    readonly commands: ICommand[]
 
     /**
      * The command groups
      *
      * @type {IDefaultCommandGroups}
      */
-    readonly commandGroups: IDefaultCommandGroups
+    readonly commandGroups: ICommandGroup[]
 
     /**
      * Executes a command
@@ -47,11 +48,26 @@ export interface ICommandManager {
     execute(currentWorkingDirectory: string, coreLanguage: string, commandOrGroupName: string, outputter: ICanOutputMessages, commandArguments?: string[], namespace?: string): Promise<void>
 
     /**
+     * Clears the plugin-providers from the command manager
+     *
+     */
+    clear(): void
+
+    /**
      * Loads the tooling command system with the given providers
      *
      * @param {ICanProvideDefaultCommands[]} defaultCommandProviders
      * @param {ICanProvideDefaultCommandGroups[]} defaultCommandGroupsProviders
      * @param {ICanProvideNamespaces} namespaceProviders
      */
-    load(defaultCommandProviders: ICanProvideDefaultCommands[], defaultCommandGroupsProviders: ICanProvideDefaultCommandGroups[], namespaceProviders: ICanProvideNamespaces[]): void
+    registerProviders(defaultCommandProviders: ICanProvideDefaultCommands[], defaultCommandGroupsProviders: ICanProvideDefaultCommandGroups[], namespaceProviders: ICanProvideNamespaces[]): void
+    
+    /**
+     * Loads the tooling command system with the given default providers
+     *
+     * @param {ICanProvideDefaultCommands[]} defaultCommandProviders
+     * @param {ICanProvideDefaultCommandGroups[]} defaultCommandGroupsProviders
+     * @param {ICanProvideNamespaces} namespaceProviders
+     */
+    registerDefaultProviders(defaultCommandProviders: ICanProvideDefaultCommands[], defaultCommandGroupsProviders: ICanProvideDefaultCommandGroups[], namespaceProviders: ICanProvideNamespaces[]): void
 }

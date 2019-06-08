@@ -13,20 +13,38 @@ import { ICanProvideDefaultCommands, IDefaultCommands, ICommand } from "./index"
  * @interface DefaultCommands
  */
 export class DefaultCommands implements IDefaultCommands {
-    
-    private _commands: ICommand[] = []
+    private _defaultProviders: ICanProvideDefaultCommands[] = [];
+    private _nonDefaultProviders: ICanProvideDefaultCommands[] = [];
+    private _commands: ICommand[] = [];
 
-    constructor (private _providers: ICanProvideDefaultCommands[], private _logger: Logger) {}
+    /**
+     * Instantiates an instance of {DefaultCommands}.
+     * @param {Logger} _logger
+     */
+    constructor (private _logger: Logger) {}
 
-    get providers() {return this._providers; }
+    get providers() {
+        let providers: ICanProvideDefaultCommands[] = [];
+        this._defaultProviders.forEach(_ => providers.push(_));
+        this._nonDefaultProviders.forEach(_ => providers.push(_));
+        return providers;
+    }
 
     get commands() {
         this.loadCommands();
         return this._commands;
     } 
+
+    clear() {
+        this._nonDefaultProviders = [];
+    }
     
-    addProviders(...providers: ICanProvideDefaultCommands[]) {
-        this._providers.push(...providers);
+    register(...providers: ICanProvideDefaultCommands[]) {
+        this._nonDefaultProviders.push(...providers);
+    }
+
+    registerDefault(...providers: ICanProvideDefaultCommands[]) {
+        this._defaultProviders.push(...providers);
     }
 
     private loadCommands() {

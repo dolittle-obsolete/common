@@ -2,7 +2,6 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-
 import { Logger } from "@dolittle/tooling.common.logging";
 import { ICanProvideDefaultCommandGroups, IDefaultCommandGroups, ICommandGroup } from "./index";
 
@@ -13,20 +12,39 @@ import { ICanProvideDefaultCommandGroups, IDefaultCommandGroups, ICommandGroup }
  * @interface DefaultCommandGroups
  */
 export class DefaultCommandGroups implements IDefaultCommandGroups {
-    
+
+    private _defaultProviders: ICanProvideDefaultCommandGroups[] = [];
+    private _nonDefaultProviders: ICanProvideDefaultCommandGroups[] = [];
     private _commandGroups: ICommandGroup[] = []
 
-    constructor (private _providers: ICanProvideDefaultCommandGroups[], private _logger: Logger) {}
+    /**
+     * Instantiates an instance of {DefaultCommandGroups}.
+     * @param {Logger} _logger
+     */
+    constructor (private _logger: Logger) {}
 
-    get providers() {return this._providers; }
+    get providers() {
+        let providers: ICanProvideDefaultCommandGroups[] = [];
+        this._defaultProviders.forEach(_ => providers.push(_));
+        this._nonDefaultProviders.forEach(_ => providers.push(_));
+        return providers;
+    }
 
     get commandGroups() {
         this.loadCommandGroups();
         return this._commandGroups;
     } 
     
-    addProviders(...providers: ICanProvideDefaultCommandGroups[]) {
-        this._providers.push(...providers);
+    clear() { 
+        this._nonDefaultProviders = [];
+    }
+
+    register(...providers: ICanProvideDefaultCommandGroups[]) {
+        this._nonDefaultProviders.push(...providers);
+    }
+    
+    registerDefault(...providers: ICanProvideDefaultCommandGroups[]) {
+        this._defaultProviders.push(...providers);
     }
 
     private loadCommandGroups() {

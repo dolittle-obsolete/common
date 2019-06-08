@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { INamespace } from "../index";
+import { INamespace, IProviderFor } from "../index";
 
 /**
  * Defines a system that can provide namespaces
@@ -11,12 +11,6 @@ import { INamespace } from "../index";
  * @export
  * @interface ICanProvideNamespaces
  */
-export interface ICanProvideNamespaces {
+export interface ICanProvideNamespaces extends IProviderFor<INamespace> {
 
-    /**
-     * Provides a set of {INamespace}
-     *
-     * @returns {INamespace[]}
-     */
-    provide(): INamespace[]
 }

@@ -16,25 +16,36 @@ export class CommandManager implements ICommandManager {
     private _defaultCommands: IDefaultCommands;
 
     constructor(private _logger: Logger) {
-        this._namespaces = new Namespaces([], this._logger);
-        this._defaultCommandGroups = new DefaultCommandGroups([], this._logger);
-        this._defaultCommands = new DefaultCommands([], this._logger);
+        this._namespaces = new Namespaces(this._logger);
+        this._defaultCommandGroups = new DefaultCommandGroups(this._logger);
+        this._defaultCommands = new DefaultCommands(this._logger);
     }
     
-    get namespaces() { return this._namespaces; }
+    get namespaces() { return this._namespaces.namespaces; }
     
-    get commands() { return this._defaultCommands; }
+    get commands() { return this._defaultCommands.commands; }
 
-    get commandGroups() { return this._defaultCommandGroups; }
+    get commandGroups() { return this._defaultCommandGroups.commandGroups; }
 
     
     async execute(currentWorkingDirectory: string, coreLanguage: string, commandOrGroupName: string, outputter: ICanOutputMessages, commandArguments?: string[], namespace?: string) {
         console.log('Execute command');
     }
 
-    load(defaultCommandProviders: ICanProvideDefaultCommands[], defaultCommandGroupsProviders: ICanProvideDefaultCommandGroups[], namespaceProviders: ICanProvideNamespaces[]) {
-        this._defaultCommands.addProviders(...defaultCommandProviders);
-        this._defaultCommandGroups.addProviders(...defaultCommandGroupsProviders);
-        this._namespaces.addProviders(...namespaceProviders);
+    clear() {
+        this._defaultCommands.clear();
+        this._defaultCommandGroups.clear();
+        this._namespaces.clear();
+    }
+
+    registerProviders(defaultCommandProviders: ICanProvideDefaultCommands[], defaultCommandGroupsProviders: ICanProvideDefaultCommandGroups[], namespaceProviders: ICanProvideNamespaces[]) {
+        this._defaultCommands.register(...defaultCommandProviders);
+        this._defaultCommandGroups.register(...defaultCommandGroupsProviders);
+        this._namespaces.register(...namespaceProviders);
+    }
+    registerDefaultProviders(defaultCommandProviders: ICanProvideDefaultCommands[], defaultCommandGroupsProviders: ICanProvideDefaultCommandGroups[], namespaceProviders: ICanProvideNamespaces[]) {
+        this._defaultCommands.registerDefault(...defaultCommandProviders);
+        this._defaultCommandGroups.registerDefault(...defaultCommandGroupsProviders);
+        this._namespaces.registerDefault(...namespaceProviders);
     }
 }

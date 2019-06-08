@@ -3,7 +3,8 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { ICommandGroup } from "./index";
+import { ICommandGroup, IProviderFor } from "./index";
+
 
 /**
  * Defines a system that can provide default command groups
@@ -11,12 +12,6 @@ import { ICommandGroup } from "./index";
  * @export
  * @interface ICanProvideDefaultCommandGroups
  */
-export interface ICanProvideDefaultCommandGroups {
-
-    /**
-     * Provides default command groups
-     *
-     * @returns {ICommandGroup[]}
-     */
-    provide(): ICommandGroup[]
+export interface ICanProvideDefaultCommandGroups extends IProviderFor<ICommandGroup> {
+    
 }

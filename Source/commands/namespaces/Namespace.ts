@@ -33,6 +33,7 @@ export abstract class Namespace implements INamespace {
     get commands() { return this._commands; }
 
     get commandGroups() { return this._commandGroups; }
+    
     get description() { return this._description; }
 
     get shortDescription() { return this._shortDescription; }
