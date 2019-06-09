@@ -36,4 +36,5 @@ export const onlineBoilerplatesFinder = new OnlineBoilerplatesDiscoverer(latestC
 
 export const onlineDolittleBoilerplatesFinder = new OnlineDolittleBoilerplatesFinder(latestCompatiblePackageFinder, logger);
 
-export const scriptRunner: IScriptRunner = new ScriptRunner(); 
+export const scriptRunner: IScriptRunner = new ScriptRunner();
+

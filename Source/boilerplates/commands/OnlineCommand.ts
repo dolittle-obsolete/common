@@ -6,13 +6,29 @@ import {Command} from '@dolittle/tooling.common.commands';
 import { FileSystem } from '@dolittle/tooling.common.files';
 import { requireInternet, isGreaterVersion } from '@dolittle/tooling.common.packages';
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { fetchOnlineBoilerplates, OnlineBoilerplatesDiscoverer, getInstalledBoilerplates, IBoilerplateDiscoverers, askToDownloadOrUpdateBoilerplates } from '../index';
-import { BoilerplatePackageInfo } from 'online';
-import { IDependencyResolvers } from '@dolittle/tooling.common.dependencies';
+import { fetchOnlineBoilerplates, OnlineBoilerplatesDiscoverer, getInstalledBoilerplates, IBoilerplateDiscoverers, askToDownloadOrUpdateBoilerplates, BoilerplatePackageInfo } from '../index';
+import { IDependencyResolvers, PromptDependency, argumentUserInputType } from '@dolittle/tooling.common.dependencies';
 import { Logger } from '@dolittle/tooling.common.logging';
 
 const name = 'online';
 const description = 'Finds boilerplates on npmjs';
+
+const dependencies = [
+    new PromptDependency(
+        'keywords', 
+        'The additional list of keywords to use in the search',
+        argumentUserInputType,
+        'Additional keywords:',
+        true
+    ),
+    new PromptDependency(
+        'limit', 
+        'The limit of boilerplates',
+        argumentUserInputType,
+        'Limit: ',
+        true
+    ),
+]
 
 /**
  * Represents an implementation of {ICommand} for finding online boilerplates
