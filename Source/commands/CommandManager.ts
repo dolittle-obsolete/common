@@ -15,6 +15,10 @@ export class CommandManager implements ICommandManager {
     private _defaultCommandGroups: IDefaultCommandGroups;
     private _defaultCommands: IDefaultCommands;
 
+    /**
+     * Instantiates an instance of {CommandManager}.
+     * @param {Logger} _logger
+     */
     constructor(private _logger: Logger) {
         this._namespaces = new Namespaces(this._logger);
         this._defaultCommandGroups = new DefaultCommandGroups(this._logger);

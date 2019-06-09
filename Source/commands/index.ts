@@ -16,6 +16,7 @@ export * from './IDefaultCommandGroups';
 export * from './IDefaultCommands';
 export * from './DefaultCommandGroups';
 export * from './DefaultCommands';
+export * from './CommandManager';
 
 export * from './Command';
 export * from './CommandGroup';
