@@ -26,7 +26,7 @@ export class ListCommand extends Command {
         super(name, description);
     }
 
-    async action(cwd: string, coreLanguage: string, commandArguments?: string[], namespace?: string, 
+    async action(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
                 outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         
         this._logger.info(`Executing 'boilerplates list' command`);

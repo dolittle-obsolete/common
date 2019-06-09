@@ -13,21 +13,23 @@ import { Logger } from '@dolittle/tooling.common.logging';
 const name = 'online';
 const description = 'Finds boilerplates on npmjs';
 
+const keywordDependency = new PromptDependency(
+    'keywords', 
+    'The additional list of keywords to use in the search',
+    argumentUserInputType,
+    'Additional keywords:',
+    true
+);
+const limitDependency = new PromptDependency(
+    'limit', 
+    'The limit of boilerplates',
+    argumentUserInputType,
+    'Limit: ',
+    true
+);
 const dependencies = [
-    new PromptDependency(
-        'keywords', 
-        'The additional list of keywords to use in the search',
-        argumentUserInputType,
-        'Additional keywords:',
-        true
-    ),
-    new PromptDependency(
-        'limit', 
-        'The limit of boilerplates',
-        argumentUserInputType,
-        'Limit: ',
-        true
-    ),
+    keywordDependency,
+    limitDependency
 ]
 
 /**
@@ -48,14 +50,15 @@ export class OnlineCommand extends Command {
         super(name, description);
     }
 
-    async action(cwd: string, coreLanguage: string, commandArguments?: string[], namespace?: string, 
+    async action(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
                 outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         
         this._logger.info(`Executing 'boilerplates dolittle' command`);
         await requireInternet(busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop();
-        // let keywords = parserResult.getCommandArgs();
-        // let limit = parserResult.extraOpts['l']? parserResult.extraOpts['l'] : parserResult.extraOpts['limit'];
+        let context = await this._dependencyResolvers.resolve({}, dependencies, cwd, coreLanguage, commandArguments, commandOptions);
+        let keywords = context[keywordDependency.name];
+        let limit = parseInt(context[limitDependency.name]);
 
         let boilerplates = await fetchOnlineBoilerplates(this._boilerplateFinder, busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop();
