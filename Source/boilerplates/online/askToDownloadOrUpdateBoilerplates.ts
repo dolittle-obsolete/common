@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import {requireInternet, OnStdCallback, downloadPackagesFromNpmSync, DownloadPackageInfo} from '@dolittle/tooling.common.packages';
+import {requireInternet, downloadPackagesFromNpmSync, DownloadPackageInfo} from '@dolittle/tooling.common.packages';
 import { PromptDependency, IDependencyResolvers, confirmUserInputType, chooseMultipleUserInputType } from '@dolittle/tooling.common.dependencies';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { IBoilerplateDiscoverers, initBoilerplatesSystem } from '../index';
@@ -58,7 +58,7 @@ async function askWhichBoilerplates(boilerplates: BoilerplatePackageInfo[], reso
                     }
             })
         );
-        let chooseBoilerplatesDependency = new PromptDependency('boilerplates', 'Which boilerplates to download', chooseMultipleUserInputType, 'Choose boilerplates:', choices)
+        let chooseBoilerplatesDependency = new PromptDependency('boilerplates', 'Which boilerplates to download', chooseMultipleUserInputType, 'Choose boilerplates:', undefined, choices)
         answers = await resolvers.resolve({}, [chooseBoilerplatesDependency]);
         return answers['boilerplates'] as DownloadPackageInfo[];
     }

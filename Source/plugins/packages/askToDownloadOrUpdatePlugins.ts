@@ -57,7 +57,7 @@ async function askWhichPlugins(plugins: PluginPackageInfo[], resolvers: IDepende
                 }
             })
         );
-        let choosePluginsDependency = new PromptDependency('plugins', 'Which plugins to download', chooseMultipleUserInputType, 'Choose plugins:', choices)
+        let choosePluginsDependency = new PromptDependency('plugins', 'Which plugins to download', chooseMultipleUserInputType, 'Choose plugins:', undefined, choices)
         answers = await resolvers.resolve({}, [choosePluginsDependency]);
         return answers['plugins'] as DownloadPackageInfo[];
     }
