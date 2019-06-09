@@ -38,5 +38,5 @@ export interface IDependencyResolvers {
      * @param {string[]} [args] The optional list of arguments, only used for resolving argument dependencies
      * @returns {Promise<any>}
      */
-    resolve(context: any, dependencies: IDependency[], destinationPath?: string, coreLanguage?: string, args?: string[]): Promise<any>
+    resolve(context: any, dependencies: IDependency[], destinationPath?: string, coreLanguage?: string, args?: string[], options?: Map<string, string>): Promise<any>
 }
