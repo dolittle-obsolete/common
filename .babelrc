@@ -1,3 +1,19 @@
 {
-  "extends": "./node_modules/@dolittle/build/.babelrc"
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "targets": {
+          "esmodules": "false",
+          "node": "current"
+        }
+       }
+    ],
+    "@babel/typescript"
+  ],
+  "plugins": [
+      "@babel/transform-modules-commonjs",
+      "@babel/proposal-class-properties",
+      "@babel/proposal-object-rest-spread"
+  ]
 }

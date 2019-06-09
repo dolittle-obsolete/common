@@ -1,0 +1,51 @@
+{
+  "name": "@dolittle/tooling.common.boilerplates",
+  "version": "5.1.0",
+  "description": "The boilerplates system for common dolittle tooling",
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://dolittle.io",
+  "author": "Dolittle",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dolittle-tools/common.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dolittle-tools/common/issues"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "main": "lib/index.js",
+  "types": "index.d.ts",
+  "typings": "index.d.ts",
+  "scripts": {
+    "ts:cjs": "tsc -p tsconfig.json --declaration false",
+    "ts:typedefs": "tsc --outDir . --emitDeclarationOnly",
+    "ts:all": "yarn ts:cjs && yarn ts:typedefs",
+    "ts:clean": "rimraf ./*.d.ts **/*.d.ts lib",
+    "build": "yarn clean && yarn ts:all",
+    "clean": "rimraf dist && yarn ts:clean",
+    "prepublishOnly": "yarn build"
+  },
+  "dependencies": {
+    "@dolittle/tooling.common.configurations": "5.1.*",
+    "@dolittle/tooling.common.dependencies": "5.1.*",
+    "@dolittle/tooling.common.files": "5.1.*",
+    "@dolittle/tooling.common.utilities": "5.1.*",
+    "@dolittle/tooling.common.logging": "5.1.*",
+    "cross-spawn": "^6.0.5",
+    "handlebars": "^4.0.12",
+    "lodash": "^4.17.11",
+    "npm-keyword": "^6.1.0",
+    "npm-user-packages": "^3.0.0",
+    "semver": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.125",
+    "@types/npm-user-packages": "^3.0.0",
+    "@types/semver": "^6.0.0"
+  }
+}

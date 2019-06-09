@@ -1,52 +1,32 @@
 {
-  "name": "@dolittle/tooling.common",
-  "version": "4.1.1",
-  "description": "Common tools for dolittle tooling",
-  "publishConfig": {
-    "access": "public"
-  },
-  "homepage": "https://dolittle.io",
-  "author": "Dolittle",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/dolittle-tools/common.git"
-  },
-  "bugs": {
-    "url": "https://github.com/dolittle-tools/common/issues"
-  },
-  "files": [
-    "dist"
+  "private": true,
+  "workspaces": [
+    "Source/*"
   ],
-  "main": "dist/commonjs/index.js",
-  "module": "dist/esmodule/index.js",
-  "jspm": {
-    "registry": "npm",
-    "jspmPackage": true,
-    "format": "amd",
-    "main": "index",
-    "directories": {
-      "dist": "dist/systemjs"
-    },
-    "dependencies": {}
-  },
-  "scripts": {
-    "build": "gulp build && find ./dist/* -type 'f' -maxdepth 1| xargs rm -f && for dir in ./dist/*; do mv \"$dir\"/Source/* \"$dir\"/ && rm -rf \"$dir\"/Source; done",
-    "prepublish": "yarn build"
-  },
   "devDependencies": {
-    "@dolittle/build": "~6.2.1"
-  },
-  "dependencies": {
-    "@dolittle/boilerplates.application": "^1.0.2",
-    "@dolittle/boilerplates.artifact-templates": "^1.1.0",
-    "@dolittle/boilerplates.bounded-context.csharp": "^1.1.1",
-    "@dolittle/boilerplates.bounded-context.veracity.csharp": "^1.0.0",
-    "fs-extra": "^7.0.0",
-    "handlebars": "^4.0.12",
-    "rc": "^1.2.8",
-    "shelljs": "^0.8.2",
-    "simple-git": "^1.96.0",
-    "winston": "^3.1.0"
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
+    "@babel/plugin-transform-modules-commonjs": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/chai": "^4.1.7",
+    "@types/cross-spawn": "^6.0.0",
+    "@types/fs-extra": "^5.1.0",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "12.0.0",
+    "@types/winston": "^2.4.4",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "karma": "^4.1.0",
+    "karma-chai-plugins": "^0.9.0",
+    "karma-mocha": "^1.3.0",
+    "mocha": "^6.1.4",
+    "module-alias": "^2.2.0",
+    "rimraf": "^2.6.3",
+    "sinon": "^7.3.2",
+    "sinon-chai": "^3.3.0",
+    "sinon-chai-in-order": "^0.1.0",
+    "typescript": "^3.4.5"
   }
 }
