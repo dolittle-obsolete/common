@@ -6,15 +6,15 @@ import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import {  IPlugins } from './index';
 
 /**
- * Lists the plugins used by the tooling
+ * Gets the plugins used by the tooling
  *
  * @param {IPlugins} _plugins 
  * @param {IBusyIndicator} busyIndicator
  * @export
  * 
  */
-export async function listPluginsInUse(_plugins: IPlugins, busyIndicator: IBusyIndicator) {
-    busyIndicator = busyIndicator.createNew().start('Listing plugins in use:\n');
+export async function getPluginsInUse(_plugins: IPlugins, busyIndicator: IBusyIndicator) {
+    busyIndicator = busyIndicator.createNew().start('Getting plugins in use:\n');
     try {
         let plugins = await _plugins.getPluginPackages();
         let numPlugins = plugins.length;

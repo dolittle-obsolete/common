@@ -9,7 +9,7 @@ import path from 'path';
 import { IPluginDiscoverers } from './index';
 
 /**
- * Finds and gets the plugins installed on the local machine
+ * Gets the plugins installed on the local machine
  *
  * @param {IPluginDiscoverers} pluginDiscoverers
  * @param {FileSystem} filesystem  
@@ -18,9 +18,7 @@ import { IPluginDiscoverers } from './index';
  * @export
  * @returns A list of the package configurations for each plugin
  */
-
- 
-export async function listInstalledPlugins(pluginDiscoverers: IPluginDiscoverers, filesystem: FileSystem, busyIndicator: IBusyIndicator) {
+export async function getInstalledPlugins(pluginDiscoverers: IPluginDiscoverers, filesystem: FileSystem, busyIndicator: IBusyIndicator) {
     busyIndicator = busyIndicator.createNew().start('Getting installed plugins:\n');
 
     try {
