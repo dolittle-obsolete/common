@@ -12,11 +12,11 @@
 export interface IBusyIndicator {
 
     /**
-     * The text
+     * Gets the text. Returns undefined if internal busy indicator object is not created
      *
      * @type {string}
      */
-    text: string
+    text: string | undefined
    
     /**
      * Whether or not the indicator is busy
