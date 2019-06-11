@@ -1,7 +1,7 @@
 {
   "name": "@dolittle/tooling.common.plugins",
   "description": "The aggregated package for dolittle tooling",
-  "version": "6.0.0-alpha.2",
+  "version": "6.0.0-alpha.3",
   "publishConfig": {
     "access": "public"
   },

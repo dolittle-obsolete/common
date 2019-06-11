@@ -33,4 +33,8 @@ export class InitCommand extends Command {
         await initPluginSystem(this._plugins, busyIndicator, this._commandManager);
         if (busyIndicator.isBusy) busyIndicator.stop();
     }
+
+    getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {
+        return this.dependencies;
+    }
 }

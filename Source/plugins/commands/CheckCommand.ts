@@ -47,4 +47,8 @@ export class CheckCommand extends Command {
         if (busyIndicator.isBusy) busyIndicator.stop()
         askToDownloadOrUpdatePlugins(outOfDatePackages, this._plugins, this._dependencyResolvers, this._commandManager, busyIndicator);    
     }
+
+    getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {
+        return this.dependencies;
+    }
 }
