@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { Command } from '@dolittle/tooling.common.commands';
+import { Command, ICommandManager } from '@dolittle/tooling.common.commands';
 import { IDependencyResolvers } from '@dolittle/tooling.common.dependencies';
 import { FileSystem } from '@dolittle/tooling.common.files';
 import { Logger } from '@dolittle/tooling.common.logging';
@@ -25,7 +25,7 @@ export class DolittleCommand extends Command {
      * Instantiates an instance of {DolittleCommand}.
      */
     constructor(private _plugins: IPlugins, private _pluginDiscoverers: IPluginDiscoverers, private _dependencyResolvers: IDependencyResolvers, private _onlinePluginFinder: OnlineDolittlePluginsFinder, 
-                private _fileSystem: FileSystem, private _logger: Logger) {
+                private _commandManager: ICommandManager, private _fileSystem: FileSystem, private _logger: Logger) {
         super(name, description);
     }
 
@@ -58,7 +58,7 @@ export class DolittleCommand extends Command {
             
         let pluginsToDownload = newAvailablePlugins.concat(<any>upgradeablePlugins);
         await askToDownloadOrUpdatePlugins(pluginsToDownload as PluginPackageInfo[], this._plugins,
-            this._dependencyResolvers, busyIndicator);    
+            this._dependencyResolvers, this._commandManager, busyIndicator);    
         if (busyIndicator.isBusy) busyIndicator.stop();
     }
     

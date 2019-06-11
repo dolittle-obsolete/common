@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { Command } from '@dolittle/tooling.common.commands';
+import { Command, ICommandManager } from '@dolittle/tooling.common.commands';
 import { IDependencyResolvers } from '@dolittle/tooling.common.dependencies';
 import { FileSystem } from '@dolittle/tooling.common.files';
 import { requireInternet, ILatestCompatiblePackageFinder } from '@dolittle/tooling.common.packages';
@@ -32,7 +32,7 @@ export class CheckCommand extends Command {
      * Instantiates an instance of {CheckCommand}.
      */
     constructor(private _plugins: IPlugins, private _pluginDiscoverers: IPluginDiscoverers, private _dependencyResolvers: IDependencyResolvers, private _latestPackageFinder: ILatestCompatiblePackageFinder, 
-                private _fileSystem: FileSystem, private _logger: Logger) {
+                private _commandManager: ICommandManager, private _fileSystem: FileSystem, private _logger: Logger) {
         super(name, description, shortDescription);
     }
 
@@ -45,6 +45,6 @@ export class CheckCommand extends Command {
         
         let outOfDatePackages: any = await checkPlugins(this._pluginDiscoverers, this._latestPackageFinder, this._fileSystem, busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop()
-        askToDownloadOrUpdatePlugins(outOfDatePackages, this._plugins, this._dependencyResolvers, busyIndicator);    
+        askToDownloadOrUpdatePlugins(outOfDatePackages, this._plugins, this._dependencyResolvers, this._commandManager, busyIndicator);    
     }
 }

@@ -3,10 +3,12 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
+import { commandManager } from '@dolittle/tooling.common.commands';
 import { fileSystem } from '@dolittle/tooling.common.files';
 import { logger } from '@dolittle/tooling.common.logging';
-import { nodeModulesPath, toolingPackage, latestCompatiblePackageFinder } from '@dolittle/tooling.common.packages'
-import { LocalPluginsDiscoverer, IPluginLoader, PluginLoader, PluginsConfig, IPluginDiscoverers, PluginDiscoverers, IPlugins, Plugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder } from './index';
+import { nodeModulesPath, toolingPackage, latestCompatiblePackageFinder } from '@dolittle/tooling.common.packages';
+import { dependencyResolvers } from '@dolittle/tooling.common.dependencies';
+import { LocalPluginsDiscoverer, IPluginLoader, PluginLoader, PluginsConfig, IPluginDiscoverers, PluginDiscoverers, IPlugins, Plugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, PluginsCommandGroupProvider } from './index';
 
 export const pluginsConfig = new PluginsConfig(nodeModulesPath);
 export const pluginLoader: IPluginLoader = new PluginLoader(pluginsConfig, fileSystem, logger);
@@ -19,3 +21,7 @@ export const plugins: IPlugins = new Plugins(pluginDiscoverers, pluginLoader, lo
 export const onlinePluginsFinder = new OnlinePluginsFinder(latestCompatiblePackageFinder, logger);
 
 export const onlineDolittlePluginsFinder = new OnlineDolittlePluginsFinder(latestCompatiblePackageFinder, logger);
+
+let pluginsCommandGroupProvider = new PluginsCommandGroupProvider(pluginDiscoverers, dependencyResolvers, latestCompatiblePackageFinder, plugins, onlinePluginsFinder, onlineDolittlePluginsFinder, commandManager, fileSystem, logger);
+
+commandManager.registerDefaultProviders([], [pluginsCommandGroupProvider], []);

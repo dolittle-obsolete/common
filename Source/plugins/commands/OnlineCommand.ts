@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import {Command} from '@dolittle/tooling.common.commands';
+import {Command, ICommandManager} from '@dolittle/tooling.common.commands';
 import { FileSystem } from '@dolittle/tooling.common.files';
 import { requireInternet, isGreaterVersion } from '@dolittle/tooling.common.packages';
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
@@ -45,8 +45,8 @@ export class OnlineCommand extends Command {
      * Instantiates an instance of {OnlineCommand}.
      * @memberof Online
      */
-    constructor(private _plugins: IPlugins, private _pluginsFinder: OnlinePluginsFinder, private _pluginDiscoverers: IPluginDiscoverers, private _dependencyResolvers: IDependencyResolvers, 
-                private _fileSystem: FileSystem, private _logger: Logger) {
+    constructor(private _plugins: IPlugins, private _pluginsFinder: OnlinePluginsFinder, private _pluginDiscoverers: IPluginDiscoverers, private _dependencyResolvers: IDependencyResolvers,
+                private _commandManager: ICommandManager, private _fileSystem: FileSystem, private _logger: Logger) {
         super(name, description);
     }
 
@@ -83,7 +83,7 @@ export class OnlineCommand extends Command {
         outputter.print(upgradeablePlugins.map((_: any) => `${_.name} v${_.localVersion} --> v${_.version}`).join('\t\n'));
         
         let boilerplatesToDownload = newAvailablePlugins.concat(<any>upgradeablePlugins);
-        await askToDownloadOrUpdatePlugins(boilerplatesToDownload as PluginPackageInfo[], this._plugins, this._dependencyResolvers, busyIndicator);
+        await askToDownloadOrUpdatePlugins(boilerplatesToDownload as PluginPackageInfo[], this._plugins, this._dependencyResolvers, this._commandManager, busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop();
           
     }

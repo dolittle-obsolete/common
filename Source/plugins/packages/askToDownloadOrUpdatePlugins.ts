@@ -3,8 +3,9 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import {requireInternet, downloadPackagesFromNpmSync, DownloadPackageInfo} from '@dolittle/tooling.common.packages';
+import { ICommandManager } from '@dolittle/tooling.common.commands';
 import { PromptDependency, IDependencyResolvers, confirmUserInputType, chooseMultipleUserInputType } from '@dolittle/tooling.common.dependencies';
+import {requireInternet, downloadPackagesFromNpmSync, DownloadPackageInfo} from '@dolittle/tooling.common.packages';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 
 import { initPluginSystem, IPlugins } from '../index';
@@ -20,7 +21,7 @@ export type PluginPackageInfo = {
  * 
  * @export
  */
-export async function askToDownloadOrUpdatePlugins(pluginsPackages: PluginPackageInfo[], plugins: IPlugins, resolvers: IDependencyResolvers, 
+export async function askToDownloadOrUpdatePlugins(pluginsPackages: PluginPackageInfo[], plugins: IPlugins, resolvers: IDependencyResolvers, commandManager: ICommandManager,
     busyIndicator: IBusyIndicator) {
     await requireInternet(busyIndicator);
     if (pluginsPackages.length && pluginsPackages.length > 0) {
@@ -29,7 +30,7 @@ export async function askToDownloadOrUpdatePlugins(pluginsPackages: PluginPackag
             let packagesToDownload = await askWhichPlugins(pluginsPackages, resolvers);
             if (packagesToDownload.length > 0) {
                 await downloadPackagesFromNpmSync(packagesToDownload, busyIndicator);
-                await initPluginSystem(plugins, busyIndicator);
+                await initPluginSystem(plugins, busyIndicator, commandManager);
             }
         }
     }
