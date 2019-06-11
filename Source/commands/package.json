@@ -1,7 +1,7 @@
 {
   "name": "@dolittle/tooling.common.commands",
   "description": "A system for dolittle tooling for commands",
-  "version": "5.1.0-alpha.11",
+  "version": "6.0.0-alpha.2",
   "publishConfig": {
     "access": "public"
   },
@@ -36,8 +36,6 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@dolittle/tooling.common.boilerplates": "alpha",
-    "@dolittle/tooling.common.configurations": "alpha",
     "@dolittle/tooling.common.dependencies": "alpha",
     "@dolittle/tooling.common.utilities": "alpha"
   }
