@@ -22,5 +22,6 @@ export * from './Command';
 export * from './CommandGroup';
 export * from './DiscoverableCommandGroup';
 
+export * from './namespaces/index';
 
-export * from './namespaces';
+export * from './globals';
