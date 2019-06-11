@@ -35,6 +35,9 @@ export class CommandManager implements ICommandManager {
     async execute(allArguments: string[], currentWorkingDirectory: string, coreLanguage: string, commandOptions?: Map<string, string>, outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         console.log('Execute command');
         console.log(allArguments);
+        console.log(currentWorkingDirectory);
+        console.log(coreLanguage);
+        console.log(commandOptions);
     }
 
     clear() {

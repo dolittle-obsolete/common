@@ -49,4 +49,16 @@ export interface ICommand {
      * @param {IBusyIndicator} [busyIndicator]
      */
     action(currentWorkingDirectory: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, outputter?: ICanOutputMessages, busyIndicator?: IBusyIndicator): Promise<void>
+
+    /**
+     * Gets all the dependencies given the context and arguments
+     *
+     * @param {string} currentWorkingDirectory
+     * @param {string} coreLanguage
+     * @param {string[]} [commandArguments]
+     * @param {Map<string, string>} [commandOptions]
+     * @param {string} [namespace]
+     * @returns {IDependency[]}
+     */
+    getAllDependencies(currentWorkingDirectory: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string): IDependency[]
 }
