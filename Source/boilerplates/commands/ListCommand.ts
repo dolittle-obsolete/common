@@ -41,4 +41,8 @@ export class ListCommand extends Command {
 
         boilerplatesInUse.forEach(_ => outputter.print(`${_.name} - ${_.description}`));
     }
+
+    getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {
+        return this.dependencies;
+    }
 }

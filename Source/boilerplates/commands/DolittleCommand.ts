@@ -61,5 +61,9 @@ export class DolittleCommand extends Command {
             this._dependencyResolvers, busyIndicator);    
         if (busyIndicator.isBusy) busyIndicator.stop();
     }
+
+    getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {
+        return this.dependencies;
+    }
     
 }

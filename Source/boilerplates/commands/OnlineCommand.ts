@@ -87,4 +87,8 @@ export class OnlineCommand extends Command {
         if (busyIndicator.isBusy) busyIndicator.stop();
           
     }
+
+    getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {
+        return this.dependencies;
+    }
 }

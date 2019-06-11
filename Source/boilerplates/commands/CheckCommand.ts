@@ -47,4 +47,8 @@ export class CheckCommand extends Command {
         if (busyIndicator.isBusy) busyIndicator.stop()
         askToDownloadOrUpdateBoilerplates(outOfDatePackages, this._boilerplatesDiscoverers, this._dependencyResolvers, busyIndicator);    
     }
+
+    getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {
+        return this.dependencies;
+    }
 }

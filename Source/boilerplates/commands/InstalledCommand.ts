@@ -42,4 +42,8 @@ export class InstalledCommand extends Command {
         if (busyIndicator.isBusy) busyIndicator.stop();
         boilerplates.forEach(_ => outputter.print(`${_.packageJson.name}@${_.packageJson.version}`));
     }
+
+    getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {
+        return this.dependencies;
+    }
 }
