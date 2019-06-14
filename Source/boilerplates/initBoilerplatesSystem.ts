@@ -12,7 +12,7 @@ import { IBoilerplateDiscoverers } from './index';
  * @param {IBusyIndicator} busyIndicator
  */
 export async function initBoilerplatesSystem(boilerplateDiscoverers: IBoilerplateDiscoverers, busyIndicator: IBusyIndicator) {
-    busyIndicator.createNew().start('Initializing boilerplates system');
+    busyIndicator = busyIndicator.createNew().start('Initializing boilerplates system');
     try {
         boilerplateDiscoverers.discover();
         busyIndicator.succeed('Boilerplates system initialized');
