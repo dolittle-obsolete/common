@@ -47,7 +47,7 @@ export class OnlineCommand extends Command {
      */
     constructor(private _plugins: IPlugins, private _pluginsFinder: OnlinePluginsFinder, private _pluginDiscoverers: IPluginDiscoverers, private _dependencyResolvers: IDependencyResolvers,
                 private _commandManager: ICommandManager, private _fileSystem: FileSystem, private _logger: Logger) {
-        super(name, description);
+        super(name, description, undefined, dependencies);
     }
 
     async action(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
