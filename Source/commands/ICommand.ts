@@ -60,5 +60,5 @@ export interface ICommand {
      * @param {string} [namespace]
      * @returns {IDependency[]}
      */
-    getAllDependencies(currentWorkingDirectory: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string): IDependency[]
+    getAllDependencies(currentWorkingDirectory: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, any>, namespace?: string): IDependency[]
 }

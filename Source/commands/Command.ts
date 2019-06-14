@@ -35,6 +35,6 @@ export abstract class Command implements ICommand {
 
     abstract action(currentWorkingDirectory: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, any>, namespace?: string, outputter?: ICanOutputMessages, busyIndicator?: IBusyIndicator): Promise<void>
 
-    abstract getAllDependencies(currentWorkingDirectory: string, coreLanguage: string, commandArguments?: string[] | undefined, commandOptions?: Map<string, string> | undefined, namespace?: string | undefined): IDependency[];
+    abstract getAllDependencies(currentWorkingDirectory: string, coreLanguage: string, commandArguments?: string[] | undefined, commandOptions?: Map<string, any> | undefined, namespace?: string | undefined): IDependency[];
     
 }
