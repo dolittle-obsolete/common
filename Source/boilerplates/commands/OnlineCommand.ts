@@ -47,7 +47,7 @@ export class OnlineCommand extends Command {
      */
     constructor(private _boilerplateFinder: OnlineBoilerplatesDiscoverer, private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _dependencyResolvers: IDependencyResolvers, 
                 private _fileSystem: FileSystem, private _logger: Logger) {
-        super(name, description);
+        super(name, description, undefined, dependencies);
     }
 
     async action(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
