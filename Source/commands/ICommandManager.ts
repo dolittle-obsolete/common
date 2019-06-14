@@ -43,7 +43,7 @@ export interface ICommandManager {
      * @param {ICanOutputMessages} [outputter] The system that can output messages
      * @param {IBusyIndicator} [busyIndicator]
      */
-    execute(allArguments: string[], currentWorkingDirectory: string, coreLanguage: string, commandOptions?: Map<string, string>, outputter?: ICanOutputMessages, busyIndicator?: IBusyIndicator): Promise<void>
+    execute(allArguments: string[], currentWorkingDirectory: string, coreLanguage: string, commandOptions?: Map<string, any>, outputter?: ICanOutputMessages, busyIndicator?: IBusyIndicator): Promise<void>
 
     /**
      * Clears the plugin-providers from the command manager

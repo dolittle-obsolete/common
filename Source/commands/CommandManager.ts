@@ -32,7 +32,7 @@ export class CommandManager implements ICommandManager {
     get commandGroups() { return this._defaultCommandGroups.commandGroups; }
 
     
-    async execute(allArguments: string[], currentWorkingDirectory: string, coreLanguage: string, commandOptions?: Map<string, string>, outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
+    async execute(allArguments: string[], currentWorkingDirectory: string, coreLanguage: string, commandOptions?: Map<string, any>, outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         console.log('Execute command');
         console.log(allArguments);
         console.log(currentWorkingDirectory);

@@ -48,7 +48,7 @@ export interface ICommand {
      * @param {ICanOutputMessages} [outputter] The system that can output messages
      * @param {IBusyIndicator} [busyIndicator]
      */
-    action(currentWorkingDirectory: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, outputter?: ICanOutputMessages, busyIndicator?: IBusyIndicator): Promise<void>
+    action(currentWorkingDirectory: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, any>, namespace?: string, outputter?: ICanOutputMessages, busyIndicator?: IBusyIndicator): Promise<void>
 
     /**
      * Gets all the dependencies given the context and arguments

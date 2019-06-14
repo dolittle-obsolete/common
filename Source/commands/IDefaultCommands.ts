@@ -19,6 +19,4 @@ export interface IDefaultCommands extends ICanManageProvidersFor<ICommand> {
      */
     readonly commands: ICommand[]
     
-
-
 }
