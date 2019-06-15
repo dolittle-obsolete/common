@@ -39,13 +39,13 @@ export class CheckCommand extends Command {
     async action(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
                 outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         this._logger.info(`Executing 'boilerplates check' command`);
-        busyIndicator.start();
         await requireInternet(busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop()
         
         let outOfDatePackages: any = await checkBoilerplates(this._boilerplatesDiscoverers, this._latestPackageFinder, this._fileSystem, busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop()
-        askToDownloadOrUpdateBoilerplates(outOfDatePackages, this._boilerplatesDiscoverers, this._dependencyResolvers, busyIndicator);    
+        askToDownloadOrUpdateBoilerplates(outOfDatePackages, this._boilerplatesDiscoverers, this._dependencyResolvers, busyIndicator);  
+        if (busyIndicator.isBusy) busyIndicator.stop()  
     }
 
     getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {
