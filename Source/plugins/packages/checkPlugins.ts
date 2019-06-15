@@ -61,6 +61,10 @@ export async function checkPlugins(pluginDiscoverers: IPluginDiscoverers, latest
                     busyIndicator = busyIndicator.createNew().start();
                 });
         }
+
+        if (outOfDatePackages.length < 1) {
+            busyIndicator.succeed('There are no out-of-date plugins');
+        }
         resolve(outOfDatePackages);
 
     }).then(outOfDatePackages => {
