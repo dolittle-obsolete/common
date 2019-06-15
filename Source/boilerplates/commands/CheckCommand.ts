@@ -44,7 +44,7 @@ export class CheckCommand extends Command {
         
         let outOfDatePackages: any = await checkBoilerplates(this._boilerplatesDiscoverers, this._latestPackageFinder, this._fileSystem, busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop()
-        askToDownloadOrUpdateBoilerplates(outOfDatePackages, this._boilerplatesDiscoverers, this._dependencyResolvers, busyIndicator);  
+        await askToDownloadOrUpdateBoilerplates(outOfDatePackages, this._boilerplatesDiscoverers, this._dependencyResolvers, busyIndicator);  
         if (busyIndicator.isBusy) busyIndicator.stop()  
     }
 
