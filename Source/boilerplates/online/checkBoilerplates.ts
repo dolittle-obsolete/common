@@ -62,6 +62,9 @@ export async function checkBoilerplates(boilerplateDiscoverers: IBoilerplateDisc
                     busyIndicator = busyIndicator.createNew().start();
                 });
         }
+        if (outOfDatePackages.length < 1) {
+            busyIndicator.succeed('There are no out-of-date boilerplates');
+        }
         resolve(outOfDatePackages);
 
     }).then(outOfDatePackages => {
