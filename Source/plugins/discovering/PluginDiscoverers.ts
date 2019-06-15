@@ -12,7 +12,8 @@ import { ICanDiscoverPlugins, PluginPackage, IPluginDiscoverers } from "../index
  * @class PluginDiscoverers
  */
 export class PluginDiscoverers implements IPluginDiscoverers {
-
+    private _hasDiscovered = false;
+    
     /**
      * Instantiates an instance of {PluginDiscoverers}.
      * @param {ICanDiscoverPlugins[]} pluginDiscoverers
@@ -24,12 +25,14 @@ export class PluginDiscoverers implements IPluginDiscoverers {
     readonly pluginDiscoverers: ICanDiscoverPlugins[]
     
     get discoveredPlugins() {
+        if (! this._hasDiscovered) this.discover();
         let plugins: PluginPackage[] = [];
         this.pluginDiscoverers.forEach(_ => plugins.push(..._.discovered));
         return plugins;
     }
     
     get pluginPaths() {
+        if (! this._hasDiscovered) this.discover();
         let paths: string[] = [];
         this.pluginDiscoverers.forEach(_ => paths.push(..._.pluginPaths));
         return paths;
@@ -40,6 +43,7 @@ export class PluginDiscoverers implements IPluginDiscoverers {
     }
 
     discover() {
+        this._hasDiscovered = true;
         this.pluginDiscoverers.forEach(_ => _.discover());
     }
 }
