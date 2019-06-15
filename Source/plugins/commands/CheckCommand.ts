@@ -39,13 +39,12 @@ export class CheckCommand extends Command {
     async action(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
                 outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         this._logger.info(`Executing 'plugins check' command`);
-        busyIndicator.start();
         await requireInternet(busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop()
         
         let outOfDatePackages: any = await checkPlugins(this._pluginDiscoverers, this._latestPackageFinder, this._fileSystem, busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop()
-        askToDownloadOrUpdatePlugins(outOfDatePackages, this._plugins, this._dependencyResolvers, this._commandManager, busyIndicator);    
+        await askToDownloadOrUpdatePlugins(outOfDatePackages, this._plugins, this._dependencyResolvers, this._commandManager, busyIndicator);    
     }
 
     getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {
