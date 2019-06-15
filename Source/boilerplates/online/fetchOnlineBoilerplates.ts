@@ -13,8 +13,6 @@ import { OnlineBoilerplatesDiscoverer } from '../index';
  * @param {OnlineBoilerplatesDiscoverer} onlineBoilerplatesDiscoverer
  * @param {string[]} [keywords=[]]
  * @param {number} [limit=250]
- * @param {OnStdCallback} [onStdOut] Optional callback for dealing with the standard text output  
- * @param {OnStdCallback} [onStdErr] Optional callback for dealing with the text output when an error occurs  
  * @returns
  */
 export async function fetchOnlineBoilerplates(onlineBoilerplatesDiscoverer: OnlineBoilerplatesDiscoverer, busyIndicator: IBusyIndicator, keywords: string[] = [], limit: number = 250) {

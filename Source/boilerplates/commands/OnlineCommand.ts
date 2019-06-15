@@ -58,9 +58,9 @@ export class OnlineCommand extends Command {
         if (busyIndicator.isBusy) busyIndicator.stop();
         let context = await this._dependencyResolvers.resolve({}, dependencies, cwd, coreLanguage, commandArguments, commandOptions);
         let keywords = context[keywordDependency.name];
-        let limit = parseInt(context[limitDependency.name]);
+        let limit = parseInt(context[limitDependency.name]) || undefined;
 
-        let boilerplates = await fetchOnlineBoilerplates(this._boilerplateFinder, busyIndicator);
+        let boilerplates = await fetchOnlineBoilerplates(this._boilerplateFinder, busyIndicator, keywords, limit);
         if (busyIndicator.isBusy) busyIndicator.stop();
         let localBoilerplates = await getInstalledBoilerplates(this._boilerplateDiscoverers, this._fileSystem, busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop();
