@@ -13,7 +13,7 @@ import { ICanDiscoverBoilerplates, IBoilerplateDiscoverers } from './index';
  * @implements {IBoilerplateDiscoverers}
  */
 export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
-    
+    private _hasDiscovered = false;
     /**
      * Instantiates an instance of {BoilerplateDiscoverers}.
      * @param {ICanDiscoverBoilerplates[]} boilerplateDiscoverers
@@ -25,12 +25,14 @@ export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
     readonly discoverers: ICanDiscoverBoilerplates[];
     
     get boilerplatePaths() {
+        if (! this._hasDiscovered) this.discover();
         let paths: string[] = [];
         this.discoverers.forEach(_ => paths.push(..._.boilerplatePaths));
         return paths;
     }
 
     get discovered() {
+        if (! this._hasDiscovered) this.discover();
         let boilerplates: ToolingPackage[] = [];
         this.discoverers.forEach(_ => boilerplates.push(..._.discovered));
         return boilerplates;
@@ -41,6 +43,7 @@ export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
     }
 
     discover() {
+        this._hasDiscovered = true;
         this.discoverers.forEach(_ => _.discover());
     }
 }
