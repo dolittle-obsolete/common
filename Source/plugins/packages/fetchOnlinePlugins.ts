@@ -18,6 +18,7 @@ import { OnlinePluginsFinder } from '../index';
  */
 export async function fetchOnlinePlugins(onlinePluginsDiscoverer: OnlinePluginsFinder, busyIndicator: IBusyIndicator, keywords: string[] = [], limit: number = 250) {
     await requireInternet(busyIndicator);
+    if (busyIndicator.isBusy) busyIndicator.stop();
     busyIndicator = busyIndicator.createNew().start('Getting plugins (this might take a while, depending on your internet connection): ');
     let plugins = await onlinePluginsDiscoverer.findLatest(keywords, limit)
         .then(plugins => {

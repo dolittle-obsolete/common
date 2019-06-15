@@ -58,7 +58,7 @@ export class OnlineCommand extends Command {
         if (busyIndicator.isBusy) busyIndicator.stop();
         let context = await this._dependencyResolvers.resolve({}, dependencies, cwd, coreLanguage, commandArguments, commandOptions);
         let keywords = context[keywordDependency.name];
-        let limit = parseInt(context[limitDependency.name]);
+        let limit = parseInt(context[limitDependency.name]) || undefined;
 
         let plugins = await fetchOnlinePlugins(this._pluginsFinder, busyIndicator, keywords, limit);
         if (busyIndicator.isBusy) busyIndicator.stop();
