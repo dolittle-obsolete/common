@@ -24,13 +24,16 @@ export type BoilerplatePackageInfo = {
 export async function askToDownloadOrUpdateBoilerplates(boilerplates: BoilerplatePackageInfo[], boilerplateDiscoverers: IBoilerplateDiscoverers, resolvers: IDependencyResolvers, 
     busyIndicator: IBusyIndicator) {
     await requireInternet(busyIndicator);
+    if (busyIndicator.isBusy) busyIndicator.stop()
     if (boilerplates.length && boilerplates.length > 0) {
         const shouldDownload = await askToDownload(resolvers);
         if (shouldDownload) {
             let packagesToDownload = await askWhichBoilerplates(boilerplates, resolvers);
             if (packagesToDownload.length > 0) {
                 await downloadPackagesFromNpmSync(packagesToDownload, busyIndicator);
+                if (busyIndicator.isBusy) busyIndicator.stop()
                 await initBoilerplatesSystem(boilerplateDiscoverers, busyIndicator);
+                if (busyIndicator.isBusy) busyIndicator.stop()
             }
         }
     }
