@@ -8,7 +8,7 @@ import { Logger } from "@dolittle/tooling.common.logging";
 import { 
     INamespaces, IDefaultCommands, IDefaultCommandGroups, ICanProvideDefaultCommands, 
     ICanProvideDefaultCommandGroups, ICanProvideNamespaces, ICommandManager, Namespaces, 
-    DefaultCommandGroups, DefaultCommands 
+    DefaultCommandGroups, DefaultCommands, ICommand, NoArgumentsGiven, NoMatchingCommand, INamespace, ICommandGroup 
 } from "./index";
 
 /**
@@ -36,12 +36,12 @@ export class CommandManager implements ICommandManager {
     get commandGroups() { return this._defaultCommandGroups.commandGroups; }
 
     
-    async execute(allArguments: string[], currentWorkingDirectory: string, coreLanguage: string, commandOptions?: Map<string, any>, outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
-        console.log('Execute command');
-        console.log(allArguments);
-        console.log(currentWorkingDirectory);
-        console.log(coreLanguage);
-        console.log(commandOptions);
+    async execute(allArguments: string[], currentWorkingDirectory: string, coreLanguage: string, commandOptions?: Map<string, any>, 
+                    outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
+        
+        if (allArguments.length < 1) throw new NoArgumentsGiven();
+        const {command, commandArguments, namespace} = this.getCommandContext(allArguments);
+        await command.action(currentWorkingDirectory, coreLanguage, commandArguments, commandOptions, namespace, outputter, busyIndicator);
     }
 
     clear() {
@@ -59,5 +59,48 @@ export class CommandManager implements ICommandManager {
         this._defaultCommands.registerDefault(...defaultCommandProviders);
         this._defaultCommandGroups.registerDefault(...defaultCommandGroupsProviders);
         this._namespaces.registerDefault(...namespaceProviders);
+    }
+
+    private getCommandContext(allArguments: string[]): {command: ICommand, commandArguments: string[], namespace?: string} {
+        let [firstArgument, ...restArguments] = allArguments;
+        let namespace = this.namespaces.find(_ => _.name === firstArgument);
+        if (namespace) {
+            let nextArgument = restArguments.shift();
+            if (!nextArgument) throw new NoMatchingCommand(firstArgument);
+            firstArgument = nextArgument;
+            return this.getCommandContextFromNamespace(firstArgument, restArguments, namespace);
+        }
+        let commandGroup = this.commandGroups.find(_ => _.name === firstArgument);
+        if (commandGroup) {
+            let nextArgument = restArguments.shift();
+            if (!nextArgument) throw new NoMatchingCommand(firstArgument);
+            firstArgument = nextArgument;
+            return this.getCommandContextFromCommandGroup(firstArgument, restArguments, commandGroup);
+        }
+        let command = this.commands.find(_ => _.name);
+        if (command) return {command, commandArguments: restArguments};
+
+        throw new NoMatchingCommand(firstArgument);
+    }
+
+    private getCommandContextFromNamespace(firstArgument: string, restArguments: string[], namespace: INamespace): { command: ICommand, commandArguments: string[], namespace?: string | undefined } {
+        let commandGroup = this.commandGroups.find(_ => _.name === firstArgument);
+        if (commandGroup) {
+            let nextArgument = restArguments.shift();
+            if (!nextArgument) throw new NoMatchingCommand(firstArgument, namespace.name);
+            firstArgument = nextArgument;
+            return this.getCommandContextFromCommandGroup(firstArgument, restArguments, commandGroup, namespace.name);
+        }
+        let command = this.commands.find(_ => _.name);
+        if (command) return {command, commandArguments: restArguments, namespace: namespace.name};
+
+        throw new NoMatchingCommand(firstArgument, namespace.name);
+    }
+
+    private getCommandContextFromCommandGroup(firstArgument: string, restArguments: string[], commandGroup: ICommandGroup, namespace?: string): { command: ICommand, commandArguments: string[], namespace?: string } {
+        let command = commandGroup.commands.find(_ => _.name);
+        if (command) return {command, commandArguments: restArguments, namespace};
+
+        throw new NoMatchingCommand(firstArgument, namespace, commandGroup.name);
     }
 }
