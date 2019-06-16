@@ -16,16 +16,16 @@ export const groupBy = (key: string) => (array: any[]) =>
         return objectsByKeyValue;
     }, {});
 /**
- * Determines the destination of an artifact given the area, the core language, the input name of artifact, cwd and path of the bounded context
+ * Determines the destination of a template given the area, the core language, the input name of the template, cwd and path of the bounded context
  * 
- * @param {string} area Area of the artifact (read, events, domain, concepts)
+ * @param {string} area Area of the template (read, events, domain, concepts)
  * @param {string} language The core language of the bounded context
- * @param {string} name The inputted name of the artifact (dots, '.', used to derive feature/module path )
+ * @param {string} name The inputted name of the template (dots, '.', used to derive feature/module path )
  * @param {string} cwd The current working directory
  * @param {string} boundedContextPath The path of the bounded-context.json configuration
- * @param {any} dolittleConfig A configuration object that tells us what folder an artifact should go into depending on the area
+ * @param {any} dolittleConfig A configuration object that tells us what folder a template should go into depending on the area
  * 
- * @returns {{destination: string, name: string}} The destination path and the actual name of the artifact
+ * @returns {{destination: string, name: string}} The destination path and the actual name of the template
  */
 export function determineDestination(area: string, language: string, name: string, cwd: string, boundedContextPath: string, dolittleConfig: any): { destination: string; name: string; }{
     let config = dolittleConfig[language];
@@ -37,7 +37,7 @@ export function determineDestination(area: string, language: string, name: strin
     const boundedContextRoot = path.dirname(boundedContextPath);
     const regExp = new RegExp(
         `(${escapeRegex(boundedContextRoot)})` + // Match first part of path (root of bounded-context) 
-        `(?:${escapeRegex(path.sep)}[^${escapeRegex(path.sep)}]+)?` + // Non-matching group matching the segment after the bounded-context root folder. This indicates the area of the artifact
+        `(?:${escapeRegex(path.sep)}[^${escapeRegex(path.sep)}]+)?` + // Non-matching group matching the segment after the bounded-context root folder. This indicates the area of the template
         `(${escapeRegex(path.sep)}?.*)` // Match all the segments after the area
         
     );
@@ -53,7 +53,7 @@ function escapeRegex(s: string): string {
 }
 
 /**
- * @type {string[]} List of the artifact areas
+ * @type {string[]} List of the template areas
  */
 export const areas: string[] = [
     'concepts',

@@ -10,7 +10,7 @@ import {
 } from "../index";
 
 /**
- * Represents an implementation of {ICanParseBoilerplates} for parsing {IArtifactsBoilerplate} boilerplates
+ * Represents an implementation of {ICanParseBoilerplates} for parsing {ITemplatesBoilerplate} boilerplates
  *
  * @export
  * @class TemplatesBoilerplateParser

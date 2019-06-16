@@ -11,28 +11,28 @@ import { ITemplatesBoilerplate } from '../index';
 export interface ITemplate
 {
     /**
-     * The name of the artifact template
+     * The name of the template
      *
      * @type {string}
      */
     readonly name: string
 
     /**
-     * The type of the artifact template
+     * The type of the template
      *
      * @type {string}
      */
     readonly type: string
 
     /**
-     * The area of the artifact.
+     * The area of the template.
      *
      * @type {string}
      */
     readonly area: string
 
     /**
-     * The description of the artifact template
+     * The description of the template
      *
      * @type {string}
      */
@@ -67,7 +67,7 @@ export interface ITemplate
     readonly filesToCreate: string[]
     
     /**
-     * Gets all the dependencies needed to create this artifact
+     * Gets all the dependencies needed to create this template
      *
      * @param {ITemplatesBoilerplate} boilerplate The boilerplate that holds this {ITemplate}
      * @returns {IDependency[]}

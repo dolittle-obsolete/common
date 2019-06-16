@@ -20,7 +20,7 @@ const binaryFiles = [
  * Represents an implementation of {ICanParseBoilerplates} for parsing {ContentBoilerplate} boilerplates
  *
  * @export
- * @class NonArtifactsBoilerplateParser
+ * @class ContentBoilerplateParser
  */
 export class ContentBoilerplateParser implements ICanParseBoilerplates {
 
