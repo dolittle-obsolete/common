@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { Logger } from "@dolittle/tooling.common.logging";
-import { ICanProvideDefaultCommands, IDefaultCommands, ICommand } from "./index";
+import { ICanProvideDefaultCommands, IDefaultCommands, ICommand, DuplicateCommandName } from "./index";
 
 /**
  * Represents an implementation of {IDefaultCommands}
@@ -41,16 +41,25 @@ export class DefaultCommands implements IDefaultCommands {
     
     register(...providers: ICanProvideDefaultCommands[]) {
         this._nonDefaultProviders.push(...providers);
+        this.throwIfDuplicates();
     }
 
     registerDefault(...providers: ICanProvideDefaultCommands[]) {
         this._defaultProviders.push(...providers);
+        this.throwIfDuplicates();
     }
 
     private loadCommands() {
         this._logger.info('Providing default commands');
         this._commands = [];
         this.providers.forEach(_ => this._commands.push(..._.provide()));
+    }
+
+    private throwIfDuplicates() {
+        let names = this.commands.map(_ => _.name);
+        names.forEach((name, i) => {
+            if (names.slice(i + 1).includes(name)) throw new DuplicateCommandName(name);
+        });
     }
 
 }

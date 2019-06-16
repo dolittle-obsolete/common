@@ -5,7 +5,11 @@
 *--------------------------------------------------------------------------------------------*/
 import { ICanOutputMessages, NullMessageOutputter, NullBusyIndicator, IBusyIndicator } from "@dolittle/tooling.common.utilities";
 import { Logger } from "@dolittle/tooling.common.logging";
-import { INamespaces, IDefaultCommands, IDefaultCommandGroups, ICanProvideDefaultCommands, ICanProvideDefaultCommandGroups, ICanProvideNamespaces, ICommandManager, Namespaces, DefaultCommandGroups, DefaultCommands } from "./index";
+import { 
+    INamespaces, IDefaultCommands, IDefaultCommandGroups, ICanProvideDefaultCommands, 
+    ICanProvideDefaultCommandGroups, ICanProvideNamespaces, ICommandManager, Namespaces, 
+    DefaultCommandGroups, DefaultCommands 
+} from "./index";
 
 /**
  * Represents an implementation of {ICommandManager}

@@ -3,6 +3,9 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
+export * from './DuplicateCommandName';
+export * from './DuplicateCommandGroupName';
+export * from './DuplicateNamespaceName';
 export * from './IProviderFor';
 export * from './ICanManageProvidersFor';
 
