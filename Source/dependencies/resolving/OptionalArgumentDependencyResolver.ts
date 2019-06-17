@@ -14,7 +14,7 @@ import { argumentUserInputType, ICanResolveSyncDependencies, IDependency, Argume
  */
 export class OptionalArgumentDependencyResolver implements ICanResolveSyncDependencies {
     
-    resolve(context: any, dependencies: IDependency[], destinationPath?: string, coreLanguage?: string, args?: string[], options?: Map<string, string>) {
+    resolve(context: any, dependencies: IDependency[], destinationPath?: string, coreLanguage?: string, args?: string[], options?: Map<string, any>) {
         if (options === undefined && dependencies.length === 0) return context;
         else if (options !== undefined) {
             dependencies.forEach((dep, i) => {
