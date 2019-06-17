@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.boilerplates",
-  "version": "6.0.0-alpha.11",
+  "version": "6.0.0-alpha.12",
   "description": "The boilerplates system for common dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -40,8 +40,8 @@
     "@dolittle/tooling.common.commands": "alpha",
     "@dolittle/tooling.common.dependencies": "alpha",
     "@dolittle/tooling.common.files": "alpha",
-    "@dolittle/tooling.common.utilities": "alpha",
     "@dolittle/tooling.common.logging": "alpha",
+    "@dolittle/tooling.common.utilities": "alpha",
     "cross-spawn": "^6.0.5",
     "handlebars": "^4.0.12",
     "lodash": "^4.17.11",
