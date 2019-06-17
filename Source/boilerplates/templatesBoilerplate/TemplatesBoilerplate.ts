@@ -5,12 +5,6 @@
 import { IDependency, PromptDependency, argumentUserInputType } from '@dolittle/tooling.common.dependencies';
 import { Boilerplate, Scripts, templatesBoilerplateContentDirectoryName, ITemplate, templatesBoilerplateType, ITemplatesBoilerplate } from '../index';
 
-let nameDependency: IDependency = new PromptDependency(
-    'name',
-    'The name of the template to be created',
-    argumentUserInputType,
-    'The name of the template to be created'
-)
 /**
  * Represents an implementation of {ITemplatesBoilerplate}
  */
@@ -26,27 +20,18 @@ export class TemplatesBoilerplate extends Boilerplate implements ITemplatesBoile
      * @param {string} path
      */
     constructor(language: string, name: string, description: string, dependencies: IDependency[], namespace: string, scripts: Scripts, contentDirectory: string, private _templates: ITemplate[]) {
-        super(
-            language, name, description, templatesBoilerplateType, 
-            dependencies.find(_ => _.name === 'name')? dependencies : [nameDependency].concat(dependencies),
-            namespace, scripts, contentDirectory
-        );
-        
+        super(language, name, description, templatesBoilerplateType, dependencies, namespace, scripts, contentDirectory);
     }
-
-    readonly contentDirectoryName = templatesBoilerplateContentDirectoryName;
     
-    /**
-     * Gets the templates belonging under this boilerplate
-     * @readonly
-     */
+    readonly nameDependency = new PromptDependency(
+        'name',
+        'The name of the template to be created',
+        argumentUserInputType,
+        'The name of the template to be created'
+    );
+
     get templates() { return this._templates; }
 
-    /**
-     * Gets the templates with the given type
-     *
-     * @param {string} type The type of the {Template}
-     */
     templatesByType(type: string) {
         return this.templates.filter(_ => _.type === type);
     }
