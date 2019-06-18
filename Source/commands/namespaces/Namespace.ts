@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { INamespace, ICommand, ICommandGroup } from "../index";
+import { INamespace, ICommand, ICommandGroup, DuplicateCommandName, DuplicateCommandGroupName } from "../index";
 
 /**
  * Represents an abstract implementation of {INamespace}
@@ -34,5 +34,27 @@ export abstract class Namespace implements INamespace {
     get description() { return this._description; }
 
     get shortDescription() { return this._shortDescription; }
+
+    addDefaultCommands(commands: ICommand[]): void {
+        this._commands.push(...commands);
+        this.throwIfDuplicateCommands();
+    }
+    addDefaultCommandGroups(commandGroups: ICommandGroup[]): void {
+        this._commandGroups.push(...commandGroups);
+        this.throwIfDuplicateCommandGroups();
+    }
+
+    private throwIfDuplicateCommands() {
+        let names = this.commands.map(_ => _.name);
+        names.forEach((name, i) => {
+            if (names.slice(i + 1).includes(name)) throw new DuplicateCommandName(name);
+        })
+    }
+    private throwIfDuplicateCommandGroups() {
+        let names = this.commandGroups.map(_ => _.name);
+        names.forEach((name, i) => {
+            if (names.slice(i + 1).includes(name)) throw new DuplicateCommandGroupName(name);
+        })
+    }
     
 }

@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { Logger } from "@dolittle/tooling.common.logging";
-import { ICanProvideDefaultCommands, IDefaultCommands, ICommand, DuplicateCommandName } from "./index";
+import { ICanProvideDefaultCommands, IDefaultCommands, ICommand, DuplicateCommandName, ICanValidateProviderFor } from "./index";
 
 /**
  * Represents an implementation of {IDefaultCommands}
@@ -21,7 +21,7 @@ export class DefaultCommands implements IDefaultCommands {
      * Instantiates an instance of {DefaultCommands}.
      * @param {Logger} _logger
      */
-    constructor (private _logger: Logger) {}
+    constructor (private _providerValidator: ICanValidateProviderFor<ICommand>, private _logger: Logger) {}
 
     get providers() {
         let providers: ICanProvideDefaultCommands[] = [];
@@ -40,19 +40,15 @@ export class DefaultCommands implements IDefaultCommands {
     }
     
     register(...providers: ICanProvideDefaultCommands[]) {
+        providers.forEach(this._providerValidator.validate);
         this._nonDefaultProviders.push(...providers);
         this.throwIfDuplicates();
     }
 
     registerDefault(...providers: ICanProvideDefaultCommands[]) {
+        providers.forEach(this._providerValidator.validate);
         this._defaultProviders.push(...providers);
         this.throwIfDuplicates();
-    }
-
-    private loadCommands() {
-        this._logger.info('Providing default commands');
-        this._commands = [];
-        this.providers.forEach(_ => this._commands.push(..._.provide()));
     }
 
     private throwIfDuplicates() {
@@ -60,6 +56,11 @@ export class DefaultCommands implements IDefaultCommands {
         names.forEach((name, i) => {
             if (names.slice(i + 1).includes(name)) throw new DuplicateCommandName(name);
         });
+    }
+    private loadCommands() {
+        this._logger.info('Providing default commands');
+        this._commands = [];
+        this.providers.forEach(_ => this._commands.push(..._.provide()));
     }
 
 }

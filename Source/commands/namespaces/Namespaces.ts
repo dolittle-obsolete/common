@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { Logger } from "@dolittle/tooling.common.logging";
-import { ICanProvideNamespaces, INamespaces, INamespace, ICommandGroup, DuplicateCommandName, DuplicateNamespaceName, DuplicateCommandGroupName, ICommand } from "../index";
+import { ICanProvideNamespaces, INamespaces, INamespace, DuplicateNamespaceName, ICanValidateProviderFor } from "../index";
 
 /**
  * Represents an implementation of {INamespaces}
@@ -13,7 +13,7 @@ import { ICanProvideNamespaces, INamespaces, INamespace, ICommandGroup, Duplicat
  * @implements {INamespaces}
  */
 export class Namespaces implements INamespaces {
-
+    
     private _defaultProviders: ICanProvideNamespaces[] = []
     private _nonDefaultProviders: ICanProvideNamespaces[] = []
     private _namespaces: INamespace[] = []
@@ -22,7 +22,7 @@ export class Namespaces implements INamespaces {
      * Instantiates an instance of {Namespaces}.
      * @param {Logger} _logger
      */
-    constructor (private _logger: Logger) {}
+    constructor (private _providerValidator: ICanValidateProviderFor<INamespace> ,private _logger: Logger) {}
 
     get providers() {
         let providers: ICanProvideNamespaces[] = [];
@@ -41,13 +41,13 @@ export class Namespaces implements INamespaces {
     }
     
     register(...providers: ICanProvideNamespaces[]) {
-        this.throwIfInvalidProviders(providers);
+        providers.forEach(this._providerValidator.validate);
         this._nonDefaultProviders.push(...providers);
         this.throwIfDuplicates();
     }
 
     registerDefault(...providers: ICanProvideNamespaces[]) {
-        this.throwIfInvalidProviders(providers);
+        providers.forEach(this._providerValidator.validate);
         this._defaultProviders.push(...providers);
         this.throwIfDuplicates();
     }
@@ -58,37 +58,6 @@ export class Namespaces implements INamespaces {
         this.providers.forEach(_ => this._namespaces.push(..._.provide()));
     }
 
-
-    private throwIfInvalidProviders(providers: ICanProvideNamespaces[]) {
-        providers.forEach(_ => {
-            _.provide().forEach(this.throwIfInvalidNamespace);
-        });
-    }
-
-    private throwIfInvalidNamespace(namespace: INamespace) {
-        this.throwIfDuplicateCommands(namespace.commands);
-        this.throwIfInvalidCommandGroups(namespace.commandGroups);
-    }
-    private throwIfInvalidCommandGroups(commandGroups: ICommandGroup[]) {
-        this.throwIfDuplicateCommandGroups(commandGroups);
-        commandGroups.forEach(this.throwIfCommandGroupHasDuplicateCommands);
-    }
-    private throwIfCommandGroupHasDuplicateCommands(commandGroup: ICommandGroup) {
-        this.throwIfDuplicateCommands(commandGroup.commands);
-    }
-    private throwIfDuplicateCommandGroups(commandGroups: ICommandGroup[]) {
-        let names = commandGroups.map(_ => _.name);
-        names.forEach((name, i) => {
-            if (names.slice(i + 1).includes(name)) throw new DuplicateCommandGroupName(name);
-        });
-    }
-    private throwIfDuplicateCommands(commands: ICommand[]) {
-        let names = commands.map(_ => _.name);
-        names.forEach((name, i) => {
-            if (names.slice(i + 1).includes(name)) throw new DuplicateCommandName(name);
-        });
-    }
-    
     private throwIfDuplicates() {
         let names = this.namespaces.map(_ => _.name);
         names.forEach((name, i) => {

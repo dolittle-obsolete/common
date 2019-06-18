@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { Logger } from "@dolittle/tooling.common.logging";
-import { ICanProvideDefaultCommandGroups, IDefaultCommandGroups, ICommandGroup, DuplicateCommandGroupName, DuplicateCommandName } from "./index";
+import { ICanProvideDefaultCommandGroups, IDefaultCommandGroups, ICommandGroup, DuplicateCommandGroupName, ICanValidateProviderFor } from "./index";
 
 /**
  * Represents an implementation of {IDefaultCommandGroups}
@@ -21,7 +21,7 @@ export class DefaultCommandGroups implements IDefaultCommandGroups {
      * Instantiates an instance of {DefaultCommandGroups}.
      * @param {Logger} _logger
      */
-    constructor (private _logger: Logger) {}
+    constructor (private _providerValidator: ICanValidateProviderFor<ICommandGroup>, private _logger: Logger) {}
 
     get providers() {
         let providers: ICanProvideDefaultCommandGroups[] = [];
@@ -40,13 +40,13 @@ export class DefaultCommandGroups implements IDefaultCommandGroups {
     }
 
     register(...providers: ICanProvideDefaultCommandGroups[]) {
-        this.throwIfInvalidProviders(providers);
+        providers.forEach(this._providerValidator.validate);
         this._nonDefaultProviders.push(...providers);
         this.throwIfDuplicates();
     }
     
     registerDefault(...providers: ICanProvideDefaultCommandGroups[]) {
-        this.throwIfInvalidProviders(providers);
+        providers.forEach(this._providerValidator.validate);
         this._defaultProviders.push(...providers);
         this.throwIfDuplicates();
     }
@@ -57,17 +57,6 @@ export class DefaultCommandGroups implements IDefaultCommandGroups {
         this.providers.forEach(_ => this._commandGroups.push(..._.provide()));
     }
     
-    private throwIfInvalidProviders(providers: ICanProvideDefaultCommandGroups[]) {
-        providers.forEach(_ => {
-            _.provide().forEach(this.throwIfCommandGroupHasDuplicateCommands);
-        });
-    }
-    private throwIfCommandGroupHasDuplicateCommands(commandGroup: ICommandGroup) {
-        let names = commandGroup.commands.map(_ => _.name);
-        names.forEach((name, i) => {
-            if (names.slice(i + 1).includes(name)) throw new DuplicateCommandName(name);
-        });
-    }
     private throwIfDuplicates() {
         let names = this.commandGroups.map(_ => _.name);
         names.forEach((name, i) => {

@@ -8,13 +8,14 @@ import { Logger } from "@dolittle/tooling.common.logging";
 import { 
     INamespaces, IDefaultCommands, IDefaultCommandGroups, ICanProvideDefaultCommands, 
     ICanProvideDefaultCommandGroups, ICanProvideNamespaces, ICommandManager, Namespaces, 
-    DefaultCommandGroups, DefaultCommands, ICommand, NoArgumentsGiven, NoMatchingCommand, INamespace, ICommandGroup 
+    DefaultCommandGroups, DefaultCommands, ICommand, NoArgumentsGiven, NoMatchingCommand, INamespace, ICommandGroup, ICanValidateProviderFor 
 } from "./index";
 
 /**
  * Represents an implementation of {ICommandManager}
  */
 export class CommandManager implements ICommandManager {
+    
     private _namespaces: INamespaces;
     private _defaultCommandGroups: IDefaultCommandGroups;
     private _defaultCommands: IDefaultCommands;
@@ -23,13 +24,18 @@ export class CommandManager implements ICommandManager {
      * Instantiates an instance of {CommandManager}.
      * @param {Logger} _logger
      */
-    constructor(private _logger: Logger) {
-        this._namespaces = new Namespaces(this._logger);
-        this._defaultCommandGroups = new DefaultCommandGroups(this._logger);
-        this._defaultCommands = new DefaultCommands(this._logger);
+    constructor(private _commandProviderValidator: ICanValidateProviderFor<ICommand>, private _commandGroupProviderValidator: ICanValidateProviderFor<ICommandGroup>,
+                private _namespaceProviderValidator: ICanValidateProviderFor<INamespace>, private _logger: Logger) {
+        this._namespaces = new Namespaces(this._namespaceProviderValidator, this._logger);
+        this._defaultCommandGroups = new DefaultCommandGroups(this._commandGroupProviderValidator, this._logger);
+        this._defaultCommands = new DefaultCommands(this._commandProviderValidator, this._logger);
     }
     
-    get namespaces() { return this._namespaces.namespaces; }
+    get namespaces() { 
+        let namespaces = this._namespaces.namespaces;
+        this.addDefaultsToNamespaces(namespaces);
+        return namespaces;
+    }
     
     get commands() { return this._defaultCommands.commands; }
 
@@ -59,6 +65,13 @@ export class CommandManager implements ICommandManager {
         this._defaultCommands.registerDefault(...defaultCommandProviders);
         this._defaultCommandGroups.registerDefault(...defaultCommandGroupsProviders);
         this._namespaces.registerDefault(...namespaceProviders);
+    }
+
+    private addDefaultsToNamespaces(namespaces: INamespace[]) {
+        namespaces.forEach(_ => {
+            _.addDefaultCommands(this._defaultCommands.commands);
+            _.addDefaultCommandGroups(this._defaultCommandGroups.commandGroups);
+        });
     }
 
     private getCommandContext(allArguments: string[]): {command: ICommand, commandArguments: string[], namespace?: string} {

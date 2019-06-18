@@ -10,6 +10,7 @@ export * from './DuplicateCommandGroupName';
 export * from './DuplicateNamespaceName';
 export * from './IProviderFor';
 export * from './ICanManageProvidersFor';
+export * from './ICanValidateProviderFor';
 
 export * from './ICommand';
 export * from './ICommandGroup';
@@ -19,6 +20,8 @@ export * from './ICanProvideDefaultCommands';
 export * from './ICommandManager'
 export * from './IDefaultCommandGroups';
 export * from './IDefaultCommands';
+export * from './CommandsProviderValidator';
+export * from './CommandGroupsProviderValidator';
 export * from './DefaultCommandGroups';
 export * from './DefaultCommands';
 export * from './CommandManager';

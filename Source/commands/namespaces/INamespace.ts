@@ -44,6 +44,20 @@ export interface INamespace {
      *
      * @type {ICommandGroup[]}
      */
-    readonly commandGroups: ICommandGroup[]    
+    readonly commandGroups: ICommandGroup[]
+    
+    /**
+     * Adds default commands to the namespace
+     *
+     * @param {ICommand[]} commands
+     */
+    addDefaultCommands(commands: ICommand[]): void
+
+    /**
+     * Adds default command groups to the namespace
+     *
+     * @param {ICommandGroup[]} commandGroups
+     */
+    addDefaultCommandGroups(commandGroups: ICommandGroup[]): void
     
 }
