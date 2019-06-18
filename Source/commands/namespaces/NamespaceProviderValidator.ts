@@ -18,7 +18,7 @@ export class NamespaceProviderValidator implements ICanValidateProviderFor<IName
         let namespaces = provider.provide();
         
         this.throwIfDuplicates(namespaces);
-        namespaces.forEach(this.throwIfInvalidNamespace);
+        namespaces.forEach(_ => this.throwIfInvalidNamespace(_));
     }
 
     private throwIfDuplicates(namespaces: INamespace[]) {
@@ -34,7 +34,7 @@ export class NamespaceProviderValidator implements ICanValidateProviderFor<IName
     }
     private throwIfInvalidCommandGroups(commandGroups: ICommandGroup[]) {
         this.throwIfDuplicateCommandGroups(commandGroups);
-        commandGroups.forEach(this.throwIfCommandGroupHasDuplicateCommands);
+        commandGroups.forEach(_ => this.throwIfCommandGroupHasDuplicateCommands(_));
     }
     private throwIfCommandGroupHasDuplicateCommands(commandGroup: ICommandGroup) {
         this.throwIfDuplicateCommands(commandGroup.commands);

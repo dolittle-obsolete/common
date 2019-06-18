@@ -18,7 +18,7 @@ export class CommandGroupsProviderValidator implements ICanValidateProviderFor<I
         let commandGroups = provider.provide();
 
         this.throwIfDuplicates(commandGroups);
-        commandGroups.forEach(this.throwIfCommandGroupHasDuplicateCommands);
+        commandGroups.forEach(_ => this.throwIfCommandGroupHasDuplicateCommands(_));
     }
 
     private throwIfDuplicates(commandGroups: ICommandGroup[]) {
