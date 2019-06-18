@@ -24,12 +24,12 @@ export class DolittleCommand extends Command {
     /**
      * Instantiates an instance of {DolittleCommand}.
      */
-    constructor(private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _dependencyResolvers: IDependencyResolvers, private _onlineBoilerplatesFinder: OnlineDolittleBoilerplatesFinder, 
+    constructor(private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _onlineBoilerplatesFinder: OnlineDolittleBoilerplatesFinder, 
                 private _fileSystem: FileSystem, private _logger: Logger) {
         super(name, description);
     }
 
-    async action(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
+    async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
                 outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         this._logger.info(`Executing 'boilerplates dolittle' command`);
         await requireInternet(busyIndicator);
@@ -58,7 +58,7 @@ export class DolittleCommand extends Command {
             
         let boilerplatesToDownload = newAvailableBoilerplates.concat(<any>upgradeableBoilerplates);
         await askToDownloadOrUpdateBoilerplates(boilerplatesToDownload as BoilerplatePackageInfo[], this._boilerplateDiscoverers,
-            this._dependencyResolvers, busyIndicator);    
+            dependencyResolvers, busyIndicator);    
         if (busyIndicator.isBusy) busyIndicator.stop();
     }
 

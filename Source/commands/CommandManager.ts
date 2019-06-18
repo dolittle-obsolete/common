@@ -10,6 +10,7 @@ import {
     ICanProvideDefaultCommandGroups, ICanProvideNamespaces, ICommandManager, Namespaces, 
     DefaultCommandGroups, DefaultCommands, ICommand, NoArgumentsGiven, NoMatchingCommand, INamespace, ICommandGroup, ICanValidateProviderFor 
 } from "./index";
+import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
 
 /**
  * Represents an implementation of {ICommandManager}
@@ -42,12 +43,12 @@ export class CommandManager implements ICommandManager {
     get commandGroups() { return this._defaultCommandGroups.commandGroups; }
 
     
-    async execute(allArguments: string[], currentWorkingDirectory: string, coreLanguage: string, commandOptions?: Map<string, any>, 
+    async execute(dependencyResolvers: IDependencyResolvers, allArguments: string[], currentWorkingDirectory: string, coreLanguage: string, commandOptions?: Map<string, any>, 
                     outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         
         if (allArguments.length < 1) throw new NoArgumentsGiven();
         const {command, commandArguments, namespace} = this.getCommandContext(allArguments);
-        await command.action(currentWorkingDirectory, coreLanguage, commandArguments, commandOptions, namespace, outputter, busyIndicator);
+        await command.action(dependencyResolvers, currentWorkingDirectory, coreLanguage, commandArguments, commandOptions, namespace, outputter, busyIndicator);
     }
 
     clear() {

@@ -45,18 +45,17 @@ export class OnlineCommand extends Command {
      * Instantiates an instance of {OnlineCommand}.
      * @memberof Online
      */
-    constructor(private _boilerplateFinder: OnlineBoilerplatesDiscoverer, private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _dependencyResolvers: IDependencyResolvers, 
-                private _fileSystem: FileSystem, private _logger: Logger) {
+    constructor(private _boilerplateFinder: OnlineBoilerplatesDiscoverer, private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _fileSystem: FileSystem, private _logger: Logger) {
         super(name, description, undefined, dependencies);
     }
 
-    async action(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
+    async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
                 outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         
         this._logger.info(`Executing 'boilerplates dolittle' command`);
         await requireInternet(busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop();
-        let context = await this._dependencyResolvers.resolve({}, dependencies, cwd, coreLanguage, commandArguments, commandOptions);
+        let context = await dependencyResolvers.resolve({}, dependencies, cwd, coreLanguage, commandArguments, commandOptions);
         let keywords = context[keywordDependency.name];
         let limit = parseInt(context[limitDependency.name]) || undefined;
 
@@ -83,7 +82,7 @@ export class OnlineCommand extends Command {
         outputter.print(upgradeableBoilerplates.map((_: any) => `${_.name} v${_.localVersion} --> v${_.version}`).join('\t\n'));
         
         let boilerplatesToDownload = newAvailableBoilerplates.concat(<any>upgradeableBoilerplates);
-        await askToDownloadOrUpdateBoilerplates(boilerplatesToDownload as BoilerplatePackageInfo[], this._boilerplateDiscoverers, this._dependencyResolvers, busyIndicator);
+        await askToDownloadOrUpdateBoilerplates(boilerplatesToDownload as BoilerplatePackageInfo[], this._boilerplateDiscoverers, dependencyResolvers, busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop();
           
     }

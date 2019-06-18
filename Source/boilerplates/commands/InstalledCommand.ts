@@ -7,6 +7,7 @@ import { FileSystem } from "@dolittle/tooling.common.files";
 import { Logger } from "@dolittle/tooling.common.logging";
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
 import { getInstalledBoilerplates, IBoilerplateDiscoverers } from "../index";
+import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
 
 const name = 'installed';
 const description = 'Lists installed boilerplates';
@@ -27,7 +28,7 @@ export class InstalledCommand extends Command {
         super(name, description);
     }
 
-    async action(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
+    async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
                 outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         
         this._logger.info(`Executing 'boilerplates installed' command`);

@@ -31,12 +31,12 @@ export class CheckCommand extends Command {
     /**
      * Instantiates an instance of {CheckCommand}.
      */
-    constructor(private _boilerplatesDiscoverers: IBoilerplateDiscoverers, private _dependencyResolvers: IDependencyResolvers, private _latestPackageFinder: ILatestCompatiblePackageFinder, 
+    constructor(private _boilerplatesDiscoverers: IBoilerplateDiscoverers, private _latestPackageFinder: ILatestCompatiblePackageFinder, 
                 private _fileSystem: FileSystem, private _logger: Logger) {
         super(name, description, shortDescription);
     }
 
-    async action(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
+    async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
                 outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         this._logger.info(`Executing 'boilerplates check' command`);
         await requireInternet(busyIndicator);
@@ -44,7 +44,7 @@ export class CheckCommand extends Command {
         
         let outOfDatePackages: any = await checkBoilerplates(this._boilerplatesDiscoverers, this._latestPackageFinder, this._fileSystem, busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop()
-        await askToDownloadOrUpdateBoilerplates(outOfDatePackages, this._boilerplatesDiscoverers, this._dependencyResolvers, busyIndicator);  
+        await askToDownloadOrUpdateBoilerplates(outOfDatePackages, this._boilerplatesDiscoverers, dependencyResolvers, busyIndicator);  
         if (busyIndicator.isBusy) busyIndicator.stop()  
     }
 

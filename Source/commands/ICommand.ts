@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { ICanOutputMessages, IBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { IDependency } from "@dolittle/tooling.common.dependencies";
+import { IDependency, IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
 
 /**
  * Define the structure of a Command
@@ -40,6 +40,7 @@ export interface ICommand {
     /**
      * The action performed when the command is invoked
      *
+     * @param {IDependencyResolvers} dependencyResolvers  
      * @param {string} currentWorkingDirectory The current working directory 
      * @param {string} coreLanguage The core language
      * @param {string[]} [commandArguments] The non-optional arguments for the command
@@ -48,7 +49,7 @@ export interface ICommand {
      * @param {ICanOutputMessages} [outputter] The system that can output messages
      * @param {IBusyIndicator} [busyIndicator]
      */
-    action(currentWorkingDirectory: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, any>, namespace?: string, outputter?: ICanOutputMessages, busyIndicator?: IBusyIndicator): Promise<void>
+    action(dependencyResolvers: IDependencyResolvers, currentWorkingDirectory: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, any>, namespace?: string, outputter?: ICanOutputMessages, busyIndicator?: IBusyIndicator): Promise<void>
 
     /**
      * Gets all the dependencies given the context and arguments

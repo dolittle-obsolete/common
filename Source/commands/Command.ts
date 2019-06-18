@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { ICanOutputMessages, IBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { IDependency } from "@dolittle/tooling.common.dependencies";
+import { IDependency, IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
 import { ICommand } from "./index";
 
 /**
@@ -33,7 +33,7 @@ export abstract class Command implements ICommand {
         
     get dependencies() { return this._dependencies; }
 
-    abstract action(currentWorkingDirectory: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, any>, namespace?: string, outputter?: ICanOutputMessages, busyIndicator?: IBusyIndicator): Promise<void>
+    abstract action(dependencyResolvers: IDependencyResolvers, currentWorkingDirectory: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, any>, namespace?: string, outputter?: ICanOutputMessages, busyIndicator?: IBusyIndicator): Promise<void>
 
     abstract getAllDependencies(currentWorkingDirectory: string, coreLanguage: string, commandArguments?: string[] | undefined, commandOptions?: Map<string, any> | undefined, namespace?: string | undefined): IDependency[];
     

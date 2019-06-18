@@ -5,6 +5,7 @@
 *--------------------------------------------------------------------------------------------*/
 import { ICanOutputMessages, IBusyIndicator } from "@dolittle/tooling.common.utilities";
 import { ICanProvideDefaultCommands, ICanProvideDefaultCommandGroups, ICanProvideNamespaces, INamespace, ICommand, ICommandGroup } from "./index";
+import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
 
 
 /**
@@ -36,6 +37,7 @@ export interface ICommandManager {
      /**
      * Executes a command
      *
+     * @param {IDependencyResolvers} dependencyResolvers  
      * @param {string[]} allArguments A list of all the arguments
      * @param {string} currentWorkingDirectory The current working directory 
      * @param {string} coreLanguage The core language
@@ -43,7 +45,7 @@ export interface ICommandManager {
      * @param {ICanOutputMessages} [outputter] The system that can output messages
      * @param {IBusyIndicator} [busyIndicator]
      */
-    execute(allArguments: string[], currentWorkingDirectory: string, coreLanguage: string, commandOptions?: Map<string, any>, outputter?: ICanOutputMessages, busyIndicator?: IBusyIndicator): Promise<void>
+    execute(dependencyResolvers: IDependencyResolvers, allArguments: string[], currentWorkingDirectory: string, coreLanguage: string, commandOptions?: Map<string, any>, outputter?: ICanOutputMessages, busyIndicator?: IBusyIndicator): Promise<void>
 
     /**
      * Clears the plugin-providers from the command manager

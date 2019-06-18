@@ -17,12 +17,12 @@ export class BoilerplatesCommandGroupProvider implements ICanProvideDefaultComma
     constructor(boilerplateDiscoverers: IBoilerplateDiscoverers, dependencyResolvers: IDependencyResolvers, latestPackageFinder: ILatestCompatiblePackageFinder, boilerplates: IBoilerplates, 
                 onlineBoilerplatesFinder: OnlineBoilerplatesDiscoverer, onlineDolittleBoilerplatesFinder: OnlineDolittleBoilerplatesFinder, fileSystem: FileSystem, logger: Logger ) {
         this._boilerplatesCommandGroup = new BoilerplatesCommandGroup([
-            new CheckCommand(boilerplateDiscoverers, dependencyResolvers, latestPackageFinder, fileSystem, logger),
-            new DolittleCommand(boilerplateDiscoverers, dependencyResolvers, onlineDolittleBoilerplatesFinder, fileSystem, logger),
+            new CheckCommand(boilerplateDiscoverers, latestPackageFinder, fileSystem, logger),
+            new DolittleCommand(boilerplateDiscoverers, onlineDolittleBoilerplatesFinder, fileSystem, logger),
             new InitCommand(boilerplateDiscoverers, logger),
             new InstalledCommand(boilerplateDiscoverers, fileSystem, logger),
             new ListCommand(boilerplates, logger),
-            new OnlineCommand(onlineBoilerplatesFinder, boilerplateDiscoverers, dependencyResolvers, fileSystem, logger)
+            new OnlineCommand(onlineBoilerplatesFinder, boilerplateDiscoverers, fileSystem, logger)
         ]);
     }
     provide(): ICommandGroup[] { return [this._boilerplatesCommandGroup]; }

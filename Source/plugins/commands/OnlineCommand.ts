@@ -45,18 +45,18 @@ export class OnlineCommand extends Command {
      * Instantiates an instance of {OnlineCommand}.
      * @memberof Online
      */
-    constructor(private _plugins: IPlugins, private _pluginsFinder: OnlinePluginsFinder, private _pluginDiscoverers: IPluginDiscoverers, private _dependencyResolvers: IDependencyResolvers,
+    constructor(private _plugins: IPlugins, private _pluginsFinder: OnlinePluginsFinder, private _pluginDiscoverers: IPluginDiscoverers,
                 private _commandManager: ICommandManager, private _fileSystem: FileSystem, private _logger: Logger) {
         super(name, description, undefined, dependencies);
     }
 
-    async action(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
+    async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
                 outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         
         this._logger.info(`Executing 'plugins online' command`);
         await requireInternet(busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop();
-        let context = await this._dependencyResolvers.resolve({}, dependencies, cwd, coreLanguage, commandArguments, commandOptions);
+        let context = await dependencyResolvers.resolve({}, dependencies, cwd, coreLanguage, commandArguments, commandOptions);
         let keywords = context[keywordDependency.name];
         let limit = parseInt(context[limitDependency.name]) || undefined;
 
@@ -83,7 +83,7 @@ export class OnlineCommand extends Command {
         outputter.print(upgradeablePlugins.map((_: any) => `${_.name} v${_.localVersion} --> v${_.version}`).join('\t\n'));
         
         let boilerplatesToDownload = newAvailablePlugins.concat(<any>upgradeablePlugins);
-        await askToDownloadOrUpdatePlugins(boilerplatesToDownload as PluginPackageInfo[], this._plugins, this._dependencyResolvers, this._commandManager, busyIndicator);
+        await askToDownloadOrUpdatePlugins(boilerplatesToDownload as PluginPackageInfo[], this._plugins, dependencyResolvers, this._commandManager, busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop();
           
     }

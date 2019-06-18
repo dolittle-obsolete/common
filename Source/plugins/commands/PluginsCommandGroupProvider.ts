@@ -17,12 +17,12 @@ export class PluginsCommandGroupProvider implements ICanProvideDefaultCommandGro
     constructor(pluginDiscoverers: IPluginDiscoverers, dependencyResolvers: IDependencyResolvers, latestPackageFinder: ILatestCompatiblePackageFinder, plugins: IPlugins, 
                 onlinePluginsFinder: OnlinePluginsFinder, onlineDolittlePluginsFinder: OnlineDolittlePluginsFinder, commandManager: ICommandManager, fileSystem: FileSystem, logger: Logger ) {
         this._pluginsCommandGroup = new PluginsCommandGroup([
-            new CheckCommand(plugins, pluginDiscoverers, dependencyResolvers, latestPackageFinder, commandManager, fileSystem, logger),
-            new DolittleCommand(plugins, pluginDiscoverers, dependencyResolvers, onlineDolittlePluginsFinder, commandManager, fileSystem, logger),
+            new CheckCommand(plugins, pluginDiscoverers, latestPackageFinder, commandManager, fileSystem, logger),
+            new DolittleCommand(plugins, pluginDiscoverers, onlineDolittlePluginsFinder, commandManager, fileSystem, logger),
             new InitCommand(plugins, commandManager, logger),
             new InstalledCommand(pluginDiscoverers, fileSystem, logger),
             new ListCommand(plugins, logger),
-            new OnlineCommand(plugins, onlinePluginsFinder, pluginDiscoverers, dependencyResolvers, commandManager, fileSystem, logger)
+            new OnlineCommand(plugins, onlinePluginsFinder, pluginDiscoverers, commandManager, fileSystem, logger)
         ]);
     }
     provide(): ICommandGroup[] { return [this._pluginsCommandGroup]; }
