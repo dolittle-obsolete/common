@@ -4,9 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 export * from './PluginsCommandGroup';
 export * from './CheckCommand';
-export * from './DolittleCommand';
 export * from './InitCommand';
+export * from './InstallCommand';
 export * from './InstalledCommand';
 export * from './ListCommand';
-export * from './OnlineCommand';
 export * from './PluginsCommandGroupProvider';

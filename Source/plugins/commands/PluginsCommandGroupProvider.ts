@@ -7,7 +7,7 @@ import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
 import { FileSystem } from "@dolittle/tooling.common.files";
 import { Logger } from "@dolittle/tooling.common.logging";
 import { ILatestCompatiblePackageFinder } from "@dolittle/tooling.common.packages";
-import { PluginsCommandGroup, IPluginDiscoverers, IPlugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, CheckCommand, DolittleCommand, InitCommand, InstalledCommand, ListCommand, OnlineCommand } from "../index";
+import { PluginsCommandGroup, IPluginDiscoverers, IPlugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, CheckCommand, InitCommand, InstalledCommand, ListCommand, InstallCommand } from "../index";
 
 export class PluginsCommandGroupProvider implements ICanProvideDefaultCommandGroups {
 
@@ -18,11 +18,10 @@ export class PluginsCommandGroupProvider implements ICanProvideDefaultCommandGro
                 onlinePluginsFinder: OnlinePluginsFinder, onlineDolittlePluginsFinder: OnlineDolittlePluginsFinder, commandManager: ICommandManager, fileSystem: FileSystem, logger: Logger ) {
         this._pluginsCommandGroup = new PluginsCommandGroup([
             new CheckCommand(plugins, pluginDiscoverers, latestPackageFinder, commandManager, fileSystem, logger),
-            new DolittleCommand(plugins, pluginDiscoverers, onlineDolittlePluginsFinder, commandManager, fileSystem, logger),
             new InitCommand(plugins, commandManager, logger),
+            new InstallCommand(plugins, pluginDiscoverers, commandManager, onlinePluginsFinder, onlineDolittlePluginsFinder, fileSystem, logger),
             new InstalledCommand(pluginDiscoverers, fileSystem, logger),
             new ListCommand(plugins, logger),
-            new OnlineCommand(plugins, onlinePluginsFinder, pluginDiscoverers, commandManager, fileSystem, logger)
         ]);
     }
     provide(): ICommandGroup[] { return [this._pluginsCommandGroup]; }

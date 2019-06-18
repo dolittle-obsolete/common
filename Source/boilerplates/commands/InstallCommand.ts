@@ -3,39 +3,49 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { Command } from '@dolittle/tooling.common.commands';
-import { IDependencyResolvers } from '@dolittle/tooling.common.dependencies';
+import { IDependencyResolvers, PromptDependency, argumentUserInputType } from '@dolittle/tooling.common.dependencies';
 import { FileSystem } from '@dolittle/tooling.common.files';
 import { Logger } from '@dolittle/tooling.common.logging';
-import { requireInternet, isGreaterVersion } from '@dolittle/tooling.common.packages';
+import { requireInternet, isGreaterVersion, ToolingPackage } from '@dolittle/tooling.common.packages';
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { fetchDolittleBoilerplates, OnlineDolittleBoilerplatesFinder, getInstalledBoilerplates, IBoilerplateDiscoverers, askToDownloadOrUpdateBoilerplates, BoilerplatePackageInfo } from '../index';
+import { fetchOnlineBoilerplates, fetchDolittleBoilerplates, OnlineBoilerplatesDiscoverer, OnlineDolittleBoilerplatesFinder, getInstalledBoilerplates, IBoilerplateDiscoverers, askToDownloadOrUpdateBoilerplates, BoilerplatePackageInfo } from '../index';
 
-const name = 'dolittle';
-const description = `Lists Dolittle's boilerplates found on npm`;
+const name = 'install';
+const description = `Prompt to install boilerplates`;
+
+const dolittleBoilerplatesDependency = new PromptDependency(
+    'dolittle',
+    'Whether to only find boilerplates under the dolittle scope',
+    argumentUserInputType,
+    'Find only boilerplates under Dolittle scope / user?',
+    true
+);
 
 /**
- * Represents an implementation of {ICommand} for finding Dolittle boilerplates online 
+ * Represents an implementation of {ICommand} for finding and installing boilerplates 
  *
  * @export
- * @class DolittleCommand
+ * @class InstallCommand
  * @extends {Command}
  */
-export class DolittleCommand extends Command {
+export class InstallCommand extends Command {
     /**
      * Instantiates an instance of {DolittleCommand}.
      */
-    constructor(private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _onlineBoilerplatesFinder: OnlineDolittleBoilerplatesFinder, 
+    constructor(private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _onlineBoilerplatesFinder: OnlineBoilerplatesDiscoverer, private _onlineDolittleBoilerplatesFinder: OnlineDolittleBoilerplatesFinder, 
                 private _fileSystem: FileSystem, private _logger: Logger) {
-        super(name, description);
+        super(name, description, undefined, [dolittleBoilerplatesDependency]);
     }
 
-    async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
+    async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments: string[], commandOptions: Map<string, string>, namespace?: string, 
                 outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
-        this._logger.info(`Executing 'boilerplates dolittle' command`);
+        this._logger.info(`Executing 'boilerplates install' command`);
         await requireInternet(busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop()
+        let boilerplates: ToolingPackage[]
+        if (commandOptions.get(dolittleBoilerplatesDependency.name)) boilerplates = await fetchDolittleBoilerplates(this._onlineDolittleBoilerplatesFinder, busyIndicator);
+        else boilerplates = await fetchOnlineBoilerplates(this._onlineBoilerplatesFinder, busyIndicator, namespace? [namespace]: []);
 
-        let boilerplates = await fetchDolittleBoilerplates(this._onlineBoilerplatesFinder, busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop();
         let localBoilerplates = await getInstalledBoilerplates(this._boilerplateDiscoverers, this._fileSystem, busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop();
@@ -53,7 +63,7 @@ export class DolittleCommand extends Command {
         outputter.warn(`Found ${newAvailableBoilerplates.length} new boilerplates`);
         outputter.print(newAvailableBoilerplates.map(_ => `${_.name} v${_.version}`).join('\t\n'));
         
-        outputter.warn(`Found ${upgradeableBoilerplates.length} upgradeble boilerplates`);
+        outputter.warn(`Found ${upgradeableBoilerplates.length} upgradeable boilerplates`);
         outputter.print(upgradeableBoilerplates.map((_: any) => `${_.name} v${_.localVersion} --> v${_.version}`).join('\t\n'));
             
         let boilerplatesToDownload = newAvailableBoilerplates.concat(<any>upgradeableBoilerplates);
@@ -65,5 +75,4 @@ export class DolittleCommand extends Command {
     getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {
         return this.dependencies;
     }
-    
 }
