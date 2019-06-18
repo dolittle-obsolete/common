@@ -61,9 +61,11 @@ export class PluginLoader implements IPluginLoader {
             }
             else {
                 let plugin = await this.getPluginFromModule(pluginFilePath);
-                this._loadedPlugins.push(plugin);
-                let pluginPackage = await this._fileSystem.readJson(pluginPackagePath);
-                this._loadedPluginPackages.push(pluginPackage as ToolingPackage)
+                if (plugin) {
+                    this._loadedPlugins.push(plugin);
+                    let pluginPackage = await this._fileSystem.readJson(pluginPackagePath);
+                    this._loadedPluginPackages.push(pluginPackage as ToolingPackage)
+                }
             }
         }
         this.needsReload = false;
@@ -71,7 +73,14 @@ export class PluginLoader implements IPluginLoader {
     }
     
     private async getPluginFromModule(pluginFilePath: string) {
-        let pluginModule: PluginModule = await import(pluginFilePath);
-        return pluginModule.plugin;
+        let pluginModule: PluginModule | undefined;
+        try {
+            pluginModule = await import(pluginFilePath);
+            return pluginModule!.plugin;
+        } catch(error) {
+            this._logger.info(`Could not load plugin from path ${pluginFilePath}`);
+            this._logger.warn(error);
+        }
+        return undefined;
     }    
 }
