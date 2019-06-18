@@ -41,13 +41,13 @@ export class Namespaces implements INamespaces {
     }
     
     register(...providers: ICanProvideNamespaces[]) {
-        providers.forEach(this._providerValidator.validate);
+        providers.forEach(_ => this._providerValidator.validate(_));
         this._nonDefaultProviders.push(...providers);
         this.throwIfDuplicates();
     }
 
     registerDefault(...providers: ICanProvideNamespaces[]) {
-        providers.forEach(this._providerValidator.validate);
+        providers.forEach(_ => this._providerValidator.validate(_));
         this._defaultProviders.push(...providers);
         this.throwIfDuplicates();
     }

@@ -40,13 +40,13 @@ export class DefaultCommandGroups implements IDefaultCommandGroups {
     }
 
     register(...providers: ICanProvideDefaultCommandGroups[]) {
-        providers.forEach(this._providerValidator.validate);
+        providers.forEach(_ => this._providerValidator.validate(_));
         this._nonDefaultProviders.push(...providers);
         this.throwIfDuplicates();
     }
     
     registerDefault(...providers: ICanProvideDefaultCommandGroups[]) {
-        providers.forEach(this._providerValidator.validate);
+        providers.forEach(_ => this._providerValidator.validate(_));
         this._defaultProviders.push(...providers);
         this.throwIfDuplicates();
     }
