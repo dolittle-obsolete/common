@@ -11,13 +11,13 @@ import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndic
 import { fetchOnlinePlugins, fetchDolittlePlugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, getInstalledPlugins, IPluginDiscoverers, askToDownloadOrUpdatePlugins, PluginPackageInfo, IPlugins } from '../index';
 
 const name = 'install';
-const description = `Prompt to install boilerplates`;
+const description = `Prompt to install plugins`;
 
-const dolittleBoilerplatesDependency = new PromptDependency(
+const dolittlePluginsDependency = new PromptDependency(
     'dolittle',
-    'Whether to only find boilerplates under the dolittle scope',
+    'Whether to only find plugins under the Dolittle scope / user',
     argumentUserInputType,
-    'Find only boilerplates under Dolittle scope / user?',
+    'Find only plugins under Dolittle scope / user?',
     true
 );
 
@@ -34,7 +34,7 @@ export class InstallCommand extends Command {
      */
     constructor(private _plugins: IPlugins, private _pluginDiscoverers: IPluginDiscoverers, private _commandManager: ICommandManager, private _onlinePluginsFinder: OnlinePluginsFinder, private _onlineDolittlePluginsFinder: OnlineDolittlePluginsFinder, 
                 private _fileSystem: FileSystem, private _logger: Logger) {
-        super(name, description, undefined, [dolittleBoilerplatesDependency]);
+        super(name, description, undefined, [dolittlePluginsDependency]);
     }
 
     async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments: string[], commandOptions: Map<string, string>, namespace?: string, 
@@ -43,7 +43,7 @@ export class InstallCommand extends Command {
         await requireInternet(busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop()
         let plugins: ToolingPackage[]
-        if (commandOptions.get(dolittleBoilerplatesDependency.name)) plugins = await fetchDolittlePlugins(this._onlineDolittlePluginsFinder, busyIndicator);
+        if (commandOptions.get(dolittlePluginsDependency.name)) plugins = await fetchDolittlePlugins(this._onlineDolittlePluginsFinder, busyIndicator);
         else plugins = await fetchOnlinePlugins(this._onlinePluginsFinder, busyIndicator, namespace? [namespace]: []);
 
         if (busyIndicator.isBusy) busyIndicator.stop();
