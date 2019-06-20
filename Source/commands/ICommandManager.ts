@@ -1,11 +1,10 @@
-
 /*---------------------------------------------------------------------------------------------
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { ICanOutputMessages, IBusyIndicator } from "@dolittle/tooling.common.utilities";
-import { ICanProvideDefaultCommands, ICanProvideDefaultCommandGroups, ICanProvideNamespaces, INamespace, ICommand, ICommandGroup } from "./index";
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
+import { ICanProvideDefaultCommands, ICanProvideDefaultCommandGroups, ICanProvideNamespaces, INamespace, ICommand, ICommandGroup } from "./index";
 
 
 /**

@@ -12,7 +12,7 @@ import { INamespace, ICommand, ICommandGroup, DuplicateCommandName, DuplicateCom
  * @class Namespace
  * @implements {INamespace}
  */
-export abstract class Namespace implements INamespace {
+export class Namespace implements INamespace {
     
     /**
      * Instantiates an instance of {Namespace}.

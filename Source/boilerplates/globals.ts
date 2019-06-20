@@ -2,15 +2,15 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { commandManager } from '@dolittle/tooling.common.commands';
-import { dependencyParsers, dependencyResolvers } from '@dolittle/tooling.common.dependencies';
+import { ICanRegisterProviders, commandManager } from '@dolittle/tooling.common.commands';
+import { dependencyParsers } from '@dolittle/tooling.common.dependencies';
 import { fileSystem, folders } from '@dolittle/tooling.common.files';
-import { nodeModulesPath, toolingPackage, latestCompatiblePackageFinder } from '@dolittle/tooling.common.packages';
 import { logger } from '@dolittle/tooling.common.logging';
+import { nodeModulesPath, toolingPackage, latestCompatiblePackageFinder } from '@dolittle/tooling.common.packages';
 import {
     BoilerplatesConfig, IBoilerplatesLoader, BoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplateDiscoverers, LocalBoilerplatesDiscoverer, IBoilerplateDiscoverers, 
     OnlineBoilerplatesDiscoverer, ITemplatesBoilerplates, TemplatesBoilerplates, IBoilerplateParsers, BoilerplateParsers, ICanParseBoilerplates, ContentBoilerplateParser, TemplatesBoilerplateParser,
-    Boilerplates, IBoilerplates, OnlineDolittleBoilerplatesFinder, handlebars, IContentBoilerplates, ContentBoilerplates, ProjectConfig, IScriptRunner, ScriptRunner, BoilerplatesCommandGroupProvider
+    Boilerplates, IBoilerplates, OnlineDolittleBoilerplatesFinder, handlebars, IContentBoilerplates, ContentBoilerplates, ProjectConfig, IScriptRunner, ScriptRunner, BoilerplatesCommandGroupProvider, IBoilerplate, ProviderRegistrator
 } from './index';
 
 export const projectConfig = new ProjectConfig(nodeModulesPath);
@@ -39,6 +39,4 @@ export const onlineDolittleBoilerplatesFinder = new OnlineDolittleBoilerplatesFi
 
 export const scriptRunner: IScriptRunner = new ScriptRunner();
 
-let boilerplatesCommandGroupProvider = new BoilerplatesCommandGroupProvider(boilerplateDiscoverers, dependencyResolvers, latestCompatiblePackageFinder, boilerplates, onlineBoilerplatesFinder, onlineDolittleBoilerplatesFinder, fileSystem, logger);
-
-commandManager.registerDefaultProviders([], [boilerplatesCommandGroupProvider], []);
+export let providerRegistrator: ICanRegisterProviders = new ProviderRegistrator(commandManager, boilerplateDiscoverers, latestCompatiblePackageFinder, boilerplates, onlineBoilerplatesFinder, onlineDolittleBoilerplatesFinder, fileSystem, logger);

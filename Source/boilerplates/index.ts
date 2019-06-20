@@ -32,7 +32,6 @@ export * from './askToChooseBoilerplate';
 export * from './initBoilerplatesSystem';
 export * from './getBoilerplatesInUse';
 export * from './getInstalledBoilerplates';
-
 export * from './contentBoilerplate/index'
 export * from './templatesBoilerplate/index';
 export * from './online/index';

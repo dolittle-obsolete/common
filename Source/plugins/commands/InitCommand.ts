@@ -23,15 +23,15 @@ export class InitCommand extends Command {
     /**
      * Instantiates an instance of {InitCommand}.
      */
-    constructor(private _plugins: IPlugins, private _commandManager: ICommandManager, private _logger: Logger) {
-        super(name, description);
+    constructor(private _plugins: IPlugins, private _logger: Logger) {
+        super(name, description, false);
     }
 
     async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
                 outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         
         this._logger.info(`Executing 'plugins init' command`);
-        await initPluginSystem(this._plugins, busyIndicator, this._commandManager);
+        await initPluginSystem(this._plugins, busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop();
     }
 

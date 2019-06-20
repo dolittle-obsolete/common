@@ -9,3 +9,4 @@ export * from './InstallCommand';
 export * from './InstalledCommand';
 export * from './ListCommand';
 export * from './BoilerplatesCommandGroupProvider';
+export * from './ProviderRegistrator'

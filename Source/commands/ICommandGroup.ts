@@ -5,6 +5,7 @@
 
 import { ICommand } from "./index";
 
+
 /**
  * Defines the structure of a Command Group
  *
@@ -13,6 +14,14 @@ import { ICommand } from "./index";
  */
 export interface ICommandGroup {
     
+
+    /**
+     * Whether or not this is a common on boilerplates
+     *
+     * @type {boolean}
+     */
+    readonly isBoilerplatesCommandGroup: boolean;
+
     /**
      * The commands under this command group
      * @memberof ICommandGroup

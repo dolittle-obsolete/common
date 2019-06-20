@@ -5,8 +5,8 @@
 import { Command } from "@dolittle/tooling.common.commands";
 import { Logger } from "@dolittle/tooling.common.logging";
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
-import { getBoilerplatesInUse, IBoilerplates } from "../index";
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
+import { getBoilerplatesInUse, IBoilerplates } from "../index";
 
 const name = 'list';
 const description = 'Lists the boilerplates in use by the tooling';
@@ -24,7 +24,7 @@ export class ListCommand extends Command {
      * Instantiates an instance of {ListCommand}
      */
     constructor(private _boilerplates: IBoilerplates, private _logger: Logger) {
-        super(name, description);
+        super(name, description, false);
     }
 
     async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 

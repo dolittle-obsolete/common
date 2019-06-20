@@ -22,6 +22,6 @@ export class BoilerplatesCommandGroup extends CommandGroup {
      * @param {ICommand[]} commands
      */
     constructor(commands: ICommand[]) {
-        super(name, commands, description);
+        super(name, commands, description, false);
     }
 }

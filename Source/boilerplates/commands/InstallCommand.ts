@@ -34,7 +34,7 @@ export class InstallCommand extends Command {
      */
     constructor(private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _onlineBoilerplatesFinder: OnlineBoilerplatesDiscoverer, private _onlineDolittleBoilerplatesFinder: OnlineDolittleBoilerplatesFinder, 
                 private _fileSystem: FileSystem, private _logger: Logger) {
-        super(name, description, undefined, [dolittleBoilerplatesDependency]);
+        super(name, description, false, undefined, [dolittleBoilerplatesDependency]);
     }
 
     async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments: string[], commandOptions: Map<string, string>, namespace?: string, 

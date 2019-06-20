@@ -32,9 +32,9 @@ export class InstallCommand extends Command {
     /**
      * Instantiates an instance of {DolittleCommand}.
      */
-    constructor(private _plugins: IPlugins, private _pluginDiscoverers: IPluginDiscoverers, private _commandManager: ICommandManager, private _onlinePluginsFinder: OnlinePluginsFinder, private _onlineDolittlePluginsFinder: OnlineDolittlePluginsFinder, 
+    constructor(private _plugins: IPlugins, private _pluginDiscoverers: IPluginDiscoverers, private _onlinePluginsFinder: OnlinePluginsFinder, private _onlineDolittlePluginsFinder: OnlineDolittlePluginsFinder, 
                 private _fileSystem: FileSystem, private _logger: Logger) {
-        super(name, description, undefined, [dolittlePluginsDependency]);
+        super(name, description, false, undefined, [dolittlePluginsDependency]);
     }
 
     async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments: string[], commandOptions: Map<string, string>, namespace?: string, 
@@ -67,8 +67,7 @@ export class InstallCommand extends Command {
         outputter.print(upgradeablePlugins.map((_: any) => `${_.name} v${_.localVersion} --> v${_.version}`).join('\t\n'));
             
         let pluginsToDownload = newAvailablePlugins.concat(<any>upgradeablePlugins);
-        await askToDownloadOrUpdatePlugins(pluginsToDownload as PluginPackageInfo[], this._plugins, dependencyResolvers, this._commandManager,
-            busyIndicator);    
+        await askToDownloadOrUpdatePlugins(pluginsToDownload as PluginPackageInfo[], this._plugins, dependencyResolvers, busyIndicator);    
         if (busyIndicator.isBusy) busyIndicator.stop();
     }
 

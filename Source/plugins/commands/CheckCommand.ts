@@ -32,8 +32,8 @@ export class CheckCommand extends Command {
      * Instantiates an instance of {CheckCommand}.
      */
     constructor(private _plugins: IPlugins, private _pluginDiscoverers: IPluginDiscoverers, private _latestPackageFinder: ILatestCompatiblePackageFinder, 
-                private _commandManager: ICommandManager, private _fileSystem: FileSystem, private _logger: Logger) {
-        super(name, description, shortDescription);
+                private _fileSystem: FileSystem, private _logger: Logger) {
+        super(name, description, false, shortDescription);
     }
 
     async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
@@ -44,7 +44,7 @@ export class CheckCommand extends Command {
         
         let outOfDatePackages: any = await checkPlugins(this._pluginDiscoverers, this._latestPackageFinder, this._fileSystem, busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop()
-        await askToDownloadOrUpdatePlugins(outOfDatePackages, this._plugins, dependencyResolvers, this._commandManager, busyIndicator);    
+        await askToDownloadOrUpdatePlugins(outOfDatePackages, this._plugins, dependencyResolvers, busyIndicator);    
     }
 
     getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {

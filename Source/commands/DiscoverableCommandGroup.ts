@@ -21,7 +21,9 @@ export abstract class DiscoverableCommandGroup implements IDiscoverableCommandGr
      * @param {string} _description
      * @param {string} [_shortDescription=_description]
      */
-    constructor(private _name: string, private _description: string, private _shortDescription: string = _description) {}
+    constructor(private _name: string, private _description: string, private _isBoilerplatesCommandGroup: boolean, private _shortDescription: string = _description) {}
+    
+    get isBoilerplatesCommandGroup() { return this._isBoilerplatesCommandGroup; }
     
     get name() { return this._name; }
 

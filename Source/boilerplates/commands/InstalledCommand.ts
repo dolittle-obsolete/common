@@ -25,7 +25,7 @@ export class InstalledCommand extends Command {
      * Instantiates an instance of {InstalledCommand}.
      */
     constructor(private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _fileSystem: FileSystem, private _logger: Logger) {
-        super(name, description);
+        super(name, description, false);
     }
 
     async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 

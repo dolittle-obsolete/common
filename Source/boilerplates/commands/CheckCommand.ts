@@ -33,7 +33,7 @@ export class CheckCommand extends Command {
      */
     constructor(private _boilerplatesDiscoverers: IBoilerplateDiscoverers, private _latestPackageFinder: ILatestCompatiblePackageFinder, 
                 private _fileSystem: FileSystem, private _logger: Logger) {
-        super(name, description, shortDescription);
+        super(name, description, false, shortDescription);
     }
 
     async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 

@@ -7,11 +7,11 @@ import { commandManager } from '@dolittle/tooling.common.commands';
 import { fileSystem } from '@dolittle/tooling.common.files';
 import { logger } from '@dolittle/tooling.common.logging';
 import { nodeModulesPath, toolingPackage, latestCompatiblePackageFinder } from '@dolittle/tooling.common.packages';
-import { dependencyResolvers } from '@dolittle/tooling.common.dependencies';
 import { LocalPluginsDiscoverer, IPluginLoader, PluginLoader, PluginsConfig, IPluginDiscoverers, PluginDiscoverers, IPlugins, Plugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, PluginsCommandGroupProvider } from './index';
 
 export const pluginsConfig = new PluginsConfig(nodeModulesPath);
 export const pluginLoader: IPluginLoader = new PluginLoader(pluginsConfig, fileSystem, logger);
+
 let localPluginsDiscoverer = new LocalPluginsDiscoverer(toolingPackage, pluginsConfig, nodeModulesPath, pluginLoader, fileSystem, logger);
 
 export const pluginDiscoverers: IPluginDiscoverers = new PluginDiscoverers([localPluginsDiscoverer])
@@ -22,6 +22,6 @@ export const onlinePluginsFinder = new OnlinePluginsFinder(latestCompatiblePacka
 
 export const onlineDolittlePluginsFinder = new OnlineDolittlePluginsFinder(latestCompatiblePackageFinder, logger);
 
-let pluginsCommandGroupProvider = new PluginsCommandGroupProvider(pluginDiscoverers, dependencyResolvers, latestCompatiblePackageFinder, plugins, onlinePluginsFinder, onlineDolittlePluginsFinder, commandManager, fileSystem, logger);
+let pluginsCommandGroupProvider = new PluginsCommandGroupProvider(pluginDiscoverers, latestCompatiblePackageFinder, plugins, onlinePluginsFinder, onlineDolittlePluginsFinder, fileSystem, logger);
 
 commandManager.registerDefaultProviders([], [pluginsCommandGroupProvider], []);

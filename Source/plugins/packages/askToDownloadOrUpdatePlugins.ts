@@ -21,8 +21,7 @@ export type PluginPackageInfo = {
  * 
  * @export
  */
-export async function askToDownloadOrUpdatePlugins(pluginsPackages: PluginPackageInfo[], plugins: IPlugins, resolvers: IDependencyResolvers, commandManager: ICommandManager,
-    busyIndicator: IBusyIndicator) {
+export async function askToDownloadOrUpdatePlugins(pluginsPackages: PluginPackageInfo[], plugins: IPlugins, resolvers: IDependencyResolvers, busyIndicator: IBusyIndicator) {
     await requireInternet(busyIndicator);
     if (pluginsPackages.length && pluginsPackages.length > 0) {
         const shouldDownload = await askToDownload(resolvers);
@@ -30,7 +29,7 @@ export async function askToDownloadOrUpdatePlugins(pluginsPackages: PluginPackag
             let packagesToDownload = await askWhichPlugins(pluginsPackages, resolvers);
             if (packagesToDownload.length > 0) {
                 await downloadPackagesFromNpmSync(packagesToDownload, busyIndicator);
-                await initPluginSystem(plugins, busyIndicator, commandManager);
+                await initPluginSystem(plugins, busyIndicator);
             }
         }
     }

@@ -7,10 +7,11 @@ import { ICanOutputMessages, NullMessageOutputter, NullBusyIndicator, IBusyIndic
 import { Logger } from "@dolittle/tooling.common.logging";
 import { 
     INamespaces, IDefaultCommands, IDefaultCommandGroups, ICanProvideDefaultCommands, 
-    ICanProvideDefaultCommandGroups, ICanProvideNamespaces, ICommandManager, Namespaces, 
+    ICanProvideDefaultCommandGroups, ICanProvideNamespaces, Namespaces, 
     DefaultCommandGroups, DefaultCommands, ICommand, NoArgumentsGiven, NoMatchingCommand, INamespace, ICommandGroup, ICanValidateProviderFor 
-} from "./index";
+} from "@dolittle/tooling.common.commands";
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
+import { ICommandManager } from "./index";
 
 /**
  * Represents an implementation of {ICommandManager}
@@ -70,8 +71,8 @@ export class CommandManager implements ICommandManager {
 
     private addDefaultsToNamespaces(namespaces: INamespace[]) {
         namespaces.forEach(_ => {
-            _.addDefaultCommands(this._defaultCommands.commands);
-            _.addDefaultCommandGroups(this._defaultCommandGroups.commandGroups);
+            _.addDefaultCommands(this._defaultCommands.commands.filter(_ => _.isBoilerplatesCommand));
+            _.addDefaultCommandGroups(this._defaultCommandGroups.commandGroups.filter(_ => _.isBoilerplatesCommandGroup));
         });
     }
 

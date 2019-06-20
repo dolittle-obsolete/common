@@ -12,6 +12,13 @@ import { IDependency, IDependencyResolvers } from "@dolittle/tooling.common.depe
  * @interface ICommand
  */
 export interface ICommand {
+
+    /**
+     * Whether or not this is a common on boilerplates
+     *
+     * @type {boolean}
+     */
+    readonly isBoilerplatesCommand: boolean;
     
     /**
      * The name of the command

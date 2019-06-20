@@ -12,17 +12,20 @@ import { ICommandGroup, ICommand } from "./index";
  * @class CommandGroup
  * @implements {ICommandGroup}
  */
-export abstract class CommandGroup implements ICommandGroup {
+export class CommandGroup implements ICommandGroup {
     
     /**
      * Instantiates an instance of {CommandGroup}.
      * @param {string} _name
      * @param {ICommand[]} _commands
      * @param {string} _description
+     * @param {boolean} _isBoilerplateCommandGroup
      * @param {string} [_shortDescription=_description]
      */
-    constructor(private _name: string, private _commands: ICommand[], private _description: string, private _shortDescription: string = _description) {}
+    constructor(private _name: string, private _commands: ICommand[], private _description: string, private _isBoilerplateCommandGroup: boolean, private _shortDescription: string = _description) {}
     
+    get isBoilerplatesCommandGroup() { return this._isBoilerplateCommandGroup; }
+
     get name() { return this._name; }
 
     get commands() { return this._commands; }

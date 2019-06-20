@@ -1,6 +1,7 @@
 {
     "files": [],
     "references": [
+        {"path": "Source/common"},
         {"path": "Source/boilerplates"},
         {"path": "Source/commands"},
         {"path": "Source/configurations"},

@@ -24,7 +24,7 @@ export class ListCommand extends Command {
      * Instantiates an instance of {ListCommand}
      */
     constructor(private _plugins: IPlugins, private _logger: Logger) {
-        super(name, description);
+        super(name, description, false);
     }
 
     async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
