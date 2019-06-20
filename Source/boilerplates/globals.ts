@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ICanRegisterProviders, commandManager } from '@dolittle/tooling.common.commands';
+import { ICanRegisterProviders, commandManager, providerRegistrators } from '@dolittle/tooling.common.commands';
 import { dependencyParsers } from '@dolittle/tooling.common.dependencies';
 import { fileSystem, folders } from '@dolittle/tooling.common.files';
 import { logger } from '@dolittle/tooling.common.logging';
@@ -40,3 +40,5 @@ export const onlineDolittleBoilerplatesFinder = new OnlineDolittleBoilerplatesFi
 export const scriptRunner: IScriptRunner = new ScriptRunner();
 
 export let providerRegistrator: ICanRegisterProviders = new ProviderRegistrator(commandManager, boilerplateDiscoverers, latestCompatiblePackageFinder, boilerplates, onlineBoilerplatesFinder, onlineDolittleBoilerplatesFinder, fileSystem, logger);
+
+providerRegistrators.addRegistrators(providerRegistrator);

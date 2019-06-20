@@ -4,5 +4,6 @@
 *--------------------------------------------------------------------------------------------*/
 
 export * from './IInitializer';
-
 export * from './Initializer';
+
+export * from './globals';

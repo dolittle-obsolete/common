@@ -70,7 +70,7 @@ export class Initializer implements IInitializer {
         boilerplatesWithNamespaces = boilerplatesWithNamespaces.filter(_ => !namespaceNames.includes(_.namespace));
         for (let boilerplate of boilerplatesWithNamespaces) {
             if (!map.has(boilerplate.namespace)) {
-                map.set(boilerplate.namespace, new Namespace(boilerplate.name, [], [], boilerplate.description));
+                map.set(boilerplate.namespace, new Namespace(boilerplate.namespace, [], [], boilerplate.description));
             }
         }
         let ret: INamespace[] = [];
