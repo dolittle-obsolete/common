@@ -34,6 +34,5 @@
     "build": "yarn clean && yarn ts:all",
     "clean": "rimraf dist && yarn ts:clean",
     "prepublishOnly": "yarn build"
-  },
-  "dependencies": {}
+  }
 }

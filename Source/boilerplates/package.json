@@ -42,16 +42,16 @@
     "@dolittle/tooling.common.files": "alpha",
     "@dolittle/tooling.common.logging": "alpha",
     "@dolittle/tooling.common.utilities": "alpha",
-    "cross-spawn": "^6.0.5",
-    "handlebars": "^4.0.12",
-    "lodash": "^4.17.11",
-    "npm-keyword": "^6.1.0",
-    "npm-user-packages": "^3.0.0",
-    "semver": "^6.1.0"
+    "cross-spawn": "6.0.5",
+    "handlebars": "4.0.12",
+    "lodash": "4.17.11",
+    "npm-keyword": "6.1.0",
+    "npm-user-packages": "3.0.0",
+    "semver": "6.1.1"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.125",
-    "@types/npm-user-packages": "^3.0.0",
-    "@types/semver": "^6.0.0"
+    "@types/lodash": "4.14.125",
+    "@types/npm-user-packages": "3.0.0",
+    "@types/semver": "6.0.1"
   }
 }

@@ -43,6 +43,5 @@
     "@dolittle/tooling.common.logging": "alpha",
     "@dolittle/tooling.common.packages": "alpha",
     "@dolittle/tooling.common.utilities": "alpha"
-  },
-  "devDependencies": {}
+  }
 }

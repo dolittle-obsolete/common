@@ -21,7 +21,7 @@ export class Initializer implements IInitializer {
     private _isInitialized = false;
     
     constructor(private _providerRegistrators: IProviderRegistrators, private _commandManager: ICommandManager, private _plugins: IPlugins, private _boilerplates: IBoilerplates, 
-        private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _logger: Logger) {}
+                private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _logger: Logger) {}
     
         get isInitialized() { return this._isInitialized; }
 
@@ -36,8 +36,8 @@ export class Initializer implements IInitializer {
             await initBoilerplatesSystem(this._boilerplateDiscoverers, busyIndicator);
             
             this._providerRegistrators.register();
-            this.providePlugins();
-            this.provideBoilerplateNamespaces();
+            await this.providePlugins();
+            await this.provideBoilerplateNamespaces();
             this._isInitialized = true;
     
             this._logger.info('Initialized the tooling system');

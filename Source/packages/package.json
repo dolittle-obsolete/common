@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.packages",
-  "version": "6.0.0-alpha.2",
+  "version": "6.0.0-alpha.3",
   "description": "Utilities related to packages for dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -37,9 +37,9 @@
   },
   "dependencies": {
     "@dolittle/tooling.common.utilities": "alpha",
-    "cross-spawn": "^6.0.5",
-    "is-online": "^8.2.0",
-    "latest-version": "^5.1.0",
-    "package-json": "^6.3.0"
+    "cross-spawn": "6.0.5",
+    "is-online": "8.2.0",
+    "latest-version": "5.1.0",
+    "package-json": "6.4.0"
   }
 }
