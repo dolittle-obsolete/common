@@ -64,13 +64,20 @@ export class Initializer implements IInitializer {
     }
 
     private createNamespacesFromBoilerplates() {
-        let namespaceNames = this._commandManager.namespaces.map(_ => _.name);
+        let namespaces = this._commandManager.namespaces;
+        let namespaceNames = namespaces.map(_ => _.name);
         let map = new Map<string, INamespace>();
         let boilerplatesWithNamespaces = this._boilerplates.boilerplates.filter(_ => _.namespace !== undefined);
+        namespaces.forEach(namespace => {
+            if (boilerplatesWithNamespaces.map(_ => _.namespace).includes(namespace.name))
+                namespace.hasBoilerplates = true;
+        })
         boilerplatesWithNamespaces = boilerplatesWithNamespaces.filter(_ => !namespaceNames.includes(_.namespace));
         for (let boilerplate of boilerplatesWithNamespaces) {
             if (!map.has(boilerplate.namespace)) {
-                map.set(boilerplate.namespace, new Namespace(boilerplate.namespace, [], [], boilerplate.description));
+                let namespace = new Namespace(boilerplate.namespace, [], [], boilerplate.description);
+                namespace.hasBoilerplates = true;
+                map.set(boilerplate.namespace, namespace);
             }
         }
         let ret: INamespace[] = [];

@@ -8,6 +8,7 @@ let version = process.argv[2];
 let packageJsonPaths = [
     '../Source/boilerplates/package.json',
     '../Source/commands/package.json',
+    '../Source/common/package.json',
     '../Source/configurations/package.json',
     '../Source/dependencies/package.json',
     '../Source/files/package.json',

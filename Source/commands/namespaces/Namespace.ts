@@ -24,7 +24,9 @@ export class Namespace implements INamespace {
      */
     constructor(private _name: string, private _commands: ICommand[], private _commandGroups: ICommandGroup[],
         private _description: string, private _shortDescription: string = _description) {}
-
+    
+    hasBoilerplates = false;
+    
     get name() { return this._name; }
     
     get commands() { return this._commands; }

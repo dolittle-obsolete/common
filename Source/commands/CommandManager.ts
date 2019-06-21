@@ -35,7 +35,7 @@ export class CommandManager implements ICommandManager {
     
     get namespaces() { 
         let namespaces = this._namespaces.namespaces;
-        this.addDefaultsToNamespaces(namespaces);
+        this.addBoilerplateCommandsToNamespaces(namespaces);
         return namespaces;
     }
     
@@ -43,7 +43,6 @@ export class CommandManager implements ICommandManager {
 
     get commandGroups() { return this._defaultCommandGroups.commandGroups; }
 
-    
     async execute(dependencyResolvers: IDependencyResolvers, allArguments: string[], currentWorkingDirectory: string, coreLanguage: string, commandOptions?: Map<string, any>, 
                     outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         
@@ -69,8 +68,8 @@ export class CommandManager implements ICommandManager {
         this._namespaces.registerDefault(...namespaceProviders);
     }
 
-    private addDefaultsToNamespaces(namespaces: INamespace[]) {
-        namespaces.forEach(_ => {
+    private addBoilerplateCommandsToNamespaces(namespaces: INamespace[]) {
+        namespaces.filter(_ => _.hasBoilerplates).forEach(_ => {
             _.addDefaultCommands(this._defaultCommands.commands.filter(_ => _.isBoilerplatesCommand));
             _.addDefaultCommandGroups(this._defaultCommandGroups.commandGroups.filter(_ => _.isBoilerplatesCommandGroup));
         });

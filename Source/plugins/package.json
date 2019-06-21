@@ -1,7 +1,7 @@
 {
   "name": "@dolittle/tooling.common.plugins",
   "description": "The plugin system for dolittle tooling",
-  "version": "6.0.0-alpha.15",
+  "version": "6.0.0",
   "publishConfig": {
     "access": "public"
   },
@@ -16,7 +16,7 @@
     "url": "https://github.com/dolittle-tools/common/issues"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.0.0"
   },
   "files": [
     "lib",

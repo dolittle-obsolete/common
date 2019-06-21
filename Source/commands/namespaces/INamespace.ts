@@ -11,6 +11,14 @@ import { ICommandGroup, ICommand } from "../index";
  * @interface INamespace
  */
 export interface INamespace {
+
+    /**
+     * Whether or not this namespace has boilerplates associated with it.
+     *
+     * @type {boolean}
+     */
+    hasBoilerplates: boolean
+
     /**
      * The name of the namespace
      *
