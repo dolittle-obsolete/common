@@ -2,22 +2,22 @@
 script_folder=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$script_folder"
 cd ../Source/boilerplates
-npm publish --tag alpha
+npm publish
 cd ../commands
-npm publish --tag alpha
+npm publish
 cd ../common
-npm publish --tag alpha
+npm publish
 cd ../configurations
-npm publish --tag alpha
+npm publish
 cd ../dependencies
-npm publish --tag alpha
+npm publish
 cd ../files
-npm publish --tag alpha
+npm publish
 cd ../logging
-npm publish --tag alpha
+npm publish
 cd ../packages
-npm publish --tag alpha
+npm publish
 cd ../plugins 
-npm publish --tag alpha
+npm publish
 cd ../utilities 
-npm publish --tag alpha
+npm publish
