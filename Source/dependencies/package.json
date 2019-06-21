@@ -36,9 +36,9 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@dolittle/tooling.common.configurations": "alpha",
-    "@dolittle/tooling.common.files": "alpha",
-    "@dolittle/tooling.common.logging": "alpha",
-    "@dolittle/tooling.common.utilities": "alpha"
+    "@dolittle/tooling.common.configurations": "latest",
+    "@dolittle/tooling.common.files": "latest",
+    "@dolittle/tooling.common.logging": "latest",
+    "@dolittle/tooling.common.utilities": "latest"
   }
 }

@@ -36,12 +36,12 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@dolittle/tooling.common.configurations": "alpha",
-    "@dolittle/tooling.common.commands": "alpha",
-    "@dolittle/tooling.common.dependencies": "alpha",
-    "@dolittle/tooling.common.files": "alpha",
-    "@dolittle/tooling.common.logging": "alpha",
-    "@dolittle/tooling.common.utilities": "alpha",
+    "@dolittle/tooling.common.configurations": "latest",
+    "@dolittle/tooling.common.commands": "latest",
+    "@dolittle/tooling.common.dependencies": "latest",
+    "@dolittle/tooling.common.files": "latest",
+    "@dolittle/tooling.common.logging": "latest",
+    "@dolittle/tooling.common.utilities": "latest",
     "cross-spawn": "6.0.5",
     "handlebars": "4.0.12",
     "lodash": "4.17.11",
