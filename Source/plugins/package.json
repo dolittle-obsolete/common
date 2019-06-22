@@ -1,7 +1,7 @@
 {
   "name": "@dolittle/tooling.common.plugins",
   "description": "The plugin system for dolittle tooling",
-  "version": "6.1.0",
+  "version": "6.1.1",
   "publishConfig": {
     "access": "public"
   },
@@ -36,12 +36,12 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@dolittle/tooling.common.commands": "latest",
-    "@dolittle/tooling.common.configurations": "latest",
-    "@dolittle/tooling.common.dependencies": "latest",
-    "@dolittle/tooling.common.files": "latest",
-    "@dolittle/tooling.common.logging": "latest",
-    "@dolittle/tooling.common.packages": "latest",
-    "@dolittle/tooling.common.utilities": "latest"
+    "@dolittle/tooling.common.commands": "6.*",
+    "@dolittle/tooling.common.configurations": "6.*",
+    "@dolittle/tooling.common.dependencies": "6.*",
+    "@dolittle/tooling.common.files": "6.*",
+    "@dolittle/tooling.common.logging": "6.*",
+    "@dolittle/tooling.common.packages": "6.*",
+    "@dolittle/tooling.common.utilities": "6.*"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common",
-  "version": "6.1.0",
+  "version": "6.1.1",
   "description": "The aggregated common tooling system for dolittle",
   "publishConfig": {
     "access": "public"
@@ -36,11 +36,11 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@dolittle/tooling.common.boilerplates": "latest",
-    "@dolittle/tooling.common.commands": "latest",
-    "@dolittle/tooling.common.dependencies": "latest",
-    "@dolittle/tooling.common.plugins": "latest",
-    "@dolittle/tooling.common.utilities": "latest",
+    "@dolittle/tooling.common.boilerplates": "6.*",
+    "@dolittle/tooling.common.commands": "6.*",
+    "@dolittle/tooling.common.dependencies": "6.*",
+    "@dolittle/tooling.common.plugins": "6.*",
+    "@dolittle/tooling.common.utilities": "6.*",
     "open": "6.3.0"
   }
 }
