@@ -45,7 +45,7 @@ An optional field that represents a regex pattern matching a file's content.
 Is only in use when discover type is not *'namespace'*, it is however optional
 
 #### fromArea (optional) - string
-An optional field that denotes the area / folder from where the file traversing should look from. The area is simply a regex pattern for a folder. It maps up the 'fromArea' with a folder name based on a [.dolittlerc](../../configurations/.dolittlerc) configuration file.
+An optional field that denotes the area / folder from where the file traversing should look from. The area is simply a regex pattern for a folder. It maps up the 'fromArea' with a folder name based on a [.dolittlerc](../../configurations/dolittlerc) configuration file.
 
 ### Resolving
 Dependency resolvers that resolves discover dependencies are shipped with the dependency system.
