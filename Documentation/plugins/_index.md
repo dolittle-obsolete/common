@@ -9,7 +9,7 @@ weight: 10
 Plugins are one of the key building blocks in the [Tooling Platform](../). It provides a system for providing new [commands](../commands/command), [command groups](../commands/command_group) and [namespaces](../commands/namespace) into the tooling system.
 
 ### Extension
-Plugins represents one of the two [extension points](./package) for the tooling. New plugins can be installed and  updated without having to to patch the tools, one can simply just install them directly through the tools. 
+Plugins represents one of the two [extension points](../packages) for the tooling. New plugins can be installed and  updated without having to to patch the tools, one can simply just install them directly through the tools. 
 Any person can create a plugin for the dolittle tooling system and make it available to anyone by simply publishing it to [npmjs](https://www.npmjs.com).
 
 
