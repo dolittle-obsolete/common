@@ -2,6 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+import { IPromptDependency } from '@dolittle/tooling.common.dependencies';
 import { IBoilerplate, ITemplate } from '../index';
 
 /**
@@ -16,6 +17,12 @@ export interface ITemplatesBoilerplate extends IBoilerplate {
      */
     readonly templates: ITemplate[]
 
+    /**
+     * Gets the name dependency of the templates boilerplate
+     *
+     * @type {IPromptDependency}
+     */
+    readonly nameDependency: IPromptDependency
     /**
      * Gets the templates with the given type
      *

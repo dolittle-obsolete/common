@@ -4,4 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 export * from './Guid';
 export * from './Exception';
+export * from './ICanOutputMessages';
+export * from './NullMessageOutputter';
+export * from './IBusyIndicator';
+export * from './NullBusyIndicator';
+export * from './BusyIndicatorNotCreated';
 export * from './helpers';

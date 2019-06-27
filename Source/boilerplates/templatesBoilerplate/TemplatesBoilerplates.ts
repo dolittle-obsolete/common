@@ -11,12 +11,12 @@ import { ITemplatesBoilerplate, ITemplate, CreatedTemplateDetails, ITemplatesBoi
  * Represents an implementation of {ITemplatesBoilerplates}
  *
  * @export
- * @class ArtifactsManager
+ * @class TemplatesBoilerplates
  */
 export class TemplatesBoilerplates extends Boilerplates implements ITemplatesBoilerplates {
 
     /**
-     * Instantiates an instance of {ArtifactTemplatesManager}.
+     * Instantiates an instance of {TemplatesBoilerplates}.
      * @param {IBoilerplatesLoader} boilerplatesLoader
      * @param {Folders} _folders
      * @param {FileSystem} _fileSystem

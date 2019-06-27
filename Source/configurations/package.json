@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.configurations",
-  "version": "5.1.0",
+  "version": "6.1.1",
   "description": "Common configuration system for dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -16,8 +16,13 @@
     "url": "https://github.com/dolittle-tools/common/issues"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.0.0"
   },
+  "files": [
+    "lib",
+    "package.json",
+    "**/*.d.ts"
+  ],
   "main": "lib/index.js",
   "types": "index.d.ts",
   "typings": "index.d.ts",
@@ -31,12 +36,12 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@dolittle/tooling.common.utilities": "5.1.*",
-    "conf": "^3.0.0",
-    "rc": "^1.2.8"
+    "@dolittle/tooling.common.utilities": "6.*",
+    "conf": "3.0.0",
+    "rc": "1.2.8"
   },
   "devDependencies": {
-    "@types/conf": "^3.0.0",
-    "@types/rc": "^1.1.0"
+    "@types/rc": "1.1.0",
+    "@types/conf": "3.0.0"
   }
 }

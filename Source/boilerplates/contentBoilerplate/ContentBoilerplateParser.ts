@@ -20,7 +20,7 @@ const binaryFiles = [
  * Represents an implementation of {ICanParseBoilerplates} for parsing {ContentBoilerplate} boilerplates
  *
  * @export
- * @class NonArtifactsBoilerplateParser
+ * @class ContentBoilerplateParser
  */
 export class ContentBoilerplateParser implements ICanParseBoilerplates {
 
@@ -47,7 +47,7 @@ export class ContentBoilerplateParser implements ICanParseBoilerplates {
             boilerplate.dependencies !== undefined? 
                 Object.keys(boilerplate.dependencies).map(key => this._dependencyParsers.parse(boilerplate.dependencies[key], key))
                 : [],
-                boilerplate.namespace,
+            boilerplate.namespace,
             Scripts.fromJson(boilerplate.scripts),
             boilerplate.target,
             boilerplate.framework,

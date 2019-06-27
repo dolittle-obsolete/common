@@ -17,7 +17,7 @@ export interface IDiscoverDependency extends IDependency {
     /**
      * The discover type of the dependency, it dictates what should be discovered and how it will be discovered.
      * 
-     * The 'namespace' discovery type tries to resolve a namespace for an artifact by going upwards in the file system and finding a file matching the 'milestone' parameter and then creating the namespace by joining folder names with '.'. 
+     * The 'namespace' discovery type tries to resolve a namespace for a tempalte by going upwards in the file system and finding a file matching the 'milestone' parameter and then creating the namespace by joining folder names with '.'. 
      * 
      * The 'file' discovery type tries to find a file that matches the given 'fileMatch' parameter and sets the file name as the dependency. If the 'contentMatch' parameter is also given then the system will match the file by the fileMatch and contentMatch
      * 

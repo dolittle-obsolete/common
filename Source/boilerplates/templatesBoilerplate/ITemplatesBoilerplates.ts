@@ -75,10 +75,10 @@ export interface ITemplatesBoilerplates extends IBoilerplates {
      * Creates a template base on the {ITemplate} at the given destination
      * 
      * @param {any} context 
-     * @param {ITemplate} artifactTemplate
+     * @param {ITemplate} template
      * @param {ITemplatesBoilerplate} boilerplate
      * @param {string} destinationPath
-     * @returns {boolean} Whether or not the artifact was created successfully
+     * @returns {boolean} Whether or not the template was created successfully
      */
-    create(context: any, artifactTemplate: ITemplate, boilerplate: ITemplatesBoilerplate, destinationPath: string): CreatedTemplateDetails
+    create(context: any, template: ITemplate, boilerplate: ITemplatesBoilerplate, destinationPath: string): CreatedTemplateDetails
 }

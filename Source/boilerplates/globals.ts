@@ -2,15 +2,15 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
+import { ICanRegisterProviders, commandManager, providerRegistrators } from '@dolittle/tooling.common.commands';
 import { dependencyParsers } from '@dolittle/tooling.common.dependencies';
-import { nodeModulesPath, toolingPackage, latestCompatiblePackageFinder } from '@dolittle/tooling.common.packages';
 import { fileSystem, folders } from '@dolittle/tooling.common.files';
 import { logger } from '@dolittle/tooling.common.logging';
+import { nodeModulesPath, toolingPackage, latestCompatiblePackageFinder } from '@dolittle/tooling.common.packages';
 import {
     BoilerplatesConfig, IBoilerplatesLoader, BoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplateDiscoverers, LocalBoilerplatesDiscoverer, IBoilerplateDiscoverers, 
-    OnlineBoilerplatesDiscoverer, IApplicationsManager, ApplicationsManager, IBoundedContextsManager, BoundedContextsManager, 
-    ITemplatesBoilerplates, TemplatesBoilerplates, IBoilerplateParsers, BoilerplateParsers, ICanParseBoilerplates, ContentBoilerplateParser, TemplatesBoilerplateParser,
-    Boilerplates, IBoilerplates, OnlineDolittleBoilerplatesFinder, handlebars, IContentBoilerplates, ContentBoilerplates, ProjectConfig
+    OnlineBoilerplatesDiscoverer, ITemplatesBoilerplates, TemplatesBoilerplates, IBoilerplateParsers, BoilerplateParsers, ICanParseBoilerplates, ContentBoilerplateParser, TemplatesBoilerplateParser,
+    Boilerplates, IBoilerplates, OnlineDolittleBoilerplatesFinder, handlebars, IContentBoilerplates, ContentBoilerplates, ProjectConfig, IScriptRunner, ScriptRunner, BoilerplatesCommandGroupProvider, IBoilerplate, ProviderRegistrator
 } from './index';
 
 export const projectConfig = new ProjectConfig(nodeModulesPath);
@@ -37,6 +37,8 @@ export const onlineBoilerplatesFinder = new OnlineBoilerplatesDiscoverer(latestC
 
 export const onlineDolittleBoilerplatesFinder = new OnlineDolittleBoilerplatesFinder(latestCompatiblePackageFinder, logger);
 
-export const applicationsManager: IApplicationsManager = new ApplicationsManager(contentBoilerplates, fileSystem, logger);
-export const boundedContextsManager: IBoundedContextsManager = new BoundedContextsManager(contentBoilerplates, applicationsManager, folders, fileSystem, logger);
+export const scriptRunner: IScriptRunner = new ScriptRunner();
 
+export let providerRegistrator: ICanRegisterProviders = new ProviderRegistrator(commandManager, boilerplateDiscoverers, latestCompatiblePackageFinder, boilerplates, onlineBoilerplatesFinder, onlineDolittleBoilerplatesFinder, fileSystem, logger);
+
+providerRegistrators.addRegistrators(providerRegistrator);

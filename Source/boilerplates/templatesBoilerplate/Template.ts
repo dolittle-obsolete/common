@@ -16,7 +16,7 @@ export class Template implements ITemplate
     private _filesToCreate: string[];
 
     /**
-     * Instantiates an instance of {ArtifactTemplate}.
+     * Instantiates an instance of {Template}.
      * @param {string} name
      * @param {string} type
      * @param {string} area

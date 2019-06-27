@@ -30,14 +30,12 @@ export * from './ScriptRunner';
 
 export * from './askToChooseBoilerplate';
 export * from './initBoilerplatesSystem';
-export * from './listBoilerplatesInUse';
-export * from './listInstalledBoilerplates';
-
+export * from './getBoilerplatesInUse';
+export * from './getInstalledBoilerplates';
 export * from './contentBoilerplate/index'
 export * from './templatesBoilerplate/index';
 export * from './online/index';
-export * from './applications/index';
-export * from './boundedContexts/index';
 export * from './configurations/index';
+export * from './commands/index';
 
 export * from './globals';

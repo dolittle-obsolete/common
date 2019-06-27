@@ -6,12 +6,12 @@ import { IDependency } from '@dolittle/tooling.common.dependencies';
 import { Boilerplate, Scripts, IContentBoilerplate } from '../index';
 
 /**
- * Represents the standard, non-artifacts, boilerplate 
+ * Represents the implementation of {IContentBoilerplate}
  */
 export class ContentBoilerplate extends Boilerplate implements IContentBoilerplate {
 
     /**
-     * Instantiates an instance of {NonArtifactsBoilerplate}
+     * Instantiates an instance of {ContentBoilerplate}
      * @param {string} language 
      * @param {string} name 
      * @param {string} description 

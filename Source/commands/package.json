@@ -1,0 +1,42 @@
+{
+  "name": "@dolittle/tooling.common.commands",
+  "description": "A system for dolittle tooling for commands",
+  "version": "6.1.1",
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://dolittle.io",
+  "author": "Dolittle",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dolittle-tools/common.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dolittle-tools/common/issues"
+  },
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "files": [
+    "lib",
+    "package.json",
+    "**/*.d.ts"
+  ],
+  "main": "lib/index.js",
+  "types": "index.d.ts",
+  "typings": "index.d.ts",
+  "scripts": {
+    "ts:cjs": "tsc -p tsconfig.json --declaration false",
+    "ts:typedefs": "tsc --outDir . --emitDeclarationOnly",
+    "ts:all": "yarn ts:cjs && yarn ts:typedefs",
+    "ts:clean": "rimraf ./*.d.ts **/*.d.ts lib",
+    "build": "yarn clean && yarn ts:all",
+    "clean": "rimraf dist && yarn ts:clean",
+    "prepublishOnly": "yarn build"
+  },
+  "dependencies": {
+    "@dolittle/tooling.common.dependencies": "6.*",
+    "@dolittle/tooling.common.utilities": "6.*"
+  }
+}

@@ -42,6 +42,8 @@ export class DiscoverAndPromptDependency extends DiscoverDependency implements I
         PromptDependency.throwIfInvalidPromptDependency(this.userInputType, this.promptMessage);
     }
     
+    readonly optional = false;
+    
     readonly userInputType: string;
     
     readonly promptMessage: string;

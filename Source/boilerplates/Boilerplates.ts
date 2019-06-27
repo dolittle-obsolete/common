@@ -25,7 +25,7 @@ export class Boilerplates implements IBoilerplates {
 
     byNamespace(namespace: string | undefined) {
         return this.boilerplates.filter(_ => {
-            if (namespace && _.namespace) return _.namespace === namespace;
+            if (_.namespace) return _.namespace === namespace;
             return true;
         });
     }

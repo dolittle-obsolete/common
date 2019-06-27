@@ -20,7 +20,7 @@ export class PromptDependencyParser implements ICanParseDependencies {
 
     parse(obj: any, name: string): IPromptDependency {
         if (!this.canParse(obj)) throw new CannotParseDependency(name);
-        return new PromptDependency(name, obj.description, obj.userInputType, obj.promptMessage, obj.choices, obj.customInput );
+        return new PromptDependency(name, obj.description, obj.userInputType, obj.promptMessage, obj.optional, obj.choices, obj.customInput );
      }
 
  }

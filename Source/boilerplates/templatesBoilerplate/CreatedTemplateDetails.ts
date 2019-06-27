@@ -7,14 +7,14 @@ import { ITemplatesBoilerplate, ITemplate } from '../index';
  export type CreatedTemplateDetails = {
 
     /**
-     * The parent boilerplate of the created artifact template
+     * The parent boilerplate of the created template
      *
      * @type {ITemplatesBoilerplate}
      */
     boilerplate: ITemplatesBoilerplate;
     
     /**
-     * The artifact template that was created
+     * The template that was created
      *
      * @type {ITemplate}
      */

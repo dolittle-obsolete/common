@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 /**
- * The {NonArtifactsBoilerplate} content directory name
+ * The {IContentBoilerplate} content directory name
  *
  * @static
  * @type {string}

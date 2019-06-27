@@ -3,8 +3,9 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { requireInternet, OnStdCallback, ILatestCompatiblePackageFinder } from '@dolittle/tooling.common.packages';
+import { requireInternet, ILatestCompatiblePackageFinder } from '@dolittle/tooling.common.packages';
 import {FileSystem} from '@dolittle/tooling.common.files';
+import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import semver from 'semver';
 import path from 'path';
 import {IBoilerplateDiscoverers, boilerplatePackageKeyword } from '../index';
@@ -19,24 +20,17 @@ export type OutOfDatePackage = {
  * @param {IBoilerplateDiscoverers} boilerplateDiscoverers
  * @param {ILatestCompatiblePackageFinder} latestPackageFinder
  * @param {FileSystem} fileSystem
- * @param {OnStdCallback} [onStdOut] Optional callback for dealing with the standard text output
- * @param {OnStdCallback} [onNoBoilerplates] Optional callback for dealing with the text output when there were no boilerplates found
- * @param {OnStdCallback} [onPackageUpgrade] Optional callback for dealing with the text output for each time there is a package that can be updated
- * @param {OnStdCallback} [onStdErr] Optional callback for dealing with the text output when an error occurs
+ * @param {IBusyIndicator} busyIndicator
  * @returns
  */
 export async function checkBoilerplates(boilerplateDiscoverers: IBoilerplateDiscoverers, latestPackageFinder: ILatestCompatiblePackageFinder,
-    fileSystem: FileSystem, onStdOut?: OnStdCallback, onNoBoilerplates?: OnStdCallback, onPackageUpgrade?: OnStdCallback, onStdErr?: OnStdCallback) {
-    let ifStdOut = (data: string) => onStdOut? onStdOut(data) : {};
-    let ifNoBoilerplates = (data: string) => onNoBoilerplates? onNoBoilerplates(data) : {};
-    let ifPackageUpgrade = (data: string) => onPackageUpgrade? onPackageUpgrade(data) : {};
-    let ifStdErr = (data: string) => onStdErr? onStdErr(data) : {};
+    fileSystem: FileSystem, busyIndicator: IBusyIndicator) {
     
-    await requireInternet(onStdOut, onStdErr);
-    ifStdOut('Checking versions:\n');
+    await requireInternet(busyIndicator);
+    busyIndicator = busyIndicator.createNew().start('Checking versions:\n');
     let paths = boilerplateDiscoverers.boilerplatePaths;
     if (paths.length < 1) {
-        ifNoBoilerplates('No boilerplates installed');
+        busyIndicator.info('No boilerplates installed');
         return [];
     }
     let locallyInstalled: {name: string, version: string}[] = [];
@@ -48,18 +42,28 @@ export async function checkBoilerplates(boilerplateDiscoverers: IBoilerplateDisc
     return new Promise(async (resolve) => {
         let outOfDatePackages: OutOfDatePackage[] = [];
         for (let pkg of locallyInstalled) {
-            ifStdOut(`Checking ${pkg.name}`);
+            busyIndicator.text = `Checking ${pkg.name}`;
             await latestPackageFinder.find(pkg.name, boilerplatePackageKeyword)
                 .then(packageJson => {
-                    if (packageJson === null) ifStdErr(`'${pkg.name}' is not a boilerplate`);
+                    if (packageJson === null) {
+                        busyIndicator.fail(`'${pkg.name}' is not a boilerplate`);
+                        busyIndicator = busyIndicator.createNew().start();
+                    }
                     else {
                         let latestVersion = packageJson.version;
                         if (semver.gt(latestVersion, pkg.version)) {
                             outOfDatePackages.push({name: pkg.name, version: pkg.version, latest: latestVersion});
-                            ifPackageUpgrade(`${pkg.name}@${pkg.version} ==> ${latestVersion}`);
+                            busyIndicator.warn(`${pkg.name}@${pkg.version} ==> ${latestVersion}`);
+                            busyIndicator = busyIndicator.createNew().start();
                         }
                     }
-                }).catch(_ => ifStdErr(`Failed to fetch ${pkg.name}`));
+                }).catch(_ => {
+                    busyIndicator.fail(`Failed to fetch ${pkg.name}`);
+                    busyIndicator = busyIndicator.createNew().start();
+                });
+        }
+        if (outOfDatePackages.length < 1) {
+            busyIndicator.succeed('There are no out-of-date boilerplates');
         }
         resolve(outOfDatePackages);
 

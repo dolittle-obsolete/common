@@ -7,20 +7,19 @@ import { folders, fileSystem } from '@dolittle/tooling.common.files';
 import { dolittleConfig } from '@dolittle/tooling.common.configurations';
 import { logger } from '@dolittle/tooling.common.logging';
 import { 
-    IDependencyDiscoverResolver, DependencyDiscoverResolver, IDependencyResolvers, ICanResolveSyncDependencies, ArgumentDependencyResolver, DiscoverDependencyResolver, 
-    ICanResolveDependencies, DependencyResolvers, ICanParseDependencies, DiscoverDependencyParser, PromptDependencyParser, DiscoverAndPromptDependencyParser, IDependencyParsers, DependencyParsers 
+    IDependencyDiscoverResolver, DependencyDiscoverResolver, IDependencyResolvers, ICanResolveSyncDependencies, DiscoverDependencyResolver, 
+    ICanResolveDependencies, DependencyResolvers, ICanParseDependencies, DiscoverDependencyParser, PromptDependencyParser, DiscoverAndPromptDependencyParser, IDependencyParsers, DependencyParsers, NonOptionalArgumentDependencyResolver, OptionalArgumentDependencyResolver 
 } from './index';
 
 export let dependencyDiscoverResolver: IDependencyDiscoverResolver = new DependencyDiscoverResolver(folders, fileSystem, dolittleConfig, logger);
-export function setDependencyDiscoverResolver(resolver: IDependencyDiscoverResolver) { dependencyDiscoverResolver = resolver; }
 
-export let argumentDependencyResolver: ICanResolveDependencies = new ArgumentDependencyResolver();
-export function setArgumentDependencyResolver(resolver: ICanResolveSyncDependencies) { argumentDependencyResolver = resolver; }
+export let nonOptionalArgumentDependencyResolver: ICanResolveDependencies = new NonOptionalArgumentDependencyResolver();
+
+export let optionalArgumentDependencyResolver: ICanResolveDependencies = new OptionalArgumentDependencyResolver();
 
 export let nonPromptDependencyResolver: ICanResolveDependencies = new DiscoverDependencyResolver(dependencyDiscoverResolver, dolittleConfig);
-export function setNonPromptDependencyResolver(resolver: ICanResolveSyncDependencies) { nonPromptDependencyResolver = resolver; }
 
-let resolvers: ICanResolveDependencies[] = [argumentDependencyResolver, nonPromptDependencyResolver];
+let resolvers: ICanResolveDependencies[] = [nonOptionalArgumentDependencyResolver, optionalArgumentDependencyResolver, nonPromptDependencyResolver];
 export let dependencyResolvers: IDependencyResolvers = new DependencyResolvers(resolvers);
 
 export let discoverDependencyParser: ICanParseDependencies = new DiscoverDependencyParser();
