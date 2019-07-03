@@ -18,4 +18,6 @@ export class NullMessageOutputter implements ICanOutputMessages {
     warn(...args: string[]) {}
     
     error(...args: string[]) {}
+
+    table(data: any[][]) {}
 }
