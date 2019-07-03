@@ -9,4 +9,5 @@ export * from './NullMessageOutputter';
 export * from './IBusyIndicator';
 export * from './NullBusyIndicator';
 export * from './BusyIndicatorNotCreated';
+export * from './NotSupported';
 export * from './helpers';
