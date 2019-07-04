@@ -35,8 +35,8 @@ export interface ICanOutputMessages {
     /**
      * Outputs a table
      *
-     * @param {any[][]} data
+     * @param {any[]} data
      * @throws {NotSupported}
      */
-    table(data: any[][]): void
+    table(data: any[]): void
 }
