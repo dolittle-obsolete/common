@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.packages",
-  "version": "6.2.0",
+  "version": "6.2.1",
   "description": "Utilities related to packages for dolittle tooling",
   "publishConfig": {
     "access": "public"
