@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common",
-  "version": "6.2.1",
+  "version": "7.0.0-alpha.1",
   "description": "The aggregated common tooling system for dolittle",
   "publishConfig": {
     "access": "public"
