@@ -36,22 +36,22 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@dolittle/tooling.common.configurations": "7.0.0-alpha.*",
-    "@dolittle/tooling.common.commands": "7.0.0-alpha.*",
-    "@dolittle/tooling.common.dependencies": "7.0.0-alpha.*",
-    "@dolittle/tooling.common.files": "7.0.0-alpha.*",
-    "@dolittle/tooling.common.logging": "7.0.0-alpha.*",
-    "@dolittle/tooling.common.utilities": "7.0.0-alpha.*",
+    "@dolittle/tooling.common.configurations": "7.0.0-alpha.1",
+    "@dolittle/tooling.common.commands": "7.0.0-alpha.1",
+    "@dolittle/tooling.common.dependencies": "7.0.0-alpha.1",
+    "@dolittle/tooling.common.files": "7.0.0-alpha.1",
+    "@dolittle/tooling.common.logging": "7.0.0-alpha.1",
+    "@dolittle/tooling.common.utilities": "7.0.0-alpha.1",
     "@types/handlebars": "4.1.0",
     "cross-spawn": "6.0.5",
     "handlebars": "4.1.2",
-    "lodash": "4.17.11",
+    "lodash": "4.17.15",
     "npm-keyword": "6.1.0",
     "npm-user-packages": "3.0.0",
     "semver": "6.1.1"
   },
   "devDependencies": {
-    "@types/lodash": "4.14.125",
+    "@types/lodash": "4.14.136",
     "@types/npm-user-packages": "3.0.0",
     "@types/semver": "6.0.1"
   }
