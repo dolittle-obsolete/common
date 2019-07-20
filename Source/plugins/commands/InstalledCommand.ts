@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { Command } from "@dolittle/tooling.common.commands";
-import { FileSystem } from "@dolittle/tooling.common.files";
+import { IFileSystem } from "@dolittle/tooling.common.files";
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
 import { getInstalledPlugins, IPluginDiscoverers } from "../index";
@@ -24,7 +24,7 @@ export class InstalledCommand extends Command {
     /**
      * Instantiates an instance of {InstalledCommand}.
      */
-    constructor(private _pluginDiscoverers: IPluginDiscoverers, private _fileSystem: FileSystem, private _logger: ILoggers) {
+    constructor(private _pluginDiscoverers: IPluginDiscoverers, private _fileSystem: IFileSystem, private _logger: ILoggers) {
         super(name, description, false);
     }
 

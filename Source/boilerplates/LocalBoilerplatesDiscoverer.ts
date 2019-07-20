@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {FileSystem} from '@dolittle/tooling.common.files';
+import {IFileSystem} from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import { ToolingPackage, packageIsCompatible, toolingPackage } from '@dolittle/tooling.common.packages';
 import path from 'path';
@@ -22,11 +22,11 @@ export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
      * @param {string} _toolingPackage
      * @param {string} _nodeModulesPath
      * @param {IBoilerplatesLoader} _boilerplatesLoader
-     * @param {FileSystem} _fileSystem
+     * @param {IFileSystem} _fileSystem
      * @param {ILoggers} _logger
      */
     constructor(private _boilerplatesConfig: BoilerplatesConfig, private _toolingPackage: any, private _nodeModulesPath: string, private _boilerplatesLoader: IBoilerplatesLoader, 
-        private _fileSystem: FileSystem, private _logger: ILoggers) {
+        private _fileSystem: IFileSystem, private _logger: ILoggers) {
         this._discovered = [];
         this._boilerplatePaths = [];
     }

@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import { Command } from '@dolittle/tooling.common.commands';
 import { IDependencyResolvers, PromptDependency, argumentUserInputType } from '@dolittle/tooling.common.dependencies';
-import { FileSystem } from '@dolittle/tooling.common.files';
+import { IFileSystem } from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import { requireInternet, isGreaterVersion, ToolingPackage } from '@dolittle/tooling.common.packages';
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
@@ -33,7 +33,7 @@ export class InstallCommand extends Command {
      * Instantiates an instance of {DolittleCommand}.
      */
     constructor(private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _onlineBoilerplatesFinder: OnlineBoilerplatesDiscoverer, private _onlineDolittleBoilerplatesFinder: OnlineDolittleBoilerplatesFinder, 
-                private _fileSystem: FileSystem, private _logger: ILoggers) {
+                private _fileSystem: IFileSystem, private _logger: ILoggers) {
         super(name, description, false, undefined, [dolittleBoilerplatesDependency]);
     }
 

@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import {FileSystem} from '@dolittle/tooling.common.files';
+import {IFileSystem} from '@dolittle/tooling.common.files';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { ToolingPackage } from '@dolittle/tooling.common.packages';
 import path from 'path';
@@ -12,12 +12,12 @@ import { IBoilerplateDiscoverers } from './index';
  * Finds and gets the boilerplates installed on the local machine
  *
  * @param {IBoilerplateDiscoverers} boilerplateDiscoverers
- * @param {FileSystem} filesystem
+ * @param {IFileSystem} filesystem
  * @param {IBusyIndicator} busyIndicator
  * @export
  * @returns A list of the boilerplate and package configurations for each boilerplate
  */
-export async function getInstalledBoilerplates(boilerplateDiscoverers: IBoilerplateDiscoverers, filesystem: FileSystem, busyIndicator: IBusyIndicator) {
+export async function getInstalledBoilerplates(boilerplateDiscoverers: IBoilerplateDiscoverers, filesystem: IFileSystem, busyIndicator: IBusyIndicator) {
     busyIndicator = busyIndicator.createNew().start('Getting installed boilerplates:\n');
     try {
         let paths = boilerplateDiscoverers.boilerplatePaths;

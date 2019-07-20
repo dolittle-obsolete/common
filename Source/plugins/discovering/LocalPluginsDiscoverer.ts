@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { FileSystem } from '@dolittle/tooling.common.files';
+import { IFileSystem } from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import { ToolingPackage, packageIsCompatible } from '@dolittle/tooling.common.packages';
 import path from 'path';
@@ -29,7 +29,7 @@ export class LocalPluginsDiscoverer implements ICanDiscoverPlugins {
      * @param {ILoggers} _logger
      */
     constructor(private _toolingPackage: any, private _pluginsConfig: PluginsConfig, private _nodeModulesPath: string, private _pluginsLoader: IPluginLoader, 
-        private _fileSystem: FileSystem, private _logger: ILoggers) {
+        private _fileSystem: IFileSystem, private _logger: ILoggers) {
         this._discoveredPlugins = []; 
     }
 

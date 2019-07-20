@@ -5,7 +5,7 @@
 import { ICanRegisterProviders, ICommandManager, ICanProvideDefaultCommandGroups } from "@dolittle/tooling.common.commands";
 import { BoilerplatesCommandGroupProvider, IBoilerplateDiscoverers, IBoilerplates, OnlineBoilerplatesDiscoverer, OnlineDolittleBoilerplatesFinder } from "../index";
 import { ILatestCompatiblePackageFinder } from "@dolittle/tooling.common.packages";
-import { FileSystem } from "@dolittle/tooling.common.files";
+import { IFileSystem } from "@dolittle/tooling.common.files";
 import { ILoggers } from "@dolittle/tooling.common.logging";
 
 
@@ -22,7 +22,7 @@ export class ProviderRegistrator implements ICanRegisterProviders {
 
     constructor(private _commandManager: ICommandManager, boilerplateDiscoverers: IBoilerplateDiscoverers, latestPackageFinder: ILatestCompatiblePackageFinder, 
         boilerplates: IBoilerplates, onlineBoilerplatesFinder: OnlineBoilerplatesDiscoverer, onlineDolittleBoilerplatesFinder: OnlineDolittleBoilerplatesFinder, 
-        filesystem: FileSystem, logger: ILoggers) {
+        filesystem: IFileSystem, logger: ILoggers) {
         this._commandGroupProviders.push(new BoilerplatesCommandGroupProvider(
             boilerplateDiscoverers, latestPackageFinder, boilerplates, onlineBoilerplatesFinder, onlineDolittleBoilerplatesFinder, filesystem, logger
         ));

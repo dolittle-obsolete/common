@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { IDependencyParsers } from "@dolittle/tooling.common.dependencies";
-import { Folders, FileSystem, getFileDirPath, getFileNameAndExtension } from "@dolittle/tooling.common.files";
+import { Folders, IFileSystem, getFileDirPath, getFileNameAndExtension } from "@dolittle/tooling.common.files";
 import { 
     TemplatesBoilerplate, ICanParseBoilerplates, Scripts, CannotParseBoilerplate, templatesBoilerplateContentDirectoryFromPath, ITemplate, 
     templateFromJson, templateConfigurationName, boilerplateIsTemplatesBoilerplate
@@ -21,9 +21,9 @@ export class TemplatesBoilerplateParser implements ICanParseBoilerplates {
      * Instantiates an instance of {TemplatesBoilerplateParser}.
      * @param {IDependencyParsers} _dependencyParsers
      * @param {Folders} _folders
-     * @param {FileSystem} _fileSystem
+     * @param {IFileSystem} _fileSystem
      */
-    constructor (private _dependencyParsers: IDependencyParsers, private _folders: Folders, private _fileSystem: FileSystem) {}
+    constructor (private _dependencyParsers: IDependencyParsers, private _folders: Folders, private _fileSystem: IFileSystem) {}
     
     canParse(boilerplate: any) {
         return boilerplateIsTemplatesBoilerplate(boilerplate);

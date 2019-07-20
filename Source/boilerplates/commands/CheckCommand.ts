@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import { Command } from '@dolittle/tooling.common.commands';
 import { IDependencyResolvers } from '@dolittle/tooling.common.dependencies';
-import { FileSystem } from '@dolittle/tooling.common.files';
+import { IFileSystem } from '@dolittle/tooling.common.files';
 import { requireInternet, ILatestCompatiblePackageFinder } from '@dolittle/tooling.common.packages';
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { ILoggers } from '@dolittle/tooling.common.logging';
@@ -32,7 +32,7 @@ export class CheckCommand extends Command {
      * Instantiates an instance of {CheckCommand}.
      */
     constructor(private _boilerplatesDiscoverers: IBoilerplateDiscoverers, private _latestPackageFinder: ILatestCompatiblePackageFinder, 
-                private _fileSystem: FileSystem, private _logger: ILoggers) {
+                private _fileSystem: IFileSystem, private _logger: ILoggers) {
         super(name, description, false, shortDescription);
     }
 

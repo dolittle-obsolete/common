@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { FileSystem } from '@dolittle/tooling.common.files';
+import { IFileSystem } from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import path from 'path';
 import { Boilerplate, IBoilerplatesLoader, BoilerplatesConfig, IBoilerplateParsers } from './index';
@@ -19,10 +19,10 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
      * Instantiates an instance of {BoilerplatesLoader}
      * @param {IBoilerplateParsers} _boilerplateParsers
      * @param {BoilerplatesConfig} _boilerplatesConfig
-     * @param {FileSystem} _fileSystem
+     * @param {IFileSystem} _fileSystem
      * @param {ILoggers} _logger
      */
-    constructor(private _boilerplateParsers: IBoilerplateParsers, private _boilerplatesConfig: BoilerplatesConfig, private _fileSystem: FileSystem, private _logger: ILoggers) {
+    constructor(private _boilerplateParsers: IBoilerplateParsers, private _boilerplatesConfig: BoilerplatesConfig, private _fileSystem: IFileSystem, private _logger: ILoggers) {
         if (! this._fileSystem.existsSync(this._boilerplatesConfig.path)) {
             this._boilerplatesConfig.store = this._boilerplatesConfig.store;
         }

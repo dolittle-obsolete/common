@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import { ICanRegisterProviders, ICanProvideDefaultCommands, ICommandManager } from "@dolittle/tooling.common.commands";
 import { ILatestCompatiblePackageFinder } from "@dolittle/tooling.common.packages";
-import { FileSystem } from "@dolittle/tooling.common.files";
+import { IFileSystem } from "@dolittle/tooling.common.files";
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { CommandsProvider } from "../index";
 

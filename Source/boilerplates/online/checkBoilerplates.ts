@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import { requireInternet, ILatestCompatiblePackageFinder } from '@dolittle/tooling.common.packages';
-import {FileSystem} from '@dolittle/tooling.common.files';
+import {IFileSystem} from '@dolittle/tooling.common.files';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import semver from 'semver';
 import path from 'path';
@@ -19,12 +19,12 @@ export type OutOfDatePackage = {
  * @export
  * @param {IBoilerplateDiscoverers} boilerplateDiscoverers
  * @param {ILatestCompatiblePackageFinder} latestPackageFinder
- * @param {FileSystem} fileSystem
+ * @param {IFileSystem} fileSystem
  * @param {IBusyIndicator} busyIndicator
  * @returns
  */
 export async function checkBoilerplates(boilerplateDiscoverers: IBoilerplateDiscoverers, latestPackageFinder: ILatestCompatiblePackageFinder,
-    fileSystem: FileSystem, busyIndicator: IBusyIndicator) {
+    fileSystem: IFileSystem, busyIndicator: IBusyIndicator) {
     
     await requireInternet(busyIndicator);
     busyIndicator = busyIndicator.createNew().start('Checking versions:\n');

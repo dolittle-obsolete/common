@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { ToolingPackage } from '@dolittle/tooling.common.packages';
-import {FileSystem} from '@dolittle/tooling.common.files';
+import {IFileSystem} from '@dolittle/tooling.common.files';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import path from 'path';
 import { IPluginDiscoverers } from './index';
@@ -12,13 +12,13 @@ import { IPluginDiscoverers } from './index';
  * Gets the plugins installed on the local machine
  *
  * @param {IPluginDiscoverers} pluginDiscoverers
- * @param {FileSystem} filesystem  
+ * @param {IFileSystem} filesystem  
  * @param {IBusyIndicator} busyIndicator
  * 
  * @export
  * @returns A list of the package configurations for each plugin
  */
-export async function getInstalledPlugins(pluginDiscoverers: IPluginDiscoverers, filesystem: FileSystem, busyIndicator: IBusyIndicator) {
+export async function getInstalledPlugins(pluginDiscoverers: IPluginDiscoverers, filesystem: IFileSystem, busyIndicator: IBusyIndicator) {
     busyIndicator = busyIndicator.createNew().start('Getting installed plugins:\n');
 
     try {

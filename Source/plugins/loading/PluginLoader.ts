@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import {FileSystem} from '@dolittle/tooling.common.files';
+import {IFileSystem} from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import path from 'path';
 import { PluginsConfig, IPlugin, IPluginLoader, PluginModule } from "../index";
@@ -22,10 +22,10 @@ export class PluginLoader implements IPluginLoader {
     /**
      * Instantiates an instance of {PluginLoader}.
      * @param {PluginsConfig} _pluginsConfig
-     * @param {FileSystem} _fileSystem
+     * @param {IFileSystem} _fileSystem
      * @param {ILoggers} _logger
      */
-    constructor(private _pluginsConfig: PluginsConfig, private _fileSystem: FileSystem, private _logger: ILoggers) {
+    constructor(private _pluginsConfig: PluginsConfig, private _fileSystem: IFileSystem, private _logger: ILoggers) {
         if (! this._fileSystem.existsSync(this._pluginsConfig.path))
             this._pluginsConfig.store = this._pluginsConfig.store;
     }
