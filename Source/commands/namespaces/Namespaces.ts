@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { Logger } from "@dolittle/tooling.common.logging";
+import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanProvideNamespaces, INamespaces, INamespace, DuplicateNamespaceName, ICanValidateProviderFor } from "../index";
 
 /**
@@ -20,9 +20,9 @@ export class Namespaces implements INamespaces {
 
     /**
      * Instantiates an instance of {Namespaces}.
-     * @param {Logger} _logger
+     * @param {ILoggers} _logger
      */
-    constructor (private _providerValidator: ICanValidateProviderFor<INamespace> ,private _logger: Logger) {}
+    constructor (private _providerValidator: ICanValidateProviderFor<INamespace> ,private _logger: ILoggers) {}
 
     get providers() {
         let providers: ICanProvideNamespaces[] = [];

@@ -4,7 +4,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { ICanOutputMessages, NullMessageOutputter, NullBusyIndicator, IBusyIndicator } from "@dolittle/tooling.common.utilities";
-import { Logger } from "@dolittle/tooling.common.logging";
+import { ILoggers } from "@dolittle/tooling.common.logging";
 import { 
     INamespaces, IDefaultCommands, IDefaultCommandGroups, ICanProvideDefaultCommands, 
     ICanProvideDefaultCommandGroups, ICanProvideNamespaces, Namespaces, 
@@ -24,10 +24,10 @@ export class CommandManager implements ICommandManager {
 
     /**
      * Instantiates an instance of {CommandManager}.
-     * @param {Logger} _logger
+     * @param {ILoggers} _logger
      */
     constructor(private _commandProviderValidator: ICanValidateProviderFor<ICommand>, private _commandGroupProviderValidator: ICanValidateProviderFor<ICommandGroup>,
-                private _namespaceProviderValidator: ICanValidateProviderFor<INamespace>, private _logger: Logger) {
+                private _namespaceProviderValidator: ICanValidateProviderFor<INamespace>, private _logger: ILoggers) {
         this._namespaces = new Namespaces(this._namespaceProviderValidator, this._logger);
         this._defaultCommandGroups = new DefaultCommandGroups(this._commandGroupProviderValidator, this._logger);
         this._defaultCommands = new DefaultCommands(this._commandProviderValidator, this._logger);

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { FileSystem } from '@dolittle/tooling.common.files';
-import { Logger } from '@dolittle/tooling.common.logging';
+import { ILoggers } from '@dolittle/tooling.common.logging';
 import path from 'path';
 import { Boilerplate, IBoilerplatesLoader, BoilerplatesConfig, IBoilerplateParsers } from './index';
 
@@ -20,9 +20,9 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
      * @param {IBoilerplateParsers} _boilerplateParsers
      * @param {BoilerplatesConfig} _boilerplatesConfig
      * @param {FileSystem} _fileSystem
-     * @param {Logger} _logger
+     * @param {ILoggers} _logger
      */
-    constructor(private _boilerplateParsers: IBoilerplateParsers, private _boilerplatesConfig: BoilerplatesConfig, private _fileSystem: FileSystem, private _logger: Logger) {
+    constructor(private _boilerplateParsers: IBoilerplateParsers, private _boilerplatesConfig: BoilerplatesConfig, private _fileSystem: FileSystem, private _logger: ILoggers) {
         if (! this._fileSystem.existsSync(this._boilerplatesConfig.path)) {
             this._boilerplatesConfig.store = this._boilerplatesConfig.store;
         }

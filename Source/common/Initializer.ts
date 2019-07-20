@@ -6,7 +6,7 @@ import { initPluginSystem, IPlugins } from '@dolittle/tooling.common.plugins';
 import {initBoilerplatesSystem, IBoilerplateDiscoverers, IBoilerplates} from '@dolittle/tooling.common.boilerplates';
 import { IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { INamespace, Namespace, ICommandManager, IProviderRegistrators, ICanProvideDefaultCommands, ICanProvideDefaultCommandGroups, ICanProvideNamespaces } from '@dolittle/tooling.common.commands';
-import { Logger } from '@dolittle/tooling.common.logging';
+import { ILoggers } from '@dolittle/tooling.common.logging';
 import { IInitializer } from './index';
 
 /**
@@ -21,7 +21,7 @@ export class Initializer implements IInitializer {
     private _isInitialized = false;
     
     constructor(private _providerRegistrators: IProviderRegistrators, private _commandManager: ICommandManager, private _plugins: IPlugins, private _boilerplates: IBoilerplates, 
-                private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _logger: Logger) {}
+                private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _logger: ILoggers) {}
     
         get isInitialized() { return this._isInitialized; }
 

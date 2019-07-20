@@ -5,7 +5,7 @@
 import { ICanRegisterProviders, commandManager, providerRegistrators } from '@dolittle/tooling.common.commands';
 import { dependencyParsers } from '@dolittle/tooling.common.dependencies';
 import { fileSystem, folders } from '@dolittle/tooling.common.files';
-import { logger } from '@dolittle/tooling.common.logging';
+import { loggers } from '@dolittle/tooling.common.logging';
 import { nodeModulesPath, toolingPackage, latestCompatiblePackageFinder } from '@dolittle/tooling.common.packages';
 import {
     BoilerplatesConfig, IBoilerplatesLoader, BoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplateDiscoverers, LocalBoilerplatesDiscoverer, IBoilerplateDiscoverers, 
@@ -22,23 +22,23 @@ let instancesOfICanParseBoilerplates: ICanParseBoilerplates[] = [
 ];
 
 export const boilerplateParsers: IBoilerplateParsers = new BoilerplateParsers(instancesOfICanParseBoilerplates);
-export const boilerplatesLoader: IBoilerplatesLoader = new BoilerplatesLoader(boilerplateParsers, boilerplatesConfig, fileSystem, logger);
+export const boilerplatesLoader: IBoilerplatesLoader = new BoilerplatesLoader(boilerplateParsers, boilerplatesConfig, fileSystem, loggers);
 let instancesOfICanDiscoverBoilerplates: ICanDiscoverBoilerplates[] = [
-    new LocalBoilerplatesDiscoverer(boilerplatesConfig, toolingPackage, nodeModulesPath, boilerplatesLoader, fileSystem, logger)
+    new LocalBoilerplatesDiscoverer(boilerplatesConfig, toolingPackage, nodeModulesPath, boilerplatesLoader, fileSystem, loggers)
 ];
 
 export const boilerplateDiscoverers: IBoilerplateDiscoverers = new BoilerplateDiscoverers(instancesOfICanDiscoverBoilerplates);
 
 export const boilerplates: IBoilerplates = new Boilerplates(boilerplatesLoader);
-export const templatesBoilerplates: ITemplatesBoilerplates = new TemplatesBoilerplates(boilerplatesLoader, folders, fileSystem, handlebars, logger);
-export const contentBoilerplates: IContentBoilerplates = new ContentBoilerplates(boilerplatesLoader, folders, fileSystem, logger, handlebars);
+export const templatesBoilerplates: ITemplatesBoilerplates = new TemplatesBoilerplates(boilerplatesLoader, folders, fileSystem, handlebars, loggers);
+export const contentBoilerplates: IContentBoilerplates = new ContentBoilerplates(boilerplatesLoader, folders, fileSystem, loggers, handlebars);
 
-export const onlineBoilerplatesFinder = new OnlineBoilerplatesDiscoverer(latestCompatiblePackageFinder, logger);
+export const onlineBoilerplatesFinder = new OnlineBoilerplatesDiscoverer(latestCompatiblePackageFinder, loggers);
 
-export const onlineDolittleBoilerplatesFinder = new OnlineDolittleBoilerplatesFinder(latestCompatiblePackageFinder, logger);
+export const onlineDolittleBoilerplatesFinder = new OnlineDolittleBoilerplatesFinder(latestCompatiblePackageFinder, loggers);
 
 export const scriptRunner: IScriptRunner = new ScriptRunner();
 
-export let providerRegistrator: ICanRegisterProviders = new ProviderRegistrator(commandManager, boilerplateDiscoverers, latestCompatiblePackageFinder, boilerplates, onlineBoilerplatesFinder, onlineDolittleBoilerplatesFinder, fileSystem, logger);
+export let providerRegistrator: ICanRegisterProviders = new ProviderRegistrator(commandManager, boilerplateDiscoverers, latestCompatiblePackageFinder, boilerplates, onlineBoilerplatesFinder, onlineDolittleBoilerplatesFinder, fileSystem, loggers);
 
 providerRegistrators.addRegistrators(providerRegistrator);

@@ -5,7 +5,7 @@
 import { Command, ICommandManager } from '@dolittle/tooling.common.commands';
 import { IDependencyResolvers, PromptDependency, argumentUserInputType } from '@dolittle/tooling.common.dependencies';
 import { FileSystem } from '@dolittle/tooling.common.files';
-import { Logger } from '@dolittle/tooling.common.logging';
+import { ILoggers } from '@dolittle/tooling.common.logging';
 import { requireInternet, isGreaterVersion, ToolingPackage } from '@dolittle/tooling.common.packages';
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { fetchOnlinePlugins, fetchDolittlePlugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, getInstalledPlugins, IPluginDiscoverers, askToDownloadOrUpdatePlugins, PluginPackageInfo, IPlugins } from '../index';
@@ -33,7 +33,7 @@ export class InstallCommand extends Command {
      * Instantiates an instance of {DolittleCommand}.
      */
     constructor(private _plugins: IPlugins, private _pluginDiscoverers: IPluginDiscoverers, private _onlinePluginsFinder: OnlinePluginsFinder, private _onlineDolittlePluginsFinder: OnlineDolittlePluginsFinder, 
-                private _fileSystem: FileSystem, private _logger: Logger) {
+                private _fileSystem: FileSystem, private _logger: ILoggers) {
         super(name, description, false, undefined, [dolittlePluginsDependency]);
     }
 

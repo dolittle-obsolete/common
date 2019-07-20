@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import { Command } from "@dolittle/tooling.common.commands";
 import { FileSystem } from "@dolittle/tooling.common.files";
-import { Logger } from "@dolittle/tooling.common.logging";
+import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
 import { getInstalledBoilerplates, IBoilerplateDiscoverers } from "../index";
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
@@ -24,7 +24,7 @@ export class InstalledCommand extends Command {
     /**
      * Instantiates an instance of {InstalledCommand}.
      */
-    constructor(private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _fileSystem: FileSystem, private _logger: Logger) {
+    constructor(private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _fileSystem: FileSystem, private _logger: ILoggers) {
         super(name, description, false);
     }
 

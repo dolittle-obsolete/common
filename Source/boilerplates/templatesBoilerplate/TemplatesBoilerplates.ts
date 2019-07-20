@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { FileSystem, Folders, getFileNameAndExtension } from '@dolittle/tooling.common.files';
-import { Logger } from '@dolittle/tooling.common.logging';
+import { ILoggers } from '@dolittle/tooling.common.logging';
 import path from 'path';
 import { ITemplatesBoilerplate, ITemplate, CreatedTemplateDetails, ITemplatesBoilerplates, Handlebars, boilerplateIsTemplatesBoilerplate, Boilerplates, IBoilerplatesLoader } from '../index';
 
@@ -21,9 +21,9 @@ export class TemplatesBoilerplates extends Boilerplates implements ITemplatesBoi
      * @param {Folders} _folders
      * @param {FileSystem} _fileSystem
      * @param {Handlebars} _handlebars
-     * @param {Logger} _logger
+     * @param {ILoggers} _logger
      */
-    constructor(boilerplatesLoader: IBoilerplatesLoader, private _folders: Folders, private _fileSystem: FileSystem, private _handlebars: Handlebars, private _logger: Logger) {
+    constructor(boilerplatesLoader: IBoilerplatesLoader, private _folders: Folders, private _fileSystem: FileSystem, private _handlebars: Handlebars, private _logger: ILoggers) {
         super(boilerplatesLoader);
     }
 

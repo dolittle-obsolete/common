@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { ILatestCompatiblePackageFinder, ToolingPackage, toolingPackageKeywords } from '@dolittle/tooling.common.packages';
-import { Logger } from '@dolittle/tooling.common.logging';
+import { ILoggers } from '@dolittle/tooling.common.logging';
 import npmKeyword from 'npm-keyword';
 import { ICanFindOnlineBoilerplatePackages, boilerplatePackageKeyword } from '../index';
 
@@ -20,9 +20,9 @@ export class OnlineBoilerplatesDiscoverer implements ICanFindOnlineBoilerplatePa
     /**
      * Instantiates an instance of {OnlineBoilerplatesDiscoverer}
      * @param {ILatestCompatibleBoilerplateFinder} _latestCompatibleFinder
-     * @param {Logger} _logger
+     * @param {ILoggers} _logger
      */
-    constructor(private _latestCompatibleFinder: ILatestCompatiblePackageFinder, private _logger: Logger) {}
+    constructor(private _latestCompatibleFinder: ILatestCompatiblePackageFinder, private _logger: ILoggers) {}
     
     async findLatest(keywords: string[] = [], limit: number = 250): Promise<ToolingPackage[]> {
         this._logger.info(`Attempting to find online boilerplates`);

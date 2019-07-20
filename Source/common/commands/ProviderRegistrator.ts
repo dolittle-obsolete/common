@@ -5,7 +5,7 @@
 import { ICanRegisterProviders, ICanProvideDefaultCommands, ICommandManager } from "@dolittle/tooling.common.commands";
 import { ILatestCompatiblePackageFinder } from "@dolittle/tooling.common.packages";
 import { FileSystem } from "@dolittle/tooling.common.files";
-import { Logger } from "@dolittle/tooling.common.logging";
+import { ILoggers } from "@dolittle/tooling.common.logging";
 import { CommandsProvider } from "../index";
 
 
@@ -20,7 +20,7 @@ export class ProviderRegistrator implements ICanRegisterProviders {
     
     private _commandsProvider: ICanProvideDefaultCommands[] = [];
 
-    constructor(private _commandManager: ICommandManager, logger: Logger) {
+    constructor(private _commandManager: ICommandManager, logger: ILoggers) {
         this._commandsProvider.push(new CommandsProvider(logger));
     }
 

@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { FileSystem } from '@dolittle/tooling.common.files';
-import { Logger } from '@dolittle/tooling.common.logging';
+import { ILoggers } from '@dolittle/tooling.common.logging';
 import { ToolingPackage, packageIsCompatible } from '@dolittle/tooling.common.packages';
 import path from 'path';
 import { ICanDiscoverPlugins, PluginPackage, PluginsConfig, IPluginLoader, PluginAlreadyInUse, packageIsPluginPackage } from '../index';
@@ -26,10 +26,10 @@ export class LocalPluginsDiscoverer implements ICanDiscoverPlugins {
      * @param {string} _nodeModulesPath
      * @param {IsLoader} _pluginsLoader
      * @param {typeof FsExtra} _fileSystem
-     * @param {Logger} _logger
+     * @param {ILoggers} _logger
      */
     constructor(private _toolingPackage: any, private _pluginsConfig: PluginsConfig, private _nodeModulesPath: string, private _pluginsLoader: IPluginLoader, 
-        private _fileSystem: FileSystem, private _logger: Logger) {
+        private _fileSystem: FileSystem, private _logger: ILoggers) {
         this._discoveredPlugins = []; 
     }
 

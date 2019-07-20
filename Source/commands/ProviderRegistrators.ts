@@ -4,7 +4,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import {ICanRegisterProviders, IProviderRegistrators} from './index';
-import { Logger } from '@dolittle/tooling.common.logging';
+import { ILoggers } from '@dolittle/tooling.common.logging';
 
 /**
  * Represents an implementation of {IProviderRegistrators}
@@ -18,7 +18,7 @@ export class ProviderRegistrators implements IProviderRegistrators {
     private _hasRegistered = false;
     private _registrators: ICanRegisterProviders[] = [];
     
-    constructor(private _logger: Logger) {}
+    constructor(private _logger: ILoggers) {}
 
     get hasRegistered() { return this._hasRegistered; }
 

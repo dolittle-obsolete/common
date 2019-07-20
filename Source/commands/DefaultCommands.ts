@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { Logger } from "@dolittle/tooling.common.logging";
+import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanProvideDefaultCommands, IDefaultCommands, ICommand, DuplicateCommandName, ICanValidateProviderFor } from "./index";
 
 /**
@@ -19,9 +19,9 @@ export class DefaultCommands implements IDefaultCommands {
 
     /**
      * Instantiates an instance of {DefaultCommands}.
-     * @param {Logger} _logger
+     * @param {ILoggers} _logger
      */
-    constructor (private _providerValidator: ICanValidateProviderFor<ICommand>, private _logger: Logger) {}
+    constructor (private _providerValidator: ICanValidateProviderFor<ICommand>, private _logger: ILoggers) {}
 
     get providers() {
         let providers: ICanProvideDefaultCommands[] = [];

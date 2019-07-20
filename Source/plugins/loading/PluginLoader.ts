@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 import {FileSystem} from '@dolittle/tooling.common.files';
-import { Logger } from '@dolittle/tooling.common.logging';
+import { ILoggers } from '@dolittle/tooling.common.logging';
 import path from 'path';
 import { PluginsConfig, IPlugin, IPluginLoader, PluginModule } from "../index";
 import { ToolingPackage } from '@dolittle/tooling.common.packages';
@@ -23,9 +23,9 @@ export class PluginLoader implements IPluginLoader {
      * Instantiates an instance of {PluginLoader}.
      * @param {PluginsConfig} _pluginsConfig
      * @param {FileSystem} _fileSystem
-     * @param {Logger} _logger
+     * @param {ILoggers} _logger
      */
-    constructor(private _pluginsConfig: PluginsConfig, private _fileSystem: FileSystem, private _logger: Logger) {
+    constructor(private _pluginsConfig: PluginsConfig, private _fileSystem: FileSystem, private _logger: ILoggers) {
         if (! this._fileSystem.existsSync(this._pluginsConfig.path))
             this._pluginsConfig.store = this._pluginsConfig.store;
     }

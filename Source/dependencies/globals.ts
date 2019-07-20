@@ -5,13 +5,13 @@
 
 import { folders, fileSystem } from '@dolittle/tooling.common.files';
 import { dolittleConfig } from '@dolittle/tooling.common.configurations';
-import { logger } from '@dolittle/tooling.common.logging';
+import { loggers } from '@dolittle/tooling.common.logging';
 import { 
     IDependencyDiscoverResolver, DependencyDiscoverResolver, IDependencyResolvers, ICanResolveSyncDependencies, DiscoverDependencyResolver, 
     ICanResolveDependencies, DependencyResolvers, ICanParseDependencies, DiscoverDependencyParser, PromptDependencyParser, DiscoverAndPromptDependencyParser, IDependencyParsers, DependencyParsers, NonOptionalArgumentDependencyResolver, OptionalArgumentDependencyResolver 
 } from './index';
 
-export let dependencyDiscoverResolver: IDependencyDiscoverResolver = new DependencyDiscoverResolver(folders, fileSystem, dolittleConfig, logger);
+export let dependencyDiscoverResolver: IDependencyDiscoverResolver = new DependencyDiscoverResolver(folders, fileSystem, dolittleConfig, loggers);
 
 export let nonOptionalArgumentDependencyResolver: ICanResolveDependencies = new NonOptionalArgumentDependencyResolver();
 

@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { Logger } from '@dolittle/tooling.common.logging';
+import { ILoggers } from '@dolittle/tooling.common.logging';
 import { IPlugin, IPluginDiscoverers, IPluginLoader, IPlugins } from './index';
 
 /**
@@ -18,9 +18,9 @@ export class Plugins implements IPlugins {
      * Instantiates an instance of {Plugins}.
      * @param {IPluginDiscoverers} _pluginDiscoverers
      * @param {IPluginLoader} _pluginLoader
-     * @param {Logger} _logger
+     * @param {ILoggers} _logger
      */
-    constructor(private _pluginDiscoverers: IPluginDiscoverers, private _pluginLoader: IPluginLoader, private _logger: Logger) {}
+    constructor(private _pluginDiscoverers: IPluginDiscoverers, private _pluginLoader: IPluginLoader, private _logger: ILoggers) {}
 
     async getPlugins() { 
         this._logger.info('Getting plugins');

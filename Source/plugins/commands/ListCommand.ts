@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { Command } from "@dolittle/tooling.common.commands";
-import { Logger } from "@dolittle/tooling.common.logging";
+import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
 import { getPluginsInUse, IPlugins } from "../index";
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
@@ -23,7 +23,7 @@ export class ListCommand extends Command {
     /**
      * Instantiates an instance of {ListCommand}
      */
-    constructor(private _plugins: IPlugins, private _logger: Logger) {
+    constructor(private _plugins: IPlugins, private _logger: ILoggers) {
         super(name, description, false);
     }
 

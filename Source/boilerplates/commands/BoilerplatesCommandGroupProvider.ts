@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import { ICanProvideDefaultCommandGroups, ICommandGroup } from "@dolittle/tooling.common.commands";
 import { FileSystem } from "@dolittle/tooling.common.files";
-import { Logger } from "@dolittle/tooling.common.logging";
+import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ILatestCompatiblePackageFinder } from "@dolittle/tooling.common.packages";
 import { BoilerplatesCommandGroup, IBoilerplateDiscoverers, IBoilerplates, OnlineBoilerplatesDiscoverer, OnlineDolittleBoilerplatesFinder, CheckCommand, InitCommand, InstalledCommand, ListCommand, InstallCommand } from "../index";
 
@@ -13,7 +13,7 @@ export class BoilerplatesCommandGroupProvider implements ICanProvideDefaultComma
     private _boilerplatesCommandGroup: BoilerplatesCommandGroup
 
     constructor(boilerplateDiscoverers: IBoilerplateDiscoverers, latestPackageFinder: ILatestCompatiblePackageFinder, boilerplates: IBoilerplates, 
-                onlineBoilerplatesFinder: OnlineBoilerplatesDiscoverer, onlineDolittleBoilerplatesFinder: OnlineDolittleBoilerplatesFinder, fileSystem: FileSystem, logger: Logger ) {
+                onlineBoilerplatesFinder: OnlineBoilerplatesDiscoverer, onlineDolittleBoilerplatesFinder: OnlineDolittleBoilerplatesFinder, fileSystem: FileSystem, logger: ILoggers ) {
         this._boilerplatesCommandGroup = new BoilerplatesCommandGroup([
             new CheckCommand(boilerplateDiscoverers, latestPackageFinder, fileSystem, logger),
             new InitCommand(boilerplateDiscoverers, logger),
