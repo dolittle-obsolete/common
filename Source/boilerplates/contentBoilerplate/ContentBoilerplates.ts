@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Folders, IFileSystem } from '@dolittle/tooling.common.files';
+import { IFolders, IFileSystem } from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import path from 'path';
 import { Handlebars, IContentBoilerplates, IContentBoilerplate, boilerplateIsContentBoilerplate, Boilerplates, IBoilerplatesLoader} from '../index';
@@ -15,12 +15,12 @@ export class ContentBoilerplates extends Boilerplates implements IContentBoilerp
     /**
      * Instantiates an instance of {ContentBoilerplates}.
      * @param {IBoilerplatesLoader} boilerplatesLoader
-     * @param {Folders} _folders
+     * @param {IFolders} _folders
      * @param {IFileSystem} _fileSystem
      * @param {ILoggers} _logger
      * @param {Handlebars} _handlebars
      */
-    constructor(boilerplatesLoader: IBoilerplatesLoader, private _folders: Folders, private _fileSystem: IFileSystem, private _logger: ILoggers, private _handlebars: Handlebars) {
+    constructor(boilerplatesLoader: IBoilerplatesLoader, private _folders: IFolders, private _fileSystem: IFileSystem, private _logger: ILoggers, private _handlebars: Handlebars) {
         super(boilerplatesLoader);
     }
     

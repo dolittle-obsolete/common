@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir, Folders } from "@dolittle/tooling.common.files";
+import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir, IFolders } from "@dolittle/tooling.common.files";
 import {IFileSystem} from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import { MissingDestinationPath, MissingCoreLanguage, namespaceDiscoverType, multipleFilesDiscoverType, IDependencyDiscoverResolver, DependencyMissingField, DependencyDiscoverResult, IDiscoverDependency } from '../index';
@@ -19,12 +19,12 @@ export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
     
     /**
      * Instantiates an instance of {DependencyDiscoverResolver}.
-     * @param {Folders} _folders
+     * @param {IFolders} _folders
      * @param {typeof FsExtra} _fileSystem
      * @param {*} _dolittleConfig
      * @param {ILoggers} _logger
      */
-    constructor(private _folders: Folders, private _fileSystem: IFileSystem, private _dolittleConfig: any, private _logger: ILoggers) {}
+    constructor(private _folders: IFolders, private _fileSystem: IFileSystem, private _dolittleConfig: any, private _logger: ILoggers) {}
 
     resolve(dependency: IDiscoverDependency, startLocation: string, coreLanguage: string, dolittleConfig: any = this._dolittleConfig ): DependencyDiscoverResult {
         if (!startLocation) throw new MissingDestinationPath();
