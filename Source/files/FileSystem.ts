@@ -2,8 +2,9 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import fs, { ReadOptions, WriteOptions, WriteFileOptions } from 'fs-extra';
+import fs, { ReadOptions, WriteOptions, WriteFileOptions, CopyOptions, CopyOptionsSync, EnsureOptions } from 'fs-extra';
 import { IFileSystem } from "./index";
+import { getServers } from 'dns';
 
 /**
  * Represents the implementation of {IFileSystem}
@@ -71,12 +72,28 @@ export class FileSystem implements IFileSystem {
         fs.renameSync(oldPath, newPath);
     }
 
+    copy(source: string, destination: string, options?: CopyOptions) {
+        return fs.copy(source, destination, options);
+    }
+
+    copySync(source: string, destination: string, options?: CopyOptionsSync) {
+        fs.copySync(source, destination, options);
+    }
+    
     exists(path: string) {
         return fs.pathExists(path);
     }
 
     existsSync(path: string) {
         return fs.pathExistsSync(path);
+    }
+
+    ensureDirectory(path: string, options?: EnsureOptions) {
+        return fs.ensureDir(path, options);
+    }
+
+    ensureDirectorySync(path: string, options?: EnsureOptions) {
+        fs.ensureDirSync(path, options);
     }
 
     stat(path: string) {

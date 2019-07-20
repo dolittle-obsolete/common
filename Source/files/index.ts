@@ -3,6 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 export * from './IFileSystem';
+export * from './IFolders';
 export * from './FileSystem';
 export * from './Folders';
 export * from './helpers';

@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {WriteOptions, ReadOptions, Stats, lstat, WriteFileOptions} from 'fs-extra';
+import {WriteOptions, ReadOptions, Stats, WriteFileOptions, copy, CopyOptions, CopyOptionsSync, ensureDir, EnsureOptions} from 'fs-extra';
 
 /**
  * Defines a low-level system for interacting with files
@@ -136,6 +136,25 @@ export interface IFileSystem {
     renameSync(oldPath: string, newPath: string): void
 
     /**
+     * Copies from source to destination
+     *
+     * @param {string} source
+     * @param {string} destination
+     * @param {CopyOptions} [options]
+     * @returns {Promise<void>}
+     */
+    copy(source: string, destination: string, options?: CopyOptions): Promise<void>
+    
+    /**
+     * Copies from source to destination
+     *
+     * @param {string} source
+     * @param {string} destination
+     * @param {CopyOptionsSync} [options]
+     */
+    copySync(source: string, destination: string, options?: CopyOptionsSync): void
+
+    /**
      * Checks whether a file exists
      *
      * @param {string} path
@@ -150,6 +169,23 @@ export interface IFileSystem {
      * @returns {boolean}
      */
     existsSync(path: string): boolean
+
+    /**
+     * Ensures that a directory exists. If it doesn't it will attempt to create the directory
+     *
+     * @param {string} path
+     * @param {EnsureOptions} [options]
+     * @returns {Promise<void>}
+     */
+    ensureDirectory(path: string, options?: EnsureOptions): Promise<void>
+
+    /**
+     * Ensures that a directory exists. If it doesn't it will attempt to create the directory
+     *
+     * @param {string} path
+     * @param {EnsureOptions} [options]
+     */
+    ensureDirectorySync(path: string, options?: EnsureOptions): void
 
     /**
      * Gets file status
