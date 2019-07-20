@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const fs = require('fs-extra');
-const path = require('path');
 const glob = require('glob');
 
 const version = process.argv[2];
