@@ -3,8 +3,6 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { ICanRegisterProviders, ICanProvideDefaultCommands, ICommandManager } from "@dolittle/tooling.common.commands";
-import { ILatestCompatiblePackageFinder } from "@dolittle/tooling.common.packages";
-import { IFileSystem } from "@dolittle/tooling.common.files";
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { CommandsProvider } from "../index";
 

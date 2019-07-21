@@ -2,8 +2,8 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { initPluginSystem, IPlugins } from '@dolittle/tooling.common.plugins';
-import {initBoilerplatesSystem, IBoilerplateDiscoverers, IBoilerplates} from '@dolittle/tooling.common.boilerplates';
+import { IPlugins } from '@dolittle/tooling.common.plugins';
+import { IBoilerplates, IBoilerplatesLoader} from '@dolittle/tooling.common.boilerplates';
 import { IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { INamespace, Namespace, ICommandManager, IProviderRegistrators, ICanProvideDefaultCommands, ICanProvideDefaultCommandGroups, ICanProvideNamespaces } from '@dolittle/tooling.common.commands';
 import { ILoggers } from '@dolittle/tooling.common.logging';
@@ -20,8 +20,8 @@ export class Initializer implements IInitializer {
     
     private _isInitialized = false;
     
-    constructor(private _providerRegistrators: IProviderRegistrators, private _commandManager: ICommandManager, private _plugins: IPlugins, private _boilerplates: IBoilerplates, 
-                private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _logger: ILoggers) {}
+    constructor(private _providerRegistrators: IProviderRegistrators, private _commandManager: ICommandManager, private _plugins: IPlugins, 
+        private _boilerplates: IBoilerplates, private _boilerplatesLoader: IBoilerplatesLoader, private _logger: ILoggers) {}
     
         get isInitialized() { return this._isInitialized; }
 
@@ -31,9 +31,6 @@ export class Initializer implements IInitializer {
         }
         else {
             this._logger.info('Initializing the tooling system');
-            
-            await initPluginSystem(this._plugins, busyIndicator);
-            await initBoilerplatesSystem(this._boilerplateDiscoverers, busyIndicator);
             
             this._providerRegistrators.register();
             await this.providePlugins();
@@ -58,12 +55,13 @@ export class Initializer implements IInitializer {
         this._commandManager.registerProviders(providers.command, providers.commandGroup, providers.namespace);
     }
     
-    private provideBoilerplateNamespaces() {
-        let namespacesToProvide = this.createNamespacesFromBoilerplates();
+    private async provideBoilerplateNamespaces() {
+        let namespacesToProvide = await this.createNamespacesFromBoilerplates();
         this._commandManager.registerProviders([], [], [{provide: () => namespacesToProvide}]);
     }
 
-    private createNamespacesFromBoilerplates() {
+    private async createNamespacesFromBoilerplates() {
+        if (this._boilerplatesLoader.needsReload) await this._boilerplatesLoader.load()
         let namespaces = this._commandManager.namespaces;
         let namespaceNames = namespaces.map(_ => _.name);
         let map = new Map<string, INamespace>();
