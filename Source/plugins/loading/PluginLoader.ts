@@ -17,8 +17,8 @@ import { ToolingPackage } from '@dolittle/tooling.common.packages';
  * @implements {IPluginLoader}
  */
 export class PluginLoader implements IPluginLoader {
-    private _loadedPlugins!: IPlugin[];
-    private _loadedPluginPackages!: ToolingPackage[];
+    private _loadedPlugins: IPlugin[] = [];
+    private _loadedPluginPackages: ToolingPackage[] = [];
     /**
      * Instantiates an instance of {PluginLoader}.
      * @param {PluginsConfig} _pluginsConfig
@@ -33,13 +33,11 @@ export class PluginLoader implements IPluginLoader {
 
     get pluginsConfigurationPath() { return this._pluginsConfig.path; }
 
-    async getPluginPackages() { 
-        if (! this._loadedPluginPackages || this.needsReload) await this.load();
+    get pluginPackages() { 
         return this._loadedPluginPackages;
     }
 
-    async getLoaded() {
-        if (! this._loadedPlugins || this.needsReload) return (await this.load());
+    get loaded() {
         return this._loadedPlugins;
     }
 
@@ -54,7 +52,7 @@ export class PluginLoader implements IPluginLoader {
             let pluginFilePath = path.resolve(pluginsConfigObject[key].pluginPath);
             let pluginPackagePath = path.join(path.resolve(pluginsConfigObject[key].packagePath), 'package.json');
 
-            if (!this._fileSystem.existsSync(pluginFilePath)) {
+            if (! (await this._fileSystem.exists(pluginFilePath))) {
                 this._logger.info(`Plugin path '${pluginFilePath}' does not exist. Removing entry from plugins configuration`);
                 delete pluginsConfigObject[key];
                 this._pluginsConfig.store = pluginsConfigObject;

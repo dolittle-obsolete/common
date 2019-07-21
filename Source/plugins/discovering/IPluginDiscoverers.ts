@@ -30,7 +30,7 @@ export interface IPluginDiscoverers {
     /**
      * Discovers plugins
      */
-    discover(): void
+    discover(): Promise<void>
 
     /**
      * The discovered plugin packages

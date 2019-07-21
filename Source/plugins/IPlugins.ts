@@ -30,5 +30,5 @@ export interface IPlugins {
     /**
      * Triggers the tooling to discover new plugins and load them
      */
-    discoverNewPlugins(): void
+    discoverNewPlugins(): Promise<void>
 }

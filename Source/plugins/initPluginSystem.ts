@@ -14,7 +14,7 @@ import { IPlugins } from './index';
 export async function initPluginSystem(plugins: IPlugins, busyIndicator: IBusyIndicator) {
     busyIndicator = busyIndicator.createNew().start('Initializing plugin system');
     try {
-        plugins.discoverNewPlugins();
+        await plugins.discoverNewPlugins();
         busyIndicator.succeed('Plugins initialized');
     } catch (error) {
         busyIndicator.fail(`An error occurred: ${error.message? error.message : error}`);

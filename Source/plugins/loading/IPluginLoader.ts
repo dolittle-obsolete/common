@@ -13,26 +13,19 @@ import { IPlugin } from '../index';
  */
 export interface IPluginLoader {
 
-    /**
-     * Loads all plugins into the tooling system
-     *
-     * @returns {Plugin[]}
-     */
-    load(): Promise<IPlugin[]>
-    
-    /**
+     /**
      * Gets the loaded plugins
      *
-     * @returns {Promise<Plugin[]>}
+     * @type {IPlugin[]}
      */
-    getLoaded(): Promise<IPlugin[]>
-    
+    readonly loaded: IPlugin[]
+
     /**
      * The packages of the plugins found in the plugins configuration
      *
-     * @returns {Promise<ToolingPackage[]>}
+     * @type {ToolingPackage[]}
      */
-    getPluginPackages(): Promise<ToolingPackage[]>
+    readonly pluginPackages: ToolingPackage[]
 
     /**
      * The path of the plugins configuration
@@ -47,4 +40,13 @@ export interface IPluginLoader {
      * @type {boolean}
      */
     needsReload: boolean
+
+    /**
+     * Loads all plugins into the tooling system
+     *
+     * @returns {Promise<Plugin[]>}
+     */
+    load(): Promise<IPlugin[]>
+
+
 }

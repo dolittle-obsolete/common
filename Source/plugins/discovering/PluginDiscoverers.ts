@@ -42,8 +42,8 @@ export class PluginDiscoverers implements IPluginDiscoverers {
         this.pluginDiscoverers.push(...pluginDiscoverers);
     }
 
-    discover() {
+    async discover() {
         this._hasDiscovered = true;
-        this.pluginDiscoverers.forEach(_ => _.discover());
+        await Promise.all(this.pluginDiscoverers.map(_ => _.discover()));
     }
 }
