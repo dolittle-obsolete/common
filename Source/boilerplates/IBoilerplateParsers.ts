@@ -32,9 +32,9 @@ export interface IBoilerplateParsers {
      *
      * @param {*} boilerplate
      * @param {string} boilerplatePath
-     * @returns {Boilerplate}
+     * @returns {Promise<IBoilerplate>}
      */
-    parse(boilerplate: any, boilerplatePath: string): IBoilerplate
+    parse(boilerplate: any, boilerplatePath: string): Promise<IBoilerplate>
 
     /**
      * Add boilerplate parsers

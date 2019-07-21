@@ -35,13 +35,13 @@ export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
     
     get discovered(): ToolingPackage[] {return this._discovered;}
     
-    discover() {
-        this._boilerplatePaths = this.getLocalPaths(this._nodeModulesPath);
+    async discover() {
+        this._boilerplatePaths = await this.getLocalPaths(this._nodeModulesPath);
         this._discovered = [];
         let boilerplatesConfigObject: any = {};
 
-        this.boilerplatePaths.forEach(folderPath => {
-            let packageJson: ToolingPackage = this._fileSystem.readJsonSync(path.join(folderPath, 'package.json'));
+        for (let folderPath of this.boilerplatePaths) {
+            let packageJson: ToolingPackage = await this._fileSystem.readJson(path.join(folderPath, 'package.json'));
             if (packageIsCompatible(packageJson, toolingPackage)) {
                 if (boilerplatesConfigObject[packageJson.name]) {
                     this._logger.warn(`Discovered a boilerplate with an already in-use name '${packageJson.name}'.`);
@@ -52,35 +52,39 @@ export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
                 this._discovered.push(packageJson);
                 
             }
-        });
+        }
         if (this._boilerplatesLoader.needsReload) this._boilerplatesConfig.store = boilerplatesConfigObject;
     }
 
-    private getLocalPaths(rootDir: string) {
-        let searchDirForBoilerplates = (dirName: string, filePaths: string[], pluginPackagePaths: string[]) => {
-            filePaths.forEach( filePath => {
+    private async getLocalPaths(rootDir: string) {
+        let searchDirForBoilerplates = async (dirName: string, filePaths: string[], pluginPackagePaths: string[]) => {
+            for (let filePath of filePaths) {
                 let fileName = path.parse(filePath).name;
-                if (this._fileSystem.lstatSync(filePath).isFile()) {
+                if ((await this._fileSystem.lstat(filePath)).isFile()) {
                     filePath = path.normalize(filePath);
                     if (path.parse(filePath).base === 'package.json') {
-                        let packageJson = this._fileSystem.readJsonSync(filePath);
+                        let packageJson = await this._fileSystem.readJson(filePath);
                         if (packageIsBoilerplatePackage(packageJson)) {
                             let folderPath = path.parse(filePath).dir;
                             pluginPackagePaths.push(folderPath);
                         }
                     }
                 }
-                else if (this._fileSystem.lstatSync(filePath).isDirectory() && dirName.startsWith('@')) {
-                    searchDirForBoilerplates(fileName, this._fileSystem.readdirSync(filePath).map(_ => path.join(filePath, _)), pluginPackagePaths);   
+                else if ((await this._fileSystem.lstat(filePath)).isDirectory() && dirName.startsWith('@')) {
+                    let subDir = await this._fileSystem.readDirectory(filePath);
+                    await searchDirForBoilerplates(fileName, subDir.map(_ => path.join(filePath, _)), pluginPackagePaths);   
                 }
-            });
+            }
         };
         let pluginPaths: string[] = [];
-        this._fileSystem.readdirSync(rootDir).forEach(dir => {
+        let dirs = await this._fileSystem.readDirectory(rootDir);
+        for (let dir of dirs) {
             const dirPath = path.join(rootDir, dir);
-            if (this._fileSystem.lstatSync(dirPath).isDirectory())
-                searchDirForBoilerplates(dir, this._fileSystem.readdirSync(dirPath).map(_ => path.join(dirPath, _)), pluginPaths);
-        });
+            if ((await this._fileSystem.lstat(dirPath)).isDirectory()) {
+                let subDir = await this._fileSystem.readDirectory(dirPath);
+                await searchDirForBoilerplates(dir, subDir.map(_ => path.join(dirPath, _)), pluginPaths);
+            }
+        }
 
         return pluginPaths.filter((v, i) => pluginPaths.indexOf(v) === i);
     }

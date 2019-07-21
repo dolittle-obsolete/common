@@ -29,7 +29,7 @@ export class TemplatesBoilerplateParser implements ICanParseBoilerplates {
         return boilerplateIsTemplatesBoilerplate(boilerplate);
     }
     
-    parse(boilerplate: any, boilerplatePath: string) {
+    async parse(boilerplate: any, boilerplatePath: string) {
         if (!this.canParse(boilerplate)) throw new CannotParseBoilerplate(boilerplatePath);
         let contentDirectory = templatesBoilerplateContentDirectoryFromPath(boilerplatePath);
         return new TemplatesBoilerplate(
@@ -42,23 +42,24 @@ export class TemplatesBoilerplateParser implements ICanParseBoilerplates {
             boilerplate.namespace,
             Scripts.fromJson(boilerplate.scripts),
             contentDirectory,
-            this.createTemplates(contentDirectory)
+            await this.createTemplates(contentDirectory)
         );
         
     }
 
-    private createTemplates(contentDirectory: string) {
-        let templateFiles = this._folders.searchRecursive(contentDirectory, templateConfigurationName);
+    private async createTemplates(contentDirectory: string) {
+        let templateFiles = await this._folders.getFilesRecursively(contentDirectory, new RegExp(templateConfigurationName));
         let templates: ITemplate[] = [];
-        templateFiles.forEach(_ => {
-            let includedFiles = this.getIncludedFiles(getFileDirPath(_));
-            let template = templateFromJson(JSON.parse(this._fileSystem.readFileSync(_).toString()), _, includedFiles, this._dependencyParsers);
+        for (let templateFile of templateFiles) {
+            let includedFiles = await this.getIncludedFiles(getFileDirPath(templateFile));
+            let templateJson = await this._fileSystem.readJson(templateFile);
+            let template = templateFromJson(templateJson, templateFile, includedFiles, this._dependencyParsers);
             templates.push(template);
-        });
+        }
         return templates;
     }
     
-    private getIncludedFiles(folderPath: string) {
-        return this._folders.searchFolderRegex(folderPath, /.*/).map(filePath => getFileNameAndExtension(filePath)).filter(file => file !== templateConfigurationName);
+    private async getIncludedFiles(folderPath: string) {
+        return (await this._folders.getFiles(folderPath, /.*/)).map(filePath => getFileNameAndExtension(filePath)).filter(file => file !== templateConfigurationName);
     }
 }

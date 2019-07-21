@@ -17,7 +17,7 @@ export interface ICanDiscoverBoilerplates {
      * Discovers boilerplates and returns them.
      *
      */
-    discover(): void
+    discover(): Promise<void>
 
     /**
      * The discovered boilerplates

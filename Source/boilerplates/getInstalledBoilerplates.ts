@@ -22,11 +22,11 @@ export async function getInstalledBoilerplates(boilerplateDiscoverers: IBoilerpl
     try {
         let paths = boilerplateDiscoverers.boilerplatePaths;
     
-        let boilerplatesAndPackages = paths.map(boilerplatePaths => {
-            let boilerplate = filesystem.readJSONSync(path.join(boilerplatePaths, 'boilerplate.json'));
-            let packageJson = filesystem.readJsonSync(path.join(boilerplatePaths, 'package.json')) as ToolingPackage;
+        let boilerplatesAndPackages = await Promise.all(paths.map(async boilerplatePaths => {
+            let boilerplate = await filesystem.readJson(path.join(boilerplatePaths, 'boilerplate.json'));
+            let packageJson = (await filesystem.readJson(path.join(boilerplatePaths, 'package.json'))) as ToolingPackage;
             return {boilerplate, packageJson};
-        });
+        }));
         let numBoilerplates = boilerplatesAndPackages.length;
         if (numBoilerplates > 0) busyIndicator.succeed(`Found ${numBoilerplates} installed boilerplates`);
         else busyIndicator.info(`Could not find any installed boilerplates`);

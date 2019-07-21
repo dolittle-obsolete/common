@@ -36,9 +36,9 @@ export class ContentBoilerplateParser implements ICanParseBoilerplates {
         return boilerplateIsContentBoilerplate(boilerplate);
     }
     
-    parse(boilerplate: any, boilerplatePath: string) {
+    async parse(boilerplate: any, boilerplatePath: string) {
         if (!this.canParse(boilerplate)) throw new CannotParseBoilerplate(boilerplatePath);
-        let bindings = this.getBindingsFor(boilerplatePath);
+        let bindings = await this.getBindingsFor(boilerplatePath);
         return new ContentBoilerplate(
             boilerplate.language || 'any',
             boilerplate.name,
@@ -64,15 +64,15 @@ export class ContentBoilerplateParser implements ICanParseBoilerplates {
      * @param {string} boilerplatePath The path to the boilerplate.json file
      * @returns {{pathsNeedingBinding: string[], filesNeedingBinding: string[]}} 
      */
-    private getBindingsFor(boilerplatePath: string): { pathsNeedingBinding: string[]; filesNeedingBinding: string[]; } {
+    private async getBindingsFor(boilerplatePath: string): Promise<{ pathsNeedingBinding: string[]; filesNeedingBinding: string[]; }> {
         let pathsNeedingBinding: string[] = [];
         let filesNeedingBinding: string[] = [];
         const contentFolder = path.join(path.dirname(boilerplatePath), contentBoilerplateContentDirectoryName);
-        if (! this._fileSystem.existsSync(contentFolder)) {
+        if (! (await this._fileSystem.exists(contentFolder))) {
             throw new Error(`Missing folder with name ${contentBoilerplateContentDirectoryName} at root level when parsing boilerplate at path ${boilerplatePath}`);
         }
         
-        let paths = this._folders.getFoldersAndFilesRecursivelyIn(contentFolder);
+        let paths = await this._folders.getFilesAndFoldersRecursively(contentFolder);
         paths = paths.filter((_: string) => {
             let include = true;
             binaryFiles.forEach(b => {
@@ -81,15 +81,15 @@ export class ContentBoilerplateParser implements ICanParseBoilerplates {
             return include;
         });
         pathsNeedingBinding = paths.filter((_: string) => _.indexOf('{{') > 0).map((_: string) => _.substr(contentFolder.length + 1));
-        paths.forEach((_: string) => {
-            let stat = this._fileSystem.statSync(_);
+        for (let _ of paths) {
+            let stat = await this._fileSystem.stat(_);
             if (!stat.isDirectory()) {
-                let file = this._fileSystem.readFileSync(_);
+                let file = await this._fileSystem.readFile(_);
                 if (file.indexOf('{{') >= 0) {
                     filesNeedingBinding.push(_.substr(contentFolder.length + 1));
                 }
             }
-        });
+        }
         let ret = {
             pathsNeedingBinding,
             filesNeedingBinding

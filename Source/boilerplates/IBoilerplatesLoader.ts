@@ -17,7 +17,7 @@ export interface IBoilerplatesLoader {
      *
      * @returns {IBoilerplate[]}
      */
-    load(): IBoilerplate[]
+    load(): Promise<IBoilerplate[]>
     
     /**
      * The loaded boilerplates
