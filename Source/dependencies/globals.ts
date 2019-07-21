@@ -7,7 +7,7 @@ import { folders, fileSystem } from '@dolittle/tooling.common.files';
 import { dolittleConfig } from '@dolittle/tooling.common.configurations';
 import { loggers } from '@dolittle/tooling.common.logging';
 import { 
-    IDependencyDiscoverResolver, DependencyDiscoverResolver, IDependencyResolvers, ICanResolveSyncDependencies, DiscoverDependencyResolver, 
+    IDependencyDiscoverResolver, DependencyDiscoverResolver, IDependencyResolvers, DiscoverDependencyResolver, 
     ICanResolveDependencies, DependencyResolvers, ICanParseDependencies, DiscoverDependencyParser, PromptDependencyParser, DiscoverAndPromptDependencyParser, IDependencyParsers, DependencyParsers, NonOptionalArgumentDependencyResolver, OptionalArgumentDependencyResolver 
 } from './index';
 

@@ -3,18 +3,18 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { argumentUserInputType, ICanResolveSyncDependencies, IDependency, ArgumentsNotMatchingDependencies, CannotResolveDependency, dependencyIsPromptDependency } from "../index";
+import { argumentUserInputType, ICanResolveDependencies, IDependency, ArgumentsNotMatchingDependencies, CannotResolveDependency, dependencyIsPromptDependency } from "../index";
 
 /**
- * Represents an implementation of {ICanResolveSyncDependencies} for resolving optional argument dependencies (in CLI this would be options)
+ * Represents an implementation of {ICanResolveDependencies} for resolving optional argument dependencies (in CLI this would be options)
  *
  * @export
  * @class OptionalArgumentDependencyResolver
- * @implements {ICanResolveSyncDependencies}
+ * @implements {ICanResolveDependencies}
  */
-export class OptionalArgumentDependencyResolver implements ICanResolveSyncDependencies {
+export class OptionalArgumentDependencyResolver implements ICanResolveDependencies {
     
-    resolve(context: any, dependencies: IDependency[], destinationPath?: string, coreLanguage?: string, args?: string[], options?: Map<string, any>) {
+    async resolve(context: any, dependencies: IDependency[], destinationPath?: string, coreLanguage?: string, args?: string[], options?: Map<string, any>) {
         if (options === undefined && dependencies.length === 0) return context;
         else if (options !== undefined) {
             dependencies.forEach((dep, i) => {

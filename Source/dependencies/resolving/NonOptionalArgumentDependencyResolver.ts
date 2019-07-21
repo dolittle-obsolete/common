@@ -3,18 +3,18 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { argumentUserInputType, ICanResolveSyncDependencies, IDependency, ArgumentsNotMatchingDependencies, CannotResolveDependency, dependencyIsPromptDependency } from "../index";
+import { argumentUserInputType, IDependency, ArgumentsNotMatchingDependencies, CannotResolveDependency, dependencyIsPromptDependency, ICanResolveDependencies } from "../index";
 
 /**
- * Represents an implementation of {ICanResolveSyncDependencies} for resolving non-optional argument dependencies
+ * Represents an implementation of {ICanResolveDependencies} for resolving non-optional argument dependencies
  *
  * @export
  * @class NonOptionalArgumentDependencyResolver
- * @implements {ICanResolveSyncDependencies}
+ * @implements {ICanResolveDependencies}
  */
-export class NonOptionalArgumentDependencyResolver implements ICanResolveSyncDependencies {
+export class NonOptionalArgumentDependencyResolver implements ICanResolveDependencies {
     
-    resolve(context: any, dependencies: IDependency[], destinationPath?: string, coreLanguage?: string, args?: string[]) {
+    async resolve(context: any, dependencies: IDependency[], destinationPath?: string, coreLanguage?: string, args?: string[]) {
         if (args === undefined && dependencies.length === 0) return context;
         else if (args !== undefined) {
             if (args.length !== dependencies.length) {
