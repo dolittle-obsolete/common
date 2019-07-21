@@ -40,16 +40,16 @@ module.exports = function (w) {
       },
       setup: (w) => {
         require('module-alias').addAliases({
-          '@dolittle/tooling.common.common': w.projectCacheDir + '/Source/common',
+          '@dolittle/tooling.common.boilerplates': w.projectCacheDir + '/Source/boilerplates',
           '@dolittle/tooling.common.commands': w.projectCacheDir + '/Source/commands',
-          '@dolittle/tooling.common.plugins': w.projectCacheDir + '/Source/plugins',
-          '@dolittle/tooling.common.utilities': w.projectCacheDir + '/Source/utilities',
-          '@dolittle/tooling.common.files': w.projectCacheDir + '/Source/files',
-          '@dolittle/tooling.common.packages': w.projectCacheDir + '/Source/packages',
-          '@dolittle/tooling.common.logging': w.projectCacheDir + '/Source/logging',
+          '@dolittle/tooling.common.common': w.projectCacheDir + '/Source/common',
           '@dolittle/tooling.common.configurations': w.projectCacheDir + '/Source/configurations',
           '@dolittle/tooling.common.dependencies': w.projectCacheDir + '/Source/dependencies',
-          '@dolittle/tooling.common.boilerplates': w.projectCacheDir + '/Source/boilerplates'
+          '@dolittle/tooling.common.files': w.projectCacheDir + '/Source/files',
+          '@dolittle/tooling.common.logging': w.projectCacheDir + '/Source/logging',
+          '@dolittle/tooling.common.packages': w.projectCacheDir + '/Source/packages',
+          '@dolittle/tooling.common.plugins': w.projectCacheDir + '/Source/plugins',
+          '@dolittle/tooling.common.utilities': w.projectCacheDir + '/Source/utilities'
         });
         process.env.WALLABY_TESTING = true;
         global.expect = chai.expect;
