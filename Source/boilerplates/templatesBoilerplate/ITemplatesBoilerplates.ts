@@ -80,5 +80,5 @@ export interface ITemplatesBoilerplates extends IBoilerplates {
      * @param {string} destinationPath
      * @returns {boolean} Whether or not the template was created successfully
      */
-    create(context: any, template: ITemplate, boilerplate: ITemplatesBoilerplate, destinationPath: string): CreatedTemplateDetails
+    create(context: any, template: ITemplate, boilerplate: ITemplatesBoilerplate, destinationPath: string): Promise<CreatedTemplateDetails>
 }

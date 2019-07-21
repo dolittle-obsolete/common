@@ -64,25 +64,25 @@ export class ContentBoilerplates extends Boilerplates implements IContentBoilerp
         return this.adornmentsFor(boilerplate.type, boilerplate.language, boilerplate.name, namespace);
     }
 
-    create(boilerplate: IContentBoilerplate, destination: string, context: object) {
+    async create(boilerplate: IContentBoilerplate, destination: string, context: object) {
         this._logger.info(`Creating boilerplate with name '${boilerplate.name}' at destination '${destination}'`);
-        this._folders.makeFolderIfNotExists(destination);
-        this._folders.copy(destination, boilerplate.contentDirectory);
+        await this._folders.makeFolderIfNotExists(destination);
+        await this._folders.copy(destination, boilerplate.contentDirectory);
         boilerplate.pathsNeedingBinding.forEach(_ => {
             let pathToRename = path.join(destination, _);
             let segments: string[]  = [];
             pathToRename.split(/(\\|\/)/).forEach(segment => segments.push(this._handlebars.compile(segment)(context)));
             let result = segments.join('');
-            this._fileSystem.renameSync(pathToRename, result);
+            this._fileSystem.rename(pathToRename, result);
         });
         
-        boilerplate.filesNeedingBinding.forEach(_ => {
+        await Promise.all(boilerplate.filesNeedingBinding.map(async _ => {
             let file = path.join(destination, _);
-            let content = this._fileSystem.readFileSync(file, 'utf8');
+            let content = await this._fileSystem.readFile(file, 'utf8');
             let template = this._handlebars.compile(content);
             let result = template(context);
-            this._fileSystem.writeFileSync(file, result);
-        });
+            return this._fileSystem.writeFile(file, result);
+        }));
 
         this._logger.info(`Boilerplate created`);
         return {boilerplate, destination};

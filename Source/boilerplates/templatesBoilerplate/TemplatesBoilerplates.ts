@@ -57,15 +57,15 @@ export class TemplatesBoilerplates extends Boilerplates implements ITemplatesBoi
                     .map((_: any) => (_ as ITemplatesBoilerplate).templatesByType(templateType)).reduce((a, b) => a.concat(b), []);
     }
     
-    create(context: any, template: ITemplate, boilerplate: ITemplatesBoilerplate, destinationPath: string): CreatedTemplateDetails {
+    async create(context: any, template: ITemplate, boilerplate: ITemplatesBoilerplate, destinationPath: string): Promise<CreatedTemplateDetails> {
         this._logger.info(`Creating a template of type '${template.type}' and language '${boilerplate.language}' at destination ${destinationPath}`);
         
-        this._folders.makeFolderIfNotExists(destinationPath);
+        await this._folders.makeFolderIfNotExists(destinationPath);
         let filesToCreate = template.filesToCreate;
         
-        filesToCreate.forEach( (filePath: string) => {
+        await Promise.all(filesToCreate.map(async filePath => {
             const filename = getFileNameAndExtension(filePath);
-            const oldContent = this._fileSystem.readFileSync(filePath, 'utf8');
+            const oldContent = await this._fileSystem.readFile(filePath);
             let segments: string[] = [];
 
             path.join(destinationPath, filename).split(/(\\|\/)/).forEach(segment => segments.push(this._handlebars.compile(segment)(context)));
@@ -73,8 +73,8 @@ export class TemplatesBoilerplates extends Boilerplates implements ITemplatesBoi
            
             let template = this._handlebars.compile(oldContent);
             let newContent = template(context);
-            this._fileSystem.writeFileSync(newFilePath, newContent);
-        });
+            return this._fileSystem.writeFile(newFilePath, newContent);
+        }));
 
         return {template: template, boilerplate: boilerplate, destination: destinationPath};
     }
