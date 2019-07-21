@@ -29,7 +29,7 @@ export interface IBoilerplateDiscoverers {
      * Discovers boilerplates
      *
      */
-    discover(): void
+    discover(): Promise<void>
 
     /**
      * The discovered boilerplates

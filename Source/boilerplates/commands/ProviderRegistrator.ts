@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { ICanRegisterProviders, ICommandManager, ICanProvideDefaultCommandGroups } from "@dolittle/tooling.common.commands";
-import { BoilerplatesCommandGroupProvider, IBoilerplateDiscoverers, IBoilerplates, OnlineBoilerplatesDiscoverer, OnlineDolittleBoilerplatesFinder } from "../index";
+import { BoilerplatesCommandGroupProvider, IBoilerplateDiscoverers, IBoilerplates, OnlineBoilerplatesDiscoverer, OnlineDolittleBoilerplatesFinder, IBoilerplatesLoader } from "../index";
 import { ILatestCompatiblePackageFinder } from "@dolittle/tooling.common.packages";
 import { IFileSystem } from "@dolittle/tooling.common.files";
 import { ILoggers } from "@dolittle/tooling.common.logging";
@@ -20,11 +20,11 @@ export class ProviderRegistrator implements ICanRegisterProviders {
     
     private _commandGroupProviders: ICanProvideDefaultCommandGroups[] = [];
 
-    constructor(private _commandManager: ICommandManager, boilerplateDiscoverers: IBoilerplateDiscoverers, latestPackageFinder: ILatestCompatiblePackageFinder, 
+    constructor(private _commandManager: ICommandManager, boilerplateDiscoverers: IBoilerplateDiscoverers, boilerplatesLoader: IBoilerplatesLoader, latestPackageFinder: ILatestCompatiblePackageFinder, 
         boilerplates: IBoilerplates, onlineBoilerplatesFinder: OnlineBoilerplatesDiscoverer, onlineDolittleBoilerplatesFinder: OnlineDolittleBoilerplatesFinder, 
         filesystem: IFileSystem, logger: ILoggers) {
         this._commandGroupProviders.push(new BoilerplatesCommandGroupProvider(
-            boilerplateDiscoverers, latestPackageFinder, boilerplates, onlineBoilerplatesFinder, onlineDolittleBoilerplatesFinder, filesystem, logger
+            boilerplateDiscoverers, boilerplatesLoader, latestPackageFinder, boilerplates, onlineBoilerplatesFinder, onlineDolittleBoilerplatesFinder, filesystem, logger
         ));
     }
 

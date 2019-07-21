@@ -39,6 +39,6 @@ export const onlineDolittleBoilerplatesFinder = new OnlineDolittleBoilerplatesFi
 
 export const scriptRunner: IScriptRunner = new ScriptRunner();
 
-export let providerRegistrator: ICanRegisterProviders = new ProviderRegistrator(commandManager, boilerplateDiscoverers, latestCompatiblePackageFinder, boilerplates, onlineBoilerplatesFinder, onlineDolittleBoilerplatesFinder, fileSystem, loggers);
+export let providerRegistrator: ICanRegisterProviders = new ProviderRegistrator(commandManager, boilerplateDiscoverers, boilerplatesLoader, latestCompatiblePackageFinder, boilerplates, onlineBoilerplatesFinder, onlineDolittleBoilerplatesFinder, fileSystem, loggers);
 
 providerRegistrators.addRegistrators(providerRegistrator);

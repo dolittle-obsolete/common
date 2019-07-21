@@ -8,7 +8,7 @@ import { IFileSystem } from '@dolittle/tooling.common.files';
 import { requireInternet, ILatestCompatiblePackageFinder } from '@dolittle/tooling.common.packages';
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { askToDownloadOrUpdateBoilerplates, checkBoilerplates, IBoilerplateDiscoverers } from '../index'
+import { askToDownloadOrUpdateBoilerplates, checkBoilerplates, IBoilerplateDiscoverers, IBoilerplatesLoader } from '../index'
 
 const name = 'check';
 const description = `Checks whether you have boilerplates that are out of date.
@@ -31,7 +31,7 @@ export class CheckCommand extends Command {
     /**
      * Instantiates an instance of {CheckCommand}.
      */
-    constructor(private _boilerplatesDiscoverers: IBoilerplateDiscoverers, private _latestPackageFinder: ILatestCompatiblePackageFinder, 
+    constructor(private _boilerplatesDiscoverers: IBoilerplateDiscoverers, private _boilerplatesLoader: IBoilerplatesLoader, private _latestPackageFinder: ILatestCompatiblePackageFinder, 
                 private _fileSystem: IFileSystem, private _logger: ILoggers) {
         super(name, description, false, shortDescription);
     }
@@ -44,7 +44,7 @@ export class CheckCommand extends Command {
         
         let outOfDatePackages: any = await checkBoilerplates(this._boilerplatesDiscoverers, this._latestPackageFinder, this._fileSystem, busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop()
-        await askToDownloadOrUpdateBoilerplates(outOfDatePackages, this._boilerplatesDiscoverers, dependencyResolvers, busyIndicator);  
+        await askToDownloadOrUpdateBoilerplates(outOfDatePackages, this._boilerplatesDiscoverers, this._boilerplatesLoader, dependencyResolvers, busyIndicator);  
         if (busyIndicator.isBusy) busyIndicator.stop()  
     }
 

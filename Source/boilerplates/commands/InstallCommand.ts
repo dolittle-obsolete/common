@@ -8,7 +8,7 @@ import { IFileSystem } from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import { requireInternet, isGreaterVersion, ToolingPackage } from '@dolittle/tooling.common.packages';
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { fetchOnlineBoilerplates, fetchDolittleBoilerplates, OnlineBoilerplatesDiscoverer, OnlineDolittleBoilerplatesFinder, getInstalledBoilerplates, IBoilerplateDiscoverers, askToDownloadOrUpdateBoilerplates, BoilerplatePackageInfo } from '../index';
+import { fetchOnlineBoilerplates, fetchDolittleBoilerplates, OnlineBoilerplatesDiscoverer, OnlineDolittleBoilerplatesFinder, getInstalledBoilerplates, IBoilerplateDiscoverers, askToDownloadOrUpdateBoilerplates, BoilerplatePackageInfo, IBoilerplatesLoader } from '../index';
 
 const name = 'install';
 const description = `Prompt to install boilerplates`;
@@ -32,7 +32,7 @@ export class InstallCommand extends Command {
     /**
      * Instantiates an instance of {DolittleCommand}.
      */
-    constructor(private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _onlineBoilerplatesFinder: OnlineBoilerplatesDiscoverer, private _onlineDolittleBoilerplatesFinder: OnlineDolittleBoilerplatesFinder, 
+    constructor(private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _boilerplatesLoader: IBoilerplatesLoader, private _onlineBoilerplatesFinder: OnlineBoilerplatesDiscoverer, private _onlineDolittleBoilerplatesFinder: OnlineDolittleBoilerplatesFinder, 
                 private _fileSystem: IFileSystem, private _logger: ILoggers) {
         super(name, description, false, undefined, [dolittleBoilerplatesDependency]);
     }
@@ -67,7 +67,7 @@ export class InstallCommand extends Command {
         outputter.print(upgradeableBoilerplates.map((_: any) => `${_.name} v${_.localVersion} --> v${_.version}`).join('\t\n'));
             
         let boilerplatesToDownload = newAvailableBoilerplates.concat(<any>upgradeableBoilerplates);
-        await askToDownloadOrUpdateBoilerplates(boilerplatesToDownload as BoilerplatePackageInfo[], this._boilerplateDiscoverers,
+        await askToDownloadOrUpdateBoilerplates(boilerplatesToDownload as BoilerplatePackageInfo[], this._boilerplateDiscoverers, this._boilerplatesLoader,
             dependencyResolvers, busyIndicator);    
         if (busyIndicator.isBusy) busyIndicator.stop();
     }

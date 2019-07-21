@@ -5,7 +5,7 @@
 import { Command } from "@dolittle/tooling.common.commands";
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
-import { initBoilerplatesSystem, IBoilerplateDiscoverers } from '../index';
+import { initBoilerplatesSystem, IBoilerplateDiscoverers, IBoilerplatesLoader } from '../index';
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
 
 const name = 'init';
@@ -23,7 +23,7 @@ export class InitCommand extends Command {
     /**
      * Instantiates an instance of {InitCommand}.
      */
-    constructor(private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _logger: ILoggers) {
+    constructor(private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _boilerplateLoader: IBoilerplatesLoader, private _logger: ILoggers) {
         super(name, description, false);
     }
 
@@ -31,7 +31,7 @@ export class InitCommand extends Command {
                 outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         
         this._logger.info(`Executing 'boilerplates init' command`);
-        await initBoilerplatesSystem(this._boilerplateDiscoverers, busyIndicator);
+        await initBoilerplatesSystem(this._boilerplateDiscoverers, this._boilerplateLoader, busyIndicator);
         if (busyIndicator.isBusy) busyIndicator.stop();
     }
 

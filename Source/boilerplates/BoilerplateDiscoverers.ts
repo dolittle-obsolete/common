@@ -42,8 +42,8 @@ export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
         this.discoverers.push(...boilerplateDiscoverers);
     }
 
-    discover() {
+    async discover() {
         this._hasDiscovered = true;
-        Promise.all(this.discoverers.map(_ => _.discover()));
+        await Promise.all(this.discoverers.map(_ => _.discover()));
     }
 }

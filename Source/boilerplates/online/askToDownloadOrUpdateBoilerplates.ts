@@ -6,7 +6,7 @@
 import {requireInternet, downloadPackagesFromNpmSync, DownloadPackageInfo} from '@dolittle/tooling.common.packages';
 import { PromptDependency, IDependencyResolvers, confirmUserInputType, chooseMultipleUserInputType } from '@dolittle/tooling.common.dependencies';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { IBoilerplateDiscoverers, initBoilerplatesSystem } from '../index';
+import { IBoilerplateDiscoverers, initBoilerplatesSystem, IBoilerplatesLoader } from '../index';
 
 export type BoilerplatePackageInfo = {
     name: string, version: string, latest?: string
@@ -21,7 +21,7 @@ export type BoilerplatePackageInfo = {
  * @param {IBusyIndicator} busyIndicator 
  * @export
  */
-export async function askToDownloadOrUpdateBoilerplates(boilerplates: BoilerplatePackageInfo[], boilerplateDiscoverers: IBoilerplateDiscoverers, resolvers: IDependencyResolvers, 
+export async function askToDownloadOrUpdateBoilerplates(boilerplates: BoilerplatePackageInfo[], boilerplateDiscoverers: IBoilerplateDiscoverers, boilerplatesLoader: IBoilerplatesLoader, resolvers: IDependencyResolvers, 
     busyIndicator: IBusyIndicator) {
     await requireInternet(busyIndicator);
     if (busyIndicator.isBusy) busyIndicator.stop()
@@ -32,7 +32,7 @@ export async function askToDownloadOrUpdateBoilerplates(boilerplates: Boilerplat
             if (packagesToDownload.length > 0) {
                 await downloadPackagesFromNpmSync(packagesToDownload, busyIndicator);
                 if (busyIndicator.isBusy) busyIndicator.stop()
-                await initBoilerplatesSystem(boilerplateDiscoverers, busyIndicator);
+                await initBoilerplatesSystem(boilerplateDiscoverers, boilerplatesLoader, busyIndicator);
                 if (busyIndicator.isBusy) busyIndicator.stop()
             }
         }

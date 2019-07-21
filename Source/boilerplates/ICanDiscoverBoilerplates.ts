@@ -12,7 +12,7 @@ import { ToolingPackage } from "@dolittle/tooling.common.packages";
  * @interface ICanDiscoverBoilerplates
  */
 export interface ICanDiscoverBoilerplates {
-
+    
     /**
      * Discovers boilerplates and returns them.
      *

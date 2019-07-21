@@ -6,14 +6,14 @@
 import { IFileSystem } from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import path from 'path';
-import { Boilerplate, IBoilerplatesLoader, BoilerplatesConfig, IBoilerplateParsers } from './index';
+import { IBoilerplatesLoader, BoilerplatesConfig, IBoilerplateParsers, IBoilerplate } from './index';
 
 
 /**
  * Represents an implementation of {IBoilerplatesLoader} for loading boilerplates from the {BoilerplatesConfig}
  */
 export class BoilerplatesLoader implements IBoilerplatesLoader {
-    private _loadedBoilerplates!: Boilerplate[];
+    private _loadedBoilerplates!: IBoilerplate[];
 
     /**
      * Instantiates an instance of {BoilerplatesLoader}

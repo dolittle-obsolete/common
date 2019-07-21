@@ -78,13 +78,13 @@ export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
         };
         let pluginPaths: string[] = [];
         let dirs = await this._fileSystem.readDirectory(rootDir);
-        for (let dir of dirs) {
+        await Promise.all(dirs.map(async dir => {
             const dirPath = path.join(rootDir, dir);
             if ((await this._fileSystem.lstat(dirPath)).isDirectory()) {
                 let subDir = await this._fileSystem.readDirectory(dirPath);
-                await searchDirForBoilerplates(dir, subDir.map(_ => path.join(dirPath, _)), pluginPaths);
+                return searchDirForBoilerplates(dir, subDir.map(_ => path.join(dirPath, _)), pluginPaths);
             }
-        }
+        }));
 
         return pluginPaths.filter((v, i) => pluginPaths.indexOf(v) === i);
     }
