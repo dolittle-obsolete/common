@@ -5,4 +5,3 @@
 export * from './DownloadPackageInfo';
 export * from './ICanDownloadPackages';
 export * from './NpmPackageDownloader';
-export * from './downloadPackagesNpm';
