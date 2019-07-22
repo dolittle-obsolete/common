@@ -29,18 +29,18 @@ export class Packages implements IPackages {
         return Array.prototype.concat.apply([], packages) as ToolingPackageDescriptor[];
     }
 
-    async byUser(user: string, check?: ((packageJson: any) => boolean)) {
+    async byUser(user: string, check?: ((toolingPackage: ToolingPackage) => boolean)) {
         let packages = await Promise.all(this._packagesByUserFinders.map(_ => _.find(user, check)));
         return Array.prototype.concat.apply([], packages) as ToolingPackageDescriptor[];
     }
-    
+
     async latestCompatibleWithKeywords(keywords: string[], limit?: number) {
         let packages = await this.withKeywords(keywords, limit);
         let latestCompatiblePackages = await this.getLatestCompatiblePackages(packages);
 
         return latestCompatiblePackages;
     }
-    async latestCompatibleByUser(user: string, check?: ((packageJson: any) => boolean)) {
+    async latestCompatibleByUser(user: string, check?: ((toolingPackage: ToolingPackage) => boolean)) {
         let packages = await this.byUser(user, check);
         let latestCompatiblePackages = await this.getLatestCompatiblePackages(packages);
 

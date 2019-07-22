@@ -25,10 +25,10 @@ export interface IPackages {
      * Finds tooling packages under a user
      *
      * @param {string} user
-     * @param {(packageJson) => boolean} [check]
+     * @param {(toolingPackage: ToolingPackage) => boolean} [check]
      * @returns {Promise<ToolingPackageDescriptor[]>}
      */
-    byUser(user: string, check?: (packageJson: any) => boolean): Promise<ToolingPackageDescriptor[]>
+    byUser(user: string, check?: (toolingPackage: ToolingPackage) => boolean): Promise<ToolingPackageDescriptor[]>
 
     /**
      * Finds the latest compatible tooling packages with additional keywords 
@@ -43,10 +43,10 @@ export interface IPackages {
      * Finds the latest compatible tooling packages under a user
      *
      * @param {string} user
-     * @param {(packageJson) => boolean} [check]
+     * @param {(toolingPackage: ToolingPackage) => boolean} [check]
      * @returns {Promise<ToolingPackageDescriptor[]>}
      */
-    latestCompatibleByUser(user: string, check?: (packageJson: any) => boolean): Promise<ToolingPackage[]>
+    latestCompatibleByUser(user: string, check?: (toolingPackage: ToolingPackage) => boolean): Promise<ToolingPackage[]>
 
     
 } 

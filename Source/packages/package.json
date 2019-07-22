@@ -36,6 +36,7 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
+    "@dolittle/tooling.common.files": "7.0.0-alpha.1",
     "@dolittle/tooling.common.utilities": "7.0.0-alpha.1",
     "cross-spawn": "6.0.5",
     "is-online": "8.2.0",

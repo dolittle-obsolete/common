@@ -16,7 +16,9 @@ export * from './LatestCompatibleNpmPackageFinder'
 export * from './NpmPackageByUserFinder'
 export * from './NpmPackageWithKeywordsFinder'
 export * from './Packages'
+
 export * from './compatibility/index';
 export * from './connectivity/index';
 export * from './downloading/index';
+export * from './localPackages/index';
 export * from './globals';
