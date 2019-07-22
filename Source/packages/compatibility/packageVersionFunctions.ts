@@ -2,24 +2,26 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import latestVersion from 'latest-version';
 import semver from 'semver';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { requireInternet } from '../index';
+import { requireInternet, IConnectionChecker, ICanFindLatestVersionOfPackage } from '../index';
+
 
 /**
- * Gets the latest version of a package from npmjs.com
+ * Gets the latest version of a package
  *
  * @export
- * @param {string} pkgName The name of the package
+ * @param {string} pkgName
+ * @param {ICanFindLatestVersionOfPackage} latestPackageVersionFinder
+ * @param {IConnectionChecker} connectionChecker
  * @param {IBusyIndicator} busyIndicator
- * @returns The latest version
+ * @returns 
  */
-export async function getLatestVersionFromNpm(pkgName: string, busyIndicator: IBusyIndicator) {
-    await requireInternet(busyIndicator);
+export async function getLatestVersion(pkgName: string, latestPackageVersionFinder: ICanFindLatestVersionOfPackage, connectionChecker: IConnectionChecker, busyIndicator: IBusyIndicator) {
+    await requireInternet(connectionChecker, busyIndicator);
     busyIndicator = busyIndicator.createNew().start(`Getting latest version of ${pkgName}`);
     try {
-        const version = await latestVersion(pkgName);
+        const version = await latestPackageVersionFinder.find(pkgName);
         busyIndicator.stop();
         return version;
     } catch (error) {

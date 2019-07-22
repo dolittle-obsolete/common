@@ -7,3 +7,4 @@ export * from './DiscoveredToolingPackage';
 export * from './ICanDiscoverLocalPackages';
 export * from './ILocalPackageDiscoverers';
 export * from './LocalNpmPackageDiscoverer';
+export * from './LocalPackageDiscoverers';

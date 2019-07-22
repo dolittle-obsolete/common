@@ -2,19 +2,18 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
+import isOnline from 'is-online';
+import {IConnectionChecker} from '../index';
 /**
- * Defines a system that can check the internet connection
+ * Represents an implementation of {IConnectionChecker}
  *
  * @export
- * @interface IConnectionChecker
+ * @class ConnectionChecker
+ * @implements {IConnectionChecker}
  */
-export interface IConnectionChecker {
+export class ConnectionChecker implements IConnectionChecker {
 
-    /**
-     * Whether or not there is an active connection
-     *
-     * @returns {Promise<boolean>}
-     */
-    isConnected(): Promise<boolean>
+    isConnected() {
+        return isOnline();
+    }
 }

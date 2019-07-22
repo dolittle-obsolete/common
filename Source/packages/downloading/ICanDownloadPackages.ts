@@ -4,7 +4,14 @@
 *--------------------------------------------------------------------------------------------*/
 import { DownloadPackageInfo } from "../index";
 
+/**
+ * Defines a system that can download packages
+ *
+ * @export
+ * @interface ICanDownloadPackages
+ */
 export interface ICanDownloadPackages {
+
     /**
      * Downloads packages
      *

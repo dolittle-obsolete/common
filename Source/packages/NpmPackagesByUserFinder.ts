@@ -9,10 +9,10 @@ import { ICanFindPackagesByUser, packageIsToolingPackage, ToolingPackage } from 
  * Represents an implementation of {ICanFindPackagesByUser} for finding packages on npm
  *
  * @export
- * @class NpmPackageByUserFinder
+ * @class NpmPackagesByUserFinder
  * @implements {ICanFindPackagesByUser}
  */
-export class NpmPackageByUserFinder implements ICanFindPackagesByUser {
+export class NpmPackagesByUserFinder implements ICanFindPackagesByUser {
 
     async find(user: string, check: (toolingPackage: ToolingPackage) => boolean = (_) => true) {
         let packages = await npmUserPackages(user);

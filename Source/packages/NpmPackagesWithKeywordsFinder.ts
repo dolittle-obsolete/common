@@ -9,10 +9,10 @@ import { ICanFindPackagesWithKeywords, toolingPackageKeywords } from "./index";
  * Represents an implementation of {ICanFindPackagesWithKeywords} that finds packages on npm
  *
  * @export
- * @class NpmPackageWithKeywordsFinder
+ * @class NpmPackagesWithKeywordsFinder
  * @implements {ICanFindPackagesWithKeywords}
  */
-export class NpmPackageWithKeywordsFinder implements ICanFindPackagesWithKeywords {
+export class NpmPackagesWithKeywordsFinder implements ICanFindPackagesWithKeywords {
     
     async find(additionalKeywords: string[], limit?: number) {
         let packages = await npmKeyword(toolingPackageKeywords.concat(additionalKeywords), {size: limit});
