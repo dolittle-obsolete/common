@@ -15,35 +15,56 @@ export function packageIsToolingPackage(packageJson: any) {
 }
 
 export type ToolingPackage =  {
+
     /**
      * The name of the package
      *
      * @type {string}
      */
     name: string;
+
     /**
      * The version of the package 
      *
      * @type {string}
      */
     version: string;
+
     /**
      * The description of the package
      *
      * @type {string}
      */
     description: string;
+
     /**
      * The keywords of the package
      *
      * @type {string[]}
      */
     keywords: string[];
+
     /**
      * The dolittle configuration
      *
      * @type {{tooling: string}}
-     * 
      */
     dolittle: {tooling: string}
+}
+
+export type ToolingPackageDescriptor =  {
+
+    /**
+     * The name of the package
+     *
+     * @type {string}
+     */
+    name: string;
+
+    /**
+     * The description of the package
+     *
+     * @type {string}
+     */
+    description: string;
 }
