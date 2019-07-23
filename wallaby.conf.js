@@ -56,7 +56,9 @@ module.exports = function (w) {
         let should = chai.should();
         global.sinon = require('sinon');
         let sinonChai = require('sinon-chai');
+        let chaiAsPromised = require('chai-as-promised');
         chai.use(sinonChai);
+        chai.use(chaiAsPromised);
 
         let winston = require('winston');
         global.logger = winston.createLogger({});
