@@ -18,28 +18,26 @@ export class PluginDiscoverers implements IPluginDiscoverers {
      * Instantiates an instance of {PluginDiscoverers}.
      * @param {ICanDiscoverPlugins[]} pluginDiscoverers
      */
-    constructor (pluginDiscoverers: ICanDiscoverPlugins[]) {
-        this.pluginDiscoverers = pluginDiscoverers;
-    }
+    constructor (private _pluginDiscoverers: ICanDiscoverPlugins[]) {}
 
-    readonly pluginDiscoverers: ICanDiscoverPlugins[]
+    get pluginDiscoverers() {
+        return this._pluginDiscoverers;
+    }
     
     get discoveredPlugins() {
-        if (! this._hasDiscovered) this.discover();
         let plugins: PluginPackage[] = [];
         this.pluginDiscoverers.forEach(_ => plugins.push(..._.discovered));
         return plugins;
     }
     
     get pluginPaths() {
-        if (! this._hasDiscovered) this.discover();
         let paths: string[] = [];
         this.pluginDiscoverers.forEach(_ => paths.push(..._.pluginPaths));
         return paths;
     }
     
     add(...pluginDiscoverers: ICanDiscoverPlugins[]) {
-        this.pluginDiscoverers.push(...pluginDiscoverers);
+        this._pluginDiscoverers.push(...pluginDiscoverers);
     }
 
     async discover() {

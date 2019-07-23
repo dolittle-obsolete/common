@@ -20,7 +20,6 @@ import { IPluginDiscoverers } from './index';
  */
 export async function getInstalledPlugins(pluginDiscoverers: IPluginDiscoverers, filesystem: IFileSystem, busyIndicator: IBusyIndicator) {
     busyIndicator = busyIndicator.createNew().start('Getting installed plugins:\n');
-
     try {
         let paths = pluginDiscoverers.pluginPaths;
     

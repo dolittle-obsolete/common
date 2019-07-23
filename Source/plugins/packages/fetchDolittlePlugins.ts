@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { requireInternet } from '@dolittle/tooling.common.packages';
+import { requireInternet, IConnectionChecker } from '@dolittle/tooling.common.packages';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { OnlineDolittlePluginsFinder } from '../index';
 
@@ -14,8 +14,8 @@ import { OnlineDolittlePluginsFinder } from '../index';
  * @param {IBusyIndicator} busyIndicator
  * @returns
  */
-export async function fetchDolittlePlugins(onlinePluginsDiscoverer: OnlineDolittlePluginsFinder, busyIndicator: IBusyIndicator) {
-    await requireInternet(busyIndicator);
+export async function fetchDolittlePlugins(onlinePluginsDiscoverer: OnlineDolittlePluginsFinder, connectionChecker: IConnectionChecker,busyIndicator: IBusyIndicator) {
+    await requireInternet(connectionChecker, busyIndicator);
     busyIndicator = busyIndicator.createNew().start('Getting dolittle plugins (this might take a while, depending on your internet connection): ');
     let plugins = await onlinePluginsDiscoverer.findLatest()
         .then(plugins => {

@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { ICanRegisterProviders, ICommandManager, ICanProvideDefaultCommandGroups } from "@dolittle/tooling.common.commands";
-import { ILatestCompatiblePackageFinder } from "@dolittle/tooling.common.packages";
+import { ILatestCompatiblePackageFinder, ICanDownloadPackages, IConnectionChecker } from "@dolittle/tooling.common.packages";
 import { IFileSystem } from "@dolittle/tooling.common.files";
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { PluginsCommandGroupProvider, IPluginDiscoverers, IPlugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder } from "../index";
@@ -22,9 +22,17 @@ export class ProviderRegistrator implements ICanRegisterProviders {
 
     constructor(private _commandManager: ICommandManager, pluginDiscoverers: IPluginDiscoverers, latestPackageFinder: ILatestCompatiblePackageFinder, 
         plugins: IPlugins, onlinePluginsFinder: OnlinePluginsFinder, onlineDolittlePluginsFinder: OnlineDolittlePluginsFinder, 
-        fileSystem: IFileSystem, logger: ILoggers) {
+        packageDownloader: ICanDownloadPackages, connectionChecker: IConnectionChecker, fileSystem: IFileSystem, logger: ILoggers) {
         this._commandGroupProviders.push(new PluginsCommandGroupProvider(
-            pluginDiscoverers, latestPackageFinder, plugins, onlinePluginsFinder, onlineDolittlePluginsFinder, fileSystem, logger
+            pluginDiscoverers, 
+            latestPackageFinder, 
+            plugins, 
+            onlinePluginsFinder, 
+            onlineDolittlePluginsFinder,
+            packageDownloader,
+            connectionChecker,
+            fileSystem, 
+            logger
         ));
     }
 

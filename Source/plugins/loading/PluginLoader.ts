@@ -31,7 +31,9 @@ export class PluginLoader implements IPluginLoader {
     }
     needsReload = true;
 
-    get pluginsConfigurationPath() { return this._pluginsConfig.path; }
+    get pluginsConfigurationPath() { 
+        return this._pluginsConfig.path;
+    }
 
     get pluginPackages() { 
         return this._loadedPluginPackages;

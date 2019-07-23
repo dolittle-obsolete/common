@@ -3,9 +3,8 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { ILatestCompatiblePackageFinder, ToolingPackage, toolingPackageKeywords } from '@dolittle/tooling.common.packages';
+import { ToolingPackage, toolingPackageKeywords, IPackages } from '@dolittle/tooling.common.packages';
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import npmKeyword from 'npm-keyword';
 import { ICanFindOnlinePluginPackages, pluginPackageKeyword } from '../index';
 
 /**
@@ -22,17 +21,12 @@ export class OnlinePluginsFinder implements ICanFindOnlinePluginPackages {
      * @param {ILatestCompatiblePluginsFinder} _latestCompatibleFinder
      * @param {ILoggers} _logger
      */
-    constructor(private _latestCompatibleFinder: ILatestCompatiblePackageFinder, private _logger: ILoggers) {}
+    constructor(private _packages: IPackages, private _logger: ILoggers) {}
     
     async findLatest(keywords: string[] = [], limit: number = 250): Promise<ToolingPackage[]> {
-        this._logger.info(`Attempting to find online plugins`);
-        let plugins: ToolingPackage[] = [];  
-        let pluginPackageNames = await npmKeyword(toolingPackageKeywords.concat(pluginPackageKeyword).concat(keywords), {size: limit});
-
-        for (let name of pluginPackageNames.map(_ => _.name)) {
-            let latestCompatiblePlugin= await this._latestCompatibleFinder.find(name, pluginPackageKeyword);
-            if (latestCompatiblePlugin) plugins.push(latestCompatiblePlugin as any as ToolingPackage);
-        }
-        return plugins;
+        this._logger.info(`Attempting to find online plugins`); 
+        let pluginPackages = await this._packages.latestCompatibleWithKeywords(keywords, limit);
+        
+        return pluginPackages;
     }
 }

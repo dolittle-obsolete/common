@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { Command, ICommandManager } from "@dolittle/tooling.common.commands";
+import { Command } from "@dolittle/tooling.common.commands";
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
 import { initPluginSystem, IPlugins } from '../index';
