@@ -8,14 +8,16 @@ import { MissingDestinationPath } from "../../../index";
 describe('and dependency cannot be resolved but does not have destination path', () => {
     let context = new dependencies_and_a_discover_dependency_resolver();
     let exception = null;
-    try {
-        context.discoverDependencyResolver.resolve({}, [context.promptDependency], undefined, 'lang');
-
-    } catch(error) {
-        exception = error;
-    }
+    before(async () => {
+        try {
+            await context.discoverDependencyResolver.resolve({}, [context.promptDependency], undefined, 'lang');
     
-    it('Should throw an exception', expect(exception).to.not.be.undefined);
-    it('Should throw a MissingDestinationPath exception', exception.should.be.instanceof(MissingDestinationPath));
+        } catch(error) {
+            exception = error;
+        }
+    });
+    
+    it('Should throw an exception', () => expect(exception).to.not.be.undefined);
+    it('Should throw a MissingDestinationPath exception', () => exception.should.be.instanceof(MissingDestinationPath));
 
 });

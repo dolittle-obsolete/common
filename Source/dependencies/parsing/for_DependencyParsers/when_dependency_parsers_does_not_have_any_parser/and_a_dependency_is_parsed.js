@@ -15,5 +15,5 @@ describe('and a dependency is parsed', () => {
         exception = error;
     }
     it('Should throw an exception', () => expect(exception).to.not.be.null);
-    it('Should throw a CannotParseDependency exception', exception.should.be.instanceof(CannotParseDependency));
+    it('Should throw a CannotParseDependency exception', () => exception.should.be.instanceof(CannotParseDependency));
 });

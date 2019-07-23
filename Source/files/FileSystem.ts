@@ -4,7 +4,6 @@
 *--------------------------------------------------------------------------------------------*/
 import fs, { ReadOptions, WriteOptions, WriteFileOptions, CopyOptions, CopyOptionsSync, EnsureOptions } from 'fs-extra';
 import { IFileSystem } from "./index";
-import { getServers } from 'dns';
 
 /**
  * Represents the implementation of {IFileSystem}
