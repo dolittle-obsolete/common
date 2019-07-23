@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ILatestCompatiblePackageFinder, packageIsCompatible, ToolingPackage, IAllVersionsOfPackageFinder } from "./index";
+import { ILatestCompatiblePackageFinder, packageIsCompatible, IAllVersionsOfPackageFinder } from "./index";
 
 /**
  * Represents an implementation of {ILatestCompatiblePackageFinder} that finds latest compatible npm package
