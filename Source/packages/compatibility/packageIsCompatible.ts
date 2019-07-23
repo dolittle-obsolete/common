@@ -12,5 +12,5 @@ import { ToolingPackage } from "../index";
  * @param {BoilerplatePackage} pkgJson
  */
 export function packageIsCompatible(pkgJson: ToolingPackage, toolingPackage: any) {
-    return pkgJson.dolittle && pkgJson.dolittle.tooling && semver.satisfies(toolingPackage.version, pkgJson.dolittle.tooling);
+    return pkgJson.dolittle !== undefined && pkgJson.dolittle.tooling !== undefined && semver.satisfies(toolingPackage.version, pkgJson.dolittle.tooling);
 } 

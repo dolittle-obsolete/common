@@ -10,5 +10,5 @@
     "sourceRoot": "./"
   },
   "exclude": ["**/*.d.ts", "**/*.js", "**/for_*", "node_modules"],
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "compatibility/for_packageIsCompatible/given/a_tooling_package.js"]
 }

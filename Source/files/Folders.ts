@@ -30,6 +30,7 @@ export class Folders implements IFolders
         source = path.normalize(source);
         this._fileSystem.copySync(source, destination);
     }
+
     async makeFolderIfNotExists(folderPath: string)
     {
         folderPath = path.normalize(folderPath);
@@ -153,6 +154,7 @@ export class Folders implements IFolders
         }
         return results;
     }
+
     getFilesRecursivelySync(folder: string, pattern?: RegExp) {
         folder = path.normalize(folder);
         let results: string[] = [];
@@ -174,6 +176,7 @@ export class Folders implements IFolders
         }
         return results;
     }
+
     async getFilesAndFoldersRecursively(folder: string, pattern?: RegExp) {
         folder = path.normalize(folder);
         let results: string[] = [];
@@ -193,6 +196,7 @@ export class Folders implements IFolders
         }
         return results;
     }
+
     getFilesAndFoldersRecursivelySync(folder: string, pattern?: RegExp) {
         folder = path.normalize(folder);
         let results: string[] = [];
@@ -226,6 +230,7 @@ export class Folders implements IFolders
         }
         return results;
     }
+    
     getNearestDirectoriesSearchingUpwardsSync(folder: string, pattern: RegExp) {
         folder = path.normalize(folder);
         while (this.isNotEmptyFolder(folder)) {
