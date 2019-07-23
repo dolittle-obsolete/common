@@ -38,8 +38,6 @@ export class ListCommand extends Command {
                 outputter.warn('There problem might be that you haven\'t initialized the tooling');
                 return [];
         });
-        if (busyIndicator.isBusy) busyIndicator.stop();
-
         boilerplatesInUse.forEach(_ => outputter.print(`${_.name} - ${_.description}`));
     }
 

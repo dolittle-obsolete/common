@@ -68,22 +68,24 @@ export class ContentBoilerplates extends Boilerplates implements IContentBoilerp
         this._logger.info(`Creating boilerplate with name '${boilerplate.name}' at destination '${destination}'`);
         await this._folders.makeFolderIfNotExists(destination);
         await this._folders.copy(destination, boilerplate.contentDirectory);
+        
+        let tasks: Promise<void>[] = [];
         boilerplate.pathsNeedingBinding.forEach(_ => {
             let pathToRename = path.join(destination, _);
             let segments: string[]  = [];
             pathToRename.split(/(\\|\/)/).forEach(segment => segments.push(this._handlebars.compile(segment)(context)));
             let result = segments.join('');
-            this._fileSystem.rename(pathToRename, result);
+            tasks.push(this._fileSystem.rename(pathToRename, result));
         });
         
-        await Promise.all(boilerplate.filesNeedingBinding.map(async _ => {
+        tasks.push(...boilerplate.filesNeedingBinding.map(async _ => {
             let file = path.join(destination, _);
             let content = await this._fileSystem.readFile(file, 'utf8');
             let template = this._handlebars.compile(content);
             let result = template(context);
-            return this._fileSystem.writeFile(file, result);
+            await this._fileSystem.writeFile(file, result);
         }));
-
+        await Promise.all(tasks);
         this._logger.info(`Boilerplate created`);
         return {boilerplate, destination};
     }

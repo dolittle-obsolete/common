@@ -40,7 +40,6 @@ export class InstalledCommand extends Command {
                 outputter.warn('The problem might be that you haven\'t initialized the tooling');
                 return [];
             });
-        if (busyIndicator.isBusy) busyIndicator.stop();
         boilerplates.forEach(_ => outputter.print(`${_.packageJson.name}@${_.packageJson.version}`));
     }
 

@@ -25,14 +25,12 @@ export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
     readonly discoverers: ICanDiscoverBoilerplates[];
     
     get boilerplatePaths() {
-        if (! this._hasDiscovered) this.discover();
         let paths: string[] = [];
         this.discoverers.forEach(_ => paths.push(..._.boilerplatePaths));
         return paths;
     }
 
     get discovered() {
-        if (! this._hasDiscovered) this.discover();
         let boilerplates: ToolingPackage[] = [];
         this.discoverers.forEach(_ => boilerplates.push(..._.discovered));
         return boilerplates;

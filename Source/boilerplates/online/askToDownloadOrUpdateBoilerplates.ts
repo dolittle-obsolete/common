@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import {requireInternet, downloadPackagesFromNpmSync, DownloadPackageInfo} from '@dolittle/tooling.common.packages';
+import {requireInternet, DownloadPackageInfo, IConnectionChecker, ICanDownloadPackages} from '@dolittle/tooling.common.packages';
 import { PromptDependency, IDependencyResolvers, confirmUserInputType, chooseMultipleUserInputType } from '@dolittle/tooling.common.dependencies';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { IBoilerplateDiscoverers, initBoilerplatesSystem, IBoilerplatesLoader } from '../index';
@@ -21,19 +21,17 @@ export type BoilerplatePackageInfo = {
  * @param {IBusyIndicator} busyIndicator 
  * @export
  */
-export async function askToDownloadOrUpdateBoilerplates(boilerplates: BoilerplatePackageInfo[], boilerplateDiscoverers: IBoilerplateDiscoverers, boilerplatesLoader: IBoilerplatesLoader, resolvers: IDependencyResolvers, 
-    busyIndicator: IBusyIndicator) {
-    await requireInternet(busyIndicator);
-    if (busyIndicator.isBusy) busyIndicator.stop()
+export async function askToDownloadOrUpdateBoilerplates(boilerplates: BoilerplatePackageInfo[], boilerplateDiscoverers: IBoilerplateDiscoverers, boilerplatesLoader: IBoilerplatesLoader, 
+    resolvers: IDependencyResolvers, packageDownloader: ICanDownloadPackages, connectionChecker: IConnectionChecker, busyIndicator: IBusyIndicator) {
+    await requireInternet(connectionChecker, busyIndicator);
+
     if (boilerplates.length && boilerplates.length > 0) {
         const shouldDownload = await askToDownload(resolvers);
         if (shouldDownload) {
             let packagesToDownload = await askWhichBoilerplates(boilerplates, resolvers);
             if (packagesToDownload.length > 0) {
-                await downloadPackagesFromNpmSync(packagesToDownload, busyIndicator);
-                if (busyIndicator.isBusy) busyIndicator.stop()
+                await packageDownloader.download(packagesToDownload);
                 await initBoilerplatesSystem(boilerplateDiscoverers, boilerplatesLoader, busyIndicator);
-                if (busyIndicator.isBusy) busyIndicator.stop()
             }
         }
     }

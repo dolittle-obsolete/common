@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { requireInternet } from '@dolittle/tooling.common.packages';
+import { requireInternet, IConnectionChecker } from '@dolittle/tooling.common.packages';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { OnlineDolittleBoilerplatesFinder } from '../index';
 
@@ -14,8 +14,10 @@ import { OnlineDolittleBoilerplatesFinder } from '../index';
  * @param {IBusyIndicator} busyIndicator
  * @returns
  */
-export async function fetchDolittleBoilerplates(onlineBoilerplatesDiscoverer: OnlineDolittleBoilerplatesFinder, busyIndicator: IBusyIndicator ) {
-    await requireInternet(busyIndicator);
+export async function fetchDolittleBoilerplates(onlineBoilerplatesDiscoverer: OnlineDolittleBoilerplatesFinder, 
+    connectionChecker: IConnectionChecker,busyIndicator: IBusyIndicator ) {
+    
+    await requireInternet(connectionChecker, busyIndicator);
     busyIndicator = busyIndicator.createNew().start('Getting dolittle boilerplates (this might take a while, depending on your internet connection): ');
     let boilerplates = await onlineBoilerplatesDiscoverer.findLatest()
         .then(boilerplates => {

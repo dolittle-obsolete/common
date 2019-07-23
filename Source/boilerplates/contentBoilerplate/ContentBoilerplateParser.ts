@@ -68,20 +68,15 @@ export class ContentBoilerplateParser implements ICanParseBoilerplates {
         let pathsNeedingBinding: string[] = [];
         let filesNeedingBinding: string[] = [];
         const contentFolder = path.join(path.dirname(boilerplatePath), contentBoilerplateContentDirectoryName);
-        if (! (await this._fileSystem.exists(contentFolder))) {
+        const fileExists = await this._fileSystem.exists(contentFolder);
+        if (! fileExists) {
             throw new Error(`Missing folder with name ${contentBoilerplateContentDirectoryName} at root level when parsing boilerplate at path ${boilerplatePath}`);
         }
         
         let paths = await this._folders.getFilesAndFoldersRecursively(contentFolder);
-        paths = paths.filter((_: string) => {
-            let include = true;
-            binaryFiles.forEach(b => {
-                if (_.toLowerCase().indexOf(b) > 0) include = false;
-            });
-            return include;
-        });
-        pathsNeedingBinding = paths.filter((_: string) => _.indexOf('{{') > 0).map((_: string) => _.substr(contentFolder.length + 1));
-        for (let _ of paths) {
+        paths = this.filterOutBinaryFiles(paths)
+        pathsNeedingBinding = paths.filter(_ => _.indexOf('{{') > 0).map(_ => _.substr(contentFolder.length + 1));
+        await Promise.all(paths.map(async _ => {
             let stat = await this._fileSystem.stat(_);
             if (!stat.isDirectory()) {
                 let file = await this._fileSystem.readFile(_);
@@ -89,12 +84,22 @@ export class ContentBoilerplateParser implements ICanParseBoilerplates {
                     filesNeedingBinding.push(_.substr(contentFolder.length + 1));
                 }
             }
-        }
+        }));
         let ret = {
             pathsNeedingBinding,
             filesNeedingBinding
         };
         return ret;
         
+    }
+
+    private filterOutBinaryFiles(filePaths: string[]) {
+        return filePaths.filter(_ => {
+            let include = true;
+            binaryFiles.forEach(b => {
+                if (_.toLowerCase().indexOf(b) > 0) include = false;
+            });
+            return include;
+        });
     }
 }

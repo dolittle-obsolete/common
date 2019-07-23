@@ -32,7 +32,6 @@ export class InitCommand extends Command {
         
         this._logger.info(`Executing 'boilerplates init' command`);
         await initBoilerplatesSystem(this._boilerplateDiscoverers, this._boilerplateLoader, busyIndicator);
-        if (busyIndicator.isBusy) busyIndicator.stop();
     }
 
     getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {

@@ -30,7 +30,9 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
 
     needsReload = true;
     
-    get boilerplatesConfigurationPath() { return this._boilerplatesConfig.path; }
+    get boilerplatesConfigurationPath() { 
+        return this._boilerplatesConfig.path;
+    }
     
     get loaded() {
         return this._loadedBoilerplates;
@@ -55,8 +57,8 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
     
     private async getFromFolder(folder: string) {
         let boilerplatePath = path.join(folder, 'boilerplate.json');
-        
-        if (! (await this._fileSystem.exists(boilerplatePath))) {
+        const boilerplateExists = await this._fileSystem.exists(boilerplatePath);
+        if (! boilerplateExists) {
             this._logger.info(`The path of a boilerplate defined in the boilerplates configuration does not exists. Path: ${boilerplatePath}`);
             throw new Error(`Could not find boilerplate configuration in '${folder}'`);
         }

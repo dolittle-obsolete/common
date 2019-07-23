@@ -50,16 +50,18 @@ export class TemplatesBoilerplateParser implements ICanParseBoilerplates {
     private async createTemplates(contentDirectory: string) {
         let templateFiles = await this._folders.getFilesRecursively(contentDirectory, new RegExp(templateConfigurationName));
         let templates: ITemplate[] = [];
-        for (let templateFile of templateFiles) {
+        await Promise.all(templateFiles.map(async templateFile => {
             let includedFiles = await this.getIncludedFiles(getFileDirPath(templateFile));
             let templateJson = await this._fileSystem.readJson(templateFile);
             let template = templateFromJson(templateJson, templateFile, includedFiles, this._dependencyParsers);
             templates.push(template);
-        }
+        }));
         return templates;
     }
     
     private async getIncludedFiles(folderPath: string) {
-        return (await this._folders.getFiles(folderPath, /.*/)).map(filePath => getFileNameAndExtension(filePath)).filter(file => file !== templateConfigurationName);
+        let filesInFolder = await this._folders.getFiles(folderPath, /.*/);
+        let filesExceptTemplateConfig = filesInFolder.map(filePath => getFileNameAndExtension(filePath)).filter(file => file !== templateConfigurationName);
+        return filesExceptTemplateConfig
     }
 }

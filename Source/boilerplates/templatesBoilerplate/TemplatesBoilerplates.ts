@@ -73,7 +73,7 @@ export class TemplatesBoilerplates extends Boilerplates implements ITemplatesBoi
            
             let template = this._handlebars.compile(oldContent);
             let newContent = template(context);
-            return this._fileSystem.writeFile(newFilePath, newContent);
+            await this._fileSystem.writeFile(newFilePath, newContent);
         }));
 
         return {template: template, boilerplate: boilerplate, destination: destinationPath};

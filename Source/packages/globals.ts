@@ -8,11 +8,8 @@ import {
     LatestCompatibleNpmPackageFinder, IPackages, Packages, AllNpmPackageVersionsFinder, 
     NpmPackagesByUserFinder, NpmPackagesWithKeywordsFinder, LatestNpmPackageVersionFinder, 
     ICanFindLatestVersionOfPackage, ILocalPackageDiscoverers, LocalPackageDiscoverers, 
-    LocalNpmPackageDiscoverer, 
-    NpmPackageDownloader,
-    ICanDownloadPackages,
-    IConnectionChecker,
-    ConnectionChecker
+    LocalNpmPackageDiscoverer, NpmPackageDownloader,ICanDownloadPackages,
+    IConnectionChecker, ConnectionChecker, ILatestCompatiblePackageFinder
 } from './index';
 
 
@@ -25,7 +22,7 @@ export const toolingPackage = process.env.WALLABY_TESTING? require('./package.js
 export let latestNpmPackageVersionFinder: ICanFindLatestVersionOfPackage = new LatestNpmPackageVersionFinder();
 
 let allNpmPackageVersionsFinder = new AllNpmPackageVersionsFinder(); 
-let latestCompatiblePackageFinder = new LatestCompatibleNpmPackageFinder(allNpmPackageVersionsFinder, toolingPackage);
+export let latestCompatiblePackageFinder: ILatestCompatiblePackageFinder = new LatestCompatibleNpmPackageFinder(allNpmPackageVersionsFinder, toolingPackage);
 let npmPackagesByUserFinder = new NpmPackagesByUserFinder();
 let npmPackagesWithKeywordsFinder = new NpmPackagesWithKeywordsFinder();
 

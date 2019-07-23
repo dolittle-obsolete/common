@@ -5,7 +5,7 @@
 import { ICanProvideDefaultCommandGroups, ICommandGroup } from "@dolittle/tooling.common.commands";
 import { IFileSystem } from "@dolittle/tooling.common.files";
 import { ILoggers } from "@dolittle/tooling.common.logging";
-import { ILatestCompatiblePackageFinder } from "@dolittle/tooling.common.packages";
+import { ILatestCompatiblePackageFinder, ICanDownloadPackages, IConnectionChecker } from "@dolittle/tooling.common.packages";
 import { BoilerplatesCommandGroup, IBoilerplateDiscoverers, IBoilerplates, OnlineBoilerplatesDiscoverer, OnlineDolittleBoilerplatesFinder, CheckCommand, InitCommand, InstalledCommand, ListCommand, InstallCommand, IBoilerplatesLoader } from "../index";
 
 export class BoilerplatesCommandGroupProvider implements ICanProvideDefaultCommandGroups {
@@ -13,12 +13,13 @@ export class BoilerplatesCommandGroupProvider implements ICanProvideDefaultComma
     private _boilerplatesCommandGroup: BoilerplatesCommandGroup
 
     constructor(boilerplateDiscoverers: IBoilerplateDiscoverers, boilerplatesLoader: IBoilerplatesLoader, latestPackageFinder: ILatestCompatiblePackageFinder, boilerplates: IBoilerplates, 
-                onlineBoilerplatesFinder: OnlineBoilerplatesDiscoverer, onlineDolittleBoilerplatesFinder: OnlineDolittleBoilerplatesFinder, fileSystem: IFileSystem, logger: ILoggers ) {
+                onlineBoilerplatesFinder: OnlineBoilerplatesDiscoverer, onlineDolittleBoilerplatesFinder: OnlineDolittleBoilerplatesFinder, 
+                packageDownloader: ICanDownloadPackages, connectionChecker: IConnectionChecker, fileSystem: IFileSystem, logger: ILoggers ) {
         this._boilerplatesCommandGroup = new BoilerplatesCommandGroup([
-            new CheckCommand(boilerplateDiscoverers, boilerplatesLoader, latestPackageFinder, fileSystem, logger),
+            new CheckCommand(boilerplateDiscoverers, boilerplatesLoader, latestPackageFinder, packageDownloader, connectionChecker, fileSystem, logger),
             new InitCommand(boilerplateDiscoverers, boilerplatesLoader, logger),
             new InstalledCommand(boilerplateDiscoverers, fileSystem, logger),
-            new InstallCommand(boilerplateDiscoverers, boilerplatesLoader, onlineBoilerplatesFinder, onlineDolittleBoilerplatesFinder, fileSystem, logger),
+            new InstallCommand(boilerplateDiscoverers, boilerplatesLoader, onlineBoilerplatesFinder, onlineDolittleBoilerplatesFinder, packageDownloader, connectionChecker, fileSystem, logger),
             new ListCommand(boilerplates, logger),
         ]);
     }
