@@ -21,6 +21,6 @@ export const onlinePluginsFinder = new OnlinePluginsFinder(packages, loggers);
 
 export const onlineDolittlePluginsFinder = new OnlineDolittlePluginsFinder(packages, loggers);
 
-let providerRegistrator: ICanRegisterProviders = new ProviderRegistrator(commandManager, pluginDiscoverers, latestCompatiblePackageFinder, plugins, onlinePluginsFinder, onlineDolittlePluginsFinder, npmPackageDownloader, connectionChecker, fileSystem, loggers);
+let providerRegistrator: ICanRegisterProviders = new ProviderRegistrator(commandManager, pluginDiscoverers, pluginLoader, latestCompatiblePackageFinder, plugins, onlinePluginsFinder, onlineDolittlePluginsFinder, npmPackageDownloader, connectionChecker, fileSystem, loggers);
 
 providerRegistrators.addRegistrators(providerRegistrator);

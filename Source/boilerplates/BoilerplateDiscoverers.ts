@@ -2,8 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { ToolingPackage } from '@dolittle/tooling.common.packages';
-import { ICanDiscoverBoilerplates, IBoilerplateDiscoverers } from './index';
+import { ICanDiscoverBoilerplates, IBoilerplateDiscoverers, BoilerplatePackage } from './index';
 
 /**
  * Represents an implementation of {IBoilerplateDiscoverers}
@@ -13,7 +12,6 @@ import { ICanDiscoverBoilerplates, IBoilerplateDiscoverers } from './index';
  * @implements {IBoilerplateDiscoverers}
  */
 export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
-    private _hasDiscovered = false;
     /**
      * Instantiates an instance of {BoilerplateDiscoverers}.
      * @param {ICanDiscoverBoilerplates[]} boilerplateDiscoverers
@@ -31,7 +29,7 @@ export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
     }
 
     get discovered() {
-        let boilerplates: ToolingPackage[] = [];
+        let boilerplates: BoilerplatePackage[] = [];
         this.discoverers.forEach(_ => boilerplates.push(..._.discovered));
         return boilerplates;
     }
@@ -41,7 +39,6 @@ export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
     }
 
     async discover() {
-        this._hasDiscovered = true;
         await Promise.all(this.discoverers.map(_ => _.discover()));
     }
 }

@@ -20,7 +20,9 @@ export class ProviderRegistrators implements IProviderRegistrators {
     
     constructor(private _logger: ILoggers) {}
 
-    get hasRegistered() { return this._hasRegistered; }
+    get hasRegistered() { 
+        return this._hasRegistered;
+    }
 
     register() {
         if (this._hasRegistered) {

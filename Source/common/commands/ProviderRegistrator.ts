@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import { ICanRegisterProviders, ICanProvideDefaultCommands, ICommandManager } from "@dolittle/tooling.common.commands";
 import { ILoggers } from "@dolittle/tooling.common.logging";
-import { CommandsProvider } from "../index";
+import { CommandsProvider, IInitializer } from "../index";
 
 /**
  * Represents an implementation of {ICanRegisterProviders}
@@ -22,8 +22,8 @@ export class ProviderRegistrator implements ICanRegisterProviders {
      * @param {ICommandManager} _commandManager
      * @param {ILoggers} logger
      */
-    constructor(private _commandManager: ICommandManager, logger: ILoggers) {
-        this._commandsProvider.push(new CommandsProvider(logger));
+    constructor(private _commandManager: ICommandManager, initializer: IInitializer, logger: ILoggers) {
+        this._commandsProvider.push(new CommandsProvider(initializer, logger));
     }
 
     register() {

@@ -2,10 +2,9 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { ILatestCompatiblePackageFinder, ToolingPackage, IPackages } from '@dolittle/tooling.common.packages';
-import { ICanFindOnlinePluginPackages, packageIsPluginPackage, pluginPackageKeyword } from '../index';
+import { ToolingPackage, IPackages } from '@dolittle/tooling.common.packages';
+import { ICanFindOnlinePluginPackages, packageIsPluginPackage } from '../index';
 
 const dolittleUser = 'woksin';
 /**
@@ -32,6 +31,5 @@ export class OnlineDolittlePluginsFinder implements ICanFindOnlinePluginPackages
 
         return pluginPackages;
     }
-    
 
 }

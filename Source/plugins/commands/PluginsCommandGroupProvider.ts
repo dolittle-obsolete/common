@@ -6,14 +6,32 @@ import { ICanProvideDefaultCommandGroups, ICommandGroup } from "@dolittle/toolin
 import { IFileSystem } from "@dolittle/tooling.common.files";
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ILatestCompatiblePackageFinder, IConnectionChecker, ICanDownloadPackages } from "@dolittle/tooling.common.packages";
-import { PluginsCommandGroup, IPluginDiscoverers, IPlugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, CheckCommand, InitCommand, InstalledCommand, ListCommand, InstallCommand } from "../index";
+import { PluginsCommandGroup, IPluginDiscoverers, IPlugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, CheckCommand, InitCommand, InstalledCommand, ListCommand, InstallCommand, IPluginLoader } from "../index";
 
+/**
+ * Represents an implementation of {ICanProvideDefaultCommandGroups}
+ *
+ * @export
+ * @class PluginsCommandGroupProvider
+ * @implements {ICanProvideDefaultCommandGroups}
+ */
 export class PluginsCommandGroupProvider implements ICanProvideDefaultCommandGroups {
 
     private _pluginsCommandGroup: PluginsCommandGroup
     
-
-    constructor(pluginDiscoverers: IPluginDiscoverers, latestPackageFinder: ILatestCompatiblePackageFinder, plugins: IPlugins, 
+    /**
+     * Instantiates an instance of {PluginsCommandGroupProvider}.
+     * @param {IPluginDiscoverers} pluginDiscoverers
+     * @param {ILatestCompatiblePackageFinder} latestPackageFinder
+     * @param {IPlugins} plugins
+     * @param {OnlinePluginsFinder} onlinePluginsFinder
+     * @param {OnlineDolittlePluginsFinder} onlineDolittlePluginsFinder
+     * @param {ICanDownloadPackages} packageDownloader
+     * @param {IConnectionChecker} connectionChecker
+     * @param {IFileSystem} fileSystem
+     * @param {ILoggers} logger
+     */
+    constructor(pluginDiscoverers: IPluginDiscoverers, pluginLoader: IPluginLoader, latestPackageFinder: ILatestCompatiblePackageFinder, plugins: IPlugins, 
                 onlinePluginsFinder: OnlinePluginsFinder, onlineDolittlePluginsFinder: OnlineDolittlePluginsFinder, 
                 packageDownloader: ICanDownloadPackages, connectionChecker: IConnectionChecker, fileSystem: IFileSystem, logger: ILoggers ) {
         this._pluginsCommandGroup = new PluginsCommandGroup([
@@ -21,7 +39,7 @@ export class PluginsCommandGroupProvider implements ICanProvideDefaultCommandGro
             new InitCommand(plugins, logger),
             new InstallCommand(plugins, pluginDiscoverers, onlinePluginsFinder, onlineDolittlePluginsFinder, packageDownloader, connectionChecker, fileSystem, logger),
             new InstalledCommand(pluginDiscoverers, fileSystem, logger),
-            new ListCommand(plugins, logger),
+            new ListCommand(pluginLoader, logger),
         ]);
     }
     provide(): ICommandGroup[] { return [this._pluginsCommandGroup]; }

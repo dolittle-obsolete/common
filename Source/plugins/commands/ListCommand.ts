@@ -5,7 +5,7 @@
 import { Command } from "@dolittle/tooling.common.commands";
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
-import { getPluginsInUse, IPlugins } from "../index";
+import { getPluginsInUse, IPluginLoader } from "../index";
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
 
 const name = 'list';
@@ -23,7 +23,7 @@ export class ListCommand extends Command {
     /**
      * Instantiates an instance of {ListCommand}
      */
-    constructor(private _plugins: IPlugins, private _logger: ILoggers) {
+    constructor(private _pluginLoader: IPluginLoader, private _logger: ILoggers) {
         super(name, description, false);
     }
 
@@ -31,16 +31,15 @@ export class ListCommand extends Command {
                 outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         
         this._logger.info(`Executing 'plugins list' command`);
-        let pluginsInUse = await getPluginsInUse(this._plugins, busyIndicator)
+        let pluginsInUse = await getPluginsInUse(this._pluginLoader, busyIndicator)
             .catch((error: Error) => {
                 outputter.warn('An error occured while getting the used plugins.\nError message:');
                 outputter.error(error.message);
                 outputter.warn('There problem might be that you haven\'t initialized the tooling');
                 return [];
         });
-        if (busyIndicator.isBusy) busyIndicator.stop();
 
-        pluginsInUse.forEach(_ => outputter.print(`${_.name} - ${_.description}`));
+        pluginsInUse.forEach(_ => outputter.print(`${_.packageJson.name} - ${_.packageJson.description}`));
     }
 
     getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {

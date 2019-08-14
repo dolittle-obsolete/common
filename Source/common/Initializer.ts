@@ -23,7 +23,9 @@ export class Initializer implements IInitializer {
     constructor(private _providerRegistrators: IProviderRegistrators, private _commandManager: ICommandManager, private _plugins: IPlugins, 
         private _boilerplates: IBoilerplates, private _boilerplatesLoader: IBoilerplatesLoader, private _logger: ILoggers) {}
     
-        get isInitialized() { return this._isInitialized; }
+    get isInitialized() { 
+        return this._isInitialized;
+    }
 
     async initialize(busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         if (this.isInitialized) {
@@ -41,6 +43,18 @@ export class Initializer implements IInitializer {
         }
     }
 
+    async reloadPlugins(busyIndicator: IBusyIndicator) {
+        busyIndicator = busyIndicator.createNew('Reloading plugins');
+        try {
+            await this.providePlugins();
+            await this.provideBoilerplateNamespaces();
+        } catch(error) {
+            busyIndicator.fail('Could not reload plugins');
+            throw new Error(error);
+        }
+        busyIndicator.succeed('Plugins reloaded');
+    }
+    
     private async providePlugins() {
         let loadedPlugins = await this._plugins.getPlugins();
         this._commandManager.clear();

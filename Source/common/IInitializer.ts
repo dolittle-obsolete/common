@@ -24,4 +24,11 @@ export interface IInitializer {
      */
     initialize(busyIndicator: IBusyIndicator): Promise<void>
 
+    /**
+     * Reloads plugins into the tooling system
+     *
+     * @param {IBusyIndicator} busyIndicator
+     * @returns {Promise<void>}
+     */
+    reloadPlugins(busyIndicator: IBusyIndicator): Promise<void>
 }

@@ -2,8 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ToolingPackage } from '@dolittle/tooling.common.packages';
-import { IPlugin } from '../index';
+import { IPlugin, PluginPackage } from '../index';
 
 /**
  * Defines a system for loading plugins from the plugins configuration
@@ -25,7 +24,7 @@ export interface IPluginLoader {
      *
      * @type {ToolingPackage[]}
      */
-    readonly pluginPackages: ToolingPackage[]
+    readonly pluginPackages: PluginPackage[]
 
     /**
      * The path of the plugins configuration

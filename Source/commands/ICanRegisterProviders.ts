@@ -9,7 +9,7 @@
 export interface ICanRegisterProviders {
     
     /**
-     * Registers providers
+     * Registers providers to the {ICommandManager}
      *
      */
     register(): void

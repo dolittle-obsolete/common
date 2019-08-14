@@ -5,8 +5,7 @@
 import {IFileSystem} from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import path from 'path';
-import { PluginsConfig, IPlugin, IPluginLoader, PluginModule } from "../index";
-import { ToolingPackage } from '@dolittle/tooling.common.packages';
+import { PluginsConfig, IPlugin, IPluginLoader, PluginModule, PluginPackage } from "../index";
 
 /**
  * Represents an implementation of {IPluginLoader}
@@ -17,7 +16,7 @@ import { ToolingPackage } from '@dolittle/tooling.common.packages';
  */
 export class PluginLoader implements IPluginLoader {
     private _loadedPlugins: IPlugin[] = [];
-    private _loadedPluginPackages: ToolingPackage[] = [];
+    private _loadedPluginPackages: PluginPackage[] = [];
 
     /**
      * Instantiates an instance of {PluginLoader}.
@@ -64,8 +63,12 @@ export class PluginLoader implements IPluginLoader {
                 let plugin = await this.getPluginFromModule(pluginFilePath);
                 if (plugin) {
                     this._loadedPlugins.push(plugin);
-                    let pluginPackage = await this._fileSystem.readJson(pluginPackagePath);
-                    this._loadedPluginPackages.push(pluginPackage as ToolingPackage)
+                    let pluginPackageObj = await this._fileSystem.readJson(pluginPackagePath);
+                    let pluginPackage: PluginPackage = {
+                        packageJson: pluginPackageObj,
+                        pluginFilePath: pluginFilePath
+                    }
+                    this._loadedPluginPackages.push(pluginPackage)
                 }
             }
         }

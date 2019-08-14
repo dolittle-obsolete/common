@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
-import {  IPlugins } from './index';
+import { PluginPackage, IPluginLoader } from './index';
 
 /**
  * Gets the plugins used by the tooling
@@ -11,12 +11,11 @@ import {  IPlugins } from './index';
  * @param {IPlugins} _plugins 
  * @param {IBusyIndicator} busyIndicator
  * @export
- * 
  */
-export async function getPluginsInUse(_plugins: IPlugins, busyIndicator: IBusyIndicator) {
+export async function getPluginsInUse(_pluginLoader: IPluginLoader, busyIndicator: IBusyIndicator): Promise<PluginPackage[]> {
     busyIndicator = busyIndicator.createNew().start('Getting plugins in use:\n');
     try {
-        let plugins = await _plugins.getPlugins();
+        let plugins = await _pluginLoader.pluginPackages;
         let numPlugins = plugins.length;
         if (numPlugins > 0) {
             busyIndicator.succeed(`There are ${numPlugins} in use`);

@@ -38,9 +38,13 @@ export class CommandManager implements ICommandManager {
         return namespaces;
     }
     
-    get commands() { return this._defaultCommands.commands; }
+    get commands() { 
+        return this._defaultCommands.commands;
+    }
 
-    get commandGroups() { return this._defaultCommandGroups.commandGroups; }
+    get commandGroups() { 
+        return this._defaultCommandGroups.commandGroups;
+    }
 
     async execute(dependencyResolvers: IDependencyResolvers, allArguments: string[], currentWorkingDirectory: string, coreLanguage: string, commandOptions?: Map<string, any>, 
                     outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {

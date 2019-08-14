@@ -32,7 +32,7 @@ export class InstalledCommand extends Command {
                 outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         
         this._logger.info(`Executing 'plugins installed' command`);
-        let plugins = await getInstalledPlugins(this._pluginDiscoverers, this._fileSystem, busyIndicator)
+        let plugins = await getInstalledPlugins(this._pluginDiscoverers, busyIndicator)
             .catch((error: Error) => {
                 if (busyIndicator.isBusy) busyIndicator.stop();
                 outputter.warn('An error occured while getting the installed plugins.\nError message:');
@@ -40,8 +40,7 @@ export class InstalledCommand extends Command {
                 outputter.warn('The problem might be that you haven\'t initialized the tooling');
                 return [];
             });
-        if (busyIndicator.isBusy) busyIndicator.stop();
-        plugins.forEach(_ => outputter.print(`${_.name}@${_.version}`));
+        plugins.forEach(_ => outputter.print(`${_.packageJson.name}@${_.packageJson.version}`));
     }
     
     getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {

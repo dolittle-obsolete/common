@@ -29,7 +29,7 @@ const dolittlePluginsDependency = new PromptDependency(
  * @extends {Command}
  */
 export class InstallCommand extends Command {
-    
+
     /**
      * Instantiates an instance of {DolittleCommand}.
      */
@@ -48,13 +48,13 @@ export class InstallCommand extends Command {
         else 
             plugins = await fetchOnlinePlugins(this._onlinePluginsFinder, this._connectionChecker,busyIndicator, namespace? [namespace]: []);
 
-        let localPlugins = await getInstalledPlugins(this._pluginDiscoverers, this._fileSystem, busyIndicator);
-        let newAvailablePlugins = plugins.filter(boilerplate => !localPlugins.map(_ => _.name).includes(boilerplate.name));
-        let upgradeablePlugins = plugins.filter(boilerplate => localPlugins.map(_ => _.name).includes(boilerplate.name))
+        let localPlugins = await getInstalledPlugins(this._pluginDiscoverers, busyIndicator);
+        let newAvailablePlugins = plugins.filter(boilerplate => !localPlugins.map(_ => _.packageJson.name).includes(boilerplate.name));
+        let upgradeablePlugins = plugins.filter(boilerplate => localPlugins.map(_ => _.packageJson.name).includes(boilerplate.name))
             .map(plugin => {
-                let localPlugin = localPlugins.find(_ => _.name === plugin.name);
+                let localPlugin = localPlugins.find(_ => _.packageJson.name === plugin.name);
                 if (localPlugin) {
-                    return {name: plugin.name, version: plugin.version, localVersion: localPlugin.version};
+                    return {name: plugin.name, version: plugin.version, localVersion: localPlugin.packageJson.version};
                 }
                 return undefined;
             })

@@ -2,10 +2,9 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
-import { ToolingPackage, toolingPackageKeywords, IPackages } from '@dolittle/tooling.common.packages';
+import { ToolingPackage, IPackages } from '@dolittle/tooling.common.packages';
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { ICanFindOnlinePluginPackages, pluginPackageKeyword } from '../index';
+import { ICanFindOnlinePluginPackages } from '../index';
 
 /**
  * Represents an implementation of {ICanFindOnlinePluginPackages} that can find plugins online by going through the npm registry

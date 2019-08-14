@@ -9,7 +9,7 @@ import { plugins } from "@dolittle/tooling.common.plugins";
 import { loggers } from "@dolittle/tooling.common.logging";
 import {ProviderRegistrator} from './index';
 
-let providerRegistrator: ICanRegisterProviders = new ProviderRegistrator(commandManager, loggers);
-providerRegistrators.addRegistrators(providerRegistrator);
-
 export let initializer: IInitializer = new Initializer(providerRegistrators, commandManager, plugins, boilerplates, boilerplatesLoader, loggers);
+
+let providerRegistrator: ICanRegisterProviders = new ProviderRegistrator(commandManager, initializer, loggers);
+providerRegistrators.addRegistrators(providerRegistrator);

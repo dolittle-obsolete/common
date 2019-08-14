@@ -16,7 +16,7 @@ export async function getInstalledPlugins(pluginDiscoverers: IPluginDiscoverers,
     busyIndicator = busyIndicator.createNew().start('Getting installed plugins:\n');
     try {
         await pluginDiscoverers.discover();
-        let pluginPackages = pluginDiscoverers.discoveredPlugins;
+        let pluginPackages = pluginDiscoverers.discovered;
         let numPlugins = pluginPackages.length;
         if (numPlugins > 0) busyIndicator.succeed(`Found ${numPlugins} installed plugins`);
         else busyIndicator.info('Could not find any installed plugins.');

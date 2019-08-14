@@ -11,7 +11,6 @@ import { ICanDiscoverPlugins, PluginPackage, IPluginDiscoverers } from "../index
  * @class PluginDiscoverers
  */
 export class PluginDiscoverers implements IPluginDiscoverers {
-    private _hasDiscovered = false;
     
     /**
      * Instantiates an instance of {PluginDiscoverers}.
@@ -23,13 +22,13 @@ export class PluginDiscoverers implements IPluginDiscoverers {
         return this._pluginDiscoverers;
     }
     
-    get discoveredPlugins() {
+    get discovered() {
         let plugins: PluginPackage[] = [];
         this.pluginDiscoverers.forEach(_ => plugins.push(..._.discovered));
         return plugins;
     }
     
-    get pluginPaths() {
+    get paths() {
         let paths: string[] = [];
         this.pluginDiscoverers.forEach(_ => paths.push(..._.pluginPaths));
         return paths;
@@ -40,7 +39,6 @@ export class PluginDiscoverers implements IPluginDiscoverers {
     }
 
     async discover() {
-        this._hasDiscovered = true;
         await Promise.all(this.pluginDiscoverers.map(_ => _.discover()));
     }
 }
