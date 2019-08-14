@@ -12,7 +12,7 @@ import { IBoilerplatesLoader, BoilerplatesConfig, IBoilerplateParsers, IBoilerpl
  * Represents an implementation of {IBoilerplatesLoader} for loading boilerplates from the {BoilerplatesConfig}
  */
 export class BoilerplatesLoader implements IBoilerplatesLoader {
-    private _loadedBoilerplates!: IBoilerplate[];
+    private _loadedBoilerplates: IBoilerplate[] = [];
 
     /**
      * Instantiates an instance of {BoilerplatesLoader}

@@ -21,7 +21,6 @@ export async function getInstalledBoilerplates(boilerplateDiscoverers: IBoilerpl
         await boilerplateDiscoverers.discover();
         let boilerplatePackages = boilerplateDiscoverers.discovered;
     
-        
         let numBoilerplates = boilerplatePackages.length;
         if (numBoilerplates > 0) busyIndicator.succeed(`Found ${numBoilerplates} installed boilerplates`);
         else busyIndicator.info(`Could not find any installed boilerplates`);
