@@ -8,7 +8,6 @@ import { IFileSystem } from "@dolittle/tooling.common.files";
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { PluginsCommandGroupProvider, IPluginDiscoverers, IPlugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder } from "../index";
 
-
 /**
  * Represents an implementation of {ICanRegisterProviders}
  *

@@ -1,9 +1,8 @@
-import { IBusyIndicator } from "@dolittle/tooling.common.utilities";
-
 /*---------------------------------------------------------------------------------------------
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
+import { IBusyIndicator } from "@dolittle/tooling.common.utilities";
 
 /**
  * Defines a system that initializes the tooling system

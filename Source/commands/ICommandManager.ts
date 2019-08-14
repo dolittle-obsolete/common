@@ -6,7 +6,6 @@ import { ICanOutputMessages, IBusyIndicator } from "@dolittle/tooling.common.uti
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
 import { ICanProvideDefaultCommands, ICanProvideDefaultCommandGroups, ICanProvideNamespaces, INamespace, ICommand, ICommandGroup } from "./index";
 
-
 /**
  * Defines the manager for the commands
  */

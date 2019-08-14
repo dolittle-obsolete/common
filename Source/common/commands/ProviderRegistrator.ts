@@ -6,7 +6,6 @@ import { ICanRegisterProviders, ICanProvideDefaultCommands, ICommandManager } fr
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { CommandsProvider } from "../index";
 
-
 /**
  * Represents an implementation of {ICanRegisterProviders}
  *
@@ -18,6 +17,11 @@ export class ProviderRegistrator implements ICanRegisterProviders {
     
     private _commandsProvider: ICanProvideDefaultCommands[] = [];
 
+    /**
+     * Instantiates an instance of {ProviderRegistrator}.
+     * @param {ICommandManager} _commandManager
+     * @param {ILoggers} logger
+     */
     constructor(private _commandManager: ICommandManager, logger: ILoggers) {
         this._commandsProvider.push(new CommandsProvider(logger));
     }

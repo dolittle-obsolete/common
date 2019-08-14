@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.files",
-  "version": "7.0.0-alpha.1",
+  "version": "7.0.0-alpha.3",
   "description": "Common utilities for files",
   "publishConfig": {
     "access": "public"

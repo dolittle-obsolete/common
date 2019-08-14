@@ -4,4 +4,4 @@
  *--------------------------------------------------------------------------------------------*/
 export * from './DocumentationCommand';
 export * from './CommandsProvider';
-export * from './ProviderRegistrator'
+export * from './ProviderRegistrator';

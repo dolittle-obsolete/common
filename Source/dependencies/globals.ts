@@ -2,7 +2,6 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
 import { folders, fileSystem } from '@dolittle/tooling.common.files';
 import { dolittleConfig } from '@dolittle/tooling.common.configurations';
 import { loggers } from '@dolittle/tooling.common.logging';

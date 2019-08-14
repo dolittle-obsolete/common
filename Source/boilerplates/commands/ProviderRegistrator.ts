@@ -8,7 +8,6 @@ import { ILatestCompatiblePackageFinder, IConnectionChecker, ICanDownloadPackage
 import { IFileSystem } from "@dolittle/tooling.common.files";
 import { ILoggers } from "@dolittle/tooling.common.logging";
 
-
 /**
  * Represents an implementation of {ICanRegisterProviders}
  *

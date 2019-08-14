@@ -29,6 +29,7 @@ const dolittlePluginsDependency = new PromptDependency(
  * @extends {Command}
  */
 export class InstallCommand extends Command {
+    
     /**
      * Instantiates an instance of {DolittleCommand}.
      */

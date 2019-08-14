@@ -3,8 +3,8 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { ToolingPackage, packageIsCompatible, ILocalPackageDiscoverers } from '@dolittle/tooling.common.packages';
-import { IBoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplatesConfig, packageIsBoilerplatePackage } from './index';
+import { packageIsCompatible, ILocalPackageDiscoverers } from '@dolittle/tooling.common.packages';
+import { IBoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplatesConfig, packageIsBoilerplatePackage, BoilerplatePackage } from './index';
 
 /**
  * Represents an implementation of {ICanDiscoverBoilerplates} for discovering locally installed boilerplates
@@ -12,23 +12,26 @@ import { IBoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplatesConfig, pack
 export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
 
     private _boilerplatePaths: string[] = [];
-    private _discovered: ToolingPackage[] = [];
+    private _discovered: BoilerplatePackage[] = [];
 
     /**
      * Initializes a new instance of {LocalBoilerplatesDiscoverer}
      * @param {BoilerplatesConfig} _boilerplateConfig
-     * @param {string} _toolingPackage
-     * @param {string} _nodeModulesPath
      * @param {IBoilerplatesLoader} _boilerplatesLoader
-     * @param {IFileSystem} _fileSystem
+     * @param {ILocalPackageDiscoverers} _localPackageDiscoverers
+     * @param {any} _toolingPackage
      * @param {ILoggers} _logger
      */
-    constructor(private _boilerplatesConfig: BoilerplatesConfig, private _boilerplatesLoader: IBoilerplatesLoader,
-        private _localPackageDiscoverers: ILocalPackageDiscoverers, private _toolingPackage: any, private _logger: ILoggers) {}
+    constructor(private _boilerplatesConfig: BoilerplatesConfig, private _boilerplatesLoader: IBoilerplatesLoader, private _localPackageDiscoverers: ILocalPackageDiscoverers, 
+        private _toolingPackage: any, private _logger: ILoggers) {}
 
-    get boilerplatePaths() {return this._boilerplatePaths; }
+    get boilerplatePaths() {
+        return this._boilerplatePaths;
+    }
     
-    get discovered(): ToolingPackage[] {return this._discovered;}
+    get discovered() {
+        return this._discovered;
+    }
     
     async discover() {
         this._boilerplatePaths = [];
@@ -46,7 +49,10 @@ export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
                     throw new Error(`Found two boilerplates with the same package name targeting the same tooling version.`);
                 }
                 this._boilerplatePaths.push(packageFolderPath);
-                this._discovered.push(boilerplatePackage);
+                this._discovered.push({
+                    packageJson: boilerplatePackage,
+                    boilerplatePackagePath: packageFolderPath
+                });
                 boilerplatesConfigObject[boilerplatePackage.name] = packageFolderPath;
                 this._boilerplatesLoader.needsReload = true;
             }

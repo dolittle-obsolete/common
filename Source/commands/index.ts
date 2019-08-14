@@ -32,7 +32,6 @@ export * from './DiscoverableCommandGroup';
 export * from './CommandManager';
 export * from './ProviderRegistrators'
 
-
 export * from './namespaces/index';
 
 export * from './globals';

@@ -16,7 +16,7 @@ import {  IPlugins } from './index';
 export async function getPluginsInUse(_plugins: IPlugins, busyIndicator: IBusyIndicator) {
     busyIndicator = busyIndicator.createNew().start('Getting plugins in use:\n');
     try {
-        let plugins = await _plugins.getPluginPackages();
+        let plugins = await _plugins.getPlugins();
         let numPlugins = plugins.length;
         if (numPlugins > 0) {
             busyIndicator.succeed(`There are ${numPlugins} in use`);

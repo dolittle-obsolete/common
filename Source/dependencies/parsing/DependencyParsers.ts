@@ -2,9 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-
 import { IDependencyParsers, IDependency, ICanParseDependencies, MultipleParsersForDependency, CannotParseDependency  } from '../index';
-
 
 /**
  * Represents an implementation of {IDependencyParsers} responsible for parsing an object into a Dependency

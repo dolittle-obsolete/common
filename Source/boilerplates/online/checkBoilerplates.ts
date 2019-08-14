@@ -2,7 +2,6 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-
 import { requireInternet, ILatestCompatiblePackageFinder, IConnectionChecker } from '@dolittle/tooling.common.packages';
 import {IFileSystem} from '@dolittle/tooling.common.files';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
@@ -27,6 +26,8 @@ export async function checkBoilerplates(boilerplateDiscoverers: IBoilerplateDisc
     fileSystem: IFileSystem, connectionChecker: IConnectionChecker, busyIndicator: IBusyIndicator): Promise<OutOfDatePackage[]> {
     await requireInternet(connectionChecker, busyIndicator);
     busyIndicator = busyIndicator.createNew().start('Checking versions:\n');
+
+    // Get paths from config or boilerplatesLoader instead
     let paths = boilerplateDiscoverers.boilerplatePaths;
     if (paths.length < 1) {
         busyIndicator.info('No boilerplates installed');

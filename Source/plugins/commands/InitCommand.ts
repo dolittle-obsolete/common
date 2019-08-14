@@ -32,7 +32,6 @@ export class InitCommand extends Command {
         
         this._logger.info(`Executing 'plugins init' command`);
         await initPluginSystem(this._plugins, busyIndicator);
-        if (busyIndicator.isBusy) busyIndicator.stop();
     }
 
     getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {

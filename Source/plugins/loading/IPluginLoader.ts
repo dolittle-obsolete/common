@@ -48,5 +48,4 @@ export interface IPluginLoader {
      */
     load(): Promise<IPlugin[]>
 
-
 }

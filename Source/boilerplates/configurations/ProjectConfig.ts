@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 import { CacheConfig } from '@dolittle/tooling.common.configurations';
 
-
 /**
  * Represents the cached project configuration file for the tooling
  *

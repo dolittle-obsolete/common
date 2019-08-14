@@ -2,7 +2,6 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-
 import {IFileSystem} from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import path from 'path';
@@ -19,6 +18,7 @@ import { ToolingPackage } from '@dolittle/tooling.common.packages';
 export class PluginLoader implements IPluginLoader {
     private _loadedPlugins: IPlugin[] = [];
     private _loadedPluginPackages: ToolingPackage[] = [];
+
     /**
      * Instantiates an instance of {PluginLoader}.
      * @param {PluginsConfig} _pluginsConfig
@@ -29,6 +29,7 @@ export class PluginLoader implements IPluginLoader {
         if (! this._fileSystem.existsSync(this._pluginsConfig.path))
             this._pluginsConfig.store = this._pluginsConfig.store;
     }
+    
     needsReload = true;
 
     get pluginsConfigurationPath() { 

@@ -2,8 +2,8 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import semver from 'semver';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
+import semver from 'semver';
 import { requireInternet, IConnectionChecker, ICanFindLatestVersionOfPackage } from '../index';
 
 

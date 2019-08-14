@@ -5,6 +5,7 @@
 import { IFileSystem } from "@dolittle/tooling.common.files";
 import { ICanDiscoverLocalPackages, packageIsToolingPackage, DiscoveredToolingPackage, ToolingPackage, MultiplePackagesWithSameName } from "../index";
 import path from 'path';
+
 /**
  * Represents an implementation of {ICanDiscoverLocalPackages} that discover locally installed npm packages
  *

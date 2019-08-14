@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {WriteOptions, ReadOptions, Stats, WriteFileOptions, copy, CopyOptions, CopyOptionsSync, ensureDir, EnsureOptions} from 'fs-extra';
+import {WriteOptions, ReadOptions, Stats, WriteFileOptions, CopyOptions, CopyOptionsSync, EnsureOptions} from 'fs-extra';
 
 /**
  * Defines a low-level system for interacting with files

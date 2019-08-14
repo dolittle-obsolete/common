@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { ToolingPackage, packageIsCompatible, ILocalPackageDiscoverers } from '@dolittle/tooling.common.packages';
+import { packageIsCompatible, ILocalPackageDiscoverers } from '@dolittle/tooling.common.packages';
 import path from 'path';
 import { ICanDiscoverPlugins, PluginPackage, PluginsConfig, IPluginLoader, PluginAlreadyInUse, packageIsPluginPackage } from '../index';
 import { IFileSystem } from '@dolittle/tooling.common.files';

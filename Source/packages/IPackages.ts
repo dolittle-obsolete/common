@@ -47,6 +47,5 @@ export interface IPackages {
      * @returns {Promise<ToolingPackageDescriptor[]>}
      */
     latestCompatibleByUser(user: string, check?: (toolingPackage: ToolingPackage) => boolean): Promise<ToolingPackage[]>
-
-    
-} 
+   
+}

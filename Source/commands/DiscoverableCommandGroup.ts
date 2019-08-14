@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 import { ICommand, IDiscoverableCommandGroup } from "./index";
 
-
 /**
  * Represents an abstract implementation of {IDiscoverableCommandGroup}
  *

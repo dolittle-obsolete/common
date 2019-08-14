@@ -6,16 +6,28 @@ import { ICommand, ICanProvideDefaultCommands } from "@dolittle/tooling.common.c
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { DocumentationCommand } from "../index";
 
-
+/**
+ * Represents an implementation of {ICanProvideDefaultCommands}
+ *
+ * @export
+ * @class CommandsProvider
+ * @implements {ICanProvideDefaultCommands}
+ */
 export class CommandsProvider implements ICanProvideDefaultCommands {
 
-    private _commands: ICommand[] 
+    private _commands: ICommand[];
 
+    /**
+     * Instantiates an instance of {CommandsProvider}.
+     * @param {ILoggers} logger
+     */
     constructor(logger: ILoggers) {
         this._commands = [
             new DocumentationCommand(logger)
         ];
     }
-    provide() { return this._commands; }
+    provide() { 
+        return this._commands;
+    }
 
 }

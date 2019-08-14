@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { Format } from 'logform';
-import {ILoggers, ConsoleLogger, FileLogger} from './index';
+import {ILoggers, ConsoleLogger, FileLogger, ICanLogMessages} from './index';
 
 /**
  * Represents an instance of {ILoggers}
@@ -13,12 +13,15 @@ import {ILoggers, ConsoleLogger, FileLogger} from './index';
  * @implements {ILoggers}
  */
 export class Loggers implements ILoggers {
-
     private _exitOnError = false;
-
-    private _consoleLogger: ConsoleLogger | undefined = new ConsoleLogger(this._exitOnError);
     private _fileLoggers: FileLogger[] = [];
     
+    /**
+     * Instantiates an instance of {Loggers}.
+     * @param {(ICanLogMessages | undefined)} _consoleLogger
+     */
+    constructor(private _consoleLogger: ICanLogMessages | undefined) {}
+
     get loggers() {
         return this._consoleLogger? 
                 [this._consoleLogger, ...this._fileLoggers]

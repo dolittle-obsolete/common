@@ -21,5 +21,4 @@ export class NpmPackageDownloader implements ICanDownloadPackages {
         spawn.sync('npm', ['i', '-g', ...packages.map(_ => _.version? `${_.name}@${_.version}` : _.name)], {cwd: process.cwd(), stdio: 'inherit'});
     }
 
-
 }

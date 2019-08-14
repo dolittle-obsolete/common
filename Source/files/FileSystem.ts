@@ -14,7 +14,6 @@ import { IFileSystem } from "./index";
  */
 export class FileSystem implements IFileSystem {
 
-    
     readJson(file: string, options?: ReadOptions) {
         return fs.readJson(file, options);
     }

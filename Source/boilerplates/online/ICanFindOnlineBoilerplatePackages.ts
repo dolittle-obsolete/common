@@ -4,7 +4,6 @@
 *--------------------------------------------------------------------------------------------*/
 import { ToolingPackage } from "@dolittle/tooling.common.packages";
 
-
 /**
  * Defines a system that's responsible for finding boilerplates online
  *

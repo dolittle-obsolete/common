@@ -13,4 +13,4 @@ import { ToolingPackage } from "../index";
  */
 export function packageIsCompatible(pkgJson: ToolingPackage, toolingPackage: any) {
     return pkgJson.dolittle !== undefined && pkgJson.dolittle.tooling !== undefined && semver.satisfies(toolingPackage.version, pkgJson.dolittle.tooling);
-} 
+}

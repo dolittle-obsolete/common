@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { IPlugin, IPluginDiscoverers, IPluginLoader, IPlugins } from './index';
+import { IPluginDiscoverers, IPluginLoader, IPlugins } from './index';
 
 /**
  * Represents an implementation of {IPlugins}

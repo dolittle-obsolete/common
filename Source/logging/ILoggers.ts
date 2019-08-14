@@ -5,7 +5,6 @@
 import { Format } from 'logform';
 import {ICanLogMessages} from './index';
 
-
 /**
  * Defines a system that knows about {ICanLogMessages}
  *

@@ -2,12 +2,11 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-
 import { fileSystem } from '@dolittle/tooling.common.files';
 import { loggers } from '@dolittle/tooling.common.logging';
 import { nodeModulesPath, toolingPackage, latestCompatiblePackageFinder, localPackageDiscoverers, packages, npmPackageDownloader, connectionChecker } from '@dolittle/tooling.common.packages';
-import { LocalPluginsDiscoverer, IPluginLoader, PluginLoader, PluginsConfig, IPluginDiscoverers, PluginDiscoverers, IPlugins, Plugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, ProviderRegistrator } from './index';
 import { ICanRegisterProviders, commandManager, providerRegistrators } from '@dolittle/tooling.common.commands';
+import { LocalPluginsDiscoverer, IPluginLoader, PluginLoader, PluginsConfig, IPluginDiscoverers, PluginDiscoverers, IPlugins, Plugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, ProviderRegistrator } from './index';
 
 export const pluginsConfig = new PluginsConfig(nodeModulesPath);
 export const pluginLoader: IPluginLoader = new PluginLoader(pluginsConfig, fileSystem, loggers);
