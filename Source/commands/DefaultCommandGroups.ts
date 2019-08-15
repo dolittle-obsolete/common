@@ -39,14 +39,14 @@ export class DefaultCommandGroups implements IDefaultCommandGroups {
         this._nonDefaultProviders = [];
     }
 
-    register(...providers: ICanProvideDefaultCommandGroups[]) {
-        providers.forEach(_ => this._providerValidator.validate(_));
+    async register(...providers: ICanProvideDefaultCommandGroups[]) {
+        await Promise.all(providers.map(_ => this._providerValidator.validate(_)));
         this._nonDefaultProviders.push(...providers);
         this.throwIfDuplicates();
     }
     
-    registerDefault(...providers: ICanProvideDefaultCommandGroups[]) {
-        providers.forEach(_ => this._providerValidator.validate(_));
+    async registerDefault(...providers: ICanProvideDefaultCommandGroups[]) {
+        await Promise.all(providers.map(_ => this._providerValidator.validate(_)));
         this._defaultProviders.push(...providers);
         this.throwIfDuplicates();
     }

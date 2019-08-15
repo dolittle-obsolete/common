@@ -50,7 +50,7 @@ export class CommandManager implements ICommandManager {
                     outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         
         if (allArguments.length < 1) throw new NoArgumentsGiven();
-        const {command, commandArguments, namespace} = this.getCommandContext(allArguments);
+        const {command, commandArguments, namespace} = await this.getCommandContext(allArguments);
         await command.action(dependencyResolvers, currentWorkingDirectory, coreLanguage, commandArguments, commandOptions, namespace, outputter, busyIndicator);
     }
 
@@ -60,15 +60,19 @@ export class CommandManager implements ICommandManager {
         this._namespaces.clear();
     }
 
-    registerProviders(defaultCommandProviders: ICanProvideDefaultCommands[], defaultCommandGroupsProviders: ICanProvideDefaultCommandGroups[], namespaceProviders: ICanProvideNamespaces[]) {
-        this._defaultCommands.register(...defaultCommandProviders);
-        this._defaultCommandGroups.register(...defaultCommandGroupsProviders);
-        this._namespaces.register(...namespaceProviders);
+    async registerProviders(defaultCommandProviders: ICanProvideDefaultCommands[], defaultCommandGroupsProviders: ICanProvideDefaultCommandGroups[], namespaceProviders: ICanProvideNamespaces[]) {
+        await Promise.all([
+            this._defaultCommands.register(...defaultCommandProviders),
+            this._defaultCommandGroups.register(...defaultCommandGroupsProviders),
+            this._namespaces.register(...namespaceProviders)
+        ]);
     }
-    registerDefaultProviders(defaultCommandProviders: ICanProvideDefaultCommands[], defaultCommandGroupsProviders: ICanProvideDefaultCommandGroups[], namespaceProviders: ICanProvideNamespaces[]) {
-        this._defaultCommands.registerDefault(...defaultCommandProviders);
-        this._defaultCommandGroups.registerDefault(...defaultCommandGroupsProviders);
-        this._namespaces.registerDefault(...namespaceProviders);
+    async registerDefaultProviders(defaultCommandProviders: ICanProvideDefaultCommands[], defaultCommandGroupsProviders: ICanProvideDefaultCommandGroups[], namespaceProviders: ICanProvideNamespaces[]) {
+        await Promise.all([
+            this._defaultCommands.registerDefault(...defaultCommandProviders),
+            this._defaultCommandGroups.registerDefault(...defaultCommandGroupsProviders),
+            this._namespaces.registerDefault(...namespaceProviders)
+        ]);
     }
 
     private addBoilerplateCommandsToNamespaces(namespaces: INamespace[]) {
@@ -78,21 +82,21 @@ export class CommandManager implements ICommandManager {
         });
     }
 
-    private getCommandContext(allArguments: string[]): {command: ICommand, commandArguments: string[], namespace?: string} {
+    private async getCommandContext(allArguments: string[]): Promise<{ command: ICommand, commandArguments: string[], namespace?: string}> {
         let [firstArgument, ...restArguments] = allArguments;
         let namespace = this.namespaces.find(_ => _.name === firstArgument);
         if (namespace) {
             let nextArgument = restArguments.shift();
             if (!nextArgument) throw new NoMatchingCommand(firstArgument);
             firstArgument = nextArgument;
-            return this.getCommandContextFromNamespace(firstArgument, restArguments, namespace);
+            return await this.getCommandContextFromNamespace(firstArgument, restArguments, namespace);
         }
         let commandGroup = this.commandGroups.find(_ => _.name === firstArgument);
         if (commandGroup) {
             let nextArgument = restArguments.shift();
             if (!nextArgument) throw new NoMatchingCommand(firstArgument);
             firstArgument = nextArgument;
-            return this.getCommandContextFromCommandGroup(firstArgument, restArguments, commandGroup);
+            return await this.getCommandContextFromCommandGroup(firstArgument, restArguments, commandGroup);
         }
         let command = this.commands.find(_ => _.name);
         if (command) return {command, commandArguments: restArguments};
@@ -100,13 +104,13 @@ export class CommandManager implements ICommandManager {
         throw new NoMatchingCommand(firstArgument);
     }
 
-    private getCommandContextFromNamespace(firstArgument: string, restArguments: string[], namespace: INamespace): { command: ICommand, commandArguments: string[], namespace?: string | undefined } {
+    private async getCommandContextFromNamespace(firstArgument: string, restArguments: string[], namespace: INamespace): Promise<{ command: ICommand, commandArguments: string[], namespace?: string }> {
         let commandGroup = this.commandGroups.find(_ => _.name === firstArgument);
         if (commandGroup) {
             let nextArgument = restArguments.shift();
             if (!nextArgument) throw new NoMatchingCommand(firstArgument, namespace.name);
             firstArgument = nextArgument;
-            return this.getCommandContextFromCommandGroup(firstArgument, restArguments, commandGroup, namespace.name);
+            return await this.getCommandContextFromCommandGroup(firstArgument, restArguments, commandGroup, namespace.name);
         }
         let command = this.commands.find(_ => _.name);
         if (command) return {command, commandArguments: restArguments, namespace: namespace.name};
@@ -114,8 +118,8 @@ export class CommandManager implements ICommandManager {
         throw new NoMatchingCommand(firstArgument, namespace.name);
     }
 
-    private getCommandContextFromCommandGroup(firstArgument: string, restArguments: string[], commandGroup: ICommandGroup, namespace?: string): { command: ICommand, commandArguments: string[], namespace?: string } {
-        let command = commandGroup.commands.find(_ => _.name);
+    private async getCommandContextFromCommandGroup(firstArgument: string, restArguments: string[], commandGroup: ICommandGroup, namespace?: string): Promise<{ command: ICommand, commandArguments: string[], namespace?: string }> {
+        let command = (await commandGroup.getCommands()).find(_ => _.name);
         if (command) return {command, commandArguments: restArguments, namespace};
 
         throw new NoMatchingCommand(firstArgument, namespace, commandGroup.name);

@@ -40,14 +40,14 @@ export class Namespaces implements INamespaces {
         this._nonDefaultProviders = [];
     }
     
-    register(...providers: ICanProvideNamespaces[]) {
-        providers.forEach(_ => this._providerValidator.validate(_));
+    async register(...providers: ICanProvideNamespaces[]) {
+        await Promise.all(providers.map(_ => this._providerValidator.validate(_)));
         this._nonDefaultProviders.push(...providers);
         this.throwIfDuplicates();
     }
 
-    registerDefault(...providers: ICanProvideNamespaces[]) {
-        providers.forEach(_ => this._providerValidator.validate(_));
+    async registerDefault(...providers: ICanProvideNamespaces[]) {
+        await Promise.all(providers.map(_ => this._providerValidator.validate(_)));
         this._defaultProviders.push(...providers);
         this.throwIfDuplicates();
     }

@@ -28,9 +28,9 @@ export class CommandGroup implements ICommandGroup {
 
     get name() { return this._name; }
 
-    get commands() { return this._commands; }
-    
     get description() { return this._description; }
-
+    
     get shortDescription() { return this._shortDescription; }
+
+    getCommands() { return Promise.resolve(this._commands); }
 }

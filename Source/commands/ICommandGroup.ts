@@ -12,7 +12,6 @@ import { ICommand } from "./index";
  */
 export interface ICommandGroup {
     
-
     /**
      * Whether or not this is a common on boilerplates
      *
@@ -21,27 +20,25 @@ export interface ICommandGroup {
     readonly isBoilerplatesCommandGroup: boolean;
 
     /**
-     * The commands under this command group
-     * @memberof ICommandGroup
-     */
-    readonly commands: ICommand[]
-
-    /**
      * The name of the command group
-     * @memberof ICommandGroup
      */
     readonly name: string
     
     /**
      * The description of the command group.
-     * @memberof ICommandGroup
      */
     readonly description: string
 
     /**
      * The short description of the command group. If none is specified the short description is the normal description
-     * @memberof ICommandGroup
      */
     readonly shortDescription: string;
+
+    /**
+     * The commands under this command group
+     * 
+     * @returns {Promise<ICommand[]>}
+     */
+    getCommands(): Promise<ICommand[]>
     
 }

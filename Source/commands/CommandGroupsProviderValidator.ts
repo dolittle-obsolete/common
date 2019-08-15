@@ -14,11 +14,11 @@ import { IProviderFor, ICanValidateProviderFor, ICommandGroup, DuplicateCommandN
  */
 export class CommandGroupsProviderValidator implements ICanValidateProviderFor<ICommandGroup> {
     
-    validate(provider: IProviderFor<ICommandGroup>) {
+    async validate(provider: IProviderFor<ICommandGroup>) {
         let commandGroups = provider.provide();
 
         this.throwIfDuplicates(commandGroups);
-        commandGroups.forEach(_ => this.throwIfCommandGroupHasDuplicateCommands(_));
+        await Promise.all(commandGroups.map(_ => this.throwIfCommandGroupHasDuplicateCommands(_)));
     }
 
     private throwIfDuplicates(commandGroups: ICommandGroup[]) {
@@ -28,8 +28,8 @@ export class CommandGroupsProviderValidator implements ICanValidateProviderFor<I
         });
     }
 
-    private throwIfCommandGroupHasDuplicateCommands(commandGroup: ICommandGroup) {
-        let names = commandGroup.commands.map(_ => _.name);
+    private async throwIfCommandGroupHasDuplicateCommands(commandGroup: ICommandGroup) {
+        let names = (await commandGroup.getCommands()).map(_ => _.name);
         names.forEach((name, i) => {
             if (names.slice(i + 1).includes(name)) throw new DuplicateCommandName(name);
         });

@@ -58,7 +58,7 @@ export interface ICommandManager {
      * @param {ICanProvideDefaultCommandGroups[]} defaultCommandGroupsProviders
      * @param {ICanProvideNamespaces} namespaceProviders
      */
-    registerProviders(defaultCommandProviders: ICanProvideDefaultCommands[], defaultCommandGroupsProviders: ICanProvideDefaultCommandGroups[], namespaceProviders: ICanProvideNamespaces[]): void
+    registerProviders(defaultCommandProviders: ICanProvideDefaultCommands[], defaultCommandGroupsProviders: ICanProvideDefaultCommandGroups[], namespaceProviders: ICanProvideNamespaces[]): Promise<void>
     
     /**
      * Loads the tooling command system with the given default providers
@@ -67,5 +67,5 @@ export interface ICommandManager {
      * @param {ICanProvideDefaultCommandGroups[]} defaultCommandGroupsProviders
      * @param {ICanProvideNamespaces} namespaceProviders
      */
-    registerDefaultProviders(defaultCommandProviders: ICanProvideDefaultCommands[], defaultCommandGroupsProviders: ICanProvideDefaultCommandGroups[], namespaceProviders: ICanProvideNamespaces[]): void
+    registerDefaultProviders(defaultCommandProviders: ICanProvideDefaultCommands[], defaultCommandGroupsProviders: ICanProvideDefaultCommandGroups[], namespaceProviders: ICanProvideNamespaces[]): Promise<void>
 }

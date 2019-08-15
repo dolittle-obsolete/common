@@ -16,7 +16,7 @@ export interface ICanValidateProviderFor<T> {
     /**
      * Validates a provider for {T}
      *
-     * @returns {T[]}
+     * @returns {Promise<T[]>}
      */
-    validate(provider: IProviderFor<T>): void
+    validate(provider: IProviderFor<T>): Promise<void>
 }

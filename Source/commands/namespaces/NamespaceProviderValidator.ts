@@ -14,11 +14,11 @@ import { IProviderFor, ICanValidateProviderFor, INamespace, DuplicateNamespaceNa
  */
 export class NamespaceProviderValidator implements ICanValidateProviderFor<INamespace> {
     
-    validate(provider: IProviderFor<INamespace>) {
+    async validate(provider: IProviderFor<INamespace>) {
         let namespaces = provider.provide();
         
         this.throwIfDuplicates(namespaces);
-        namespaces.forEach(_ => this.throwIfInvalidNamespace(_));
+        await Promise.all(namespaces.map(_ => this.throwIfInvalidNamespace(_)));
     }
 
     private throwIfDuplicates(namespaces: INamespace[]) {
@@ -28,16 +28,16 @@ export class NamespaceProviderValidator implements ICanValidateProviderFor<IName
         });
     }
 
-    private throwIfInvalidNamespace(namespace: INamespace) {
+    private async throwIfInvalidNamespace(namespace: INamespace) {
         this.throwIfDuplicateCommands(namespace.commands);
-        this.throwIfInvalidCommandGroups(namespace.commandGroups);
+        await this.throwIfInvalidCommandGroups(namespace.commandGroups);
     }
-    private throwIfInvalidCommandGroups(commandGroups: ICommandGroup[]) {
+    private async throwIfInvalidCommandGroups(commandGroups: ICommandGroup[]) {
         this.throwIfDuplicateCommandGroups(commandGroups);
-        commandGroups.forEach(_ => this.throwIfCommandGroupHasDuplicateCommands(_));
+        await Promise.all(commandGroups.map(_ => this.throwIfCommandGroupHasDuplicateCommands(_)));
     }
-    private throwIfCommandGroupHasDuplicateCommands(commandGroup: ICommandGroup) {
-        this.throwIfDuplicateCommands(commandGroup.commands);
+    private async throwIfCommandGroupHasDuplicateCommands(commandGroup: ICommandGroup) {
+        this.throwIfDuplicateCommands(await commandGroup.getCommands());
     }
     private throwIfDuplicateCommandGroups(commandGroups: ICommandGroup[]) {
         let names = commandGroups.map(_ => _.name);

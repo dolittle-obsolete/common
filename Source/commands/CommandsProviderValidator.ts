@@ -17,6 +17,7 @@ export class CommandsProviderValidator implements ICanValidateProviderFor<IComma
     validate(provider: IProviderFor<ICommand>) {
         let commands = provider.provide();
         this.throwIfDuplicates(commands);
+        return Promise.resolve();
     }
     private throwIfDuplicates(commands: ICommand[]) {
         let names = commands.map(_ => _.name);

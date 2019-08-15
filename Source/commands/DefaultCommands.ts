@@ -38,14 +38,14 @@ export class DefaultCommands implements IDefaultCommands {
         this._nonDefaultProviders = [];
     }
     
-    register(...providers: ICanProvideDefaultCommands[]) {
-        providers.forEach(_ => this._providerValidator.validate(_));
+    async register(...providers: ICanProvideDefaultCommands[]) {
+        await Promise.all(providers.map(_ => this._providerValidator.validate(_)));
         this._nonDefaultProviders.push(...providers);
         this.throwIfDuplicates();
     }
 
-    registerDefault(...providers: ICanProvideDefaultCommands[]) {
-        providers.forEach(_ => this._providerValidator.validate(_));
+    async registerDefault(...providers: ICanProvideDefaultCommands[]) {
+        await Promise.all(providers.map(_ => this._providerValidator.validate(_)));
         this._defaultProviders.push(...providers);
         this.throwIfDuplicates();
     }
