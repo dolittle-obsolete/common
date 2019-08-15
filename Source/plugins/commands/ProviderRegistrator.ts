@@ -50,7 +50,7 @@ export class ProviderRegistrator implements ICanRegisterProviders {
     }
 
     register() {
-        this._commandManager.registerDefaultProviders([], this._commandGroupProviders, [])
+        return this._commandManager.registerDefaultProviders([], this._commandGroupProviders, [])
     }
 
 }

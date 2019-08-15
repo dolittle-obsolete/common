@@ -12,6 +12,6 @@ export interface ICanRegisterProviders {
      * Registers providers to the {ICommandManager}
      *
      */
-    register(): void
+    register(): Promise<void>
 
 }

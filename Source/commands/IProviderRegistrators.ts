@@ -16,7 +16,7 @@ export interface IProviderRegistrators {
      * Registers all providers to the command system
      *
      */
-    register(): void
+    register(): Promise<void>
 
     /**
      * Adds instances of {ICanRegisterProviders}

@@ -24,7 +24,7 @@ export class ProviderRegistrators implements IProviderRegistrators {
         return this._hasRegistered;
     }
 
-    register() {
+    async register() {
         if (this._hasRegistered) {
             this._logger.info('Providers already registered to the command manager');
         }
@@ -32,9 +32,8 @@ export class ProviderRegistrators implements IProviderRegistrators {
             this._logger.info('Registering providers to the command manager');
             this._hasRegistered = true;
 
-            this._registrators.forEach(_ => _.register())
+            await Promise.all(this._registrators.map(_ => _.register()));
         }
-
     }
 
     addRegistrators(...registrators: ICanRegisterProviders[]) {
