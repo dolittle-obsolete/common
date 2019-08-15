@@ -54,8 +54,9 @@ export class Initializer implements IInitializer {
         }
         busyIndicator.succeed('Plugins reloaded');
     }
-    
+
     private async providePlugins() {
+        this._logger.info('Providing plugins');
         let loadedPlugins = await this._plugins.getPlugins();
         this._commandManager.clear();
         let providers: {command: ICanProvideDefaultCommands[], commandGroup: ICanProvideDefaultCommandGroups[], namespace: ICanProvideNamespaces[]} = {command: [], commandGroup: [], namespace: []};
@@ -66,23 +67,29 @@ export class Initializer implements IInitializer {
             providers.namespace.push(_.namespaceProvider);
         });
 
-        this._commandManager.registerProviders(providers.command, providers.commandGroup, providers.namespace);
+        await this._commandManager.registerProviders(providers.command, providers.commandGroup, providers.namespace);
+        this._logger.info('Plugins provided')
     }
     
     private async provideBoilerplateNamespaces() {
+        this._logger.info('Providing boilerplate namespaces')
         let namespacesToProvide = await this.createNamespacesFromBoilerplates();
-        this._commandManager.registerProviders([], [], [{provide: () => namespacesToProvide}]);
+        await this._commandManager.registerProviders([], [], [{provide: () => namespacesToProvide}]);
+        this._logger.info('Boilerplate namespaces provided');
     }
 
     private async createNamespacesFromBoilerplates() {
+        this._logger.info('Creating namespaces from boilerplates');
         if (this._boilerplatesLoader.needsReload) await this._boilerplatesLoader.load()
         let namespaces = this._commandManager.namespaces;
         let namespaceNames = namespaces.map(_ => _.name);
         let map = new Map<string, INamespace>();
         let boilerplatesWithNamespaces = this._boilerplates.boilerplates.filter(_ => _.namespace !== undefined);
         namespaces.forEach(namespace => {
-            if (boilerplatesWithNamespaces.map(_ => _.namespace).includes(namespace.name))
+            if (boilerplatesWithNamespaces.map(_ => _.namespace).includes(namespace.name)) {
                 namespace.hasBoilerplates = true;
+
+            }
         })
         boilerplatesWithNamespaces = boilerplatesWithNamespaces.filter(_ => !namespaceNames.includes(_.namespace));
         for (let boilerplate of boilerplatesWithNamespaces) {
@@ -90,12 +97,16 @@ export class Initializer implements IInitializer {
                 let namespace = new Namespace(boilerplate.namespace, [], [], boilerplate.description);
                 namespace.hasBoilerplates = true;
                 map.set(boilerplate.namespace, namespace);
+
+                this._logger.info(`Found new boilerplate namespace '${namespace.name}'`);
             }
         }
         let ret: INamespace[] = [];
         for (let entry of map) {
             ret.push(entry[1]);
         }
+
+        this._logger.info('Boilerplate namespaces created');
         return ret;
     }
 }

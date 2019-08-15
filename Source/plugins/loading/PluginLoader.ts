@@ -55,7 +55,7 @@ export class PluginLoader implements IPluginLoader {
             let pluginPackagePath = path.join(path.resolve(pluginsConfigObject[key].packagePath), 'package.json');
 
             if (! (await this._fileSystem.exists(pluginFilePath))) {
-                this._logger.info(`Plugin path '${pluginFilePath}' does not exist. Removing entry from plugins configuration`);
+                this._logger.warn(`Plugin path '${pluginFilePath}' does not exist. Removing entry from plugins configuration`);
                 delete pluginsConfigObject[key];
                 this._pluginsConfig.store = pluginsConfigObject;
             }
@@ -83,7 +83,7 @@ export class PluginLoader implements IPluginLoader {
             return pluginModule!.plugin;
         } catch(error) {
             this._logger.info(`Could not load plugin from path ${pluginFilePath}`);
-            this._logger.warn(error);
+            this._logger.error(error);
         }
         return undefined;
     }    

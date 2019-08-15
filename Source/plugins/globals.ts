@@ -13,7 +13,7 @@ export const pluginLoader: IPluginLoader = new PluginLoader(pluginsConfig, fileS
 
 let localPluginsDiscoverer = new LocalPluginsDiscoverer(toolingPackage, pluginsConfig, pluginLoader, localPackageDiscoverers, fileSystem, loggers);
 
-export const pluginDiscoverers: IPluginDiscoverers = new PluginDiscoverers([localPluginsDiscoverer])
+export const pluginDiscoverers: IPluginDiscoverers = new PluginDiscoverers([localPluginsDiscoverer], loggers)
 
 export const plugins: IPlugins = new Plugins(pluginDiscoverers, pluginLoader, loggers);
 

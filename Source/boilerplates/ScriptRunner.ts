@@ -2,6 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+import { ILoggers } from '@dolittle/tooling.common.logging';
 import path from 'path';
 import spawn from 'cross-spawn';
 import { Script, ScriptStdOut, ScriptOnError, ScriptFailed, IScriptRunner } from './index';
@@ -11,11 +12,18 @@ import { Script, ScriptStdOut, ScriptOnError, ScriptFailed, IScriptRunner } from
  */
 export class ScriptRunner implements IScriptRunner {
     
+    /**
+     * Instantiates an instance of {ScriptRunner}.
+     * @param {ILoggers} _loggers
+     */
+    constructor(private _loggers: ILoggers) {}
+    
     runSync(scripts: Script[] | string[], cwd: string, 
         onStderr: ScriptStdOut, onStdout: ScriptStdOut, 
-        onError: ScriptOnError
-        ) 
-    {
+        onError: ScriptOnError) 
+    {  
+        this._loggers.info('Running scripts');
+
         onStderr = onStderr || this.scriptOnStderr;
         onStdout = onStdout || this.scriptOnStdout;
         onError = onError || this.scriptOnError;
@@ -35,6 +43,8 @@ export class ScriptRunner implements IScriptRunner {
             if (child.stdout && child.stdout.toString() !== '') onStdout(child.stdout.toString());
             if (child.error) onError(child.error); 
         });
+        this._loggers.info('Finished running scripts');
+        
     }
     
     async run(scripts: Script[] | string[], cwd: string, 

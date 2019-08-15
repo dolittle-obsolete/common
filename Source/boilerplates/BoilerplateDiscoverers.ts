@@ -2,6 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+import { ILoggers } from '@dolittle/tooling.common.logging';
 import { ICanDiscoverBoilerplates, IBoilerplateDiscoverers, BoilerplatePackage } from './index';
 
 /**
@@ -16,7 +17,7 @@ export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
      * Instantiates an instance of {BoilerplateDiscoverers}.
      * @param {ICanDiscoverBoilerplates[]} boilerplateDiscoverers
      */
-    constructor(boilerplateDiscoverers: ICanDiscoverBoilerplates[]) {
+    constructor(boilerplateDiscoverers: ICanDiscoverBoilerplates[], private _loggers: ILoggers) {
         this.discoverers = boilerplateDiscoverers;
     }
     
@@ -39,6 +40,8 @@ export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
     }
 
     async discover() {
+        this._loggers.info('Discovering boilerplates');
         await Promise.all(this.discoverers.map(_ => _.discover()));
+        this._loggers.info('Finished discovering boilerplates');
     }
 }

@@ -35,19 +35,24 @@ export class DefaultCommands implements IDefaultCommands {
     } 
 
     clear() {
+        this._logger.info('Clearing command providers')
         this._nonDefaultProviders = [];
     }
     
     async register(...providers: ICanProvideDefaultCommands[]) {
+        this._logger.info('Registering command providers');
         await Promise.all(providers.map(_ => this._providerValidator.validate(_)));
         this._nonDefaultProviders.push(...providers);
         this.throwIfDuplicates();
+        this._logger.info('Finished registering command providers');
     }
 
     async registerDefault(...providers: ICanProvideDefaultCommands[]) {
+        this._logger.info('Registering default command providers');
         await Promise.all(providers.map(_ => this._providerValidator.validate(_)));
         this._defaultProviders.push(...providers);
         this.throwIfDuplicates();
+        this._logger.info('Finished registering default command providers');
     }
 
     private throwIfDuplicates() {
@@ -57,7 +62,6 @@ export class DefaultCommands implements IDefaultCommands {
         });
     }
     private loadCommands() {
-        this._logger.info('Providing default commands');
         this._commands = [];
         this.providers.forEach(_ => this._commands.push(..._.provide()));
     }

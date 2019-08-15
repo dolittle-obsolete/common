@@ -25,7 +25,6 @@ export class OnlineDolittleBoilerplatesFinder implements ICanFindOnlineBoilerpla
     constructor(private _packages: IPackages, private _logger: ILoggers) {}
     
     async findLatest(keywords: string[] = [], limit: number = 250) {
-        this._logger.info(`Attempting to find online dolittle boilerplates`);
         let boilerplatePackages = await this._packages.latestCompatibleByUser(
             dolittleUser, 
             _ => packageIsBoilerplatePackage(_) && keywords.every(keyword => _.keywords.includes(keyword)));

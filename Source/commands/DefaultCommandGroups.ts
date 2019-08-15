@@ -35,24 +35,28 @@ export class DefaultCommandGroups implements IDefaultCommandGroups {
         return this._commandGroups;
     } 
     
-    clear() { 
+    clear() {
+        this._logger.info('Clearing command group providers')
         this._nonDefaultProviders = [];
     }
 
     async register(...providers: ICanProvideDefaultCommandGroups[]) {
+        this._logger.info('Registering command group providers');
         await Promise.all(providers.map(_ => this._providerValidator.validate(_)));
         this._nonDefaultProviders.push(...providers);
         this.throwIfDuplicates();
+        this._logger.info('Finished registering command group providers');
     }
     
     async registerDefault(...providers: ICanProvideDefaultCommandGroups[]) {
+        this._logger.info('Registering default command group providers');
         await Promise.all(providers.map(_ => this._providerValidator.validate(_)));
         this._defaultProviders.push(...providers);
         this.throwIfDuplicates();
+        this._logger.info('Finished registering default command group providers');
     }
 
     private loadCommandGroups() {
-        this._logger.info('Providing default command groups');
         this._commandGroups = [];
         this.providers.forEach(_ => this._commandGroups.push(..._.provide()));
     }

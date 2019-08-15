@@ -37,6 +37,7 @@ export class ProviderRegistrators implements IProviderRegistrators {
     }
 
     addRegistrators(...registrators: ICanRegisterProviders[]) {
+        this._logger.info('Adding provider registrators');
         this._registrators.push(...registrators)
     }
 }

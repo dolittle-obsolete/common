@@ -2,6 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
+import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanParseBoilerplates, IBoilerplateParsers, MultipleParsersForBoilerplate, CannotParseBoilerplate } from "./index";
 
 /**
@@ -16,7 +17,7 @@ export class BoilerplateParsers implements IBoilerplateParsers {
      * Instantiates an instance of {BoilerplateParsers}.
      * @param {ICanParseBoilerplates[]} _parsers
      */
-    constructor(private _parsers: ICanParseBoilerplates[]) {}
+    constructor(private _parsers: ICanParseBoilerplates[], private _loggers: ILoggers) {}
 
     get parsers() { return this._parsers;}
 
@@ -33,9 +34,15 @@ export class BoilerplateParsers implements IBoilerplateParsers {
 
     }
     
-    parse(boilerplate: any, boilerplatePath: string) {
+    async parse(boilerplate: any, boilerplatePath: string) {
+        this._loggers.info('Parsing boilerplate');
+        
         if (! this.canParse(boilerplate, boilerplatePath)) throw new CannotParseBoilerplate(boilerplatePath);
-        return this._parsers.find(parser => parser.canParse(boilerplate))!.parse(boilerplate, boilerplatePath);
+        let parser = this._parsers.find(parser => parser.canParse(boilerplate));
+        let parsedBoilerplate = await parser!.parse(boilerplate, boilerplatePath);
+        
+        this._loggers.info('Finished parsing boilerplate');
+        return parsedBoilerplate;
     }
 
     add(...parsers: ICanParseBoilerplates[]) {

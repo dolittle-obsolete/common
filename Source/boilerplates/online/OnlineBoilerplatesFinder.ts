@@ -23,7 +23,6 @@ export class OnlineBoilerplatesDiscoverer implements ICanFindOnlineBoilerplatePa
     constructor(private _packages: IPackages, private _logger: ILoggers) {}
     
     async findLatest(keywords: string[] = [], limit: number = 250) {
-        this._logger.info(`Attempting to find online boilerplates`);
         let boilerplatePackages = await this._packages.latestCompatibleWithKeywords([boilerplatePackageKeyword].concat(keywords), limit);
         return boilerplatePackages 
     }

@@ -21,13 +21,13 @@ let instancesOfICanParseBoilerplates: ICanParseBoilerplates[] = [
     new TemplatesBoilerplateParser(dependencyParsers, folders, fileSystem)
 ];
 
-export const boilerplateParsers: IBoilerplateParsers = new BoilerplateParsers(instancesOfICanParseBoilerplates);
+export const boilerplateParsers: IBoilerplateParsers = new BoilerplateParsers(instancesOfICanParseBoilerplates, loggers);
 export const boilerplatesLoader: IBoilerplatesLoader = new BoilerplatesLoader(boilerplateParsers, boilerplatesConfig, fileSystem, loggers);
 let instancesOfICanDiscoverBoilerplates: ICanDiscoverBoilerplates[] = [
     new LocalBoilerplatesDiscoverer(boilerplatesConfig, boilerplatesLoader, localPackageDiscoverers, toolingPackage, loggers)
 ];
 
-export const boilerplateDiscoverers: IBoilerplateDiscoverers = new BoilerplateDiscoverers(instancesOfICanDiscoverBoilerplates);
+export const boilerplateDiscoverers: IBoilerplateDiscoverers = new BoilerplateDiscoverers(instancesOfICanDiscoverBoilerplates, loggers);
 
 export const boilerplates: IBoilerplates = new Boilerplates(boilerplatesLoader);
 export const templatesBoilerplates: ITemplatesBoilerplates = new TemplatesBoilerplates(boilerplatesLoader, folders, fileSystem, handlebars, loggers);
@@ -37,7 +37,7 @@ export const onlineBoilerplatesFinder = new OnlineBoilerplatesDiscoverer(package
 
 export const onlineDolittleBoilerplatesFinder = new OnlineDolittleBoilerplatesFinder(packages, loggers);
 
-export const scriptRunner: IScriptRunner = new ScriptRunner();
+export const scriptRunner: IScriptRunner = new ScriptRunner(loggers);
 
 export let providerRegistrator: ICanRegisterProviders = new ProviderRegistrator(commandManager, boilerplateDiscoverers, boilerplatesLoader, latestCompatiblePackageFinder, boilerplates, onlineBoilerplatesFinder, onlineDolittleBoilerplatesFinder, npmPackageDownloader, connectionChecker, fileSystem, loggers);
 

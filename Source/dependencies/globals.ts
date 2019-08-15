@@ -19,11 +19,11 @@ export let optionalArgumentDependencyResolver: ICanResolveDependencies = new Opt
 export let nonPromptDependencyResolver: ICanResolveDependencies = new DiscoverDependencyResolver(dependencyDiscoverResolver, dolittleConfig);
 
 let resolvers: ICanResolveDependencies[] = [nonOptionalArgumentDependencyResolver, optionalArgumentDependencyResolver, nonPromptDependencyResolver];
-export let dependencyResolvers: IDependencyResolvers = new DependencyResolvers(resolvers);
+export let dependencyResolvers: IDependencyResolvers = new DependencyResolvers(resolvers, loggers);
 
 export let discoverDependencyParser: ICanParseDependencies = new DiscoverDependencyParser();
 export let promptDependencyParser: ICanParseDependencies = new PromptDependencyParser();
 export let discoverAndPromptDependencyParser: ICanParseDependencies = new DiscoverAndPromptDependencyParser();
 
 let parsers: ICanParseDependencies[] = [discoverDependencyParser, promptDependencyParser, discoverAndPromptDependencyParser];
-export let dependencyParsers: IDependencyParsers = new DependencyParsers(parsers);
+export let dependencyParsers: IDependencyParsers = new DependencyParsers(parsers, loggers);

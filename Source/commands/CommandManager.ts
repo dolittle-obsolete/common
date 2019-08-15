@@ -23,6 +23,9 @@ export class CommandManager implements ICommandManager {
 
     /**
      * Instantiates an instance of {CommandManager}.
+     * @param {ICanValidateProviderFor<ICommand>} _commandProviderValidator
+     * @param {ICanValidateProviderFor<ICommandGroup>} _commandGroupProviderValidator
+     * @param {ICanValidateProviderFor<INamespace>} _namespaceProviderValidator
      * @param {ILoggers} _logger
      */
     constructor(private _commandProviderValidator: ICanValidateProviderFor<ICommand>, private _commandGroupProviderValidator: ICanValidateProviderFor<ICommandGroup>,
@@ -50,29 +53,36 @@ export class CommandManager implements ICommandManager {
                     outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         
         if (allArguments.length < 1) throw new NoArgumentsGiven();
+        this._logger.info(`Executing command with arguments ${allArguments}`);
         const {command, commandArguments, namespace} = await this.getCommandContext(allArguments);
         await command.action(dependencyResolvers, currentWorkingDirectory, coreLanguage, commandArguments, commandOptions, namespace, outputter, busyIndicator);
+        this._logger.info('Finished executing command');
     }
 
     clear() {
+        this._logger.info('Clearing command manager');
         this._defaultCommands.clear();
         this._defaultCommandGroups.clear();
         this._namespaces.clear();
     }
 
     async registerProviders(defaultCommandProviders: ICanProvideDefaultCommands[], defaultCommandGroupsProviders: ICanProvideDefaultCommandGroups[], namespaceProviders: ICanProvideNamespaces[]) {
+        this._logger.info('Registering providers');
         await Promise.all([
             this._defaultCommands.register(...defaultCommandProviders),
             this._defaultCommandGroups.register(...defaultCommandGroupsProviders),
             this._namespaces.register(...namespaceProviders)
         ]);
+        this._logger.info('Finished registering providers');
     }
     async registerDefaultProviders(defaultCommandProviders: ICanProvideDefaultCommands[], defaultCommandGroupsProviders: ICanProvideDefaultCommandGroups[], namespaceProviders: ICanProvideNamespaces[]) {
+        this._logger.info('Registering default providers');
         await Promise.all([
             this._defaultCommands.registerDefault(...defaultCommandProviders),
             this._defaultCommandGroups.registerDefault(...defaultCommandGroupsProviders),
             this._namespaces.registerDefault(...namespaceProviders)
         ]);
+        this._logger.info('Finished registering default providers');
     }
 
     private addBoilerplateCommandsToNamespaces(namespaces: INamespace[]) {

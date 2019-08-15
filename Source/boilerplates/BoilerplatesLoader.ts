@@ -38,19 +38,22 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
     }
 
     async load() {
+        this._logger.info('Loading boilerplates');
         this._loadedBoilerplates = [];
         let boilerplatesConfigObject: any = this._boilerplatesConfig.store;
 
         for (let key of Object.keys(boilerplatesConfigObject)) {
             let folderPath = path.resolve(boilerplatesConfigObject[key]);
             if (! (await this._fileSystem.exists(folderPath))) {
-                this._logger.info(`Boilerplate path '${folderPath}' does not exist. Removing entry from boilerplates configuration`);
+                this._logger.warn(`Boilerplate path '${folderPath}' does not exist. Removing entry from boilerplates configuration`);
                 delete boilerplatesConfigObject[key];
                 this._boilerplatesConfig.store = boilerplatesConfigObject;
             }
             else this._loadedBoilerplates.push(await this.getFromFolder(folderPath));
         }
         this.needsReload = false;
+
+        this._logger.info('Finished loading boilerplates');
         return this._loadedBoilerplates;
     }
     
