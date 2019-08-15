@@ -70,7 +70,7 @@ export class Folders implements IFolders
             let stat = await this._fileSystem.stat(actualPath);
             if (stat.isDirectory()) {
                 if (pattern) {
-                    let regexMatch = path.parse(actualPath).name.match(pattern);
+                    let regexMatch = actualPath.match(pattern);
                     if (regexMatch && regexMatch.length > 0) results.push(actualPath);
                 }
                 else results.push(actualPath);
@@ -88,7 +88,7 @@ export class Folders implements IFolders
             let stat = this._fileSystem.statSync(actualPath);
             if (stat.isDirectory()) {
                 if (pattern) {
-                    let regexMatch = path.parse(actualPath).name.match(pattern);
+                    let regexMatch = actualPath.match(pattern);
                     if (regexMatch && regexMatch.length > 0) results.push(actualPath);
                 }
                 else results.push(actualPath);
@@ -106,7 +106,7 @@ export class Folders implements IFolders
             let stat = await this._fileSystem.stat(actualPath);
             if (stat.isFile()) {
                 if (pattern) {
-                    let regexMatch = path.parse(actualPath).name.match(pattern);
+                    let regexMatch = actualPath.match(pattern);
                     if (regexMatch && regexMatch.length > 0) results.push(actualPath);
                 }
                 else results.push(actualPath);
@@ -124,7 +124,7 @@ export class Folders implements IFolders
             let stat = this._fileSystem.statSync(actualPath);
             if (stat.isFile()) {
                 if (pattern) {
-                    let regexMatch = path.parse(actualPath).name.match(pattern);
+                    let regexMatch = actualPath.match(pattern);
                     if (regexMatch && regexMatch.length > 0) results.push(actualPath);
                 }
                 else results.push(actualPath);
@@ -146,7 +146,7 @@ export class Folders implements IFolders
             }
             if (stat.isFile()) {
                 if (pattern) {
-                    let regexMatch = path.parse(actualPath).name.match(pattern);
+                    let regexMatch = actualPath.match(pattern);
                     if (regexMatch && regexMatch.length > 0) results.push(actualPath);
                 }
                 else results.push(actualPath);
@@ -168,7 +168,7 @@ export class Folders implements IFolders
             }
             if (stat.isFile()) {
                 if (pattern) {
-                    let regexMatch = path.parse(actualPath).name.match(pattern);
+                    let regexMatch = actualPath.match(pattern);
                     if (regexMatch && regexMatch.length > 0) results.push(actualPath);
                 }
                 else results.push(actualPath);
@@ -189,7 +189,7 @@ export class Folders implements IFolders
                 results = results.concat(await this.getFilesAndFoldersRecursively(actualPath, pattern));
             }
             if (pattern) {
-                let regexMatch = path.parse(actualPath).name.match(pattern);
+                let regexMatch = actualPath.match(pattern);
                 if (regexMatch && regexMatch.length > 0) results.push(actualPath);
             }
             else results.push(actualPath);
@@ -209,7 +209,7 @@ export class Folders implements IFolders
                 results = results.concat(this.getFilesAndFoldersRecursivelySync(actualPath, pattern));
             }
             if (pattern) {
-                let regexMatch = path.parse(actualPath).name.match(pattern);
+                let regexMatch = actualPath.match(pattern);
                 if (regexMatch && regexMatch.length > 0) results.push(actualPath);
             }
             else results.push(actualPath);

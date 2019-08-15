@@ -29,7 +29,7 @@ export async function askToDownloadOrUpdateBoilerplates(boilerplates: Boilerplat
         if (shouldDownload) {
             let packagesToDownload = await askWhichBoilerplates(boilerplates, resolvers);
             if (packagesToDownload.length > 0) {
-                await packageDownloader.download(packagesToDownload);
+                packageDownloader.downloadSync(packagesToDownload);
                 await initBoilerplatesSystem(boilerplateDiscoverers, boilerplatesLoader, busyIndicator);
             }
         }

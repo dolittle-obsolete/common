@@ -26,7 +26,7 @@ export async function askToDownloadOrUpdatePlugins(pluginsPackages: PluginPackag
         if (shouldDownload) {
             let packagesToDownload = await askWhichPlugins(pluginsPackages, resolvers);
             if (packagesToDownload.length > 0) {
-                await packageDownloader.download(packagesToDownload);
+                packageDownloader.downloadSync(packagesToDownload);
                 await initPluginSystem(plugins, busyIndicator);
             }
         }
