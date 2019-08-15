@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.boilerplates",
-  "version": "7.0.0-alpha.7",
+  "version": "7.0.0",
   "description": "The boilerplates system for common dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -36,12 +36,12 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@dolittle/tooling.common.configurations": "alpha",
-    "@dolittle/tooling.common.commands": "alpha",
-    "@dolittle/tooling.common.dependencies": "alpha",
-    "@dolittle/tooling.common.files": "alpha",
-    "@dolittle/tooling.common.logging": "alpha",
-    "@dolittle/tooling.common.utilities": "alpha",
+    "@dolittle/tooling.common.configurations": "7.*",
+    "@dolittle/tooling.common.commands": "7.*",
+    "@dolittle/tooling.common.dependencies": "7.*",
+    "@dolittle/tooling.common.files": "7.*",
+    "@dolittle/tooling.common.logging": "7.*",
+    "@dolittle/tooling.common.utilities": "7.*",
     "@types/handlebars": "4.1.0",
     "cross-spawn": "6.0.5",
     "handlebars": "4.1.2",
