@@ -27,7 +27,7 @@ export async function checkBoilerplates(boilerplateDiscoverers: IBoilerplateDisc
     await requireInternet(connectionChecker, busyIndicator);
     busyIndicator = busyIndicator.createNew().start('Checking versions:\n');
 
-    // Get paths from config or boilerplatesLoader instead
+    await boilerplateDiscoverers.discover();
     let paths = boilerplateDiscoverers.boilerplatePaths;
     if (paths.length < 1) {
         busyIndicator.info('No boilerplates installed');

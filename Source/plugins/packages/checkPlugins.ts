@@ -24,7 +24,9 @@ export type OutOfDatePackage = {
 export async function checkPlugins(pluginDiscoverers: IPluginDiscoverers, latestPackageFinder: ILatestCompatiblePackageFinder,
     fileSystem: IFileSystem, connectionChecker: IConnectionChecker, busyIndicator: IBusyIndicator): Promise<OutOfDatePackage[]> {
     await requireInternet(connectionChecker, busyIndicator);
-    busyIndicator = busyIndicator.createNew().start('Checking versions:\n')
+    busyIndicator = busyIndicator.createNew().start('Checking versions:\n');
+
+    await pluginDiscoverers.discover();
     let paths = pluginDiscoverers.paths;
     if (paths.length < 1) {
         busyIndicator.info('No plugins installed');
