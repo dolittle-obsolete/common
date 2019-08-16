@@ -80,5 +80,5 @@ export interface IContentBoilerplates extends IBoilerplates {
      * @param {*} context
      * @returns {CreatedContentBoilerplateDetails}
      */
-    create(boilerplate: IContentBoilerplate, destination: string, context: any): CreatedContentBoilerplateDetails
+    create(boilerplate: IContentBoilerplate, destination: string, context: any): Promise<CreatedContentBoilerplateDetails>
 }

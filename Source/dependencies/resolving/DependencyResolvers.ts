@@ -2,11 +2,11 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
 import { IDependencyResolvers, ICanResolveDependencies, IDependency, MultipleResolversForDependency, CannotResolveDependency  } from '../index';
+import { ILoggers } from '@dolittle/tooling.common.logging';
 
  /**
-  * Represents an implementation of {IDependencyResolvers} for resolving dependencies
+  * Represents an implementation of {IDependencyResolvers}
   *
   * @export
   * @class DependencyResolvers
@@ -17,7 +17,7 @@ import { IDependencyResolvers, ICanResolveDependencies, IDependency, MultipleRes
      * Instantiates an instance of {DependencyResolvers}.
      * @param {ICanResolveDependencies[]} _resolvers
      */
-    constructor(private _resolvers: ICanResolveDependencies[]) {}
+    constructor(private _resolvers: ICanResolveDependencies[], private _loggers: ILoggers) {}
 
     get resolvers() { return this._resolvers; }
 
@@ -26,13 +26,14 @@ import { IDependencyResolvers, ICanResolveDependencies, IDependency, MultipleRes
     }
     
     async resolve(context: any, dependencies: IDependency[], destinationPath?: string, coreLanguage?: string, args?: string[], options?: Map<string, any>): Promise<any> {
+        this._loggers.info('Resolving dependencies');
         let resolversMap = this.getResolverToDependenciesMap(dependencies).entries();
         for (let entry of resolversMap) {
             let resolver = entry[0];
             let deps = entry[1];
             context = await Promise.resolve(resolver.resolve(context, deps, destinationPath, coreLanguage, args, options));
         }
-
+        this._loggers.info('Finished resolving dependencies');
         return context;
     }
 

@@ -2,12 +2,9 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-
-import { ICommandManager } from '@dolittle/tooling.common.commands';
 import { PromptDependency, IDependencyResolvers, confirmUserInputType, chooseMultipleUserInputType } from '@dolittle/tooling.common.dependencies';
-import {requireInternet, downloadPackagesFromNpmSync, DownloadPackageInfo} from '@dolittle/tooling.common.packages';
+import {requireInternet, DownloadPackageInfo, IConnectionChecker, ICanDownloadPackages} from '@dolittle/tooling.common.packages';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
-
 import { initPluginSystem, IPlugins } from '../index';
 
 export type PluginPackageInfo = {
@@ -21,14 +18,15 @@ export type PluginPackageInfo = {
  * 
  * @export
  */
-export async function askToDownloadOrUpdatePlugins(pluginsPackages: PluginPackageInfo[], plugins: IPlugins, resolvers: IDependencyResolvers, busyIndicator: IBusyIndicator) {
-    await requireInternet(busyIndicator);
+export async function askToDownloadOrUpdatePlugins(pluginsPackages: PluginPackageInfo[], plugins: IPlugins, resolvers: IDependencyResolvers, 
+    packageDownloader: ICanDownloadPackages, connectionChecker: IConnectionChecker, busyIndicator: IBusyIndicator) {
+    await requireInternet(connectionChecker, busyIndicator);
     if (pluginsPackages.length && pluginsPackages.length > 0) {
         const shouldDownload = await askToDownload(resolvers);
         if (shouldDownload) {
             let packagesToDownload = await askWhichPlugins(pluginsPackages, resolvers);
             if (packagesToDownload.length > 0) {
-                await downloadPackagesFromNpmSync(packagesToDownload, busyIndicator);
+                packageDownloader.downloadSync(packagesToDownload);
                 await initPluginSystem(plugins, busyIndicator);
             }
         }

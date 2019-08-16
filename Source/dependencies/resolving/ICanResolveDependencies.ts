@@ -29,8 +29,8 @@ export interface ICanResolveDependencies {
      * @param {string} [coreLanguage] The optional core language 
      * @param {string[]} [args] The optional list of arguments, only used for resolving non-optional argument dependencies
      * @param {Map<string, any>} [options] The optional options, only used for resolving optional argument dependencies
-     * @returns {Promise<any> | any}
+     * @returns {Promise<any>}
      */
-    resolve(context: any, dependencies: IDependency[], destinationPath?: string, coreLanguage?: string, args?: string[], options?: Map<string, any>): Promise<any> | any
+    resolve(context: any, dependencies: IDependency[], destinationPath?: string, coreLanguage?: string, args?: string[], options?: Map<string, any>): Promise<any>
 
 }

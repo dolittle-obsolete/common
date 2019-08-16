@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ToolingPackage } from "@dolittle/tooling.common.packages";
+import { BoilerplatePackage } from "./index";
 
 
 /**
@@ -12,19 +12,19 @@ import { ToolingPackage } from "@dolittle/tooling.common.packages";
  * @interface ICanDiscoverBoilerplates
  */
 export interface ICanDiscoverBoilerplates {
-
+    
     /**
      * Discovers boilerplates and returns them.
      *
      */
-    discover(): void
+    discover(): Promise<void>
 
     /**
      * The discovered boilerplates
      *
-     * @type {ToolingPackage[]}
+     * @type {BoilerplatePackage[]}
      */
-    discovered: ToolingPackage[]
+    discovered: BoilerplatePackage[]
 
     /**
     * The paths of the Dolittle boilerplates

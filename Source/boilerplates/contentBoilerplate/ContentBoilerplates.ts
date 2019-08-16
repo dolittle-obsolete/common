@@ -2,8 +2,8 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Folders, FileSystem } from '@dolittle/tooling.common.files';
-import { Logger } from '@dolittle/tooling.common.logging';
+import { IFolders, IFileSystem } from '@dolittle/tooling.common.files';
+import { ILoggers } from '@dolittle/tooling.common.logging';
 import path from 'path';
 import { Handlebars, IContentBoilerplates, IContentBoilerplate, boilerplateIsContentBoilerplate, Boilerplates, IBoilerplatesLoader} from '../index';
 
@@ -15,12 +15,12 @@ export class ContentBoilerplates extends Boilerplates implements IContentBoilerp
     /**
      * Instantiates an instance of {ContentBoilerplates}.
      * @param {IBoilerplatesLoader} boilerplatesLoader
-     * @param {Folders} _folders
-     * @param {FileSystem} _fileSystem
-     * @param {Logger} _logger
+     * @param {IFolders} _folders
+     * @param {IFileSystem} _fileSystem
+     * @param {ILoggers} _logger
      * @param {Handlebars} _handlebars
      */
-    constructor(boilerplatesLoader: IBoilerplatesLoader, private _folders: Folders, private _fileSystem: FileSystem, private _logger: Logger, private _handlebars: Handlebars) {
+    constructor(boilerplatesLoader: IBoilerplatesLoader, private _folders: IFolders, private _fileSystem: IFileSystem, private _logger: ILoggers, private _handlebars: Handlebars) {
         super(boilerplatesLoader);
     }
     
@@ -64,26 +64,28 @@ export class ContentBoilerplates extends Boilerplates implements IContentBoilerp
         return this.adornmentsFor(boilerplate.type, boilerplate.language, boilerplate.name, namespace);
     }
 
-    create(boilerplate: IContentBoilerplate, destination: string, context: object) {
+    async create(boilerplate: IContentBoilerplate, destination: string, context: object) {
         this._logger.info(`Creating boilerplate with name '${boilerplate.name}' at destination '${destination}'`);
-        this._folders.makeFolderIfNotExists(destination);
-        this._folders.copy(destination, boilerplate.contentDirectory);
+        await this._folders.makeFolderIfNotExists(destination);
+        await this._folders.copy(destination, boilerplate.contentDirectory);
+        
+        let tasks: Promise<void>[] = [];
         boilerplate.pathsNeedingBinding.forEach(_ => {
             let pathToRename = path.join(destination, _);
             let segments: string[]  = [];
             pathToRename.split(/(\\|\/)/).forEach(segment => segments.push(this._handlebars.compile(segment)(context)));
             let result = segments.join('');
-            this._fileSystem.renameSync(pathToRename, result);
+            tasks.push(this._fileSystem.rename(pathToRename, result));
         });
         
-        boilerplate.filesNeedingBinding.forEach(_ => {
+        tasks.push(...boilerplate.filesNeedingBinding.map(async _ => {
             let file = path.join(destination, _);
-            let content = this._fileSystem.readFileSync(file, 'utf8');
+            let content = await this._fileSystem.readFile(file, 'utf8');
             let template = this._handlebars.compile(content);
             let result = template(context);
-            this._fileSystem.writeFileSync(file, result);
-        });
-
+            await this._fileSystem.writeFile(file, result);
+        }));
+        await Promise.all(tasks);
         this._logger.info(`Boilerplate created`);
         return {boilerplate, destination};
     }

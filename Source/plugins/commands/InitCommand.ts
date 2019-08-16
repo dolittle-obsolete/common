@@ -2,8 +2,8 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { Command, ICommandManager } from "@dolittle/tooling.common.commands";
-import { Logger } from "@dolittle/tooling.common.logging";
+import { Command } from "@dolittle/tooling.common.commands";
+import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
 import { initPluginSystem, IPlugins } from '../index';
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
@@ -23,7 +23,7 @@ export class InitCommand extends Command {
     /**
      * Instantiates an instance of {InitCommand}.
      */
-    constructor(private _plugins: IPlugins, private _logger: Logger) {
+    constructor(private _plugins: IPlugins, private _logger: ILoggers) {
         super(name, description, false);
     }
 
@@ -32,7 +32,6 @@ export class InitCommand extends Command {
         
         this._logger.info(`Executing 'plugins init' command`);
         await initPluginSystem(this._plugins, busyIndicator);
-        if (busyIndicator.isBusy) busyIndicator.stop();
     }
 
     getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {

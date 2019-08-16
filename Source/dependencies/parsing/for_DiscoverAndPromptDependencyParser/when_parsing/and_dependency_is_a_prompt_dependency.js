@@ -15,5 +15,5 @@ describe('and dependency is a prompt dependency', () => {
         exception = error;
     }
     it('Should throw an exception when parsing', () => expect(exception).to.not.be.null);
-    it('Should throw a CannotParseDependency exception', exception.should.be.instanceof(CannotParseDependency));
+    it('Should throw a CannotParseDependency exception', () => exception.should.be.instanceof(CannotParseDependency));
 });

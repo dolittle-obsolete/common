@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IPlugin } from './index';
+import { IPlugin, PluginPackage } from './index';
 import { ToolingPackage } from '@dolittle/tooling.common.packages';
 
 /**
@@ -25,10 +25,10 @@ export interface IPlugins {
      *
      * @returns {Promise<ToolingPackage[]>}
      */
-    getPluginPackages(): Promise<ToolingPackage[]>
+    getPluginPackages(): Promise<PluginPackage[]>
 
     /**
      * Triggers the tooling to discover new plugins and load them
      */
-    discoverNewPlugins(): void
+    discoverNewPlugins(): Promise<void>
 }

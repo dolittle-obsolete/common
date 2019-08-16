@@ -2,8 +2,8 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { ToolingPackage } from '@dolittle/tooling.common.packages';
-import { ICanDiscoverBoilerplates, IBoilerplateDiscoverers } from './index';
+import { ILoggers } from '@dolittle/tooling.common.logging';
+import { ICanDiscoverBoilerplates, IBoilerplateDiscoverers, BoilerplatePackage } from './index';
 
 /**
  * Represents an implementation of {IBoilerplateDiscoverers}
@@ -13,27 +13,24 @@ import { ICanDiscoverBoilerplates, IBoilerplateDiscoverers } from './index';
  * @implements {IBoilerplateDiscoverers}
  */
 export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
-    private _hasDiscovered = false;
     /**
      * Instantiates an instance of {BoilerplateDiscoverers}.
      * @param {ICanDiscoverBoilerplates[]} boilerplateDiscoverers
      */
-    constructor(boilerplateDiscoverers: ICanDiscoverBoilerplates[]) {
+    constructor(boilerplateDiscoverers: ICanDiscoverBoilerplates[], private _loggers: ILoggers) {
         this.discoverers = boilerplateDiscoverers;
     }
     
     readonly discoverers: ICanDiscoverBoilerplates[];
     
     get boilerplatePaths() {
-        if (! this._hasDiscovered) this.discover();
         let paths: string[] = [];
         this.discoverers.forEach(_ => paths.push(..._.boilerplatePaths));
         return paths;
     }
 
     get discovered() {
-        if (! this._hasDiscovered) this.discover();
-        let boilerplates: ToolingPackage[] = [];
+        let boilerplates: BoilerplatePackage[] = [];
         this.discoverers.forEach(_ => boilerplates.push(..._.discovered));
         return boilerplates;
     }
@@ -42,8 +39,9 @@ export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
         this.discoverers.push(...boilerplateDiscoverers);
     }
 
-    discover() {
-        this._hasDiscovered = true;
-        this.discoverers.forEach(_ => _.discover());
+    async discover() {
+        this._loggers.info('Discovering boilerplates');
+        await Promise.all(this.discoverers.map(_ => _.discover()));
+        this._loggers.info('Finished discovering boilerplates');
     }
 }

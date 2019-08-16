@@ -15,6 +15,6 @@ export interface IDiscoverableCommandGroup extends ICommandGroup {
     /**
      * Loads the commands
      */
-    loadCommands(): void
+    loadCommands(): Promise<void>
     
 }

@@ -4,7 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 import { ICommand, IDiscoverableCommandGroup } from "./index";
 
-
 /**
  * Represents an abstract implementation of {IDiscoverableCommandGroup}
  *
@@ -31,7 +30,7 @@ export abstract class DiscoverableCommandGroup implements IDiscoverableCommandGr
     
     get shortDescription() { return this._shortDescription; }
     
-    abstract commands: ICommand[]
+    abstract getCommands(): Promise<ICommand[]>
 
-    abstract loadCommands(): void
+    abstract loadCommands(): Promise<void>
 }

@@ -4,6 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 export * from './toolingHandlebars';
 export * from './packageIsBoilerplatePackage';
+export * from './BoilerplatePackage';
 
 export * from './MultipleParsersForBoilerplate';
 export * from './CannotParseBoilerplate';

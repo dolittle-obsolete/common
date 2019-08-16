@@ -2,8 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-
-import { requireInternet } from '@dolittle/tooling.common.packages';
+import { requireInternet, IConnectionChecker, ToolingPackage } from '@dolittle/tooling.common.packages';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { OnlineBoilerplatesDiscoverer } from '../index';
 
@@ -13,10 +12,11 @@ import { OnlineBoilerplatesDiscoverer } from '../index';
  * @param {OnlineBoilerplatesDiscoverer} onlineBoilerplatesDiscoverer
  * @param {string[]} [keywords=[]]
  * @param {number} [limit=250]
- * @returns
+ * @returns {Promise<ToolingPackage[]>}
  */
-export async function fetchOnlineBoilerplates(onlineBoilerplatesDiscoverer: OnlineBoilerplatesDiscoverer, busyIndicator: IBusyIndicator, keywords: string[] = [], limit: number = 250) {
-    await requireInternet(busyIndicator);
+export async function fetchOnlineBoilerplates(onlineBoilerplatesDiscoverer: OnlineBoilerplatesDiscoverer, connectionChecker: IConnectionChecker,
+    busyIndicator: IBusyIndicator, keywords: string[] = [], limit: number = 250): Promise<ToolingPackage[]> {
+    await requireInternet(connectionChecker, busyIndicator);
     busyIndicator = busyIndicator.createNew().start('Getting boilerplates (this might take a while, depending on your internet connection): ');
     let boilerplates = await onlineBoilerplatesDiscoverer.findLatest(keywords, limit)
         .then(boilerplates => {

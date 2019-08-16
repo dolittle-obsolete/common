@@ -8,14 +8,16 @@ import { MissingCoreLanguage } from "../../../index";
 describe('and dependency can be resolved but does not have core language', () => {
     let context = new dependencies_and_a_discover_dependency_resolver();
     let exception = null;
-    try {
-        context.discoverDependencyResolver.resolve({}, [context.discoverDependency], 'something', undefined);
-        
-    } catch(error) {
-        exception = error;
-    }
-    
-    it('Should throw an exception', expect(exception).to.not.be.undefined);
-    it('Should throw a MissingCoreLanguage exception', exception.should.be.instanceof(MissingCoreLanguage));
+    before(async () => {
+        try {
+            await context.discoverDependencyResolver.resolve({}, [context.discoverDependency], 'something');
+        }
+        catch (error) {
+            exception = error;
+        }
+    });
+
+    it('should throw exception', () => expect(exception).to.not.be.undefined);
+    it('Should throw a MissingCoreLanguage exception', () => exception.should.be.instanceof(MissingCoreLanguage));
 
 });

@@ -3,8 +3,8 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { Command } from "@dolittle/tooling.common.commands";
-import { FileSystem } from "@dolittle/tooling.common.files";
-import { Logger } from "@dolittle/tooling.common.logging";
+import { IFileSystem } from "@dolittle/tooling.common.files";
+import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
 import { getInstalledBoilerplates, IBoilerplateDiscoverers } from "../index";
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
@@ -24,7 +24,7 @@ export class InstalledCommand extends Command {
     /**
      * Instantiates an instance of {InstalledCommand}.
      */
-    constructor(private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _fileSystem: FileSystem, private _logger: Logger) {
+    constructor(private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _fileSystem: IFileSystem, private _logger: ILoggers) {
         super(name, description, false);
     }
 
@@ -40,7 +40,6 @@ export class InstalledCommand extends Command {
                 outputter.warn('The problem might be that you haven\'t initialized the tooling');
                 return [];
             });
-        if (busyIndicator.isBusy) busyIndicator.stop();
         boilerplates.forEach(_ => outputter.print(`${_.packageJson.name}@${_.packageJson.version}`));
     }
 

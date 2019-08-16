@@ -3,8 +3,8 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { Command } from "@dolittle/tooling.common.commands";
-import { FileSystem } from "@dolittle/tooling.common.files";
-import { Logger } from "@dolittle/tooling.common.logging";
+import { IFileSystem } from "@dolittle/tooling.common.files";
+import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
 import { getInstalledPlugins, IPluginDiscoverers } from "../index";
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
@@ -24,7 +24,7 @@ export class InstalledCommand extends Command {
     /**
      * Instantiates an instance of {InstalledCommand}.
      */
-    constructor(private _pluginDiscoverers: IPluginDiscoverers, private _fileSystem: FileSystem, private _logger: Logger) {
+    constructor(private _pluginDiscoverers: IPluginDiscoverers, private _fileSystem: IFileSystem, private _logger: ILoggers) {
         super(name, description, false);
     }
 
@@ -32,7 +32,7 @@ export class InstalledCommand extends Command {
                 outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         
         this._logger.info(`Executing 'plugins installed' command`);
-        let plugins = await getInstalledPlugins(this._pluginDiscoverers, this._fileSystem, busyIndicator)
+        let plugins = await getInstalledPlugins(this._pluginDiscoverers, busyIndicator)
             .catch((error: Error) => {
                 if (busyIndicator.isBusy) busyIndicator.stop();
                 outputter.warn('An error occured while getting the installed plugins.\nError message:');
@@ -40,8 +40,7 @@ export class InstalledCommand extends Command {
                 outputter.warn('The problem might be that you haven\'t initialized the tooling');
                 return [];
             });
-        if (busyIndicator.isBusy) busyIndicator.stop();
-        plugins.forEach(_ => outputter.print(`${_.name}@${_.version}`));
+        plugins.forEach(_ => outputter.print(`${_.packageJson.name}@${_.packageJson.version}`));
     }
     
     getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {

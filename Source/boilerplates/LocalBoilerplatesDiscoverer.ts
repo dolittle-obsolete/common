@@ -2,86 +2,62 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {FileSystem} from '@dolittle/tooling.common.files';
-import { Logger } from '@dolittle/tooling.common.logging';
-import { ToolingPackage, packageIsCompatible, toolingPackage } from '@dolittle/tooling.common.packages';
-import path from 'path';
-import { IBoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplatesConfig, packageIsBoilerplatePackage } from './index';
+import { ILoggers } from '@dolittle/tooling.common.logging';
+import { packageIsCompatible, ILocalPackageDiscoverers } from '@dolittle/tooling.common.packages';
+import { IBoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplatesConfig, packageIsBoilerplatePackage, BoilerplatePackage } from './index';
 
 /**
  * Represents an implementation of {ICanDiscoverBoilerplates} for discovering locally installed boilerplates
  */
 export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
 
-    private _discovered: ToolingPackage[];
-    private _boilerplatePaths: string[];
+    private _boilerplatePaths: string[] = [];
+    private _discovered: BoilerplatePackage[] = [];
 
     /**
-     * Initializes a new instance of {BoilerplatesDiscoverer}
+     * Initializes a new instance of {LocalBoilerplatesDiscoverer}
      * @param {BoilerplatesConfig} _boilerplateConfig
-     * @param {string} _toolingPackage
-     * @param {string} _nodeModulesPath
      * @param {IBoilerplatesLoader} _boilerplatesLoader
-     * @param {FileSystem} _fileSystem
-     * @param {Logger} _logger
+     * @param {ILocalPackageDiscoverers} _localPackageDiscoverers
+     * @param {any} _toolingPackage
+     * @param {ILoggers} _logger
      */
-    constructor(private _boilerplatesConfig: BoilerplatesConfig, private _toolingPackage: any, private _nodeModulesPath: string, private _boilerplatesLoader: IBoilerplatesLoader, 
-        private _fileSystem: FileSystem, private _logger: Logger) {
-        this._discovered = [];
-        this._boilerplatePaths = [];
-    }
+    constructor(private _boilerplatesConfig: BoilerplatesConfig, private _boilerplatesLoader: IBoilerplatesLoader, private _localPackageDiscoverers: ILocalPackageDiscoverers, 
+        private _toolingPackage: any, private _logger: ILoggers) {}
 
-    get boilerplatePaths() {return this._boilerplatePaths; }
+    get boilerplatePaths() {
+        return this._boilerplatePaths;
+    }
     
-    get discovered(): ToolingPackage[] {return this._discovered;}
+    get discovered() {
+        return this._discovered;
+    }
     
-    discover() {
-        this._boilerplatePaths = this.getLocalPaths(this._nodeModulesPath);
+    async discover() {
+        this._boilerplatePaths = [];
         this._discovered = [];
+        let discoveredBoilerplatePackages = await this._localPackageDiscoverers.discover(toolingPackage => packageIsBoilerplatePackage(toolingPackage));
+        
         let boilerplatesConfigObject: any = {};
 
-        this.boilerplatePaths.forEach(folderPath => {
-            let packageJson: ToolingPackage = this._fileSystem.readJsonSync(path.join(folderPath, 'package.json'));
-            if (packageIsCompatible(packageJson, toolingPackage)) {
-                if (boilerplatesConfigObject[packageJson.name]) {
-                    this._logger.warn(`Discovered a boilerplate with an already in-use name '${packageJson.name}'.`);
+        discoveredBoilerplatePackages.forEach( discoveredPackage => {
+            let packageFolderPath = discoveredPackage.path;
+            let boilerplatePackage = discoveredPackage.package;
+            if (packageIsCompatible(boilerplatePackage, this._toolingPackage)) {
+                if (boilerplatesConfigObject[boilerplatePackage.name]) {
+                    this._logger.warn(`Discovered a boilerplate with an already in-use name '${boilerplatePackage.name}'.`);
                     throw new Error(`Found two boilerplates with the same package name targeting the same tooling version.`);
                 }
+                this._boilerplatePaths.push(packageFolderPath);
+                this._discovered.push({
+                    packageJson: boilerplatePackage,
+                    boilerplatePackagePath: packageFolderPath
+                });
+                boilerplatesConfigObject[boilerplatePackage.name] = packageFolderPath;
                 this._boilerplatesLoader.needsReload = true;
-                boilerplatesConfigObject[packageJson.name] = folderPath;
-                this._discovered.push(packageJson);
-                
             }
         });
         if (this._boilerplatesLoader.needsReload) this._boilerplatesConfig.store = boilerplatesConfigObject;
     }
 
-    private getLocalPaths(rootDir: string) {
-        let searchDirForBoilerplates = (dirName: string, filePaths: string[], pluginPackagePaths: string[]) => {
-            filePaths.forEach( filePath => {
-                let fileName = path.parse(filePath).name;
-                if (this._fileSystem.lstatSync(filePath).isFile()) {
-                    filePath = path.normalize(filePath);
-                    if (path.parse(filePath).base === 'package.json') {
-                        let packageJson = this._fileSystem.readJsonSync(filePath);
-                        if (packageIsBoilerplatePackage(packageJson)) {
-                            let folderPath = path.parse(filePath).dir;
-                            pluginPackagePaths.push(folderPath);
-                        }
-                    }
-                }
-                else if (this._fileSystem.lstatSync(filePath).isDirectory() && dirName.startsWith('@')) {
-                    searchDirForBoilerplates(fileName, this._fileSystem.readdirSync(filePath).map(_ => path.join(filePath, _)), pluginPackagePaths);   
-                }
-            });
-        };
-        let pluginPaths: string[] = [];
-        this._fileSystem.readdirSync(rootDir).forEach(dir => {
-            const dirPath = path.join(rootDir, dir);
-            if (this._fileSystem.lstatSync(dirPath).isDirectory())
-                searchDirForBoilerplates(dir, this._fileSystem.readdirSync(dirPath).map(_ => path.join(dirPath, _)), pluginPaths);
-        });
-
-        return pluginPaths.filter((v, i) => pluginPaths.indexOf(v) === i);
-    }
 }

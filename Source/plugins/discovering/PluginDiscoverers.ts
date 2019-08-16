@@ -2,8 +2,8 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-
 import { ICanDiscoverPlugins, PluginPackage, IPluginDiscoverers } from "../index";
+import { ILoggers } from "@dolittle/tooling.common.logging";
 
 /**
  * Represents an implementation of {IPluginDiscoverers}
@@ -12,38 +12,36 @@ import { ICanDiscoverPlugins, PluginPackage, IPluginDiscoverers } from "../index
  * @class PluginDiscoverers
  */
 export class PluginDiscoverers implements IPluginDiscoverers {
-    private _hasDiscovered = false;
     
     /**
      * Instantiates an instance of {PluginDiscoverers}.
      * @param {ICanDiscoverPlugins[]} pluginDiscoverers
      */
-    constructor (pluginDiscoverers: ICanDiscoverPlugins[]) {
-        this.pluginDiscoverers = pluginDiscoverers;
-    }
+    constructor (private _pluginDiscoverers: ICanDiscoverPlugins[], private _loggers: ILoggers) {}
 
-    readonly pluginDiscoverers: ICanDiscoverPlugins[]
+    get pluginDiscoverers() {
+        return this._pluginDiscoverers;
+    }
     
-    get discoveredPlugins() {
-        if (! this._hasDiscovered) this.discover();
+    get discovered() {
         let plugins: PluginPackage[] = [];
         this.pluginDiscoverers.forEach(_ => plugins.push(..._.discovered));
         return plugins;
     }
     
-    get pluginPaths() {
-        if (! this._hasDiscovered) this.discover();
+    get paths() {
         let paths: string[] = [];
         this.pluginDiscoverers.forEach(_ => paths.push(..._.pluginPaths));
         return paths;
     }
     
     add(...pluginDiscoverers: ICanDiscoverPlugins[]) {
-        this.pluginDiscoverers.push(...pluginDiscoverers);
+        this._pluginDiscoverers.push(...pluginDiscoverers);
     }
 
-    discover() {
-        this._hasDiscovered = true;
-        this.pluginDiscoverers.forEach(_ => _.discover());
+    async discover() {
+        this._loggers.info('Discovering plugins');
+        await Promise.all(this.pluginDiscoverers.map(_ => _.discover()));
+        this._loggers.info('Finished discovering plugins');
     }
 }

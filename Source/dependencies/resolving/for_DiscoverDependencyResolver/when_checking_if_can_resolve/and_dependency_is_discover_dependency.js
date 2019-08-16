@@ -7,5 +7,5 @@ import { dependencies_and_a_discover_dependency_resolver } from "../given/depend
 describe('and dependency is discover dependency', () => {
     let context = new dependencies_and_a_discover_dependency_resolver();
     
-    it('Should be able to resolve', context.discoverDependencyResolver.canResolve(context.discoverDependency).should.be.true);
+    it('Should be able to resolve', () => context.discoverDependencyResolver.canResolve(context.discoverDependency).should.be.true);
 });

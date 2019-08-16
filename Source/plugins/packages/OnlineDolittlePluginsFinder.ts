@@ -2,11 +2,9 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
-import { Logger } from '@dolittle/tooling.common.logging';
-import { ILatestCompatiblePackageFinder, ToolingPackage } from '@dolittle/tooling.common.packages';
-import npmUserPackages from 'npm-user-packages';
-import { ICanFindOnlinePluginPackages, packageIsPluginPackage, pluginPackageKeyword } from '../index';
+import { ILoggers } from '@dolittle/tooling.common.logging';
+import { ToolingPackage, IPackages } from '@dolittle/tooling.common.packages';
+import { ICanFindOnlinePluginPackages, packageIsPluginPackage } from '../index';
 
 const dolittleUser = 'woksin';
 /**
@@ -21,21 +19,17 @@ export class OnlineDolittlePluginsFinder implements ICanFindOnlinePluginPackages
     /**
      * Instantiates an instance of {OnlineBoilerplatesDiscoverer}
      * @param {ILatestCompatiblePackageFinder} _latestCompatibleFinder
-     * @param {Logger} _logger
+     * @param {ILoggers} _logger
      */
-    constructor(private _latestCompatibleFinder: ILatestCompatiblePackageFinder, private _logger: Logger) {}
+    constructor(private _packages: IPackages, private _logger: ILoggers) {}
     
     async findLatest(keywords: string[] = [], limit: number = 250): Promise<ToolingPackage[]> {
         this._logger.info(`Attempting to find online dolittle plugins`);
-        let plugins: ToolingPackage[] = [];  
-        let pluginPackageData = (await npmUserPackages(dolittleUser)).filter(packageJson => packageIsPluginPackage(packageJson));
+        let pluginPackages  = await this._packages.latestCompatibleByUser(
+            dolittleUser, 
+            _ => packageIsPluginPackage(_) && keywords.every(keyword => _.keywords.includes(keyword)));
 
-        for (let name of pluginPackageData.map(_ => _.name)) {
-            let latestCompatiblePlugin = await this._latestCompatibleFinder.find(name, pluginPackageKeyword);
-            if (latestCompatiblePlugin) plugins.push(latestCompatiblePlugin as any as ToolingPackage);
-        }
-        return plugins;
+        return pluginPackages;
     }
-    
 
 }

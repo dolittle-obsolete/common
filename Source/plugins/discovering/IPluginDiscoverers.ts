@@ -2,7 +2,6 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-
 import { ICanDiscoverPlugins, PluginPackage } from "../index";
 
 /**
@@ -30,14 +29,14 @@ export interface IPluginDiscoverers {
     /**
      * Discovers plugins
      */
-    discover(): void
+    discover(): Promise<void>
 
     /**
      * The discovered plugin packages
      *
      * @type {PluginPackage[]}
      */
-    discoveredPlugins: PluginPackage[]
+    discovered: PluginPackage[]
 
     /**
     * Gets the paths of the Dolittle plugins
@@ -45,5 +44,5 @@ export interface IPluginDiscoverers {
     * @readonly
     * @type {string[]} Filesystem paths of the Dolittle boilerplates installed on the system
     */
-    pluginPaths: string[]
+    paths: string[]
 }

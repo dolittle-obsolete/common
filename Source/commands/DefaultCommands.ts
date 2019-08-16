@@ -2,8 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-
-import { Logger } from "@dolittle/tooling.common.logging";
+import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanProvideDefaultCommands, IDefaultCommands, ICommand, DuplicateCommandName, ICanValidateProviderFor } from "./index";
 
 /**
@@ -19,9 +18,9 @@ export class DefaultCommands implements IDefaultCommands {
 
     /**
      * Instantiates an instance of {DefaultCommands}.
-     * @param {Logger} _logger
+     * @param {ILoggers} _logger
      */
-    constructor (private _providerValidator: ICanValidateProviderFor<ICommand>, private _logger: Logger) {}
+    constructor (private _providerValidator: ICanValidateProviderFor<ICommand>, private _logger: ILoggers) {}
 
     get providers() {
         let providers: ICanProvideDefaultCommands[] = [];
@@ -36,19 +35,24 @@ export class DefaultCommands implements IDefaultCommands {
     } 
 
     clear() {
+        this._logger.info('Clearing command providers')
         this._nonDefaultProviders = [];
     }
     
-    register(...providers: ICanProvideDefaultCommands[]) {
-        providers.forEach(_ => this._providerValidator.validate(_));
+    async register(...providers: ICanProvideDefaultCommands[]) {
+        this._logger.info('Registering command providers');
+        await Promise.all(providers.map(_ => this._providerValidator.validate(_)));
         this._nonDefaultProviders.push(...providers);
         this.throwIfDuplicates();
+        this._logger.info('Finished registering command providers');
     }
 
-    registerDefault(...providers: ICanProvideDefaultCommands[]) {
-        providers.forEach(_ => this._providerValidator.validate(_));
+    async registerDefault(...providers: ICanProvideDefaultCommands[]) {
+        this._logger.info('Registering default command providers');
+        await Promise.all(providers.map(_ => this._providerValidator.validate(_)));
         this._defaultProviders.push(...providers);
         this.throwIfDuplicates();
+        this._logger.info('Finished registering default command providers');
     }
 
     private throwIfDuplicates() {
@@ -58,7 +62,6 @@ export class DefaultCommands implements IDefaultCommands {
         });
     }
     private loadCommands() {
-        this._logger.info('Providing default commands');
         this._commands = [];
         this.providers.forEach(_ => this._commands.push(..._.provide()));
     }

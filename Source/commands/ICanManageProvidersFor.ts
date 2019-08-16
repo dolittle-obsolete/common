@@ -31,7 +31,7 @@ export interface ICanManageProvidersFor<T> {
      *
      * @param {...IProviderFor<T>[]} providers
      */
-    register(...providers: IProviderFor<T>[]): void
+    register(...providers: IProviderFor<T>[]): Promise<void>
 
 
     /**
@@ -39,5 +39,5 @@ export interface ICanManageProvidersFor<T> {
      *
      * @param {...IProviderFor<T>[]} providers
      */
-    registerDefault(...providers: IProviderFor<T>[]): void
+    registerDefault(...providers: IProviderFor<T>[]): Promise<void>
 }

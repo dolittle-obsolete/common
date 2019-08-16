@@ -25,7 +25,7 @@ export interface ICanParseBoilerplates {
      *
      * @param {*} boilerplate
      * @param {string} boilerplatePath
-     * @returns {Boilerplate}
+     * @returns {Promise<IBoilerplate>}
      */
-    parse(boilerplate: any, boilerplatePath: string): IBoilerplate
+    parse(boilerplate: any, boilerplatePath: string): Promise<IBoilerplate>
 }

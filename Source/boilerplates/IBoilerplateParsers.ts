@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { Boilerplate, ICanParseBoilerplates, IBoilerplate } from "./index";
+import { ICanParseBoilerplates, IBoilerplate } from "./index";
 
 /**
  * Defines a system that knows about boilerplate parsers {ICanParseBoilerplates}
@@ -32,9 +32,9 @@ export interface IBoilerplateParsers {
      *
      * @param {*} boilerplate
      * @param {string} boilerplatePath
-     * @returns {Boilerplate}
+     * @returns {Promise<IBoilerplate>}
      */
-    parse(boilerplate: any, boilerplatePath: string): IBoilerplate
+    parse(boilerplate: any, boilerplatePath: string): Promise<IBoilerplate>
 
     /**
      * Add boilerplate parsers

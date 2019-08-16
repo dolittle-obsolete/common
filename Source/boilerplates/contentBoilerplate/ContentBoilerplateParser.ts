@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { IDependencyParsers } from "@dolittle/tooling.common.dependencies";
-import { Folders, FileSystem } from "@dolittle/tooling.common.files";
+import { IFolders, IFileSystem } from "@dolittle/tooling.common.files";
 import path from 'path';
 import { ICanParseBoilerplates, Scripts, ContentBoilerplate, contentBoilerplateContentDirectoryName, CannotParseBoilerplate, boilerplateIsContentBoilerplate, contentBoilerplateContentDirectoryFromPath } from "../index";
 
@@ -27,18 +27,18 @@ export class ContentBoilerplateParser implements ICanParseBoilerplates {
     /**
      * Instantiates an instance of {ContentBoilerplateParser}.
      * @param {IDependencyParsers} _dependencyParsers
-     * @param {Folders} _folders
-     * @param {FileSystem} _fileSystem
+     * @param {IFolders} _folders
+     * @param {IFileSystem} _fileSystem
      */
-    constructor (private _dependencyParsers: IDependencyParsers, private _folders: Folders, private _fileSystem: FileSystem) {}
+    constructor (private _dependencyParsers: IDependencyParsers, private _folders: IFolders, private _fileSystem: IFileSystem) {}
     
     canParse(boilerplate: any) {
         return boilerplateIsContentBoilerplate(boilerplate);
     }
     
-    parse(boilerplate: any, boilerplatePath: string) {
+    async parse(boilerplate: any, boilerplatePath: string) {
         if (!this.canParse(boilerplate)) throw new CannotParseBoilerplate(boilerplatePath);
-        let bindings = this.getBindingsFor(boilerplatePath);
+        let bindings = await this.getBindingsFor(boilerplatePath);
         return new ContentBoilerplate(
             boilerplate.language || 'any',
             boilerplate.name,
@@ -64,37 +64,42 @@ export class ContentBoilerplateParser implements ICanParseBoilerplates {
      * @param {string} boilerplatePath The path to the boilerplate.json file
      * @returns {{pathsNeedingBinding: string[], filesNeedingBinding: string[]}} 
      */
-    private getBindingsFor(boilerplatePath: string): { pathsNeedingBinding: string[]; filesNeedingBinding: string[]; } {
+    private async getBindingsFor(boilerplatePath: string): Promise<{ pathsNeedingBinding: string[]; filesNeedingBinding: string[]; }> {
         let pathsNeedingBinding: string[] = [];
         let filesNeedingBinding: string[] = [];
         const contentFolder = path.join(path.dirname(boilerplatePath), contentBoilerplateContentDirectoryName);
-        if (! this._fileSystem.existsSync(contentFolder)) {
+        const fileExists = await this._fileSystem.exists(contentFolder);
+        if (! fileExists) {
             throw new Error(`Missing folder with name ${contentBoilerplateContentDirectoryName} at root level when parsing boilerplate at path ${boilerplatePath}`);
         }
         
-        let paths = this._folders.getFoldersAndFilesRecursivelyIn(contentFolder);
-        paths = paths.filter((_: string) => {
-            let include = true;
-            binaryFiles.forEach(b => {
-                if (_.toLowerCase().indexOf(b) > 0) include = false;
-            });
-            return include;
-        });
-        pathsNeedingBinding = paths.filter((_: string) => _.indexOf('{{') > 0).map((_: string) => _.substr(contentFolder.length + 1));
-        paths.forEach((_: string) => {
-            let stat = this._fileSystem.statSync(_);
+        let paths = await this._folders.getFilesAndFoldersRecursively(contentFolder);
+        paths = this.filterOutBinaryFiles(paths)
+        pathsNeedingBinding = paths.filter(_ => _.indexOf('{{') > 0).map(_ => _.substr(contentFolder.length + 1));
+        await Promise.all(paths.map(async _ => {
+            let stat = await this._fileSystem.stat(_);
             if (!stat.isDirectory()) {
-                let file = this._fileSystem.readFileSync(_);
+                let file = await this._fileSystem.readFile(_);
                 if (file.indexOf('{{') >= 0) {
                     filesNeedingBinding.push(_.substr(contentFolder.length + 1));
                 }
             }
-        });
+        }));
         let ret = {
             pathsNeedingBinding,
             filesNeedingBinding
         };
         return ret;
         
+    }
+
+    private filterOutBinaryFiles(filePaths: string[]) {
+        return filePaths.filter(_ => {
+            let include = true;
+            binaryFiles.forEach(b => {
+                if (_.toLowerCase().indexOf(b) > 0) include = false;
+            });
+            return include;
+        });
     }
 }

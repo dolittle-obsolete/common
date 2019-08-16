@@ -7,5 +7,5 @@ import { dependencies_and_a_discover_dependency_resolver } from "../given/depend
 describe('and dependency is prompt dependency', () => {
     let context = new dependencies_and_a_discover_dependency_resolver();
     
-    it('Should not be able to resolve', context.discoverDependencyResolver.canResolve(context.promptDependency).should.be.false);
+    it('Should not be able to resolve', () => context.discoverDependencyResolver.canResolve(context.promptDependency).should.be.false);
 });

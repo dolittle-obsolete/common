@@ -4,11 +4,11 @@
 *--------------------------------------------------------------------------------------------*/
 import { Command } from '@dolittle/tooling.common.commands';
 import { IDependencyResolvers, PromptDependency, argumentUserInputType } from '@dolittle/tooling.common.dependencies';
-import { FileSystem } from '@dolittle/tooling.common.files';
-import { Logger } from '@dolittle/tooling.common.logging';
-import { requireInternet, isGreaterVersion, ToolingPackage } from '@dolittle/tooling.common.packages';
+import { IFileSystem } from '@dolittle/tooling.common.files';
+import { ILoggers } from '@dolittle/tooling.common.logging';
+import { requireInternet, isGreaterVersion, ToolingPackage, IConnectionChecker, ICanDownloadPackages } from '@dolittle/tooling.common.packages';
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { fetchOnlineBoilerplates, fetchDolittleBoilerplates, OnlineBoilerplatesDiscoverer, OnlineDolittleBoilerplatesFinder, getInstalledBoilerplates, IBoilerplateDiscoverers, askToDownloadOrUpdateBoilerplates, BoilerplatePackageInfo } from '../index';
+import { fetchOnlineBoilerplates, fetchDolittleBoilerplates, OnlineBoilerplatesDiscoverer, OnlineDolittleBoilerplatesFinder, getInstalledBoilerplates, IBoilerplateDiscoverers, askToDownloadOrUpdateBoilerplates, BoilerplatePackageInfo, IBoilerplatesLoader } from '../index';
 
 const name = 'install';
 const description = `Prompt to install boilerplates`;
@@ -32,23 +32,22 @@ export class InstallCommand extends Command {
     /**
      * Instantiates an instance of {DolittleCommand}.
      */
-    constructor(private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _onlineBoilerplatesFinder: OnlineBoilerplatesDiscoverer, private _onlineDolittleBoilerplatesFinder: OnlineDolittleBoilerplatesFinder, 
-                private _fileSystem: FileSystem, private _logger: Logger) {
+    constructor(private _boilerplateDiscoverers: IBoilerplateDiscoverers, private _boilerplatesLoader: IBoilerplatesLoader, private _onlineBoilerplatesFinder: OnlineBoilerplatesDiscoverer, private _onlineDolittleBoilerplatesFinder: OnlineDolittleBoilerplatesFinder, 
+                private _packageDownloader: ICanDownloadPackages, private _connectionChecker: IConnectionChecker, private _fileSystem: IFileSystem, private _logger: ILoggers) {
         super(name, description, false, undefined, [dolittleBoilerplatesDependency]);
     }
 
     async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments: string[], commandOptions: Map<string, string>, namespace?: string, 
                 outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         this._logger.info(`Executing 'boilerplates install' command`);
-        await requireInternet(busyIndicator);
-        if (busyIndicator.isBusy) busyIndicator.stop()
+        await requireInternet(this._connectionChecker, busyIndicator);
         let boilerplates: ToolingPackage[]
-        if (commandOptions.get(dolittleBoilerplatesDependency.name)) boilerplates = await fetchDolittleBoilerplates(this._onlineDolittleBoilerplatesFinder, busyIndicator);
-        else boilerplates = await fetchOnlineBoilerplates(this._onlineBoilerplatesFinder, busyIndicator, namespace? [namespace]: []);
+        if (commandOptions.get(dolittleBoilerplatesDependency.name)) 
+            boilerplates = await fetchDolittleBoilerplates(this._onlineDolittleBoilerplatesFinder, this._connectionChecker, busyIndicator);
+        else 
+            boilerplates = await fetchOnlineBoilerplates(this._onlineBoilerplatesFinder, this._connectionChecker, busyIndicator, namespace? [namespace] : []);
 
-        if (busyIndicator.isBusy) busyIndicator.stop();
         let localBoilerplates = await getInstalledBoilerplates(this._boilerplateDiscoverers, this._fileSystem, busyIndicator);
-        if (busyIndicator.isBusy) busyIndicator.stop();
         let newAvailableBoilerplates = boilerplates.filter(boilerplate => !localBoilerplates.map(_ => _.packageJson.name).includes(boilerplate.name));
         let upgradeableBoilerplates = boilerplates.filter(boilerplate => localBoilerplates.map(_ => _.packageJson.name).includes(boilerplate.name))
             .map(boilerplate => {
@@ -67,9 +66,8 @@ export class InstallCommand extends Command {
         outputter.print(upgradeableBoilerplates.map((_: any) => `${_.name} v${_.localVersion} --> v${_.version}`).join('\t\n'));
             
         let boilerplatesToDownload = newAvailableBoilerplates.concat(<any>upgradeableBoilerplates);
-        await askToDownloadOrUpdateBoilerplates(boilerplatesToDownload as BoilerplatePackageInfo[], this._boilerplateDiscoverers,
-            dependencyResolvers, busyIndicator);    
-        if (busyIndicator.isBusy) busyIndicator.stop();
+        await askToDownloadOrUpdateBoilerplates(boilerplatesToDownload as BoilerplatePackageInfo[], this._boilerplateDiscoverers, this._boilerplatesLoader,
+            dependencyResolvers, this._packageDownloader, this._connectionChecker, busyIndicator);    
     }
 
     getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {

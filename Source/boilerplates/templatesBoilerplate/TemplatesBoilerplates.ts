@@ -2,8 +2,8 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { FileSystem, Folders, getFileNameAndExtension } from '@dolittle/tooling.common.files';
-import { Logger } from '@dolittle/tooling.common.logging';
+import { IFileSystem, IFolders, getFileNameAndExtension } from '@dolittle/tooling.common.files';
+import { ILoggers } from '@dolittle/tooling.common.logging';
 import path from 'path';
 import { ITemplatesBoilerplate, ITemplate, CreatedTemplateDetails, ITemplatesBoilerplates, Handlebars, boilerplateIsTemplatesBoilerplate, Boilerplates, IBoilerplatesLoader } from '../index';
 
@@ -18,12 +18,12 @@ export class TemplatesBoilerplates extends Boilerplates implements ITemplatesBoi
     /**
      * Instantiates an instance of {TemplatesBoilerplates}.
      * @param {IBoilerplatesLoader} boilerplatesLoader
-     * @param {Folders} _folders
-     * @param {FileSystem} _fileSystem
+     * @param {IFolders} _folders
+     * @param {IFileSystem} _fileSystem
      * @param {Handlebars} _handlebars
-     * @param {Logger} _logger
+     * @param {ILoggers} _logger
      */
-    constructor(boilerplatesLoader: IBoilerplatesLoader, private _folders: Folders, private _fileSystem: FileSystem, private _handlebars: Handlebars, private _logger: Logger) {
+    constructor(boilerplatesLoader: IBoilerplatesLoader, private _folders: IFolders, private _fileSystem: IFileSystem, private _handlebars: Handlebars, private _logger: ILoggers) {
         super(boilerplatesLoader);
     }
 
@@ -57,15 +57,15 @@ export class TemplatesBoilerplates extends Boilerplates implements ITemplatesBoi
                     .map((_: any) => (_ as ITemplatesBoilerplate).templatesByType(templateType)).reduce((a, b) => a.concat(b), []);
     }
     
-    create(context: any, template: ITemplate, boilerplate: ITemplatesBoilerplate, destinationPath: string): CreatedTemplateDetails {
+    async create(context: any, template: ITemplate, boilerplate: ITemplatesBoilerplate, destinationPath: string): Promise<CreatedTemplateDetails> {
         this._logger.info(`Creating a template of type '${template.type}' and language '${boilerplate.language}' at destination ${destinationPath}`);
         
-        this._folders.makeFolderIfNotExists(destinationPath);
+        await this._folders.makeFolderIfNotExists(destinationPath);
         let filesToCreate = template.filesToCreate;
         
-        filesToCreate.forEach( (filePath: string) => {
+        await Promise.all(filesToCreate.map(async filePath => {
             const filename = getFileNameAndExtension(filePath);
-            const oldContent = this._fileSystem.readFileSync(filePath, 'utf8');
+            const oldContent = await this._fileSystem.readFile(filePath);
             let segments: string[] = [];
 
             path.join(destinationPath, filename).split(/(\\|\/)/).forEach(segment => segments.push(this._handlebars.compile(segment)(context)));
@@ -73,8 +73,8 @@ export class TemplatesBoilerplates extends Boilerplates implements ITemplatesBoi
            
             let template = this._handlebars.compile(oldContent);
             let newContent = template(context);
-            this._fileSystem.writeFileSync(newFilePath, newContent);
-        });
+            await this._fileSystem.writeFile(newFilePath, newContent);
+        }));
 
         return {template: template, boilerplate: boilerplate, destination: destinationPath};
     }

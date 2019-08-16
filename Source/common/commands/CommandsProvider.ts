@@ -3,19 +3,32 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { ICommand, ICanProvideDefaultCommands } from "@dolittle/tooling.common.commands";
-import { Logger } from "@dolittle/tooling.common.logging";
-import { DocumentationCommand } from "../index";
+import { ILoggers } from "@dolittle/tooling.common.logging";
+import { DocumentationCommand, ReloadPluginsCommand, IInitializer } from "../index";
 
-
+/**
+ * Represents an implementation of {ICanProvideDefaultCommands}
+ *
+ * @export
+ * @class CommandsProvider
+ * @implements {ICanProvideDefaultCommands}
+ */
 export class CommandsProvider implements ICanProvideDefaultCommands {
 
-    private _commands: ICommand[] 
+    private _commands: ICommand[];
 
-    constructor(logger: Logger) {
+    /**
+     * Instantiates an instance of {CommandsProvider}.
+     * @param {ILoggers} logger
+     */
+    constructor(initializer: IInitializer, loggers: ILoggers) {
         this._commands = [
-            new DocumentationCommand(logger)
+            new DocumentationCommand(loggers),
+            new ReloadPluginsCommand(initializer, loggers)
         ];
     }
-    provide() { return this._commands; }
+    provide() { 
+        return this._commands;
+    }
 
 }

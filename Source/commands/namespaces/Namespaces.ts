@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { Logger } from "@dolittle/tooling.common.logging";
+import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanProvideNamespaces, INamespaces, INamespace, DuplicateNamespaceName, ICanValidateProviderFor } from "../index";
 
 /**
@@ -20,9 +20,9 @@ export class Namespaces implements INamespaces {
 
     /**
      * Instantiates an instance of {Namespaces}.
-     * @param {Logger} _logger
+     * @param {ILoggers} _logger
      */
-    constructor (private _providerValidator: ICanValidateProviderFor<INamespace> ,private _logger: Logger) {}
+    constructor (private _providerValidator: ICanValidateProviderFor<INamespace>, private _logger: ILoggers) {}
 
     get providers() {
         let providers: ICanProvideNamespaces[] = [];
@@ -37,23 +37,29 @@ export class Namespaces implements INamespaces {
     } 
 
     clear() {
+        this._logger.info('Clearing namespace providers')
         this._nonDefaultProviders = [];
     }
     
-    register(...providers: ICanProvideNamespaces[]) {
-        providers.forEach(_ => this._providerValidator.validate(_));
+    async register(...providers: ICanProvideNamespaces[]) {
+        this._logger.info('Registering namespace providers');
+        await Promise.all(providers.map(_ => this._providerValidator.validate(_)));
         this._nonDefaultProviders.push(...providers);
         this.throwIfDuplicates();
+        this._logger.info('Finished registering namespace providers');
     }
 
-    registerDefault(...providers: ICanProvideNamespaces[]) {
-        providers.forEach(_ => this._providerValidator.validate(_));
+    async registerDefault(...providers: ICanProvideNamespaces[]) {
+
+        this._logger.info('Registering default namespace providers');
+        await Promise.all(providers.map(_ => this._providerValidator.validate(_)));
         this._defaultProviders.push(...providers);
         this.throwIfDuplicates();
+
+        this._logger.info('Finished registering default namespace providers');
     }
 
     private loadNamespaces() {
-        this._logger.info('Providing namespaces');
         this._namespaces = [];
         this.providers.forEach(_ => this._namespaces.push(..._.provide()));
     }

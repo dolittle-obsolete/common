@@ -4,7 +4,6 @@
 *--------------------------------------------------------------------------------------------*/
 import { ICommandGroup, IProviderFor } from "./index";
 
-
 /**
  * Defines a system that can provide default command groups
  *

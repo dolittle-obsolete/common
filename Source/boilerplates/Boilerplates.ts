@@ -12,10 +12,6 @@ export class Boilerplates implements IBoilerplates {
     /**
      * Instantiates an instance of {Boilerplates}.
      * @param {IBoilerplatesLoader} _boilerplatesLoader
-     * @param {Folders} _folders
-     * @param {FileSystem} _fileSystem
-     * @param {Logger} _logger
-     * @param {typeof Handlebars} _handlebars
      */
     constructor(private _boilerplatesLoader: IBoilerplatesLoader) {}
     

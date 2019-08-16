@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { Command } from "@dolittle/tooling.common.commands";
-import { Logger } from "@dolittle/tooling.common.logging";
+import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
 import { getBoilerplatesInUse, IBoilerplates } from "../index";
@@ -23,7 +23,7 @@ export class ListCommand extends Command {
     /**
      * Instantiates an instance of {ListCommand}
      */
-    constructor(private _boilerplates: IBoilerplates, private _logger: Logger) {
+    constructor(private _boilerplates: IBoilerplates, private _logger: ILoggers) {
         super(name, description, false);
     }
 
@@ -38,8 +38,6 @@ export class ListCommand extends Command {
                 outputter.warn('There problem might be that you haven\'t initialized the tooling');
                 return [];
         });
-        if (busyIndicator.isBusy) busyIndicator.stop();
-
         boilerplatesInUse.forEach(_ => outputter.print(`${_.name} - ${_.description}`));
     }
 

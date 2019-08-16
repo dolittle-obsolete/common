@@ -2,12 +2,12 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { Command, ICommandManager } from '@dolittle/tooling.common.commands';
+import { Command } from '@dolittle/tooling.common.commands';
 import { IDependencyResolvers } from '@dolittle/tooling.common.dependencies';
-import { FileSystem } from '@dolittle/tooling.common.files';
-import { requireInternet, ILatestCompatiblePackageFinder } from '@dolittle/tooling.common.packages';
+import { IFileSystem } from '@dolittle/tooling.common.files';
+import { requireInternet, ILatestCompatiblePackageFinder, ICanDownloadPackages, IConnectionChecker } from '@dolittle/tooling.common.packages';
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { Logger } from '@dolittle/tooling.common.logging';
+import { ILoggers } from '@dolittle/tooling.common.logging';
 import { askToDownloadOrUpdatePlugins, checkPlugins, IPluginDiscoverers, IPlugins } from '../index'
 
 const name = 'check';
@@ -32,19 +32,17 @@ export class CheckCommand extends Command {
      * Instantiates an instance of {CheckCommand}.
      */
     constructor(private _plugins: IPlugins, private _pluginDiscoverers: IPluginDiscoverers, private _latestPackageFinder: ILatestCompatiblePackageFinder, 
-                private _fileSystem: FileSystem, private _logger: Logger) {
+                private _packageDownloader: ICanDownloadPackages, private _connectionChecker: IConnectionChecker, private _fileSystem: IFileSystem, private _logger: ILoggers) {
         super(name, description, false, shortDescription);
     }
 
     async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
                 outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
         this._logger.info(`Executing 'plugins check' command`);
-        await requireInternet(busyIndicator);
-        if (busyIndicator.isBusy) busyIndicator.stop()
+        await requireInternet(this._connectionChecker, busyIndicator);
         
-        let outOfDatePackages: any = await checkPlugins(this._pluginDiscoverers, this._latestPackageFinder, this._fileSystem, busyIndicator);
-        if (busyIndicator.isBusy) busyIndicator.stop()
-        await askToDownloadOrUpdatePlugins(outOfDatePackages, this._plugins, dependencyResolvers, busyIndicator);    
+        let outOfDatePackages = await checkPlugins(this._pluginDiscoverers, this._latestPackageFinder, this._fileSystem, this._connectionChecker, busyIndicator);
+        await askToDownloadOrUpdatePlugins(outOfDatePackages, this._plugins, dependencyResolvers, this._packageDownloader, this._connectionChecker, busyIndicator);    
     }
 
     getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {

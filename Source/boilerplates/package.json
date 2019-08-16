@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.boilerplates",
-  "version": "6.2.1",
+  "version": "7.0.1",
   "description": "The boilerplates system for common dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -36,23 +36,20 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@dolittle/tooling.common.configurations": "6.*",
-    "@dolittle/tooling.common.commands": "6.*",
-    "@dolittle/tooling.common.dependencies": "6.*",
-    "@dolittle/tooling.common.files": "6.*",
-    "@dolittle/tooling.common.logging": "6.*",
-    "@dolittle/tooling.common.utilities": "6.*",
+    "@dolittle/tooling.common.configurations": "7.*",
+    "@dolittle/tooling.common.commands": "7.*",
+    "@dolittle/tooling.common.dependencies": "7.*",
+    "@dolittle/tooling.common.files": "7.*",
+    "@dolittle/tooling.common.logging": "7.*",
+    "@dolittle/tooling.common.utilities": "7.*",
     "@types/handlebars": "4.1.0",
     "cross-spawn": "6.0.5",
     "handlebars": "4.1.2",
-    "lodash": "4.17.11",
-    "npm-keyword": "6.1.0",
-    "npm-user-packages": "3.0.0",
+    "lodash": "4.17.15",
     "semver": "6.1.1"
   },
   "devDependencies": {
-    "@types/lodash": "4.14.125",
-    "@types/npm-user-packages": "3.0.0",
+    "@types/lodash": "4.14.136",
     "@types/semver": "6.0.1"
   }
 }
