@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.logging",
-  "version": "7.0.1",
+  "version": "7.1.0",
   "description": "Utilities related to logging for dolittle tooling",
   "publishConfig": {
     "access": "public"

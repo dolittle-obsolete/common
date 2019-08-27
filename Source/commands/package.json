@@ -1,7 +1,7 @@
 {
   "name": "@dolittle/tooling.common.commands",
   "description": "A system for dolittle tooling for commands",
-  "version": "7.0.1",
+  "version": "7.1.0",
   "publishConfig": {
     "access": "public"
   },

@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.packages",
-  "version": "7.0.1",
+  "version": "7.1.0",
   "description": "Utilities related to packages for dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -38,13 +38,13 @@
   "dependencies": {
     "@dolittle/tooling.common.files": "7.*",
     "@dolittle/tooling.common.utilities": "7.*",
+    "@types/npm-user-packages": "3.0.0",
     "cross-spawn": "6.0.5",
     "is-online": "8.2.0",
     "latest-version": "5.1.0",
-    "package-json": "6.4.0",
     "npm-keyword": "6.1.0",
     "npm-user-packages": "3.0.0",
-    "@types/npm-user-packages": "3.0.0"
+    "package-json": "6.4.0"
   },
   "devDependencies": {}
 }
