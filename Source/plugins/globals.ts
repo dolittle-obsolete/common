@@ -8,7 +8,7 @@ import { nodeModulesPath, toolingPackage, latestCompatiblePackageFinder, localPa
 import { ICanRegisterProviders, commandManager, providerRegistrators } from '@dolittle/tooling.common.commands';
 import { LocalPluginsDiscoverer, IPluginLoader, PluginLoader, PluginsConfig, IPluginDiscoverers, PluginDiscoverers, IPlugins, Plugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, ProviderRegistrator } from './index';
 
-export const pluginsConfig = new PluginsConfig(nodeModulesPath);
+export const pluginsConfig = new PluginsConfig();
 export const pluginLoader: IPluginLoader = new PluginLoader(pluginsConfig, fileSystem, loggers);
 
 let localPluginsDiscoverer = new LocalPluginsDiscoverer(toolingPackage, pluginsConfig, pluginLoader, localPackageDiscoverers, fileSystem, loggers);

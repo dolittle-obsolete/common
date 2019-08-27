@@ -3,6 +3,8 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import rc from 'rc';
+import { GlobalCacheConfig, UserCacheConfig } from './index';
+import { nodeModulesPath, userHomePath } from '@dolittle/tooling.common.packages';
 
 export const dolittleConfigDefault = {
     any: {
@@ -31,3 +33,6 @@ export function setNewDolittleConfig(config?: any) {
         config = rc('dolittle', dolittleConfigDefault); 
     dolittleConfig = config;
 }
+
+GlobalCacheConfig.nodeModulesFolder = nodeModulesPath;
+UserCacheConfig.userHomeFolder = userHomePath;

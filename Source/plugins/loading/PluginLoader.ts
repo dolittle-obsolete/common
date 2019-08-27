@@ -79,6 +79,10 @@ export class PluginLoader implements IPluginLoader {
     private async getPluginFromModule(pluginFilePath: string) {
         let pluginModule: PluginModule | undefined;
         try {
+            let stats = await this._fileSystem.stat(pluginFilePath);
+            if (stats.isSymbolicLink()) 
+                pluginFilePath = await this._fileSystem.realPath(pluginFilePath)
+            
             pluginModule = await import(pluginFilePath);
             return pluginModule!.plugin;
         } catch(error) {

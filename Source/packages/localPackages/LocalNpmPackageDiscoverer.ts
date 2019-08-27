@@ -39,11 +39,11 @@ export class LocalNpmPackageDiscoverer implements ICanDiscoverLocalPackages{
         let dirs = await this._fileSystem.readDirectory(this._nodeModulesFolder);
         await Promise.all(dirs.map(async dir => {
             const dirPath = path.join(this._nodeModulesFolder, dir);
-            const isDirectory = (await this._fileSystem.lstat(dirPath)).isDirectory();
-            if (isDirectory) {
+            try {
                 let subDir = await this._fileSystem.readDirectory(dirPath);
                 return this.searchDirectoryForPackages(dir, subDir.map(_ => path.join(dirPath, _)), discoveredPackages);
             }
+            catch (err) {}
         }));
 
         return discoveredPackages;
@@ -52,7 +52,7 @@ export class LocalNpmPackageDiscoverer implements ICanDiscoverLocalPackages{
     private async searchDirectoryForPackages(dirName: string, filePaths: string[], discoveredPackages: DiscoveredToolingPackage[]) {
         for (let filePath of filePaths) {
             let fileName = path.parse(filePath).name;
-            const fileStat = await this._fileSystem.lstat(filePath);
+            const fileStat = await this._fileSystem.stat(filePath);
             if (fileStat.isFile()) {
                 filePath = path.normalize(filePath);
                 if (path.parse(filePath).base === LocalNpmPackageDiscoverer.packageName) {

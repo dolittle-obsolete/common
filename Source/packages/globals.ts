@@ -3,6 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import spawn from 'cross-spawn';
+import os from 'os';
 import { fileSystem } from '@dolittle/tooling.common.files';
 import { 
     LatestCompatibleNpmPackageFinder, IPackages, Packages, AllNpmPackageVersionsFinder, 
@@ -16,6 +17,7 @@ import {
 let npmRootSpawn = spawn.sync('npm', ['root', '-g']);
 if (npmRootSpawn.error) throw npmRootSpawn.error;
 export const nodeModulesPath = npmRootSpawn.stdout.toString().replace(/\n$/, '');
+export const userHomePath = os.homedir();
 
 export const toolingPackage = process.env.WALLABY_TESTING? require('./package.json') : require('../package.json');
 

@@ -14,6 +14,14 @@ import { IFileSystem } from "./index";
  */
 export class FileSystem implements IFileSystem {
 
+    realPath(path: string) {
+        return fs.realpath(path);
+    }
+
+    realPathSync(path: string) {
+        return fs.realpathSync(path);
+    }
+
     readJson(file: string, options?: ReadOptions) {
         return fs.readJson(file, options);
     }

@@ -6,15 +6,15 @@ import { ICanRegisterProviders, commandManager, providerRegistrators } from '@do
 import { dependencyParsers } from '@dolittle/tooling.common.dependencies';
 import { fileSystem, folders } from '@dolittle/tooling.common.files';
 import { loggers } from '@dolittle/tooling.common.logging';
-import { nodeModulesPath, toolingPackage, latestCompatiblePackageFinder, localPackageDiscoverers, packages, npmPackageDownloader, connectionChecker } from '@dolittle/tooling.common.packages';
+import { toolingPackage, latestCompatiblePackageFinder, localPackageDiscoverers, packages, npmPackageDownloader, connectionChecker } from '@dolittle/tooling.common.packages';
 import {
     BoilerplatesConfig, IBoilerplatesLoader, BoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplateDiscoverers, LocalBoilerplatesDiscoverer, IBoilerplateDiscoverers, 
     OnlineBoilerplatesDiscoverer, ITemplatesBoilerplates, TemplatesBoilerplates, IBoilerplateParsers, BoilerplateParsers, ICanParseBoilerplates, ContentBoilerplateParser, TemplatesBoilerplateParser,
-    Boilerplates, IBoilerplates, OnlineDolittleBoilerplatesFinder, handlebars, IContentBoilerplates, ContentBoilerplates, ProjectConfig, IScriptRunner, ScriptRunner, BoilerplatesCommandGroupProvider, IBoilerplate, ProviderRegistrator
+    Boilerplates, IBoilerplates, OnlineDolittleBoilerplatesFinder, handlebars, IContentBoilerplates, ContentBoilerplates, ProjectConfig, IScriptRunner, ScriptRunner, ProviderRegistrator
 } from './index';
 
-export const projectConfig = new ProjectConfig(nodeModulesPath);
-export const boilerplatesConfig = new BoilerplatesConfig(nodeModulesPath); 
+export const projectConfig = new ProjectConfig();
+export const boilerplatesConfig = new BoilerplatesConfig(); 
 
 let instancesOfICanParseBoilerplates: ICanParseBoilerplates[] = [
     new ContentBoilerplateParser(dependencyParsers, folders, fileSystem),

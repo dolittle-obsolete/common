@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.boilerplates",
-  "version": "7.0.1",
+  "version": "7.1.0",
   "description": "The boilerplates system for common dolittle tooling",
   "publishConfig": {
     "access": "public"

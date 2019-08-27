@@ -13,6 +13,22 @@ import {WriteOptions, ReadOptions, Stats, WriteFileOptions, CopyOptions, CopyOpt
 export interface IFileSystem {
 
     /**
+     * Computes the canonical pathname by resolving relative paths and symbolic links
+     *
+     * @param {string} path
+     * @returns {Promise<string>}
+     */
+    realPath(path: string): Promise<string>
+
+    /**
+     * Computes the canonical pathname by resolving relative paths and symbolic links
+     *
+     * @param {string} path
+     * @returns {string}
+     */
+    realPathSync(path: string): string
+
+    /**
      * Reads a file as a json
      *
      * @param {string} file

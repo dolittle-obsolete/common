@@ -7,26 +7,24 @@ import path from 'path';
 
 /**
  * Represents a config file that's used as a cache storage for the tooling. 
- * 
- * The configuration file should be stored at the root of the scope folder of the running tooling package.
  *
  * @export
  * @class CacheConfig
  * @extends {Conf}
  */
-export class CacheConfig extends Conf {
+export abstract class CacheConfig extends Conf {
 
     /**
      * Instantiates an instance of {CacheConfig}.
      * @param {string} configName The name of the configuration. Becomes the filename
-     * @param {string} nodeModulesFolder The path of the global node_modules folder
+     * @param {string} folder The path of the folder
      * @param {{[key: string]: any}} defaultObj
      */
-    constructor(configName: string, nodeModulesFolder: string, defaultObj: { [key: string]: any; }) {
+    constructor(configName: string, folder: string, defaultObj: { [key: string]: any; }) {
         super({
             projectName: '.dolittle', 
             configName,
-            cwd: path.join(nodeModulesFolder, '@dolittle', '.dolittle'),
+            cwd: path.join(folder, '.dolittle'),
             defaults: defaultObj,
             projectSuffix: ''
         });
