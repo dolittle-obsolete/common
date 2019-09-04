@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { ICanOutputMessages, IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { IDependency, IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
-import { ICommand, CommandContext } from "./index";
+import { ICommand, CommandContext, IFailedCommandOutputter } from "./index";
 
 /**
  * Represents an abstract implementation of {ICommand}
@@ -36,6 +36,6 @@ export abstract class Command implements ICommand {
         
     get dependencies() { return this._dependencies; }
 
-    abstract action(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, outputter?: ICanOutputMessages, busyIndicator?: IBusyIndicator): Promise<void>
+    abstract action(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, failedCommandOutputter: IFailedCommandOutputter, outputter: ICanOutputMessages, busyIndicator: IBusyIndicator): Promise<void>
     
 }

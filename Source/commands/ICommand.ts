@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { ICanOutputMessages, IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { IDependency, IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
-import { CommandContext } from './index';
+import { CommandContext, IFailedCommandOutputter } from './index';
 
 /**
  * Define the structure of a Command
@@ -48,10 +48,13 @@ export interface ICommand {
     /**
      * The action performed when the command is invoked
      *
+     * @param {CommandContext} commandContext
      * @param {IDependencyResolvers} dependencyResolvers
-     * @param {ICanOutputMessages} [outputter] The system that can output messages
-     * @param {IBusyIndicator} [busyIndicator]
+     * @param {IFailedCommandOutputter} failedCommandOutputter
+     * @param {ICanOutputMessages} outputter
+     * @param {IBusyIndicator} busyIndicator
+     * @returns {Promise<void>}
      */
-    action(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, outputter?: ICanOutputMessages, busyIndicator?: IBusyIndicator): Promise<void>
+    action(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, failedCommandOutputter: IFailedCommandOutputter, outputter: ICanOutputMessages, busyIndicator: IBusyIndicator): Promise<void>
 
 }

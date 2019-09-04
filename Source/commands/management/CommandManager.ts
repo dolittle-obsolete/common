@@ -2,13 +2,10 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ICanOutputMessages, NullMessageOutputter, NullBusyIndicator, IBusyIndicator } from "@dolittle/tooling.common.utilities";
 import { ILoggers } from "@dolittle/tooling.common.logging";
-import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
 import { 
     ICommandManager, INamespaces, ICommands, ICommandGroups, ICanProvideCommands, 
-    ICanProvideCommandGroups, ICanProvideNamespaces, 
-    ICommand, INamespace, CommandContext
+    ICanProvideCommandGroups, ICanProvideNamespaces, INamespace
 } from "../index";
 
 /**
@@ -37,13 +34,6 @@ export class CommandManager implements ICommandManager {
 
     get commandGroups() { 
         return this._commandGroups.commandGroups;
-    }
-
-    async executeCommand(command: ICommand, commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
-        
-        this._logger.info(`Executing command with arguments ${command.name}`);
-        await command.action(commandContext, dependencyResolvers, outputter, busyIndicator);
-        this._logger.info('Finished executing command');
     }
 
     clear() {

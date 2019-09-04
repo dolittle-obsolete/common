@@ -6,12 +6,12 @@ import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanProvideCommands, ICommands, ICommand, DuplicateCommandName, ICanValidateProviderFor } from "../index";
 
 /**
- * Represents an implementation of {IDefaultCommands}
+ * Represents an implementation of {ICommands}
  *
  * @export
- * @interface DefaultCommands
+ * @interface Commands
  */
-export class DefaultCommands implements ICommands {
+export class Commands implements ICommands {
     private _defaultProviders: ICanProvideCommands[] = [];
     private _nonDefaultProviders: ICanProvideCommands[] = [];
     private _commands: ICommand[] = [];

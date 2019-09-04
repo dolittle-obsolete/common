@@ -4,14 +4,21 @@
 *--------------------------------------------------------------------------------------------*/
 import { ICanOutputMessages, IBusyIndicator } from "@dolittle/tooling.common.utilities";
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
-import { ICommand, CommandContext } from "../index";
+import { ICommand, CommandContext, IFailedCommandOutputter } from "../index";
 
 /**
  * Defines a system that can execute a command
  */
 export interface ICommandExecutor {
     
-     /**
+    /**
+     * The {IFailedCommandOutputter}
+     *
+     * @type {IFailedCommandOutputter}
+     */
+    failedCommandOutputter: IFailedCommandOutputter
+    
+    /**
      * Executes a command
      *
      * @param {ICommand} command  
