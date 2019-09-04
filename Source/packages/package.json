@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.packages",
-  "version": "7.1.0",
+  "version": "8.0.0",
   "description": "Utilities related to packages for dolittle tooling",
   "publishConfig": {
     "access": "public"
@@ -36,8 +36,8 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@dolittle/tooling.common.files": "7.*",
-    "@dolittle/tooling.common.utilities": "7.*",
+    "@dolittle/tooling.common.files": "8.*",
+    "@dolittle/tooling.common.utilities": "8.*",
     "@types/npm-user-packages": "3.0.0",
     "cross-spawn": "6.0.5",
     "is-online": "8.2.0",
