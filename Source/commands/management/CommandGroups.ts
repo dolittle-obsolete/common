@@ -3,18 +3,18 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { ILoggers } from "@dolittle/tooling.common.logging";
-import { ICanProvideDefaultCommandGroups, IDefaultCommandGroups, ICommandGroup, DuplicateCommandGroupName, ICanValidateProviderFor } from "./index";
+import { ICanProvideCommandGroups, ICommandGroups, ICommandGroup, DuplicateCommandGroupName, ICanValidateProviderFor } from "../index";
 
 /**
- * Represents an implementation of {IDefaultCommandGroups}
+ * Represents an implementation of {ICommandGroups}
  *
  * @export
- * @interface DefaultCommandGroups
+ * @interface CommandGroups
  */
-export class DefaultCommandGroups implements IDefaultCommandGroups {
+export class CommandGroups implements ICommandGroups {
 
-    private _defaultProviders: ICanProvideDefaultCommandGroups[] = [];
-    private _nonDefaultProviders: ICanProvideDefaultCommandGroups[] = [];
+    private _defaultProviders: ICanProvideCommandGroups[] = [];
+    private _nonDefaultProviders: ICanProvideCommandGroups[] = [];
     private _commandGroups: ICommandGroup[] = []
 
     /**
@@ -24,7 +24,7 @@ export class DefaultCommandGroups implements IDefaultCommandGroups {
     constructor (private _providerValidator: ICanValidateProviderFor<ICommandGroup>, private _logger: ILoggers) {}
 
     get providers() {
-        let providers: ICanProvideDefaultCommandGroups[] = [];
+        let providers: ICanProvideCommandGroups[] = [];
         this._defaultProviders.forEach(_ => providers.push(_));
         this._nonDefaultProviders.forEach(_ => providers.push(_));
         return providers;
@@ -40,7 +40,7 @@ export class DefaultCommandGroups implements IDefaultCommandGroups {
         this._nonDefaultProviders = [];
     }
 
-    async register(...providers: ICanProvideDefaultCommandGroups[]) {
+    async register(...providers: ICanProvideCommandGroups[]) {
         this._logger.info('Registering command group providers');
         await Promise.all(providers.map(_ => this._providerValidator.validate(_)));
         this._nonDefaultProviders.push(...providers);
@@ -48,7 +48,7 @@ export class DefaultCommandGroups implements IDefaultCommandGroups {
         this._logger.info('Finished registering command group providers');
     }
     
-    async registerDefault(...providers: ICanProvideDefaultCommandGroups[]) {
+    async registerDefault(...providers: ICanProvideCommandGroups[]) {
         this._logger.info('Registering default command group providers');
         await Promise.all(providers.map(_ => this._providerValidator.validate(_)));
         this._defaultProviders.push(...providers);

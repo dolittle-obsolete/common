@@ -2,21 +2,14 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IProviderFor } from "./index";
+import { ICommandGroup, IProviderFor } from "../index";
 
 /**
- * Defines a provider
+ * Defines a system that can provide command groups
  *
  * @export
- * @interface ICanValidateProviderFor
- * @template T What to provide
+ * @interface ICanProvideCommandGroups
  */
-export interface ICanValidateProviderFor<T> {
+export interface ICanProvideCommandGroups extends IProviderFor<ICommandGroup> {
     
-    /**
-     * Validates a provider for {T}
-     *
-     * @returns {Promise<T[]>}
-     */
-    validate(provider: IProviderFor<T>): Promise<void>
 }

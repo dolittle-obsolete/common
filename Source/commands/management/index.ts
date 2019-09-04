@@ -2,14 +2,12 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ICommandGroup, IProviderFor } from "./index";
+export * from './ICommands';
+export * from './ICommandGroups';
+export * from './INamespaces';
+export * from './ICommandManager';
 
-/**
- * Defines a system that can provide default command groups
- *
- * @export
- * @interface ICanProvideDefaultCommandGroups
- */
-export interface ICanProvideDefaultCommandGroups extends IProviderFor<ICommandGroup> {
-    
-}
+export * from './Commands';
+export * from './CommandGroups';
+export * from './Namespaces';
+export * from './CommandManager';

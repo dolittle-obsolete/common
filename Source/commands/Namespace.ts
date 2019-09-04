@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { INamespace, ICommand, ICommandGroup, DuplicateCommandName, DuplicateCommandGroupName } from "../index";
+import { INamespace, ICommand, ICommandGroup, DuplicateCommandName, DuplicateCommandGroupName } from "./index";
 
 /**
  * Represents an abstract implementation of {INamespace}

@@ -2,15 +2,21 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-
-import { ICommand, IProviderFor } from "./index";
+import { IProviderFor } from "../index";
 
 /**
- * Defines a system that can provide default commands
+ * Defines a provider
  *
  * @export
- * @interface ICanProvideDefaultCommands
+ * @interface ICanValidateProviderFor
+ * @template T What to provide
  */
-export interface ICanProvideDefaultCommands extends IProviderFor<ICommand> {
+export interface ICanValidateProviderFor<T> {
     
+    /**
+     * Validates a provider for {T}
+     *
+     * @returns {Promise<T[]>}
+     */
+    validate(provider: IProviderFor<T>): Promise<void>
 }

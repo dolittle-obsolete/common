@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { ILoggers } from "@dolittle/tooling.common.logging";
-import { ICanProvideDefaultCommands, IDefaultCommands, ICommand, DuplicateCommandName, ICanValidateProviderFor } from "./index";
+import { ICanProvideCommands, ICommands, ICommand, DuplicateCommandName, ICanValidateProviderFor } from "../index";
 
 /**
  * Represents an implementation of {IDefaultCommands}
@@ -11,9 +11,9 @@ import { ICanProvideDefaultCommands, IDefaultCommands, ICommand, DuplicateComman
  * @export
  * @interface DefaultCommands
  */
-export class DefaultCommands implements IDefaultCommands {
-    private _defaultProviders: ICanProvideDefaultCommands[] = [];
-    private _nonDefaultProviders: ICanProvideDefaultCommands[] = [];
+export class DefaultCommands implements ICommands {
+    private _defaultProviders: ICanProvideCommands[] = [];
+    private _nonDefaultProviders: ICanProvideCommands[] = [];
     private _commands: ICommand[] = [];
 
     /**
@@ -23,7 +23,7 @@ export class DefaultCommands implements IDefaultCommands {
     constructor (private _providerValidator: ICanValidateProviderFor<ICommand>, private _logger: ILoggers) {}
 
     get providers() {
-        let providers: ICanProvideDefaultCommands[] = [];
+        let providers: ICanProvideCommands[] = [];
         this._defaultProviders.forEach(_ => providers.push(_));
         this._nonDefaultProviders.forEach(_ => providers.push(_));
         return providers;
@@ -39,7 +39,7 @@ export class DefaultCommands implements IDefaultCommands {
         this._nonDefaultProviders = [];
     }
     
-    async register(...providers: ICanProvideDefaultCommands[]) {
+    async register(...providers: ICanProvideCommands[]) {
         this._logger.info('Registering command providers');
         await Promise.all(providers.map(_ => this._providerValidator.validate(_)));
         this._nonDefaultProviders.push(...providers);
@@ -47,7 +47,7 @@ export class DefaultCommands implements IDefaultCommands {
         this._logger.info('Finished registering command providers');
     }
 
-    async registerDefault(...providers: ICanProvideDefaultCommands[]) {
+    async registerDefault(...providers: ICanProvideCommands[]) {
         this._logger.info('Registering default command providers');
         await Promise.all(providers.map(_ => this._providerValidator.validate(_)));
         this._defaultProviders.push(...providers);

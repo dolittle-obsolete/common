@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IProviderFor } from "./index";
+import { IProviderFor } from "../index";
 
 /**
  * Defines a system that manages a {IProviderFor} for a specific type
@@ -27,7 +27,7 @@ export interface ICanManageProvidersFor<T> {
     clear(): void
     
     /**
-     * Registers {ICanProvideDefaultCommands} providers
+     * Registers {ICanProvideCommands} providers
      *
      * @param {...IProviderFor<T>[]} providers
      */
