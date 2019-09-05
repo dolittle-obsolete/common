@@ -5,9 +5,9 @@
 import { CommandsProviderValidator, CommandGroupsProviderValidator, NamespaceProviderValidator, ICommand, ICanValidateProviderFor, ICommandGroup, INamespace, ICommandManager, CommandManager, IProviderRegistrators, ProviderRegistrators, ICommandExecutor, CommandExecutor, Namespaces, CommandGroups, Commands} from './index';
 import { loggers } from '@dolittle/tooling.common.logging';
 
-export let commandProviderValidator: ICanValidateProviderFor<ICommand> = new CommandsProviderValidator(loggers);
-export let commandGroupProviderValidator: ICanValidateProviderFor<ICommandGroup> = new CommandGroupsProviderValidator(loggers);
-export let namespaceProviderValidator: ICanValidateProviderFor<INamespace> = new NamespaceProviderValidator(loggers);
+let commandProviderValidator: ICanValidateProviderFor<ICommand> = new CommandsProviderValidator(loggers);
+let commandGroupProviderValidator: ICanValidateProviderFor<ICommandGroup> = new CommandGroupsProviderValidator(loggers);
+let namespaceProviderValidator: ICanValidateProviderFor<INamespace> = new NamespaceProviderValidator(loggers);
 
 export let commandManager: ICommandManager = new CommandManager(
     new Namespaces(namespaceProviderValidator, loggers), 
