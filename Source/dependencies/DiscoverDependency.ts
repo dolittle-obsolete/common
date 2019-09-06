@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {Dependency, IDiscoverDependency} from './index';
+import {Dependency, IDiscoverDependency, IDependencyRule} from './index';
 
 /**
  * Represents an implementation of {IDiscoverDependency} for the configuration of a dependency with only a 'discover' element
@@ -18,6 +18,7 @@ export class DiscoverDependency extends Dependency implements IDiscoverDependenc
      * Instantiates an instance of {DiscoverDependency}.
      * @param {string} name
      * @param {string} description
+     * @param {IDependencyRule[]} rules
      * @param {string} discoverType
      * @param {boolean} [withNamespace]
      * @param {string} [milestone]
@@ -25,9 +26,9 @@ export class DiscoverDependency extends Dependency implements IDiscoverDependenc
      * @param {string} [contentMatch]
      * @param {string} [fromArea]
      */
-    constructor (name: string, description: string, discoverType: string, withNamespace?: boolean, milestone?: string, fileMatch?: string, 
+    constructor (name: string, description: string, rules: IDependencyRule[],  discoverType: string, withNamespace?: boolean, milestone?: string, fileMatch?: string, 
             contentMatch?: string, fromArea?: string ) {
-        super(name, description, 'discover');
+        super(name, description, 'discover', rules);
         this.discoverType = discoverType;
         this.withNamespace = withNamespace;
         this.milestone = milestone? new RegExp(milestone) : undefined;

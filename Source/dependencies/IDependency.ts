@@ -1,7 +1,8 @@
 /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Dolittle. All rights reserved.
- *  Licensed under the MIT License. See LICENSE in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+*  Copyright (c) Dolittle. All rights reserved.
+*  Licensed under the MIT License. See LICENSE in the project root for license information.
+*--------------------------------------------------------------------------------------------*/
+import { IDependencyRule } from "./index";
 
  /**
  * Defines the base configuration of a dependency
@@ -40,4 +41,11 @@ export interface IDependency {
  
      */
     readonly type: string;
+    
+    /**
+     * The rules associated with this specific dependency
+     *
+     * @type {IDependencyRule[]}
+     */
+    readonly rules: IDependencyRule[]
 }
