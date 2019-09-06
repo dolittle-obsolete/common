@@ -3,19 +3,19 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { Exception } from "@dolittle/tooling.common.utilities";
-import { IDependency } from "./index";
+import { IDependency } from "../index";
 
 /**
  * The exception that gets throw when a dependency is missing a field that it was expected to have 
  *
  * @export
- * @class DependencyMissingField
+ * @class MissingField
  * @extends {Exception}
  */
-export class DependencyMissingField extends Exception {
+export class MissingField extends Exception {
 
     /**
-     * Instantiates an instance of {DependencyMissingField}.
+     * Instantiates an instance of {MissingField}.
      * @param {IDependency} dependency
      * @param {string} field
      */

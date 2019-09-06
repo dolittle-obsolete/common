@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {DiscoverDependency, IPromptDependency, PromptDependency} from './index';
+import {DiscoverDependency, IPromptDependency} from './index';
 
 /**
  * Represents an implementation of {IPromptDependency} for the configuration of a dependency which has both a 'discover' element and a 'prompt' element. 
@@ -37,8 +37,6 @@ export class DiscoverAndPromptDependency extends DiscoverDependency implements I
         this.choices = choices;
         this.promptMessage = promptMessage;
         this.customInput = customInput;
-
-        PromptDependency.throwIfInvalidPromptDependency(this.userInputType, this.promptMessage);
     }
     
     readonly optional = false;
