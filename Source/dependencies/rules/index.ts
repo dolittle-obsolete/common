@@ -4,5 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 export * from './IDependencyRule';
 export * from './IDependencyRuleFor';
+
 export * from './DependencyRule';
 export * from './IsNumberRule';
+
+export * from './RuleNotRespected';

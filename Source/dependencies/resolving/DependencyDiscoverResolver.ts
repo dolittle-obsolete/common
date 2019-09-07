@@ -5,7 +5,7 @@
 import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir, IFolders } from "@dolittle/tooling.common.files";
 import {IFileSystem} from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { MissingDestinationPath, MissingCoreLanguage, namespaceDiscoverType, multipleFilesDiscoverType, IDependencyDiscoverResolver, DependencyMissingField, DependencyDiscoverResult, IDiscoverDependency } from '../index';
+import { MissingDestinationPath, MissingCoreLanguage, namespaceDiscoverType, multipleFilesDiscoverType, IDependencyDiscoverResolver, MissingField, DependencyDiscoverResult, IDiscoverDependency } from '../index';
 
 /**
  * Represents an implementation of {IDependencyDiscoverResolver} for resolving a dependency's 'discover' field
@@ -44,12 +44,12 @@ export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
     private async discoverMultipleFiles(dependency: IDiscoverDependency, location: string, language: string, dolittleConfig: any): Promise<string[] | { value: string, namespace: string }[]> {
         let filePaths: string[] = [];
         if (dependency.fromArea === undefined) {
-            if (!dependency.fileMatch) throw new DependencyMissingField(dependency, 'fileMatch');
+            if (!dependency.fileMatch) throw new MissingField(dependency, 'fileMatch');
             filePaths = await this._folders.getFilesRecursively(location, dependency.fileMatch);
         }
         else {
             const folders = await this._folders.getNearestDirectoriesSearchingUpwards(location, new RegExp(dolittleConfig[language][dependency.fromArea]));
-            if (!dependency.fileMatch) throw new DependencyMissingField(dependency, 'fileMatch');
+            if (!dependency.fileMatch) throw new MissingField(dependency, 'fileMatch');
             let files = await Promise.all(folders.map(folder => this._folders.getFilesRecursively(folder, <RegExp>dependency.fileMatch)));
             files.forEach(_ => filePaths.push(..._));
         }
@@ -69,7 +69,7 @@ export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
         else {
             for (let filePath of filePaths) {
                 let content = await this._fileSystem.readFile(filePath);
-                if (!dependency.contentMatch) throw new DependencyMissingField(dependency, 'contentMatch');
+                if (!dependency.contentMatch) throw new MissingField(dependency, 'contentMatch');
                 let theMatch = content.match(dependency.contentMatch);
                 if (theMatch !== null && theMatch.length > 0) {
                     let namespace = '';
@@ -87,7 +87,7 @@ export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
 
     private async createNamespace(dependency: IDiscoverDependency, location: string) {
         let milestoneRegexp = dependency.milestone;
-        if (!milestoneRegexp) throw new DependencyMissingField(dependency, 'milestone');
+        if (!milestoneRegexp) throw new MissingField(dependency, 'milestone');
         const milestonePaths = await this._folders.getNearestFilesSearchingUpwards(location, milestoneRegexp);
         if (milestonePaths.length === 0) {
             this._logger.warn('Could not discover the namespace');

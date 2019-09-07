@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { dependencyIsDiscoverDependency, IDependency, IDependencyDiscoverResolver, MissingDestinationPath, MissingCoreLanguage, CannotResolveDependency, ICanResolveDependencies } from "../index";
+import { dependencyIsDiscoverDependency, IDependency, IDependencyDiscoverResolver, MissingDestinationPath, MissingCoreLanguage, CannotResolveDependency, ICanResolveDependencies, IDependencyRuleFor, RuleNotRespected } from "../index";
 
 /**
  * Represents an implementation of {ICanResolveDependencies} that resolves {DiscoverDependency}
@@ -19,10 +19,10 @@ export class DiscoverDependencyResolver implements ICanResolveDependencies {
      */
     constructor(private _discoverResolver: IDependencyDiscoverResolver, private _dolittleConfig: any) {}
 
-    async resolve(context: any, dependencies: IDependency[], destinationPath?: string, coreLanguage?: string, args?: string[]) {
+    async resolve(context: any, dependencies: IDependency[], additionalRules: IDependencyRuleFor<IDependency>[], destinationPath?: string, coreLanguage?: string, args?: string[]) {
         if (!destinationPath) throw new MissingDestinationPath();
         if (!coreLanguage) throw new MissingCoreLanguage();
-
+        
         dependencies.forEach(dep => {
             if (!this.canResolve(dep)) throw new CannotResolveDependency(dep);
             context[dep.name] = this._discoverResolver.resolve(<any>dep, destinationPath, coreLanguage, this._dolittleConfig);
