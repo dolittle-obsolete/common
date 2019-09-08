@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Script } from './index';
+import { Script } from '../index';
 
 export type ScriptStdOut = (data: string) => void 
 export type ScriptOnError = (error: Error | string) => void

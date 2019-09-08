@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ICanDiscoverBoilerplates, BoilerplatePackage } from "./index";
+import { ICanDiscoverBoilerplates, BoilerplatePackage } from "../index";
 
 /**
  * Defines a system that knows about {ICanDiscoverBoilerplate} boilerplates discoverers

@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { ICanDiscoverBoilerplates, IBoilerplateDiscoverers, BoilerplatePackage } from './index';
+import { ICanDiscoverBoilerplates, IBoilerplateDiscoverers, BoilerplatePackage } from '../index';
 
 /**
  * Represents an implementation of {IBoilerplateDiscoverers}
@@ -13,6 +13,7 @@ import { ICanDiscoverBoilerplates, IBoilerplateDiscoverers, BoilerplatePackage }
  * @implements {IBoilerplateDiscoverers}
  */
 export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
+    
     /**
      * Instantiates an instance of {BoilerplateDiscoverers}.
      * @param {ICanDiscoverBoilerplates[]} boilerplateDiscoverers

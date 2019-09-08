@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { IDependency } from '@dolittle/tooling.common.dependencies';
+import { IDependencies } from '@dolittle/tooling.common.dependencies';
 import { Scripts, IBoilerplate } from './index';
 
 /**
@@ -16,12 +16,12 @@ export abstract class Boilerplate implements IBoilerplate {
      * @param {string} name 
      * @param {string} description 
      * @param {string} type
-     * @param {IDependency[]} dependencies
+     * @param {IDependencies} dependencies
      * @param {string} namespace
      * @param {Scripts} scripts
      * @param {string} path 
      */
-    constructor(language: string, name: string, description: string, type: string, dependencies: IDependency[], namespace: string, scripts: Scripts, contentDirectory: string) {
+    constructor(language: string, name: string, description: string, type: string, dependencies: IDependencies, namespace: string, scripts: Scripts, contentDirectory: string) {
         this.language = language;
         this.name = name;
         this.description = description;
@@ -40,7 +40,7 @@ export abstract class Boilerplate implements IBoilerplate {
 
     readonly type: string;
 
-    readonly dependencies: IDependency[];
+    readonly dependencies: IDependencies;
 
     readonly namespace: string;
 

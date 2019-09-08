@@ -5,7 +5,7 @@
 import { IFileSystem } from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import path from 'path';
-import { IBoilerplatesLoader, BoilerplatesConfig, IBoilerplateParsers, IBoilerplate } from './index';
+import { IBoilerplatesLoader, BoilerplatesConfig, IBoilerplateParsers, IBoilerplate } from '../index';
 
 
 /**

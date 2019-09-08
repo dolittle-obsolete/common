@@ -20,7 +20,7 @@ export async function chooseBoilerplate(boilerplates: IBoilerplate[], resolvers:
 
 async function askWhichBoilerplate(boilerplates: IBoilerplate[], resolvers: IDependencyResolvers) {
     let choices = boilerplates.map(boilerplate => new Object({name: `${boilerplate.namespace? `${boilerplate.namespace}::`: ''}${boilerplate.name} language: ${boilerplate.language}`, value: boilerplate}));
-    let dep = new PromptDependency('boilerplate', 'Choose a boilerplate', chooseOneUserInputType, 'Choose boilerplate:', false, choices);
-    let answer = await resolvers.resolve({}, [dep]);
+    let dep = new PromptDependency('boilerplate', 'Choose a boilerplate', [], chooseOneUserInputType, 'Choose boilerplate:', false, choices);
+    let answer = await resolvers.resolve({}, [dep], []);
     return answer['boilerplate'] as IBoilerplate;
 }
