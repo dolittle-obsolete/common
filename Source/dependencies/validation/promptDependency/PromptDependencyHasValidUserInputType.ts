@@ -11,7 +11,7 @@ import { InvalidField, IPromptDependency, PromptDependencyValidator, dependencyU
  * @class DependencyHasValidUserInputType
  * @extends {PromptDependencyValidator}
  */
-export class DependencyHasValidUserInputType extends PromptDependencyValidator {
+export class PromptDependencyHasValidUserInputType extends PromptDependencyValidator {
 
     validate(dependency: IPromptDependency) {
         if (dependency.userInputType === undefined || !dependencyUserInputTypes.includes(dependency.userInputType)) 

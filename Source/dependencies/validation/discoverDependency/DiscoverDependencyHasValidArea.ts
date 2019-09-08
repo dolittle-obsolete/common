@@ -12,7 +12,7 @@ import { InvalidField, IDiscoverDependency, DiscoverDependencyValidator } from '
  * @class DependencyHasValidArea
  * @extends {DiscoverDependencyValidator}
  */
-export class DependencyHasValidArea extends DiscoverDependencyValidator {
+export class DiscoverDependencyHasValidArea extends DiscoverDependencyValidator {
 
     canValidate(dependency: IDiscoverDependency) {
         return super.canValidate(dependency) && dependency.fromArea !== undefined;

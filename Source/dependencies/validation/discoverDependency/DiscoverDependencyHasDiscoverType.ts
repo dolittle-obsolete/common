@@ -11,7 +11,7 @@ import { MissingField, IDiscoverDependency, DiscoverDependencyValidator } from '
  * @class DependencyHasDiscoveryType
  * @extends {DiscoverDependencyValidator}
  */
-export class DependencyHasDiscoverType extends DiscoverDependencyValidator {
+export class DiscoverDependencyHasDiscoverType extends DiscoverDependencyValidator {
 
     validate(dependency: IDiscoverDependency) {
         if (dependency.discoverType === undefined || dependency.discoverType.trim() === '') 

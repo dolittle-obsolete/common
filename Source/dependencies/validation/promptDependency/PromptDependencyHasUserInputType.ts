@@ -11,7 +11,7 @@ import { MissingField, IPromptDependency, PromptDependencyValidator } from '../.
  * @class DependencyHasUserInputType
  * @extends {PromptDependencyValidator}
  */
-export class DependencyHasUserInputType extends PromptDependencyValidator {
+export class PromptDependencyHasUserInputType extends PromptDependencyValidator {
 
     validate(dependency: IPromptDependency) {
         if (dependency.userInputType === undefined || dependency.userInputType.trim() === '') 

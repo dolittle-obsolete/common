@@ -11,7 +11,7 @@ import { IDiscoverDependency, DiscoverDependencyValidator, MissingField, fileDis
  * @class DependencyHasFileMatchWhenDiscoveringFiles
  * @extends {DiscoverDependencyValidator}
  */
-export class DependencyHasFileMatchWhenDiscoveringFiles extends DiscoverDependencyValidator {
+export class DiscoverDependencyHasFileMatchWhenDiscoveringFiles extends DiscoverDependencyValidator {
 
     canValidate(dependency: IDiscoverDependency) {
         return super.canValidate(dependency) && this.isDiscoveringFiles(dependency);

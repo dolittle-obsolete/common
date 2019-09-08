@@ -11,7 +11,7 @@ import { IDiscoverDependency, DiscoverDependencyValidator, MissingField } from '
  * @class DependencyHasMilestoneWhenDiscoveringNamespace
  * @extends {DiscoverDependencyValidator}
  */
-export class DependencyHasMilestoneWhenDiscoveringNamespace extends DiscoverDependencyValidator {
+export class DiscoverDependencyHasMilestoneWhenDiscoveringNamespace extends DiscoverDependencyValidator {
 
     canValidate(dependency: IDiscoverDependency) {
         return super.canValidate(dependency) 

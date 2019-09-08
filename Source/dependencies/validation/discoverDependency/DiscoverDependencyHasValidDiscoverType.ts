@@ -11,7 +11,7 @@ import { InvalidField, IDiscoverDependency, DiscoverDependencyValidator, depende
  * @class DependencyHasValidDiscoverType
  * @extends {DiscoverDependencyValidator}
  */
-export class DependencyHasValidDiscoverType extends DiscoverDependencyValidator {
+export class DiscoverDependencyHasValidDiscoverType extends DiscoverDependencyValidator {
 
     validate(dependency: IDiscoverDependency) {
         if (dependency.discoverType === undefined || !dependencyDiscoverTypes.includes(dependency.discoverType)) 
