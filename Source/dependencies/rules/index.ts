@@ -7,5 +7,6 @@ export * from './IDependencyRuleFor';
 
 export * from './DependencyRule';
 export * from './IsNumberRule';
+export * from './IsNotEmptyRule';
 
 export * from './RuleNotRespected';
