@@ -15,6 +15,7 @@ export * from './dependencyUserInputTypes';
 export * from './IDependency';
 export * from './IDiscoverDependency';
 export * from './IPromptDependency';
+export * from './IDependencies';
 
 export * from './Dependency';
 export * from './DependencyChoice'
@@ -22,6 +23,8 @@ export * from './DependencyDiscoverResult';
 export * from './DiscoverDependency';
 export * from './DiscoverAndPromptDependency';
 export * from './PromptDependency';
+export * from './Dependencies';
+export * from './DependenciesWithStandardValidators';
 
 export * from './parsing/index';
 export * from './resolving/index';
