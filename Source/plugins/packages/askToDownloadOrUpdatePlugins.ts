@@ -34,13 +34,25 @@ export async function askToDownloadOrUpdatePlugins(pluginsPackages: PluginPackag
 }
 
 async function askToDownload(resolvers: IDependencyResolvers) {
-    let dep = new PromptDependency('download', 'Asks whether to download plugins', confirmUserInputType, "Download latest plugins?");
+    let dep = new PromptDependency(
+        'download',
+        'Asks whether to download plugins',
+        [],
+        confirmUserInputType,
+        "Download latest plugins?"
+    );
     let answers = await resolvers.resolve({}, [dep]);
     return answers['download'];
 }
 
 async function askWhichPlugins(plugins: PluginPackageInfo[], resolvers: IDependencyResolvers): Promise<DownloadPackageInfo[]> {
-    let downloadAllDep = new PromptDependency('downloadAll', 'Download all plugins?' , confirmUserInputType, 'Download all?');
+    let downloadAllDep = new PromptDependency(
+        'downloadAll',
+        'Download all plugins?',
+        [],
+        confirmUserInputType,
+        'Download all?'
+    );
 
     let answers = await resolvers.resolve({}, [downloadAllDep]);
     
@@ -55,7 +67,15 @@ async function askWhichPlugins(plugins: PluginPackageInfo[], resolvers: IDepende
                 }
             })
         );
-        let choosePluginsDependency = new PromptDependency('plugins', 'Which plugins to download', chooseMultipleUserInputType, 'Choose plugins:', undefined, choices)
+        let choosePluginsDependency = new PromptDependency(
+            'plugins',
+            'Which plugins to download',
+            [],
+            chooseMultipleUserInputType,
+            'Choose plugins:',
+            undefined,
+            choices
+        );
         answers = await resolvers.resolve({}, [choosePluginsDependency]);
         return answers['plugins'] as DownloadPackageInfo[];
     }

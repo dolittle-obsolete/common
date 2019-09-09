@@ -3,7 +3,6 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { IPlugin, PluginPackage } from './index';
-import { ToolingPackage } from '@dolittle/tooling.common.packages';
 
 /**
  * Defines a system that knows about {IPlugin} plugins

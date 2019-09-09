@@ -2,11 +2,11 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { Command } from '@dolittle/tooling.common.commands';
+import { Command, CommandContext, IFailedCommandOutputter } from '@dolittle/tooling.common.commands';
 import { IDependencyResolvers } from '@dolittle/tooling.common.dependencies';
 import { IFileSystem } from '@dolittle/tooling.common.files';
 import { requireInternet, ILatestCompatiblePackageFinder, ICanDownloadPackages, IConnectionChecker } from '@dolittle/tooling.common.packages';
-import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
+import { ICanOutputMessages, IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import { askToDownloadOrUpdatePlugins, checkPlugins, IPluginDiscoverers, IPlugins } from '../index'
 
@@ -36,8 +36,7 @@ export class CheckCommand extends Command {
         super(name, description, false, shortDescription);
     }
 
-    async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
-                outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
+    async onAction(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, failedCommandOutputter: IFailedCommandOutputter, outputter: ICanOutputMessages, busyIndicator: IBusyIndicator) {
         this._logger.info(`Executing 'plugins check' command`);
         await requireInternet(this._connectionChecker, busyIndicator);
         
@@ -45,7 +44,4 @@ export class CheckCommand extends Command {
         await askToDownloadOrUpdatePlugins(outOfDatePackages, this._plugins, dependencyResolvers, this._packageDownloader, this._connectionChecker, busyIndicator);    
     }
 
-    getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {
-        return this.dependencies;
-    }
 }
