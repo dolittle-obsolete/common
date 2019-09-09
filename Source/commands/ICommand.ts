@@ -50,11 +50,23 @@ export interface ICommand {
      *
      * @param {CommandContext} commandContext
      * @param {IDependencyResolvers} dependencyResolvers
+     * @param {IFailedCommandOutputter} [failedCommandOutputter]
+     * @param {ICanOutputMessages} [outputter]
+     * @param {IBusyIndicator} [busyIndicator]
+     * @returns {Promise<void>}
+     */
+    action(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, failedCommandOutputter?: IFailedCommandOutputter, outputter?: ICanOutputMessages, busyIndicator?: IBusyIndicator): Promise<void>
+
+    /**
+     * The actual action that is performed when action is called on the command
+     *
+     * @param {CommandContext} commandContext
+     * @param {IDependencyResolvers} dependencyResolvers
      * @param {IFailedCommandOutputter} failedCommandOutputter
      * @param {ICanOutputMessages} outputter
      * @param {IBusyIndicator} busyIndicator
      * @returns {Promise<void>}
      */
-    action(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, failedCommandOutputter: IFailedCommandOutputter, outputter: ICanOutputMessages, busyIndicator: IBusyIndicator): Promise<void>
+    onAction(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, failedCommandOutputter: IFailedCommandOutputter, outputter: ICanOutputMessages, busyIndicator: IBusyIndicator): Promise<void>
 
 }

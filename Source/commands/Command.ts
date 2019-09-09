@@ -2,9 +2,9 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { ICanOutputMessages, IBusyIndicator } from '@dolittle/tooling.common.utilities';
+import { ICanOutputMessages, IBusyIndicator, NullMessageOutputter, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { IDependency, IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
-import { ICommand, CommandContext, IFailedCommandOutputter } from "./index";
+import { ICommand, CommandContext, IFailedCommandOutputter, CommandFailed, NullFailedCommandOutputter } from "./index";
 
 /**
  * Represents an abstract implementation of {ICommand}
@@ -35,7 +35,17 @@ export abstract class Command implements ICommand {
     get shortDescription() { return this._shortDescription; }
         
     get dependencies() { return this._dependencies; }
+    
+    async action(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, failedCommandOutputter: IFailedCommandOutputter = new NullFailedCommandOutputter(), 
+                outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
+        try {
+            await this.onAction(commandContext, dependencyResolvers, failedCommandOutputter, outputter, busyIndicator);
+        } catch (error) {
+            failedCommandOutputter.output(this, commandContext, this.dependencies);
+            throw new CommandFailed(this, error);
+        }
+    }
 
-    abstract action(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, failedCommandOutputter: IFailedCommandOutputter, outputter: ICanOutputMessages, busyIndicator: IBusyIndicator): Promise<void>
+    abstract onAction(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, failedCommandOutputter: IFailedCommandOutputter, outputter: ICanOutputMessages, busyIndicator: IBusyIndicator): Promise<void>
     
 }

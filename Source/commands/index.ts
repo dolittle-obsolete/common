@@ -8,6 +8,7 @@ export * from './CommandContext';
 export * from './DuplicateCommandName';
 export * from './DuplicateCommandGroupName';
 export * from './DuplicateNamespaceName';
+export * from './CommandFailed';
 
 export * from './ICommand';
 export * from './ICommandGroup';
