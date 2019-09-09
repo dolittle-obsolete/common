@@ -36,9 +36,7 @@ export interface IDependencyResolvers {
      * @param {IDependencyRuleFor<IDependency>[]} additionalRules
      * @param {string} [destinationPath] The optional source path for where the discovery mechanism should start from 
      * @param {string} [coreLanguage] The optional core language
-     * @param {string[]} [args] The optional list of arguments, only used for resolving argument dependencies
-     * @param {Map<string, any>} [options] The optional map of options, only used for resolving argument dependencies
      * @returns {Promise<any>}
      */
-    resolve(context: any, dependencies: IDependency[], additionalRules: IDependencyRuleFor<IDependency>[], destinationPath?: string, coreLanguage?: string, args?: string[], options?: Map<string, any>): Promise<any>
+    resolve(context: any, dependencies: IDependency[], additionalRules: IDependencyRuleFor<IDependency>[], destinationPath?: string, coreLanguage?: string): Promise<any>
 }

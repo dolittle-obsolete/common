@@ -25,13 +25,13 @@ import { ILoggers } from '@dolittle/tooling.common.logging';
         this._resolvers.push(...resolvers);
     }
     
-    async resolve(context: any, dependencies: IDependency[], additionalRules: IDependencyRuleFor<IDependency>[], destinationPath?: string, coreLanguage?: string, args?: string[], options?: Map<string, any>): Promise<any> {
+    async resolve(context: any, dependencies: IDependency[], additionalRules: IDependencyRuleFor<IDependency>[], destinationPath?: string, coreLanguage?: string): Promise<any> {
         this._loggers.info('Resolving dependencies');
         let resolversMap = this.getResolverToDependenciesMap(dependencies).entries();
         for (let entry of resolversMap) {
             let resolver = entry[0];
             let deps = entry[1];
-            context = await Promise.resolve(resolver.resolve(context, deps, additionalRules, destinationPath, coreLanguage, args, options));
+            context = await Promise.resolve(resolver.resolve(context, deps, additionalRules, destinationPath, coreLanguage));
         }
         this._loggers.info('Finished resolving dependencies');
         return context;
@@ -59,3 +59,4 @@ import { ILoggers } from '@dolittle/tooling.common.logging';
         return resolverToDependenciesMap;
     }
  }
+ 

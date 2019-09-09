@@ -27,11 +27,9 @@ export interface ICanResolveDependencies {
      * @param {IDependency[]} dependencies The dependencies to resolve
      * @param {IDependencyRuleFor<IDependency>[]} additionalRules
      * @param {string} [destinationPath] The optional source path for where the discovery mechanism should start from 
-     * @param {string} [coreLanguage] The optional core language 
-     * @param {string[]} [args] The optional list of arguments, only used for resolving non-optional argument dependencies
-     * @param {Map<string, any>} [options] The optional options, only used for resolving optional argument dependencies
+     * @param {string} [coreLanguage] The optional core language
      * @returns {Promise<any>}
      */
-    resolve(context: any, dependencies: IDependency[], additionalRules: IDependencyRuleFor<IDependency>[], destinationPath?: string, coreLanguage?: string, args?: string[], options?: Map<string, any>): Promise<any>
+    resolve(context: any, dependencies: IDependency[], additionalRules: IDependencyRuleFor<IDependency>[], destinationPath?: string, coreLanguage?: string): Promise<any>
 
 }

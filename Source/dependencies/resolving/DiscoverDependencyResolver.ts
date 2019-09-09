@@ -19,7 +19,7 @@ export class DiscoverDependencyResolver implements ICanResolveDependencies {
      */
     constructor(private _discoverResolver: IDependencyDiscoverResolver, private _dolittleConfig: any) {}
 
-    async resolve(context: any, dependencies: IDependency[], additionalRules: IDependencyRuleFor<IDependency>[], destinationPath?: string, coreLanguage?: string, args?: string[]) {
+    async resolve(context: any, dependencies: IDependency[], additionalRules: IDependencyRuleFor<IDependency>[], destinationPath?: string, coreLanguage?: string) {
         if (!destinationPath) throw new MissingDestinationPath();
         if (!coreLanguage) throw new MissingCoreLanguage();
         
