@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IDependencyParsers } from "@dolittle/tooling.common.dependencies";
+import { IDependencyParsers, DependenciesWithStandardValidators } from "@dolittle/tooling.common.dependencies";
 import { IFolders, IFileSystem, getFileDirPath, getFileNameAndExtension } from "@dolittle/tooling.common.files";
 import { 
     TemplatesBoilerplate, ICanParseBoilerplates, Scripts, CannotParseBoilerplate, templatesBoilerplateContentDirectoryFromPath, ITemplate, 
@@ -37,8 +37,8 @@ export class TemplatesBoilerplateParser implements ICanParseBoilerplates {
             boilerplate.name,
             boilerplate.description,
             boilerplate.dependencies !== undefined? 
-                Object.keys(boilerplate.dependencies).map(key => this._dependencyParsers.parse(boilerplate.dependencies[key], key))
-                : [],
+                new DependenciesWithStandardValidators(Object.keys(boilerplate.dependencies).map(key => this._dependencyParsers.parse(boilerplate.dependencies[key], key)))
+                : new DependenciesWithStandardValidators([]),
             boilerplate.namespace,
             Scripts.fromJson(boilerplate.scripts),
             contentDirectory,

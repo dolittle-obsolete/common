@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { IDependencyParsers } from '@dolittle/tooling.common.dependencies';
+import { IDependencyParsers, DependenciesWithStandardValidators } from '@dolittle/tooling.common.dependencies';
 import { Template } from '../index';
 
 /**
@@ -18,6 +18,6 @@ import { Template } from '../index';
 export function templateFromJson(obj: any, path: string, includedFiles: string[], dependencyParsers: IDependencyParsers) {
     return new Template(obj.name, obj.type, obj.area, obj.description,
         obj.dependencies !== undefined? 
-            Object.keys(obj.dependencies).map(key => dependencyParsers.parse(obj.dependencies[key], key))
-            : [], includedFiles, path);
+            new DependenciesWithStandardValidators(Object.keys(obj.dependencies).map(key => dependencyParsers.parse(obj.dependencies[key], key)))
+            : new DependenciesWithStandardValidators([]), includedFiles, path);
 }

@@ -21,7 +21,7 @@ export async function chooseTemplate(templates: ITemplate[], resolvers: IDepende
 
 async function askWhichTemplate(templates: ITemplate[], resolvers: IDependencyResolvers) {
     let choices = templates.map(_ => new Object({name: `${_.name} description: ${_.description}`, value: _}));
-    let dep = new PromptDependency('template','Choose a template', chooseOneUserInputType, 'Choose template:', false,  choices);
-    let answer = await resolvers.resolve({}, [dep]);
+    let dep = new PromptDependency('template','Choose a template', [], chooseOneUserInputType, 'Choose template:', false,  choices);
+    let answer = await resolvers.resolve({}, [dep], []);
     return answer['template'] as ITemplate;
 }

@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { IDependency } from '@dolittle/tooling.common.dependencies';
+import { IDependency, IDependencies } from '@dolittle/tooling.common.dependencies';
 import { getFileDirPath } from '@dolittle/tooling.common.files';
 import { areas } from '@dolittle/tooling.common.utilities';
 import * as _path from 'path';
@@ -21,12 +21,12 @@ export class Template implements ITemplate
      * @param {string} type
      * @param {string} area
      * @param {string} description
-     * @param {IDependency[]} dependencies
+     * @param {IDependencies} dependencies
      * @param {string[]} includedFiles
      * @param {string} path
      */
     constructor (name: string, type: string, area: string, description: string,
-        dependencies: IDependency[], includedFiles: string[], path: string) {
+        dependencies: IDependencies, includedFiles: string[], path: string) {
         this.name = name;
         this.type = type;
         this.area = area;
@@ -49,7 +49,7 @@ export class Template implements ITemplate
 
     readonly description: string;
 
-    readonly dependencies: IDependency[];
+    readonly dependencies: IDependencies;
 
     readonly includedFiles: string[];
 
@@ -57,7 +57,7 @@ export class Template implements ITemplate
     
     get filesToCreate(): string[] {return this._filesToCreate;}
 
-    getAllDependencies(boilerplate: ITemplatesBoilerplate): IDependency[] {return boilerplate.dependencies.concat(this.dependencies);}
+    getAllDependencies(boilerplate: ITemplatesBoilerplate): IDependency[] {return boilerplate.dependencies.dependencies.concat(this.dependencies.dependencies);}
 
 
     private throwIfInvalidArea(): void {
