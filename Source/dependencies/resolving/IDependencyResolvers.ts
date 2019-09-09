@@ -33,10 +33,10 @@ export interface IDependencyResolvers {
      * 
      * @param {*} context The context to base off of. Fields will be appended to the context and returned
      * @param {IDependency[]} dependencies The dependencies to resolve
-     * @param {IDependencyRuleFor<IDependency>[]} additionalRules
+     * @param {IDependencyRuleFor<IDependency>[]} [additionalRules]
      * @param {string} [destinationPath] The optional source path for where the discovery mechanism should start from 
      * @param {string} [coreLanguage] The optional core language
      * @returns {Promise<any>}
      */
-    resolve(context: any, dependencies: IDependency[], additionalRules: IDependencyRuleFor<IDependency>[], destinationPath?: string, coreLanguage?: string): Promise<any>
+    resolve(context: any, dependencies: IDependency[], additionalRules?: IDependencyRuleFor<IDependency>[], destinationPath?: string, coreLanguage?: string): Promise<any>
 }
