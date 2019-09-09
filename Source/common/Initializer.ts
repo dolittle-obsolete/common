@@ -5,7 +5,7 @@
 import { IPlugins } from '@dolittle/tooling.common.plugins';
 import { IBoilerplates, IBoilerplatesLoader} from '@dolittle/tooling.common.boilerplates';
 import { IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { INamespace, Namespace, ICommandManager, IProviderRegistrators, ICanProvideDefaultCommands, ICanProvideDefaultCommandGroups, ICanProvideNamespaces } from '@dolittle/tooling.common.commands';
+import { INamespace, Namespace, ICommandManager, IProviderRegistrators, ICanProvideCommands, ICanProvideCommandGroups, ICanProvideNamespaces } from '@dolittle/tooling.common.commands';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import { IInitializer } from './index';
 
@@ -59,7 +59,7 @@ export class Initializer implements IInitializer {
         this._logger.info('Providing plugins');
         let loadedPlugins = await this._plugins.getPlugins();
         this._commandManager.clear();
-        let providers: {command: ICanProvideDefaultCommands[], commandGroup: ICanProvideDefaultCommandGroups[], namespace: ICanProvideNamespaces[]} = {command: [], commandGroup: [], namespace: []};
+        let providers: {command: ICanProvideCommands[], commandGroup: ICanProvideCommandGroups[], namespace: ICanProvideNamespaces[]} = {command: [], commandGroup: [], namespace: []};
 
         loadedPlugins.forEach(_ => {
             providers.command.push(_.defaultCommandsProvider);
