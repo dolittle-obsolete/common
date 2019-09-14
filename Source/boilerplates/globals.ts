@@ -10,10 +10,9 @@ import { toolingPackage, latestCompatiblePackageFinder, localPackageDiscoverers,
 import {
     BoilerplatesConfig, IBoilerplatesLoader, BoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplateDiscoverers, LocalBoilerplatesDiscoverer, IBoilerplateDiscoverers, 
     OnlineBoilerplatesDiscoverer, ITemplatesBoilerplates, TemplatesBoilerplates, IBoilerplateParsers, BoilerplateParsers, ICanParseBoilerplates, ContentBoilerplateParser, TemplatesBoilerplateParser,
-    Boilerplates, IBoilerplates, OnlineDolittleBoilerplatesFinder, handlebars, IContentBoilerplates, ContentBoilerplates, ProjectConfig, IScriptRunner, ScriptRunner, ProviderRegistrator
+    Boilerplates, IBoilerplates, OnlineDolittleBoilerplatesFinder, handlebars, IContentBoilerplates, ContentBoilerplates, IScriptRunner, ScriptRunner, ProviderRegistrator
 } from './index';
 
-export const projectConfig = new ProjectConfig();
 export const boilerplatesConfig = new BoilerplatesConfig(); 
 
 let instancesOfICanParseBoilerplates: ICanParseBoilerplates[] = [
