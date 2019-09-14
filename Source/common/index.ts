@@ -5,5 +5,6 @@
 export * from './IInitializer';
 export * from './Initializer';
 
-export * from './commands/index'
+export * from './commands/index';
+export * from './configurations/index';
 export * from './globals';

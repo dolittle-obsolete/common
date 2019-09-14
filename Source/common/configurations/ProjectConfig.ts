@@ -4,14 +4,22 @@
  *--------------------------------------------------------------------------------------------*/
 import { UserCacheConfig } from '@dolittle/tooling.common.configurations';
 
+export type ProjectConfigObject = {
+    /**
+     * Represents the default core programming language
+     *
+     * @type {string}
+     */
+    coreLanguage: string;
+}
 /**
- * Represents the cached project configuration file for the tooling
+ * Represents the cached project configuration file for the tooling.
  *
  * @export
  * @class ProjectConfig
  * @extends {UserCacheConfig}
  */
-export class ProjectConfig extends UserCacheConfig {
+export class ProjectConfig extends UserCacheConfig<ProjectConfigObject> {
     /**
      * Instantiates an instance of {ProjectConfig}.
      */

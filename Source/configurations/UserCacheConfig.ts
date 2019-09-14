@@ -11,7 +11,7 @@ import { CacheConfig } from './index';
  * @class UserCacheConfig
  * @extends {CacheConfig}
  */
-export class UserCacheConfig extends CacheConfig {
+export class UserCacheConfig<T = unknown> extends CacheConfig<T> {
     static userHomeFolder = '/'
     /**
      * Instantiates an instance of {UserCacheConfig}.

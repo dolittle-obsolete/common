@@ -12,7 +12,7 @@ import { CacheConfig } from './index';
  * @class GlobalCacheConfig
  * @extends {CacheConfig}
  */
-export class GlobalCacheConfig extends CacheConfig {
+export class GlobalCacheConfig<T = unknown> extends CacheConfig<T> {
     static nodeModulesFolder = '/';
     /**
      * Instantiates an instance of {GlobalCacheConfig}.
