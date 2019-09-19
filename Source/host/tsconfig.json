@@ -5,7 +5,7 @@
       "outDir": "lib",
       "baseUrl": "./",
       "paths": {
-          "@dolittle/tooling.common.files": ["index.ts"]
+          "@dolittle/tooling.common.host": ["index.ts"]
       },
       "sourceRoot": "./"
     },

@@ -13,6 +13,8 @@ cd ../dependencies
 npm link
 cd ../files
 npm link
+cd ../host
+npm link
 cd ../logging
 npm link
 cd ../packages
