@@ -10,7 +10,7 @@ import {
     PromptDependencyHasPromptMessage,
     PromptDependencyHasUserInputType,
     PromptDependencyHasValidUserInputType
-} from '../index';
+} from '../internal';
 
 /**
  * Represents an implementation of {ValidatorsFor<IDependency>} that contains all the standard dependency validators

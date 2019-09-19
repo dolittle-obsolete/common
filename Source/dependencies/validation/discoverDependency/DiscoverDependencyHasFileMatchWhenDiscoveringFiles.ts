@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { IDiscoverDependency, DiscoverDependencyValidator, MissingField, fileDiscoverType, fileContentDiscoverType, multipleFileContentsDiscoverType, multipleFilesDiscoverType } from '../../index';
+import { IDiscoverDependency, DiscoverDependencyValidator, MissingField, fileDiscoverType, fileContentDiscoverType, multipleFileContentsDiscoverType, multipleFilesDiscoverType } from '../../internal';
 
 /**
  * Represents a concrete implementation of {DiscoverDependencyValidator} that validates that a discover dependency has a 'fileMatch' when it's discovering files

@@ -7,7 +7,7 @@ import {IFileSystem} from '@dolittle/tooling.common.files';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import semver from 'semver';
 import path from 'path';
-import {IBoilerplateDiscoverers, boilerplatePackageKeyword } from '../index';
+import {IBoilerplateDiscoverers, boilerplatePackageKeyword } from '../internal';
 
 export type OutOfDatePackage = {
     name: string, version: string, latest: string

@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {Dependency, IDiscoverDependency, IDependencyRule} from './index';
+import {Dependency, IDiscoverDependency, IDependencyRule} from './internal';
 
 /**
  * Represents an implementation of {IDiscoverDependency} for the configuration of a dependency with only a 'discover' element

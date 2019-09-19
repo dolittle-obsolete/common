@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { IDependency, IDependencies } from '@dolittle/tooling.common.dependencies';
-import { Boilerplate, Scripts, IContentBoilerplate } from '../index';
+import { Boilerplate, Scripts, IContentBoilerplate } from '../internal';
 
 /**
  * Represents the implementation of {IContentBoilerplate}

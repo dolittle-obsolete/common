@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { IDependencyResolvers, ICanResolveDependencies, IDependency, MultipleResolversForDependency, CannotResolveDependency, IDependencyRuleFor  } from '../index';
+import { IDependencyResolvers, ICanResolveDependencies, IDependency, MultipleResolversForDependency, CannotResolveDependency, IDependencyRuleFor  } from '../internal';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 
  /**

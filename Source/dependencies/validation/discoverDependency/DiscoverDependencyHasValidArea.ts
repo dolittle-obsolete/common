@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { areas } from '@dolittle/tooling.common.utilities';
-import { InvalidField, IDiscoverDependency, DiscoverDependencyValidator } from '../../index';
+import { InvalidField, IDiscoverDependency, DiscoverDependencyValidator } from '../../internal';
 
 /**
  * Represents a concrete implementation of {DiscoverDependencyValidator} that validates that a discover dependency has a valid the 'fromArea' field

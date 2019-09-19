@@ -6,7 +6,7 @@ import { ICanRegisterProviders, ICommandManager, ICanProvideCommandGroups } from
 import { ILatestCompatiblePackageFinder, IConnectionChecker, ICanDownloadPackages } from "@dolittle/tooling.common.packages";
 import { IFileSystem } from "@dolittle/tooling.common.files";
 import { ILoggers } from "@dolittle/tooling.common.logging";
-import { BoilerplatesCommandGroupProvider, IBoilerplateDiscoverers, IBoilerplates, OnlineBoilerplatesDiscoverer, OnlineDolittleBoilerplatesFinder, IBoilerplatesLoader } from "../index";
+import { BoilerplatesCommandGroupProvider, IBoilerplateDiscoverers, IBoilerplates, OnlineBoilerplatesDiscoverer, OnlineDolittleBoilerplatesFinder, IBoilerplatesLoader } from "../internal";
 
 /**
  * Represents an implementation of {ICanRegisterProviders}

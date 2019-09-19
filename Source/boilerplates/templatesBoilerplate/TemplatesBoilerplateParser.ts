@@ -7,7 +7,7 @@ import { IFolders, IFileSystem, getFileDirPath, getFileNameAndExtension } from "
 import { 
     TemplatesBoilerplate, ICanParseBoilerplates, Scripts, CannotParseBoilerplate, templatesBoilerplateContentDirectoryFromPath, ITemplate, 
     templateFromJson, templateConfigurationName, boilerplateIsTemplatesBoilerplate
-} from "../index";
+} from "../internal";
 
 /**
  * Represents an implementation of {ICanParseBoilerplates} for parsing {ITemplatesBoilerplate} boilerplates

@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { IPlugins } from './index';
+import { IPlugins } from './internal';
 
 /**
  * Initializes the boilerplates system in the common tooling

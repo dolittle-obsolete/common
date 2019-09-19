@@ -5,7 +5,7 @@
 import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir, IFolders } from "@dolittle/tooling.common.files";
 import {IFileSystem} from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { MissingDestinationPath, MissingCoreLanguage, namespaceDiscoverType, multipleFilesDiscoverType, IDependencyDiscoverResolver, MissingField, DependencyDiscoverResult, IDiscoverDependency } from '../index';
+import { MissingDestinationPath, MissingCoreLanguage, namespaceDiscoverType, multipleFilesDiscoverType, IDependencyDiscoverResolver, MissingField, DependencyDiscoverResult, IDiscoverDependency } from '../internal';
 
 /**
  * Represents an implementation of {IDependencyDiscoverResolver} for resolving a dependency's 'discover' field

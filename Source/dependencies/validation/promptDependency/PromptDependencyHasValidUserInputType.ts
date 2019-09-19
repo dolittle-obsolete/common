@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { InvalidField, IPromptDependency, PromptDependencyValidator, dependencyUserInputTypes } from '../../index';
+import { InvalidField, IPromptDependency, PromptDependencyValidator, dependencyUserInputTypes } from '../../internal';
 
 /**
  * Represents a concrete implementation of {PromptDependencyValidator} that validates that a prompt dependency has a valid the 'userInputType' field

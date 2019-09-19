@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {IPromptDependency, Dependency, IDependencyRule} from './index';
+import {IPromptDependency, Dependency, IDependencyRule} from './internal';
 
 /**
  * Represents an implementation of {IPromptDependency} for the configuration of a dependency with only the 'prompt' element

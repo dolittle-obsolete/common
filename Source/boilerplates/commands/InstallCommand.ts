@@ -8,7 +8,7 @@ import { IFileSystem } from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import { requireInternet, isGreaterVersion, ToolingPackage, IConnectionChecker, ICanDownloadPackages } from '@dolittle/tooling.common.packages';
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { fetchOnlineBoilerplates, fetchDolittleBoilerplates, OnlineBoilerplatesDiscoverer, OnlineDolittleBoilerplatesFinder, getInstalledBoilerplates, IBoilerplateDiscoverers, askToDownloadOrUpdateBoilerplates, BoilerplatePackageInfo, IBoilerplatesLoader } from '../index';
+import { fetchOnlineBoilerplates, fetchDolittleBoilerplates, OnlineBoilerplatesDiscoverer, OnlineDolittleBoilerplatesFinder, getInstalledBoilerplates, IBoilerplateDiscoverers, askToDownloadOrUpdateBoilerplates, BoilerplatePackageInfo, IBoilerplatesLoader } from '../internal';
 
 const name = 'install';
 const description = `Prompt to install boilerplates`;

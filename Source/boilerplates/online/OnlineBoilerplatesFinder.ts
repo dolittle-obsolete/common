@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { IPackages } from '@dolittle/tooling.common.packages';
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { ICanFindOnlineBoilerplatePackages, boilerplatePackageKeyword } from '../index';
+import { ICanFindOnlineBoilerplatePackages, boilerplatePackageKeyword } from '../internal';
 
 /**
  * Represents an implementation of {ICanFindOnlineBoilerplatePackages} that can find boilerplates online

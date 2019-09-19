@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import {IFileSystem} from '@dolittle/tooling.common.files';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { IBoilerplateDiscoverers } from './index';
+import { IBoilerplateDiscoverers } from './internal';
 
 /**
  * Finds and gets the boilerplates installed on the local machine

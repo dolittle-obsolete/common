@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IProviderFor, ICanValidateProviderFor, INamespace, DuplicateNamespaceName, ICommandGroup, DuplicateCommandGroupName, ICommand, DuplicateCommandName } from "../index";
+import { IProviderFor, ICanValidateProviderFor, INamespace, DuplicateNamespaceName, ICommandGroup, DuplicateCommandGroupName, ICommand, DuplicateCommandName } from "../internal";
 import { ILoggers } from "@dolittle/tooling.common.logging";
 
 /**

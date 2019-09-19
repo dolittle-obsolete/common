@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { IDependency, MissingField, DependencyValidator } from '../index';
+import { IDependency, MissingField, DependencyValidator } from '../internal';
 
 /**
  * Represents a concrete implementation of {DependencyValidator} that validates that any dependency has the 'type' field

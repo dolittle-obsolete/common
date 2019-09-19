@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import { ICanOutputMessages, IBusyIndicator } from "@dolittle/tooling.common.utilities";
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
-import { ICommand, CommandContext, IFailedCommandOutputter } from "../index";
+import { ICommand, CommandContext, IFailedCommandOutputter } from "../internal";
 
 /**
  * Defines a system that can execute a command

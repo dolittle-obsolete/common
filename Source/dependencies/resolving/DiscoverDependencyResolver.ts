@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { dependencyIsDiscoverDependency, IDependency, IDependencyDiscoverResolver, MissingDestinationPath, MissingCoreLanguage, CannotResolveDependency, ICanResolveDependencies, IDependencyRuleFor, RuleNotRespected } from "../index";
+import { dependencyIsDiscoverDependency, IDependency, IDependencyDiscoverResolver, MissingDestinationPath, MissingCoreLanguage, CannotResolveDependency, ICanResolveDependencies, IDependencyRuleFor, RuleNotRespected } from "../internal";
 
 /**
  * Represents an implementation of {ICanResolveDependencies} that resolves {DiscoverDependency}

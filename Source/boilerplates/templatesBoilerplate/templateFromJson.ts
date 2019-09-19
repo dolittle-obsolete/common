@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { IDependencyParsers, DependenciesWithStandardValidators } from '@dolittle/tooling.common.dependencies';
-import { Template } from '../index';
+import { Template } from '../internal';
 
 /**
  * Creates a {Template} from a json object

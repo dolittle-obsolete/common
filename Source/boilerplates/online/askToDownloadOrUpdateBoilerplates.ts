@@ -5,7 +5,7 @@
 import {requireInternet, DownloadPackageInfo, IConnectionChecker, ICanDownloadPackages} from '@dolittle/tooling.common.packages';
 import { PromptDependency, IDependencyResolvers, confirmUserInputType, chooseMultipleUserInputType } from '@dolittle/tooling.common.dependencies';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { IBoilerplateDiscoverers, initBoilerplatesSystem, IBoilerplatesLoader } from '../index';
+import { IBoilerplateDiscoverers, initBoilerplatesSystem, IBoilerplatesLoader } from '../internal';
 
 export type BoilerplatePackageInfo = {
     name: string, version: string, latest?: string

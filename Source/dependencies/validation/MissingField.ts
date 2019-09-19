@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { Exception } from "@dolittle/tooling.common.utilities";
-import { IDependency } from "../index";
+import { IDependency } from "../internal";
 
 /**
  * The exception that gets throw when a dependency is missing a field that it was expected to have 

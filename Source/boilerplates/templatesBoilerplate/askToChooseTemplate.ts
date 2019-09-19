@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { IDependencyResolvers, PromptDependency, chooseOneUserInputType } from '@dolittle/tooling.common.dependencies';
-import { ITemplate } from '../index';
+import { ITemplate } from '../internal';
 
 /**
  * Prompts the user to choose a template

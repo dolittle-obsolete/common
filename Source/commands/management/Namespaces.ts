@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { ILoggers } from "@dolittle/tooling.common.logging";
-import { ICanProvideNamespaces, INamespaces, INamespace, DuplicateNamespaceName, ICanValidateProviderFor } from "../index";
+import { ICanProvideNamespaces, INamespaces, INamespace, DuplicateNamespaceName, ICanValidateProviderFor } from "../internal";
 
 /**
  * Represents an implementation of {INamespaces}

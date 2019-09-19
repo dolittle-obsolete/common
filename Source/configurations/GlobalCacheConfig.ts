@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import path from 'path';
-import { CacheConfig } from './index';
+import { CacheConfig } from './internal';
 
 /**
  * Represents a config file that's used as a global cache storage for the tooling. 

@@ -6,7 +6,7 @@ import { ICanRegisterProviders, ICommandManager, ICanProvideCommandGroups } from
 import { ILatestCompatiblePackageFinder, ICanDownloadPackages, IConnectionChecker } from "@dolittle/tooling.common.packages";
 import { IFileSystem } from "@dolittle/tooling.common.files";
 import { ILoggers } from "@dolittle/tooling.common.logging";
-import { PluginsCommandGroupProvider, IPluginDiscoverers, IPlugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, IPluginLoader } from "../index";
+import { PluginsCommandGroupProvider, IPluginDiscoverers, IPlugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, IPluginLoader } from "../internal";
 
 /**
  * Represents an implementation of {ICanRegisterProviders}

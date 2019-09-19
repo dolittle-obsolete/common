@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { CacheConfig } from './index';
+import { CacheConfig } from './internal';
 
 /**
  * Represents a config file that's used as a user cache storage for the tooling. 

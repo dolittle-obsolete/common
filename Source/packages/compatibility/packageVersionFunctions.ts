@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import semver from 'semver';
-import { requireInternet, IConnectionChecker, ICanFindLatestVersionOfPackage } from '../index';
+import { requireInternet, IConnectionChecker, ICanFindLatestVersionOfPackage } from '../internal';
 
 
 /**

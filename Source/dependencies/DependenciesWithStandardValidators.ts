@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IDependency, Dependencies, StandardValidatorsForDependency } from "./index";
+import { IDependency, Dependencies, StandardValidatorsForDependency } from "./internal";
 
 /**
  * Represents an implementation of {Dependencies} that uses the standard dependency validators 

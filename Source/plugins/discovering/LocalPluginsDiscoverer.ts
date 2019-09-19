@@ -5,7 +5,7 @@
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import { packageIsCompatible, ILocalPackageDiscoverers } from '@dolittle/tooling.common.packages';
 import path from 'path';
-import { ICanDiscoverPlugins, PluginPackage, PluginsConfig, IPluginLoader, PluginAlreadyInUse, packageIsPluginPackage, PluginConfigObject } from '../index';
+import { ICanDiscoverPlugins, PluginPackage, PluginsConfig, IPluginLoader, PluginAlreadyInUse, packageIsPluginPackage, PluginConfigObject } from '../internal';
 import { IFileSystem } from '@dolittle/tooling.common.files';
 
 /**

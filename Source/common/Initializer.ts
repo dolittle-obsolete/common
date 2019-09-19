@@ -7,7 +7,7 @@ import { IBoilerplates, IBoilerplatesLoader} from '@dolittle/tooling.common.boil
 import { IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { INamespace, Namespace, ICommandManager, IProviderRegistrators, ICanProvideCommands, ICanProvideCommandGroups, ICanProvideNamespaces } from '@dolittle/tooling.common.commands';
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { IInitializer } from './index';
+import { IInitializer } from './internal';
 
 /**
  * Represents an implementation of {IInitializer}

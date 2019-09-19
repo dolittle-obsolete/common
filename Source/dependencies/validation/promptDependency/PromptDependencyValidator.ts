@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { ICanValidateDependency, dependencyIsPromptDependency, IPromptDependency } from '../../index';
+import { ICanValidateDependency, dependencyIsPromptDependency, IPromptDependency } from '../../internal';
 
 /**
  * Represents an abstract implementation of {ICanValidateDependency} for validating {IPromptDependency} prompt dependencies

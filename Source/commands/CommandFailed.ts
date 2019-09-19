@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { Exception } from "@dolittle/tooling.common.utilities";
-import { ICommand } from "./index";
+import { ICommand } from "./internal";
 
 /**
  * The exception that gets thrown when a command throws an exception in its onAction procedure

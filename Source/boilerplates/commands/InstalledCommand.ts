@@ -6,7 +6,7 @@ import { Command, CommandContext, IFailedCommandOutputter } from "@dolittle/tool
 import { IFileSystem } from "@dolittle/tooling.common.files";
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
-import { getInstalledBoilerplates, IBoilerplateDiscoverers } from "../index";
+import { getInstalledBoilerplates, IBoilerplateDiscoverers } from "../internal";
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
 
 const name = 'installed';

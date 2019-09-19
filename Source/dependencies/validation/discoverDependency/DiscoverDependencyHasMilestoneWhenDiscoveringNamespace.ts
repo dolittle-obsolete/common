@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { IDiscoverDependency, DiscoverDependencyValidator, MissingField } from '../../index';
+import { IDiscoverDependency, DiscoverDependencyValidator, MissingField } from '../../internal';
 
 /**
  * Represents a concrete implementation of {DiscoverDependencyValidator} that validates that a discover dependency has a 'milestone' when it's discovering a namespace

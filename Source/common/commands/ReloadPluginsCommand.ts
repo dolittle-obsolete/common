@@ -6,7 +6,7 @@ import { Command, CommandContext, IFailedCommandOutputter } from "@dolittle/tool
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
 import { IDependencyResolvers, IDependency } from "@dolittle/tooling.common.dependencies";
-import { IInitializer } from "../index";
+import { IInitializer } from "../internal";
 
 const name = 'reload-plugins';
 const description = 'Reloads the plugins';

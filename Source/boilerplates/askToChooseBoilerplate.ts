@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { PromptDependency, IDependencyResolvers, chooseOneUserInputType } from '@dolittle/tooling.common.dependencies';
-import { IBoilerplate } from './index';
+import { IBoilerplate } from './internal';
 
 /**
  * Prompts the user to choose a boilerplate

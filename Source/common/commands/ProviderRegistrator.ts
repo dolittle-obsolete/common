@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import { ICanRegisterProviders, ICanProvideCommands, ICommandManager } from "@dolittle/tooling.common.commands";
 import { ILoggers } from "@dolittle/tooling.common.logging";
-import { CommandsProvider, IInitializer } from "../index";
+import { CommandsProvider, IInitializer } from "../internal";
 
 /**
  * Represents an implementation of {ICanRegisterProviders}

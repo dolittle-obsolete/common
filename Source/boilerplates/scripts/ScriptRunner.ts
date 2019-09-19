@@ -5,7 +5,7 @@
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import path from 'path';
 import spawn from 'cross-spawn';
-import { Script, ScriptStdOut, ScriptOnError, ScriptFailed, IScriptRunner } from '../index';
+import { Script, ScriptStdOut, ScriptOnError, ScriptFailed, IScriptRunner } from '../internal';
 
 /**
  * Represents an implementation of {IScriptRunner} for running scripts

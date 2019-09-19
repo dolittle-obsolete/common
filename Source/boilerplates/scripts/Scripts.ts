@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import lodash from 'lodash';
-import { Script } from '../index';
+import { Script } from '../internal';
 
 /**
  * Represents a Boilerplate's scripts

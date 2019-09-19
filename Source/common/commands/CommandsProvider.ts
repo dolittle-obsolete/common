@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import { ICommand, ICanProvideCommands } from "@dolittle/tooling.common.commands";
 import { ILoggers } from "@dolittle/tooling.common.logging";
-import { DocumentationCommand, ReloadPluginsCommand, IInitializer } from "../index";
+import { DocumentationCommand, ReloadPluginsCommand, IInitializer } from "../internal";
 
 /**
  * Represents an implementation of {ICanProvideDefaultCommands}

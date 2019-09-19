@@ -6,7 +6,7 @@ import { ILoggers } from "@dolittle/tooling.common.logging";
 import { 
     ICommandManager, INamespaces, ICommands, ICommandGroups, ICanProvideCommands, 
     ICanProvideCommandGroups, ICanProvideNamespaces, INamespace
-} from "../index";
+} from "../internal";
 
 /**
  * Represents an implementation of {ICommandManager}

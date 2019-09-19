@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {IDependency, IDependencyRule} from './index';
+import {IDependency, IDependencyRule} from './internal';
 
 /**
  * Represents an abstract implementation of {IDependency} for the abstract base configuration class of a dependency

@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { IBoilerplatesLoader, IBoilerplates} from './index';
+import { IBoilerplatesLoader, IBoilerplates} from './internal';
 
 /**
  * Represents an implementation of {IBoilerplates}

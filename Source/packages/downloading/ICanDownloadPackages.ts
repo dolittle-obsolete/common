@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { DownloadPackageInfo } from "../index";
+import { DownloadPackageInfo } from "../internal";
 
 /**
  * Defines a system that can download packages

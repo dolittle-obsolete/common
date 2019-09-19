@@ -5,7 +5,7 @@
 import { ICanOutputMessages, NullMessageOutputter, NullBusyIndicator, IBusyIndicator } from "@dolittle/tooling.common.utilities";
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
-import { ICommandExecutor, ICommand, CommandContext, NullFailedCommandOutputter } from "../index";
+import { ICommandExecutor, ICommand, CommandContext, NullFailedCommandOutputter } from "../internal";
 
 /**
  * Represents an implementation of {ICommandExecutor}

@@ -8,7 +8,7 @@ import { IFileSystem } from '@dolittle/tooling.common.files';
 import { requireInternet, ILatestCompatiblePackageFinder, ICanDownloadPackages, IConnectionChecker } from '@dolittle/tooling.common.packages';
 import { ICanOutputMessages, IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { askToDownloadOrUpdatePlugins, checkPlugins, IPluginDiscoverers, IPlugins } from '../index'
+import { askToDownloadOrUpdatePlugins, checkPlugins, IPluginDiscoverers, IPlugins } from '../internal'
 
 const name = 'check';
 const description = `Checks whether you have plugins that are out of date.

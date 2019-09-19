@@ -3,7 +3,7 @@
 // *  Licensed under the MIT License. See LICENSE in the project root for license information.
 // *--------------------------------------------------------------------------------------------*/
 
-// import { IFieldValidator } from "../index";
+// import { IFieldValidator } from "../internal";
 
 // export class ConfigurationValidationFor<T> {
 //     constructor(private _validators: IFieldValidator[]) {}

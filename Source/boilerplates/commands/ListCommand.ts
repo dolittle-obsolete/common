@@ -6,7 +6,7 @@ import { Command, CommandContext, IFailedCommandOutputter } from "@dolittle/tool
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
-import { getBoilerplatesInUse, IBoilerplates } from "../index";
+import { getBoilerplatesInUse, IBoilerplates } from "../internal";
 
 const name = 'list';
 const description = 'Lists the boilerplates in use by the tooling';

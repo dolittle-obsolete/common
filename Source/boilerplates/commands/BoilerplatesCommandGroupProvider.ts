@@ -6,7 +6,7 @@ import { ICanProvideCommandGroups, ICommandGroup } from "@dolittle/tooling.commo
 import { IFileSystem } from "@dolittle/tooling.common.files";
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ILatestCompatiblePackageFinder, ICanDownloadPackages, IConnectionChecker } from "@dolittle/tooling.common.packages";
-import { BoilerplatesCommandGroup, IBoilerplateDiscoverers, IBoilerplates, OnlineBoilerplatesDiscoverer, OnlineDolittleBoilerplatesFinder, CheckCommand, InitCommand, InstalledCommand, ListCommand, InstallCommand, IBoilerplatesLoader } from "../index";
+import { BoilerplatesCommandGroup, IBoilerplateDiscoverers, IBoilerplates, OnlineBoilerplatesDiscoverer, OnlineDolittleBoilerplatesFinder, CheckCommand, InitCommand, InstalledCommand, ListCommand, InstallCommand, IBoilerplatesLoader } from "../internal";
 
 export class BoilerplatesCommandGroupProvider implements ICanProvideCommandGroups {
 

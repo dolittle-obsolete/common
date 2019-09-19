@@ -5,7 +5,7 @@
 import { PromptDependency, IDependencyResolvers, confirmUserInputType, chooseMultipleUserInputType } from '@dolittle/tooling.common.dependencies';
 import {requireInternet, DownloadPackageInfo, IConnectionChecker, ICanDownloadPackages} from '@dolittle/tooling.common.packages';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { initPluginSystem, IPlugins } from '../index';
+import { initPluginSystem, IPlugins } from '../internal';
 
 export type PluginPackageInfo = {
     name: string, version: string, latest?: string

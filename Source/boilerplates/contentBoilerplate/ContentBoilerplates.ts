@@ -5,7 +5,7 @@
 import { IFolders, IFileSystem } from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import path from 'path';
-import { Handlebars, IContentBoilerplates, IContentBoilerplate, boilerplateIsContentBoilerplate, Boilerplates, IBoilerplatesLoader} from '../index';
+import { Handlebars, IContentBoilerplates, IContentBoilerplate, boilerplateIsContentBoilerplate, Boilerplates, IBoilerplatesLoader} from '../internal';
 
 /**
  * Represents an implementation of {IContentBoilerplates}

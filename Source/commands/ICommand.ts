@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { ICanOutputMessages, IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { IDependency, IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
-import { CommandContext, IFailedCommandOutputter } from './index';
+import { CommandContext, IFailedCommandOutputter } from './internal';
 
 /**
  * Define the structure of a Command

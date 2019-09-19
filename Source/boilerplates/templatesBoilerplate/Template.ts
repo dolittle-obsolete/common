@@ -6,7 +6,7 @@ import { IDependency, IDependencies } from '@dolittle/tooling.common.dependencie
 import { getFileDirPath } from '@dolittle/tooling.common.files';
 import { areas } from '@dolittle/tooling.common.utilities';
 import * as _path from 'path';
-import { ITemplatesBoilerplate, ITemplate } from '../index';
+import { ITemplatesBoilerplate, ITemplate } from '../internal';
 
 /**
  * Represents an implementation of {ITemplate}

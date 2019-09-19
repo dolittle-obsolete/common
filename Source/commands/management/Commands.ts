@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { ILoggers } from "@dolittle/tooling.common.logging";
-import { ICanProvideCommands, ICommands, ICommand, DuplicateCommandName, ICanValidateProviderFor } from "../index";
+import { ICanProvideCommands, ICommands, ICommand, DuplicateCommandName, ICanValidateProviderFor } from "../internal";
 
 /**
  * Represents an implementation of {ICommands}

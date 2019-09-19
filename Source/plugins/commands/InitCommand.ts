@@ -5,7 +5,7 @@
 import { Command, CommandContext, IFailedCommandOutputter } from "@dolittle/tooling.common.commands";
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
-import { initPluginSystem, IPlugins } from '../index';
+import { initPluginSystem, IPlugins } from '../internal';
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
 
 const name = 'init';

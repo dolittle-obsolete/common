@@ -8,7 +8,7 @@ import { IFileSystem } from '@dolittle/tooling.common.files';
 import { requireInternet, ILatestCompatiblePackageFinder, IConnectionChecker, ICanDownloadPackages } from '@dolittle/tooling.common.packages';
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { askToDownloadOrUpdateBoilerplates, checkBoilerplates, IBoilerplateDiscoverers, IBoilerplatesLoader } from '../index'
+import { askToDownloadOrUpdateBoilerplates, checkBoilerplates, IBoilerplateDiscoverers, IBoilerplatesLoader } from '../internal'
 
 const name = 'check';
 const description = `Checks whether you have boilerplates that are out of date.

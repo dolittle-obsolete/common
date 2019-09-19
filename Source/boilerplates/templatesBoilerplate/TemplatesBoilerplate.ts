@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { PromptDependency, argumentUserInputType, IDependencies, IsNotEmptyRule } from '@dolittle/tooling.common.dependencies';
-import { Boilerplate, Scripts, ITemplate, templatesBoilerplateType, ITemplatesBoilerplate } from '../index';
+import { Boilerplate, Scripts, ITemplate, templatesBoilerplateType, ITemplatesBoilerplate } from '../internal';
 
 /**
  * Represents an implementation of {ITemplatesBoilerplate}

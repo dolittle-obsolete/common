@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import npmUserPackages from 'npm-user-packages';
-import { ICanFindPackagesByUser, packageIsToolingPackage, ToolingPackage } from './index';
+import { ICanFindPackagesByUser, packageIsToolingPackage, ToolingPackage } from './internal';
 
 /**
  * Represents an implementation of {ICanFindPackagesByUser} for finding packages on npm

@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ICanParseDependencies, promptDependencyType, IPromptDependency, PromptDependency, CannotParseDependency } from "../index";
+import { ICanParseDependencies, promptDependencyType, IPromptDependency, PromptDependency, CannotParseDependency } from "../internal";
 
 /**
  * Handles the parsing of {PromptDependency} Objects

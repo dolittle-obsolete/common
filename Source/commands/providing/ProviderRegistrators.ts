@@ -4,7 +4,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import {ICanRegisterProviders, IProviderRegistrators} from '../index';
+import {ICanRegisterProviders, IProviderRegistrators} from '../internal';
 
 /**
  * Represents an implementation of {IProviderRegistrators}

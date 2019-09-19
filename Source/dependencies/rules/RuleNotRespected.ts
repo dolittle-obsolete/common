@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import {Exception} from '@dolittle/tooling.common.utilities';
-import { IDependency, IDependencyRule } from '../index';
+import { IDependency, IDependencyRule } from '../internal';
 
 /**
  * The exception that gets thrown when a rule is not respected by a dependency

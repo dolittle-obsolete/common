@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { IDiscoverDependency, DependencyDiscoverResult } from '../index';
+import { IDiscoverDependency, DependencyDiscoverResult } from '../internal';
 
 /**
  * Defines a system for resolving the 'discover' part of a dependency

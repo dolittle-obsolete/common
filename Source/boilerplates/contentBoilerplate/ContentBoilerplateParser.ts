@@ -5,7 +5,7 @@
 import { IDependencyParsers, DependenciesWithStandardValidators } from "@dolittle/tooling.common.dependencies";
 import { IFolders, IFileSystem } from "@dolittle/tooling.common.files";
 import path from 'path';
-import { ICanParseBoilerplates, Scripts, ContentBoilerplate, contentBoilerplateContentDirectoryName, CannotParseBoilerplate, boilerplateIsContentBoilerplate, contentBoilerplateContentDirectoryFromPath } from "../index";
+import { ICanParseBoilerplates, Scripts, ContentBoilerplate, contentBoilerplateContentDirectoryName, CannotParseBoilerplate, boilerplateIsContentBoilerplate, contentBoilerplateContentDirectoryFromPath } from "../internal";
 
 const binaryFiles = [
     '.jpg',
