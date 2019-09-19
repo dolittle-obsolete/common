@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import spawn from 'cross-spawn';
-import { IInitializer, Initializer, ICanFindLocalToolingPlatform, LocalNpmToolingPlatformFinder } from './internal';
+import { IInitializer, Initializer, ICanFindLocalToolingPlatform, LocalNpmToolingPlatformFinder, ICanDownloadToolingPlatform, NpmToolingPlatformDownloader } from './internal';
 
 const commonToolingPackages = [
     "@dolittle/tooling.common",
@@ -16,7 +16,7 @@ const commonToolingPackages = [
     "@dolittle/tooling.common.packages",
     "@dolittle/tooling.common.plugins",
     "@dolittle/tooling.common.utilities",
-]
+];
 
 let npmRootSpawn = spawn.sync('npm', ['root', '-g']);
 if (npmRootSpawn.error) throw npmRootSpawn.error;
@@ -25,4 +25,5 @@ const nodeModulesPath = npmRootSpawn.stdout.toString().replace(/\n$/, '');
 const toolingPackage = process.env.WALLABY_TESTING? require('./package.json') : require('../package.json');
 
 let localToolingPlatformFinder: ICanFindLocalToolingPlatform = new LocalNpmToolingPlatformFinder(nodeModulesPath, commonToolingPackages);
-export let initializer: IInitializer = new Initializer(toolingPackage, localToolingPlatformFinder);
+let toolingPlatformDownloader: ICanDownloadToolingPlatform = new NpmToolingPlatformDownloader(commonToolingPackages);
+export let initializer: IInitializer = new Initializer(toolingPackage, localToolingPlatformFinder, toolingPlatformDownloader);

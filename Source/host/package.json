@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.host",
-  "version": "8.0.0-alpha.6",
+  "version": "8.0.0-alpha.9",
   "description": "Common utilities needed for a host for the tooling platform",
   "publishConfig": {
     "access": "public"

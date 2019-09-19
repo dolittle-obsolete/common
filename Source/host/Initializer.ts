@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IInitializer, ICanFindLocalToolingPlatform } from "./internal";
+import { IInitializer, ICanFindLocalToolingPlatform, ICanDownloadToolingPlatform } from "./internal";
 
 /**
  * Represents an implementation of {IInitializer}
@@ -13,15 +13,12 @@ import { IInitializer, ICanFindLocalToolingPlatform } from "./internal";
  */
 export class Initializer implements IInitializer {
     
-    constructor(private _toolingPackage: {version: string}, private _localToolingPlatformFinder: ICanFindLocalToolingPlatform) {}
+    constructor(private _toolingPackage: {version: string}, private _localToolingPlatformFinder: ICanFindLocalToolingPlatform, 
+        private _toolingPlatformDownloader: ICanDownloadToolingPlatform) {}
     
     async initialize(){
         if (!await this._localToolingPlatformFinder.exists(this._toolingPackage)) {
-            console.log('It does not exist!');
-        }
-        else {
-            // IF NOT EXISTS DONWLOAD THE TOOLING PACKAGES
-            console.log('It exists!');
+            await this._toolingPlatformDownloader.download(this._toolingPackage)
         }
     }
 
