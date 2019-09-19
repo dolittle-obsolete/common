@@ -42,6 +42,10 @@
     "@dolittle/tooling.common.files": "8.*",
     "@dolittle/tooling.common.logging": "8.*",
     "@dolittle/tooling.common.packages": "8.*",
-    "@dolittle/tooling.common.utilities": "8.*"
+    "@dolittle/tooling.common.utilities": "8.*",
+    "semver": "6.1.1"
+  },
+  "devDependencies": {
+    "@types/semver": "6.0.1"
   }
 }
