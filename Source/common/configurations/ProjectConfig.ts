@@ -14,12 +14,15 @@ export type ProjectConfigObject = {
 }
 /**
  * Represents the cached project configuration file for the tooling.
+ * 
+ * Keys:
+ *  The keys are defined in the {ProjectConfigObject} type
  *
  * @export
  * @class ProjectConfig
  * @extends {UserCacheConfig}
  */
-export class ProjectConfig extends UserCacheConfig<ProjectConfigObject> {
+export class ProjectConfig extends UserCacheConfig {
     /**
      * Instantiates an instance of {ProjectConfig}.
      */

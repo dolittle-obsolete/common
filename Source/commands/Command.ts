@@ -41,7 +41,7 @@ export abstract class Command implements ICommand {
         try {
             await this.onAction(commandContext, dependencyResolvers, failedCommandOutputter, outputter, busyIndicator);
         } catch (error) {
-            failedCommandOutputter.output(this, commandContext, this.dependencies);
+            failedCommandOutputter.output(this, commandContext, error);
             throw new CommandFailed(this, error);
         }
     }

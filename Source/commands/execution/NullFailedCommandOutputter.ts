@@ -2,7 +2,6 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IDependency } from "@dolittle/tooling.common.dependencies";
 import { ICommand, CommandContext, IFailedCommandOutputter } from "../index";
 
 /**
@@ -10,5 +9,5 @@ import { ICommand, CommandContext, IFailedCommandOutputter } from "../index";
  */
 export class NullFailedCommandOutputter implements IFailedCommandOutputter {
     
-    output(command: ICommand, commandContext: CommandContext, dependencies: IDependency[]) {}
+    output(command: ICommand, commandContext: CommandContext, error?: Error) {}
 }

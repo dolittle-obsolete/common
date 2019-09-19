@@ -2,7 +2,6 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IDependency } from "@dolittle/tooling.common.dependencies";
 import { ICommand, CommandContext } from "../index";
 
 /**
@@ -15,8 +14,8 @@ export interface IFailedCommandOutputter {
      *
      * @param {ICommand} command  
      * @param {CommandContext} commandContext
-     * @param {IDependency[]} dependencies
+     * @param {Error} [error]
      */
-    output(command: ICommand, commandContext: CommandContext, dependencies: IDependency[]): void
+    output(command: ICommand, commandContext: CommandContext, error?: Error): void
 
 }
