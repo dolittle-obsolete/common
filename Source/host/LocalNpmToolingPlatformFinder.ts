@@ -4,6 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import fs from 'fs-extra';
 import path from 'path';
+import semver from 'semver';
 import { ICanFindLocalToolingPlatform } from "./internal";
 /**
  * Represents an implementation of {I}
@@ -30,11 +31,11 @@ export class LocalNpmToolingPlatformFinder implements ICanFindLocalToolingPlatfo
             if (stat.isDirectory())
                 folders.push(file);
         }));
-        await Promise.all(this._commonToolingPackages.map(async (toolingPackage) => {
+        await Promise.all(this._commonToolingPackages.map(async (toolingPackageName) => {
             if (!exists) return;
             let hasPackage = false;
             for (let folder of folders) {
-                if (await this.hasCorrectPackage(folder, toolingPackage)) {
+                if (await this.hasCorrectPackage(folder, toolingPackageName, toolingPackage.version)) {
                     hasPackage = true;
                     break;
                 }
@@ -44,11 +45,11 @@ export class LocalNpmToolingPlatformFinder implements ICanFindLocalToolingPlatfo
         return exists;
     }
 
-    private async hasCorrectPackage(packageFolder: string, packageName: string) {
+    private async hasCorrectPackage(packageFolder: string, packageName: string, version: string) {
         let packageJsonFile = path.join(packageFolder, 'package.json');
         if (await fs.pathExists(packageJsonFile)) {
             let packageJson = await fs.readJson(packageJsonFile);
-            return packageJson.name === packageName;
+            return packageJson.name === packageName && semver.major(version) === semver.major(packageJson.version);
         }
         return false;
     }

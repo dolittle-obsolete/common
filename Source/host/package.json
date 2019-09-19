@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.host",
-  "version": "8.0.0-alpha.5",
+  "version": "8.0.0-alpha.6",
   "description": "Common utilities needed for a host for the tooling platform",
   "publishConfig": {
     "access": "public"
@@ -39,9 +39,11 @@
     "@types/fs-extra": "7.0.0",
     "cross-spawn": "6.0.5",
     "fs-extra": "7.0.1",
-    "shelljs": "0.8.3"
+    "shelljs": "0.8.3",
+    "semver": "6.1.1"
   },
   "devDependencies": {
-    "@types/shelljs": "^0.8.5"
+    "@types/shelljs": "^0.8.5",
+    "@types/semver": "6.0.1"
   }
 }

@@ -20,6 +20,7 @@ export class Initializer implements IInitializer {
             console.log('It does not exist!');
         }
         else {
+            // IF NOT EXISTS DONWLOAD THE TOOLING PACKAGES
             console.log('It exists!');
         }
     }
