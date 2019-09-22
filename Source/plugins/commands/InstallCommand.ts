@@ -44,7 +44,7 @@ export class InstallCommand extends Command {
         await requireInternet(this._connectionChecker, busyIndicator);
         let plugins: ToolingPackage[] = [];
         let context = await dependencyResolvers.resolve({}, this.dependencies, [], commandContext.currentWorkingDirectory, commandContext.coreLanguage)
-        if (context[dolittlePluginsDependency.name])
+        if (context.hasOwnProperty(dolittlePluginsDependency.name)? context[dolittlePluginsDependency.name] : undefined)
             plugins = await fetchDolittlePlugins(this._onlineDolittlePluginsFinder, this._connectionChecker, busyIndicator);
         else 
             plugins = await fetchOnlinePlugins(this._onlinePluginsFinder, this._connectionChecker,busyIndicator, commandContext.namespace? [commandContext.namespace]: []);

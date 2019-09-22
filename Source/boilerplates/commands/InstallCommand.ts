@@ -43,7 +43,7 @@ export class InstallCommand extends Command {
         await requireInternet(this._connectionChecker, busyIndicator);
         let boilerplates: ToolingPackage[] = [];
         let context = await dependencyResolvers.resolve({}, this.dependencies, [], commandContext.currentWorkingDirectory, commandContext.coreLanguage)
-        let fetchDolittle = context[dolittleBoilerplatesDependency.name];
+        let fetchDolittle = context.hasOwnProperty(dolittleBoilerplatesDependency.name)? context[dolittleBoilerplatesDependency.name] : undefined;
         if (fetchDolittle) 
             boilerplates = await fetchDolittleBoilerplates(this._onlineDolittleBoilerplatesFinder, this._connectionChecker, busyIndicator);
         else 
