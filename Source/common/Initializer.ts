@@ -82,8 +82,8 @@ export class Initializer implements IInitializer {
         let providers: {command: ICanProvideCommands[], commandGroup: ICanProvideCommandGroups[], namespace: ICanProvideNamespaces[]} = {command: [], commandGroup: [], namespace: []};
 
         loadedPlugins.forEach(_ => {
-            providers.command.push(_.defaultCommandsProvider);
-            providers.commandGroup.push(_.defaultCommandGroupsProvider);
+            providers.command.push(_.commandsProvider);
+            providers.commandGroup.push(_.commandGroupsProvider);
             providers.namespace.push(_.namespaceProvider);
         });
 
