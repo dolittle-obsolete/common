@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { PromptDependency, argumentUserInputType, IDependencies, IsNotEmptyRule } from '@dolittle/tooling.common.dependencies';
+import { PromptDependency, argumentUserInputType, IDependencies, IsNotEmpty } from '@dolittle/tooling.common.dependencies';
 import { Boilerplate, Scripts, ITemplate, templatesBoilerplateType, ITemplatesBoilerplate } from '../internal';
 
 /**
@@ -26,7 +26,7 @@ export class TemplatesBoilerplate extends Boilerplate implements ITemplatesBoile
     readonly nameDependency = new PromptDependency(
         'name',
         'The name of the template to be created',
-        [new IsNotEmptyRule()],
+        [new IsNotEmpty()],
         argumentUserInputType,
         'The name of the template to be created', 
         false

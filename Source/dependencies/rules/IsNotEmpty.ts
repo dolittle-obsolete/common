@@ -8,7 +8,7 @@ import { IDependencyRule } from '../internal';
  * Represents an implementation of {IDependencyRule} for checking if value is not empty
  *
  * @export
- * @class IsNotEmptyRule
+ * @class IsNotEmpty
  * @implements {IDependencyRule}
  */
 export class IsNotEmpty implements IDependencyRule {
