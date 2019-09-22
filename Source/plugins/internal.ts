@@ -5,6 +5,7 @@
 export * from './IPlugin';
 export * from './IPlugins';
 
+export * from './Plugin';
 export * from './Plugins';
 
 export * from './initPluginSystem';
