@@ -28,22 +28,19 @@ export class Boilerplates implements IBoilerplates {
 
     byLanguage(language: string, namespace?: string) {
         return this.byNamespace(namespace).filter(_ => {
-            if (_.namespace) return _.namespace === namespace && _.language === language;
-            return _.language === language
+            return _.language === language || _.language === 'any'
         });
     }
 
     byType(type: string, namespace?: string) {
         return this.byNamespace(namespace).filter(_ => {
-            if (_.namespace) return _.namespace === namespace && _.type === type;
-            return _.type === type;
+            return _.type === type || _.type === 'any';
         });
     }
 
     byLanguageAndType(language: string, type: string, namespace?: string) {
         return this.byNamespace(namespace).filter(_ => {
-            if (_.namespace) return _.namespace === namespace && _.language == language && _.type == type;
-            return _.language == language && _.type == type;
+            this.byLanguage(language, namespace) && this.byType(type, namespace);
         });
     }
 }
