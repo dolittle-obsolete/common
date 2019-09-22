@@ -35,7 +35,7 @@ export class Initializer implements IInitializer {
         }
         else {
             this._logger.info('Initializing the tooling system');
-            if (hostPackage) this.installDefaultPluginsIfNeeded(hostPackage, dependencyResolvers, busyIndicator)
+            if (hostPackage) await this.installDefaultPluginsIfNeeded(hostPackage, dependencyResolvers, busyIndicator)
             this._providerRegistrators.register();
             await this.providePlugins();
             await this.provideBoilerplateNamespaces();
