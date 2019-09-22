@@ -7,7 +7,8 @@ import { dolittleConfig } from '@dolittle/tooling.common.configurations';
 import { loggers } from '@dolittle/tooling.common.logging';
 import { 
     IDependencyDiscoverResolver, DependencyDiscoverResolver, IDependencyResolvers, DiscoverDependencyResolver, 
-    ICanResolveDependencies, DependencyResolvers, ICanParseDependencies, DiscoverDependencyParser, PromptDependencyParser, DiscoverAndPromptDependencyParser, IDependencyParsers, DependencyParsers, RulesParser, IRulesParser, IsNotEmptyRule, IsNumberRule
+    ICanResolveDependencies, DependencyResolvers, ICanParseDependencies, DiscoverDependencyParser, PromptDependencyParser, 
+    DiscoverAndPromptDependencyParser, IDependencyParsers, DependencyParsers, RulesParser, IRulesParser, IsNotEmpty, IsNumber
 } from './internal';
 
 let dependencyDiscoverResolver: IDependencyDiscoverResolver = new DependencyDiscoverResolver(folders, fileSystem, dolittleConfig, loggers);
@@ -18,8 +19,8 @@ let resolvers: ICanResolveDependencies[] = [nonPromptDependencyResolver];
 export let dependencyResolvers: IDependencyResolvers = new DependencyResolvers(resolvers, loggers);
 
 let rulesParser: IRulesParser = new RulesParser([
-    new IsNotEmptyRule(),
-    new IsNumberRule()
+    new IsNotEmpty(),
+    new IsNumber()
 ]);
 
 let discoverDependencyParser: ICanParseDependencies = new DiscoverDependencyParser(rulesParser);

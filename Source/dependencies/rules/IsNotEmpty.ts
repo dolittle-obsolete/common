@@ -11,7 +11,7 @@ import { IDependencyRule } from '../internal';
  * @class IsNotEmptyRule
  * @implements {IDependencyRule}
  */
-export class IsNotEmptyRule implements IDependencyRule {
+export class IsNotEmpty implements IDependencyRule {
     
     isRespected(value: any) {
         return value !== undefined && value !== '';

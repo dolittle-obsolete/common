@@ -56,8 +56,8 @@ export * from './rules/IDependencyRuleFor';
 export * from './rules/RuleNotRespected';
 
 export * from './rules/DependencyRule';
-export * from './rules/IsNumberRule';
-export * from './rules/IsNotEmptyRule';
+export * from './rules/IsNumber';
+export * from './rules/IsNotEmpty';
 
 export * from './rules/parsing/IRulesParser';
 export * from './rules/parsing/RulesParser';
