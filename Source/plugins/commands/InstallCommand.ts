@@ -49,6 +49,9 @@ export class InstallCommand extends Command {
         else 
             plugins = await fetchOnlinePlugins(this._onlinePluginsFinder, this._connectionChecker,busyIndicator, commandContext.namespace? [commandContext.namespace]: []);
 
+        if (plugins.length === 0) {
+            return;
+        }
         let localPlugins = await getInstalledPlugins(this._pluginDiscoverers, busyIndicator);
         let newAvailablePlugins = plugins.filter(boilerplate => !localPlugins.map(_ => _.packageJson.name).includes(boilerplate.name));
         let upgradeablePlugins = plugins.filter(boilerplate => localPlugins.map(_ => _.packageJson.name).includes(boilerplate.name))

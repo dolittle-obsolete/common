@@ -49,6 +49,9 @@ export class InstallCommand extends Command {
         else 
             boilerplates = await fetchOnlineBoilerplates(this._onlineBoilerplatesFinder, this._connectionChecker, busyIndicator, context.namespace? [context.namespace] : []);
 
+        if (boilerplates.length === 0) {
+            return;
+        }
         let localBoilerplates = await getInstalledBoilerplates(this._boilerplateDiscoverers, this._fileSystem, busyIndicator);
         let newAvailableBoilerplates = boilerplates.filter(boilerplate => !localBoilerplates.map(_ => _.packageJson.name).includes(boilerplate.name));
         let upgradeableBoilerplates = boilerplates.filter(boilerplate => localBoilerplates.map(_ => _.packageJson.name).includes(boilerplate.name))
