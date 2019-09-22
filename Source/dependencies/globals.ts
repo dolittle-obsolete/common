@@ -7,19 +7,24 @@ import { dolittleConfig } from '@dolittle/tooling.common.configurations';
 import { loggers } from '@dolittle/tooling.common.logging';
 import { 
     IDependencyDiscoverResolver, DependencyDiscoverResolver, IDependencyResolvers, DiscoverDependencyResolver, 
-    ICanResolveDependencies, DependencyResolvers, ICanParseDependencies, DiscoverDependencyParser, PromptDependencyParser, DiscoverAndPromptDependencyParser, IDependencyParsers, DependencyParsers
+    ICanResolveDependencies, DependencyResolvers, ICanParseDependencies, DiscoverDependencyParser, PromptDependencyParser, DiscoverAndPromptDependencyParser, IDependencyParsers, DependencyParsers, RulesParser, IRulesParser, IsNotEmptyRule, IsNumberRule
 } from './internal';
 
-export let dependencyDiscoverResolver: IDependencyDiscoverResolver = new DependencyDiscoverResolver(folders, fileSystem, dolittleConfig, loggers);
+let dependencyDiscoverResolver: IDependencyDiscoverResolver = new DependencyDiscoverResolver(folders, fileSystem, dolittleConfig, loggers);
 
-export let nonPromptDependencyResolver: ICanResolveDependencies = new DiscoverDependencyResolver(dependencyDiscoverResolver, dolittleConfig);
+let nonPromptDependencyResolver: ICanResolveDependencies = new DiscoverDependencyResolver(dependencyDiscoverResolver, dolittleConfig);
 
 let resolvers: ICanResolveDependencies[] = [nonPromptDependencyResolver];
 export let dependencyResolvers: IDependencyResolvers = new DependencyResolvers(resolvers, loggers);
 
-export let discoverDependencyParser: ICanParseDependencies = new DiscoverDependencyParser();
-export let promptDependencyParser: ICanParseDependencies = new PromptDependencyParser();
-export let discoverAndPromptDependencyParser: ICanParseDependencies = new DiscoverAndPromptDependencyParser();
+let rulesParser: IRulesParser = new RulesParser([
+    new IsNotEmptyRule(),
+    new IsNumberRule()
+]);
+
+let discoverDependencyParser: ICanParseDependencies = new DiscoverDependencyParser(rulesParser);
+let promptDependencyParser: ICanParseDependencies = new PromptDependencyParser(rulesParser);
+let discoverAndPromptDependencyParser: ICanParseDependencies = new DiscoverAndPromptDependencyParser(rulesParser);
 
 let parsers: ICanParseDependencies[] = [discoverDependencyParser, promptDependencyParser, discoverAndPromptDependencyParser];
 export let dependencyParsers: IDependencyParsers = new DependencyParsers(parsers, loggers);
