@@ -13,18 +13,18 @@ import { ICanProvideCommandGroups, ICanProvideCommands, ICanProvideNamespaces } 
 export interface IPlugin {
 
     /**
-     * The default commands provider
+     * The commands provider
      *
      * @type {ICanProvideCommands}
      */
-    defaultCommandsProvider: ICanProvideCommands
+    commandsProvider: ICanProvideCommands
     
     /**
-     * The plugin's default command groups provider
+     * The plugin's command groups provider
      *
      * @type {ICanProvideDefaultCommandGroups}
      */
-    defaultCommandGroupsProvider: ICanProvideCommandGroups
+    commandGroupsProvider: ICanProvideCommandGroups
 
     /**
      * The plugin's namespace provider
