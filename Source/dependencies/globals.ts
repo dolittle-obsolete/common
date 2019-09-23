@@ -11,7 +11,7 @@ import {
     DiscoverAndPromptDependencyParser, IDependencyParsers, DependencyParsers, RulesParser, IRulesParser, IsNotEmpty, IsNumber
 } from './internal';
 
-let dependencyDiscoverResolver: IDependencyDiscoverResolver = new DependencyDiscoverResolver(folders, fileSystem, dolittleConfig, loggers);
+export let dependencyDiscoverResolver: IDependencyDiscoverResolver = new DependencyDiscoverResolver(folders, fileSystem, dolittleConfig, loggers);
 
 let nonPromptDependencyResolver: ICanResolveDependencies = new DiscoverDependencyResolver(dependencyDiscoverResolver, dolittleConfig);
 
