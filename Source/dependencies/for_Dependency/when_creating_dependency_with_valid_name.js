@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { Dependency } from '../index';
+import { Dependency } from '../internal';
 import { a_non_abstract_dependency_class } from './given/a_non_abstract_dependency_class';
 
 describe('when creating dependency with valid name', () => {

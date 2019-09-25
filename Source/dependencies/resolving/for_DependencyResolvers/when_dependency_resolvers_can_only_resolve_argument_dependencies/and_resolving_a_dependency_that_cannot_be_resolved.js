@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { dependencies_and_a_system_that_knows_about_no_resolvers } from "../given/dependencies_and_a_system_that_knows_about_no_resolvers";
-import { NonOptionalArgumentDependencyResolver, CannotResolveDependency } from "../../../index";
+import { NonOptionalArgumentDependencyResolver, CannotResolveDependency } from "../../../internal";
 
 describe('and resolving a dependency that cannot be resolved', async () => {
     let context = new dependencies_and_a_system_that_knows_about_no_resolvers();

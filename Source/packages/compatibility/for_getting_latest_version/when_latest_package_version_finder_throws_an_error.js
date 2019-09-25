@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {getLatestVersion, NotConnectedToInternet} from '../../index'
+import {getLatestVersion, NotConnectedToInternet} from '../../internal'
 import { NullBusyIndicator } from '@dolittle/tooling.common.utilities';
 
 describe('When latest package version finder throws an error', () => {

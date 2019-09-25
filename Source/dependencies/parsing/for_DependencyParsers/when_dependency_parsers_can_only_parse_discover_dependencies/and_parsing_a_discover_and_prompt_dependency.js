@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { dependencies_and_a_system_that_knows_about_no_parsers } from "../given/dependencies_and_a_system_that_knows_about_no_parsers";
-import { DiscoverDependencyParser, CannotParseDependency } from "../../../index";
+import { DiscoverDependencyParser, CannotParseDependency } from "../../../internal";
 
 
 describe('and parsing a discover and prompt dependency', () => {

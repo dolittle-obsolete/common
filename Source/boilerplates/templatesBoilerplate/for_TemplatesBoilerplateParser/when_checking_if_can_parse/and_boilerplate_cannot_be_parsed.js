@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { a_templates_boilerplate_parser } from "../given/a_templates_boilerplate_parser";
-import { Scripts, ContentBoilerplate } from "../../../index";
+import { Scripts, ContentBoilerplate } from "../../../internal";
 
 
 describe('and boilerplate cannot be parsed', () => {

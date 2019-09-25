@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { dependencies_and_a_discover_dependency_resolver } from "../given/dependencies_and_a_discover_dependency_resolver";
-import { MissingCoreLanguage } from "../../../index";
+import { MissingCoreLanguage } from "../../../internal";
 
 describe('and dependency cannot be resolved but does not have core language', () => {
     let context = new dependencies_and_a_discover_dependency_resolver();

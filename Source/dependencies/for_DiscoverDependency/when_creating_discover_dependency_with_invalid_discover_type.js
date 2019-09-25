@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { DiscoverDependency } from '../index';
+import { DiscoverDependency } from '../internal';
 import { a_valid_configuration_for_discover_dependency } from './given/a_valid_configuration_for_discover_dependency';
 
 describe('when creating discover dependency with invalid discover type', () => {

@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {PromptDependency, dependencyIsDiscoverDependency} from '../index';
+import {PromptDependency, dependencyIsDiscoverDependency} from '../internal';
 
 describe('when checking if prompt dependency is a discover dependency', () => {
     let dependency = new PromptDependency('name', 'desc', 'input', '');

@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { DependencyParsers, PromptDependency, DiscoverDependency, DiscoverAndPromptDependency } from "../../../index";
+import { DependencyParsers, PromptDependency, DiscoverDependency, DiscoverAndPromptDependency } from "../../../internal";
 
 export class dependencies_and_a_system_that_knows_about_no_parsers {
     constructor() {

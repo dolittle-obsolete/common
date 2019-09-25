@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import {dolittleConfig} from '@dolittle/tooling.common.configurations';
-import { DiscoverDependencyResolver, PromptDependency, DiscoverDependency, DiscoverAndPromptDependency } from "../../../index";
+import { DiscoverDependencyResolver, PromptDependency, DiscoverDependency, DiscoverAndPromptDependency } from "../../../internal";
 
 export class dependencies_and_a_discover_dependency_resolver {
     constructor() {

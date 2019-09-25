@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { dependencies_and_a_discover_dependency_resolver } from "../given/dependencies_and_a_discover_dependency_resolver";
-import { MissingDestinationPath } from "../../../index";
+import { MissingDestinationPath } from "../../../internal";
 
 describe('and dependency can be resolved but does not have destination path', () => {
     let context = new dependencies_and_a_discover_dependency_resolver();
