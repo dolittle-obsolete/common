@@ -5,19 +5,21 @@
 export * from './OnStdCallback';
 export * from './ToolingPackage';
 
-export * from './ICanFindLatestVersionOfPackage';
-export * from './IAllVersionsOfPackageFinder';
-export * from './ILatestCompatiblePackageFinder';
-export * from './ICanFindPackagesByUser';
-export * from './ICanFindPackagesWithKeywords';
 export * from './IPackages';
-
-export * from './LatestNpmPackageVersionFinder';
-export * from './AllNpmPackageVersionsFinder';
-export * from './LatestCompatibleNpmPackageFinder'
-export * from './NpmPackagesByUserFinder'
-export * from './NpmPackagesWithKeywordsFinder'
 export * from './Packages'
+
+// online
+export * from './online/ICanFindLatestVersionOfPackage';
+export * from './online/IAllVersionsOfPackageFinder';
+export * from './online/ILatestCompatiblePackageFinder';
+export * from './online/ICanFindPackagesByUser';
+export * from './online/ICanFindPackagesWithKeywords';
+
+export * from './online/npm/LatestNpmPackageVersionFinder';
+export * from './online/npm/AllNpmPackageVersionsFinder';
+export * from './online/npm/LatestCompatibleNpmPackageFinder'
+export * from './online/npm/NpmPackagesByUserFinder'
+export * from './online/npm/NpmPackagesWithKeywordsFinder'
 
 // connectivity
 export * from './connectivity/NotConnectedToInternet';

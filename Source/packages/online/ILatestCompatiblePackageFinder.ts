@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ToolingPackage } from './internal';
+import { ToolingPackage } from '../internal';
 
 /**
  * Defines a system that can find the latest version of a package compatible with the tooling

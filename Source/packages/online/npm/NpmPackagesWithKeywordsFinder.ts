@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import npmKeyword from 'npm-keyword';
-import { ICanFindPackagesWithKeywords, toolingPackageKeywords } from "./internal";
+import { ICanFindPackagesWithKeywords, toolingPackageKeywords } from "../../internal";
 
 /**
  * Represents an implementation of {ICanFindPackagesWithKeywords} that finds packages on npm

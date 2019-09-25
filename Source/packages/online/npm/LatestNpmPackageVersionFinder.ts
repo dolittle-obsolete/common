@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import latestVersion from "latest-version";
-import { ICanFindLatestVersionOfPackage } from "./internal";
+import { ICanFindLatestVersionOfPackage } from "../../internal";
 
 /**
  * Represents an implementation of {ICanFindLatestVersionOfPackage} that finds latest version of npm package

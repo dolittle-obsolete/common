@@ -4,7 +4,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import packageJson from 'package-json';
-import { ToolingPackage, IAllVersionsOfPackageFinder } from "./internal";
+import { ToolingPackage, IAllVersionsOfPackageFinder } from "../../internal";
 
 /**
  * Represents an implementation of {ICanFindAllVersionsOfAPackage} that finds all versions of a package on npm
