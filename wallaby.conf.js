@@ -70,6 +70,8 @@ module.exports = function (w) {
         chai.use(chaiAsPromised);
 
         let winston = require('winston');
+        global.mock = require('@fluffy-spoon/substitute').Substitute;
+        
         global.logger = winston.createLogger({});
       }
     };

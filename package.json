@@ -10,6 +10,7 @@
     "@babel/plugin-transform-modules-commonjs": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-typescript": "^7.3.3",
+    "@fluffy-spoon/substitute": "^1.89.0",
     "@types/chai": "^4.1.7",
     "@types/cross-spawn": "^6.0.0",
     "@types/fs-extra": "^5.1.0",
