@@ -26,6 +26,7 @@ export * from './DependenciesWithStandardValidators';
 // validations
 export * from './validation/MissingField';
 export * from './validation/InvalidField';
+export * from './validation/CannotValidateDependency';
 
 export * from './validation/ICanValidateDependency';
 export * from './validation/IValidatorsFor';
