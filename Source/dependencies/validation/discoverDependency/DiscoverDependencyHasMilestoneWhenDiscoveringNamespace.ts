@@ -15,7 +15,7 @@ export class DiscoverDependencyHasMilestoneWhenDiscoveringNamespace extends Disc
 
     canValidate(dependency: IDiscoverDependency) {
         return super.canValidate(dependency) 
-            && (dependency.withNamespace !== undefined || dependency.discoverType === 'namespace');
+            && (dependency.withNamespace === true || dependency.discoverType === 'namespace');
     }
     validate(dependency: IDiscoverDependency) {
         if (!this.canValidate(dependency)) throw new CannotValidateDependency(dependency, this);
