@@ -2,15 +2,18 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {getLatestVersion, NotConnectedToInternet} from '../../internal'
 import { NullBusyIndicator } from '@dolittle/tooling.common.utilities';
+import {Substitute} from '@fluffy-spoon/substitute'
+import sinon from 'sinon'; 
+import { expect } from 'chai';
+import {getLatestVersion, NotConnectedToInternet, ICanFindLatestVersionOfPackage} from '../../internal'
 
-describe('When latest package version finder throws an error', () => {
+describe('When there is no connection', () => {
     let exception = null;
-    let error = new Error('some error')
+
     before(async () => {
         try {
-            await getLatestVersion('name', {find: sinon.stub().rejects(error)}, {isConnected: sinon.stub().resolves(true)}, new NullBusyIndicator());
+            await getLatestVersion('name', Substitute.for<ICanFindLatestVersionOfPackage>(), {isConnected: sinon.stub().resolves(false)}, new NullBusyIndicator());
         }
         catch (error) {
             exception = error;
@@ -18,5 +21,5 @@ describe('When latest package version finder throws an error', () => {
     });
 
     it('Should throw an exception', () => expect(exception).to.not.be.undefined);
-    it('Should throw the correct Error', () => exception.should.be.equal(error))
+    it('Should throw a NotConnectedToInternet exception', () => exception.should.be.instanceof(NotConnectedToInternet))
 });

@@ -2,10 +2,12 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
+import { NullBusyIndicator, IBusyIndicator } from '@dolittle/tooling.common.utilities';
+import sinon from 'sinon';
+import { Substitute } from '@fluffy-spoon/substitute';
 import {requireInternet} from '../../internal';
-import { NullBusyIndicator } from '@dolittle/tooling.common.utilities';
 describe('When there is a connection', () => {
-    let busyIndicator = new NullBusyIndicator();
+    let busyIndicator = Substitute.for<IBusyIndicator>();
     busyIndicator.stop = sinon.stub();
     before(async () => {
         await requireInternet({isConnected: sinon.stub().resolves(true)}, busyIndicator)

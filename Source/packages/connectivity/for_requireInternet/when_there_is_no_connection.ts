@@ -4,6 +4,9 @@
  *--------------------------------------------------------------------------------------------*/
 import {requireInternet, NotConnectedToInternet} from '../../internal';
 import { NullBusyIndicator } from '@dolittle/tooling.common.utilities';
+import sinon from 'sinon';
+import { expect } from 'chai';
+
 describe('When there is no connection', () => {
     let exception = null;
     before(async () => {
