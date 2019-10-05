@@ -4,12 +4,7 @@
     "Source/*"
   ],
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/plugin-proposal-class-properties": "^7.4.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
-    "@babel/plugin-transform-modules-commonjs": "^7.4.4",
-    "@babel/preset-env": "^7.4.5",
-    "@babel/preset-typescript": "^7.3.3",
+    "@dolittle/typescript.build": "0.0.6",
     "@fluffy-spoon/substitute": "^1.89.0",
     "@types/chai": "^4.1.7",
     "@types/cross-spawn": "^6.0.0",

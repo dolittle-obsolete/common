@@ -7,8 +7,7 @@
       "paths": {
           "@dolittle/tooling.common.dependencies": ["index.ts"]
       },
-      "sourceRoot": "./",
-      "downlevelIteration": true
+      "sourceRoot": "./"
     },
     "exclude": ["**/*.d.ts", "**/*.js", "**/for_*", "node_modules"],
     "include": ["**/*.ts"]
