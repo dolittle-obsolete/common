@@ -5,7 +5,7 @@
 import {Exception} from '../../internal';
 
 export class a_custom_exception extends Exception {
-    constructor(message) {
+    constructor(message: string) {
         super(message);
     }
 }

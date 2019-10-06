@@ -8,7 +8,7 @@ import { determineDestination } from '../../../../helpers';
 const path = require('path');
 
 describe('when creating artifact without a feature from a path with one feature', () => {
-    let context = null;
+    let context: any = null;
     let result: {destination: string, name: string};
     (beforeEach => {
         context = new path_with_one_feature();

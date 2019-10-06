@@ -8,7 +8,7 @@ import { path_with_multiple_features } from './given/path_with_multiple_features
 const path = require('path');
 
 describe('when creating artifact with multiple features from a path with multiple features', () => {
-    let context = null;
+    let context: any = null;
     let result: {destination: string, name: string};
     let featureSegments = 'feature3.feature4';
     (beforeEach => {

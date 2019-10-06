@@ -3,6 +3,14 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 export class path_with_one_feature{
+    dolittleConfig: any;
+    area: string;
+    language: string;
+    name: string;
+    boundedContextPath: any;
+    boundedContextRoot: any;
+    featureSegments: string;
+    cwd: any;
     constructor() {
         this.dolittleConfig = {
             language: {
