@@ -9,7 +9,7 @@ describe('and adding a valid dependency', () => {
     let dependency =  new DiscoverDependency('name', 'desc', [], 'invalid discover type');
     
     let dependencies = new Dependencies([], new StandardValidatorsForDependency());
-    let exception;
+    let exception: Error;
     try {
         dependencies.add(dependency)
 

@@ -9,7 +9,7 @@ import { a_dependency } from "../given/a_dependency";
 describe('and it is a dependency with empty string as name', () => {
     let validator = new DependencyHasName();
     let dep = new a_dependency('', 'desc', 'type', []);
-    let exception;
+    let exception: Error;
     try {
         validator.validate(dep as any);    
     } catch (error) {

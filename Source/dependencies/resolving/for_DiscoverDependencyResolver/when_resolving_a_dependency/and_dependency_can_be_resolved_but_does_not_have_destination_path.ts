@@ -8,7 +8,7 @@ import { expect } from "chai";
 
 describe('and dependency can be resolved but does not have destination path', () => {
     let context = new dependencies_and_a_discover_dependency_resolver();
-    let exception = null;
+    let exception: Error;;
     before(async () => {
         try {
             await context.discoverDependencyResolver.resolve({}, [context.discoverDependency], [], undefined, 'lang');

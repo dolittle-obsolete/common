@@ -17,7 +17,7 @@ describe('and dependency is a discover dependency', () => {
         expect(result.description).to.equal(context.dependency.description);
         expect(result.type).to.equal(context.dependency.type);
         expect(result.withNamespace).to.equal(context.dependency.withNamespace);
-        expect(result.milestone.source).to.equal(context.dependency.milestone.source);
+        expect(result.milestone!.source).to.equal(context.dependency.milestone!.source);
         expect(result.fileMatch).to.equal(context.dependency.fileMatch);
         expect(result.contentMatch).to.equal(context.dependency.contentMatch);
         expect(result.fromArea).to.equal(context.dependency.fromArea);

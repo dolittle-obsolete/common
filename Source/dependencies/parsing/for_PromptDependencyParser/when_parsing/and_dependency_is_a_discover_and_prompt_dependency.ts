@@ -10,7 +10,7 @@ import { expect } from "chai";
 describe('and dependency is a discover and prompt dependency', () => {
     let context = new a_discover_and_prompt_dependency();
     let parser = new PromptDependencyParser(Substitute.for<IRulesParser>());
-    let exception = null;
+    let exception: Error;;
     try {
         parser.parse(context.dependency, context.dependency.name);
     } catch(error) {

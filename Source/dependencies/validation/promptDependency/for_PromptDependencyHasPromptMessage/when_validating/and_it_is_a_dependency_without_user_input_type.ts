@@ -7,8 +7,8 @@ import { expect } from "chai";
 
 describe('and it is a dependency without user input type', () => {
     let validator = new PromptDependencyHasUserInputType();
-    let dep = new PromptDependency('name', 'desc', [], undefined, 'prompt');
-    let exception; 
+    let dep = new PromptDependency('name', 'desc', [], undefined as any, 'prompt');
+    let exception: Error; 
     try {
         validator.validate(dep as any);    
     } catch(error) {

@@ -9,7 +9,7 @@ import { expect } from "chai";
 
 describe('and resolving a dependency that cannot be resolved', async () => {
     let context = new dependencies_and_a_system_that_knows_about_no_resolvers();
-    let exception = null;
+    let exception: Error;;
     let resolver = Substitute.for<ICanResolveDependencies>();
     resolver.canResolve(context.discoverDependency).returns(false);
     context.dependencyResolvers.add()

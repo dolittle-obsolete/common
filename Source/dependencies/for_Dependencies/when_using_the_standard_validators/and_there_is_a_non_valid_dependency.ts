@@ -6,7 +6,7 @@ import { Dependencies, StandardValidatorsForDependency, DiscoverDependency, name
 import { expect } from "chai";
 
 describe('and there is a non valid dependency', () => {
-    let exception;
+    let exception: Error;
     let a_valid_dependency = new DiscoverDependency('valid dependency', 'desc', [], namespaceDiscoverType,  undefined, 'some milestone');
     let an_invalid_dependency =  new DiscoverDependency('name', 'desc', [], 'invalid discover type');
     let dependencies = [

@@ -8,7 +8,7 @@ import { expect } from 'chai';
 import {getLatestVersion} from '../../internal'
 
 describe('When latest package version finder throws an error', () => {
-    let exception = null;
+    let exception: Error;
     let error = new Error('some error')
     before(async () => {
         try {

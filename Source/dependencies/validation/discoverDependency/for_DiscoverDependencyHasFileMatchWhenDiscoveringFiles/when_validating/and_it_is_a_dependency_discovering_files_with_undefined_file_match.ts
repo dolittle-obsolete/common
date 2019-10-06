@@ -8,7 +8,7 @@ import { expect } from "chai";
 describe('and it is a dependency discovering files with undefined file match', () => {
     let validator = new DiscoverDependencyHasFileMatchWhenDiscoveringFiles();
     let dep = new DiscoverDependency('name', 'desc', [], fileDiscoverType);
-    let exception; 
+    let exception: Error; 
     try {
         validator.validate(dep as any);    
     } catch(error) {

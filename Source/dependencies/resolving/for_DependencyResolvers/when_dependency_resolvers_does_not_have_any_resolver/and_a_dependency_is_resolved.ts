@@ -8,7 +8,7 @@ import { CannotResolveDependency } from "../../../internal";
 
 describe('and a dependency is resolved', async () => {
     let context = new dependencies_and_a_system_that_knows_about_no_resolvers();
-    let exception = null;
+    let exception: Error;;
     before(async () => {
         try {
             await context.dependencyResolvers.resolve({}, [context.promptDependency]);

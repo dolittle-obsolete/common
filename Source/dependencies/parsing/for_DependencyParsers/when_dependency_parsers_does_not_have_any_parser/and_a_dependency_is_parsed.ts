@@ -9,7 +9,7 @@ import { expect } from "chai";
 describe('and a dependency is parsed', () => {
     let context = new dependencies_and_a_system_that_knows_about_no_parsers();
     
-    let exception = null;
+    let exception: Error;;
     try {
         context.dependencyParsers.parse(context.promptDependency, context.promptDependency.name);
     } catch (error) {

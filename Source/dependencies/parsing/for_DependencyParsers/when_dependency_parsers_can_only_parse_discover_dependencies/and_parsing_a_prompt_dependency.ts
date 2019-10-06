@@ -12,7 +12,7 @@ import { expect } from "chai";
 describe('and parsing a prompt dependency', () => {
     let context = new dependencies_and_a_system_that_knows_about_no_parsers();
     context.dependencyParsers.add(new DiscoverDependencyParser(Substitute.for<IRulesParser>()));
-    let exception = null;
+    let exception: Error;;
 
     try {
         context.dependencyParsers.parse(context.promptDependency, context.promptDependency.name);

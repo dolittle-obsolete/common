@@ -12,7 +12,7 @@ describe('and parsing a discover dependency', () => {
     let context = new dependencies_and_a_system_that_knows_about_no_parsers();
     context.dependencyParsers.add(new DiscoverDependencyParser(Substitute.for<IRulesParser>()))
     context.dependencyParsers.add(new DiscoverDependencyParser(Substitute.for<IRulesParser>()))
-    let exception = null;
+    let exception: Error;;
 
     try {
         context.dependencyParsers.parse(context.discoverDependency, context.discoverDependency.name);

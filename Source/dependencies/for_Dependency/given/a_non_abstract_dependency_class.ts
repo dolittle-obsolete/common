@@ -7,7 +7,7 @@ import { Dependency } from '../../internal';
 export class a_non_abstract_dependency_class extends Dependency {
     static description = 'description';
     static type = 'type';
-    constructor(name) {
+    constructor(name: string) {
         super(name, a_non_abstract_dependency_class.description, a_non_abstract_dependency_class.type, []);
     }
 }

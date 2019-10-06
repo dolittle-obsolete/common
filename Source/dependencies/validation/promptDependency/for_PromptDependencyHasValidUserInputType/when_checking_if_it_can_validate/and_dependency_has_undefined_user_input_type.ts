@@ -7,7 +7,7 @@ import { expect } from "chai";
 
 describe('and dependency has undefined user input type', () => {
     let validator = new PromptDependencyHasValidUserInputType();
-    let dep = new PromptDependency('name', 'desc', [], undefined, 'prompt');
+    let dep = new PromptDependency('name', 'desc', [], undefined as any, 'prompt');
     let result = validator.canValidate(dep as any);
     
     it('Should not be able to validate dependency', () => result.should.be.equal(false));

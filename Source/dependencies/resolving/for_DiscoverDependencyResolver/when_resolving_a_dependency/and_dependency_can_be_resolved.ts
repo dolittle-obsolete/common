@@ -7,7 +7,7 @@ import { expect } from "chai";
 
 describe('and dependency can be resolved', () => {
     let context = new dependencies_and_a_discover_dependency_resolver();
-    let result;
+    let result: any;
 
     before(async () => {
         result = await context.discoverDependencyResolver.resolve({}, [context.discoverDependency], [], 'path', 'lang')

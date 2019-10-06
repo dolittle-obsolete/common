@@ -8,7 +8,7 @@ import { expect } from "chai";
 describe('and it is a dependency that cannot be validated', () => {
     let validator = new DiscoverDependencyHasValidArea();
     let dep = new PromptDependency('name', 'desc', [], 'type', 'prompt');
-    let exception;
+    let exception: Error;
 
     try {
         validator.validate(dep as any);    

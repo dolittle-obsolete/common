@@ -9,7 +9,7 @@ import { a_dependency } from "../given/a_dependency";
 describe('and it is a dependency with invalid type', () => {
     let validator = new DependencyHasValidType();
     let dep = new a_dependency('name', 'desc', 'some invalid type', [],);
-    let exception;
+    let exception: Error;
     try {
         validator.validate(dep as any);    
     } catch (error) {

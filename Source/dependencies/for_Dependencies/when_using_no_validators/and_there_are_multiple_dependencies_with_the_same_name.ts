@@ -7,7 +7,7 @@ import { expect } from "chai";
 import { no_validators } from "./given/no_validators";
 
 describe('and there are multiple dependencies with the same name', () => {
-    let exception;
+    let exception: Error;
     let first_dependency = new DiscoverDependency('a dependency', 'desc', [], namespaceDiscoverType,  undefined, 'some milestone');
     let second_dependency = new DiscoverDependency('a dependency', 'desc', [], namespaceDiscoverType,  undefined, 'some milestone');
     let dependencies = [

@@ -8,7 +8,7 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 
 describe('When there is no connection', () => {
-    let exception = null;
+    let exception: Error;
     before(async () => {
         try {
             await requireInternet({isConnected: sinon.stub().resolves(false)}, new NullBusyIndicator())

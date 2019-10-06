@@ -9,7 +9,7 @@ import { expect } from "chai";
 describe('and dependency is a discover dependency', () => {
     let context = new a_discover_dependency();
     let parser = new DiscoverAndPromptDependencyParser({parse: () => []}); 
-    let exception = null;
+    let exception: Error;;
     try {
         parser.parse(context.dependency, context.dependency.name);
     } catch(error) {

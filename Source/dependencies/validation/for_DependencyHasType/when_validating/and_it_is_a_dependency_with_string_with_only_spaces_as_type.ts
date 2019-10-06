@@ -9,7 +9,7 @@ import { a_dependency } from "../given/a_dependency";
 describe('and it is a dependency with string with only spaces as type', () => {
     let validator = new DependencyHasType();
     let dep = new a_dependency('name', 'desc', '   ', [],);
-    let exception;
+    let exception: Error;
     try {
         validator.validate(dep as any);    
     } catch (error) {

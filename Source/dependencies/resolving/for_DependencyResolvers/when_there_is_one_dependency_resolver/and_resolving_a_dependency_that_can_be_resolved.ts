@@ -13,7 +13,7 @@ describe('and resolving a dependency that can be resolved', () => {
     resolver.canResolve(context.argumentDependency).returns(true);
     context.dependencyResolvers.add(resolver);
 
-    let result;
+    let result: any;
     before(async () => {
         result = await context.dependencyResolvers.resolve({}, [context.argumentDependency], [], undefined, undefined);
     });

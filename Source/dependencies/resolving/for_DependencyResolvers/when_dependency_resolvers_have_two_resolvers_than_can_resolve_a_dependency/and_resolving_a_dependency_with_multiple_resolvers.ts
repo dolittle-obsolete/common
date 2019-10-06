@@ -11,7 +11,7 @@ import { expect } from "chai";
 
 describe('and resolving a dependency with multiple resolvers', () => {
     let context = new dependencies_and_a_system_that_knows_about_no_resolvers();
-    let exception = null;
+    let exception: Error;;
     let resolver1 = Substitute.for<ICanResolveDependencies>()
     let resolver2 = Substitute.for<ICanResolveDependencies>()
     resolver1.canResolve(context.argumentDependency).returns(true);

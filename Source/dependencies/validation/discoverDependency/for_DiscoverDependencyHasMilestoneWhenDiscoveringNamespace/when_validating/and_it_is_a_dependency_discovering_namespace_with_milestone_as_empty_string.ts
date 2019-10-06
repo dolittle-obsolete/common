@@ -8,7 +8,7 @@ import { expect } from "chai";
 describe('and it is a dependency discovering namespace with milestone as empty string', () => {
     let validator = new DiscoverDependencyHasMilestoneWhenDiscoveringNamespace();
     let dep = new DiscoverDependency('name', 'desc', [], namespaceDiscoverType, undefined, '');
-    let exception;
+    let exception: Error;
     try {
         validator.validate(dep as any);
     } catch (error) {

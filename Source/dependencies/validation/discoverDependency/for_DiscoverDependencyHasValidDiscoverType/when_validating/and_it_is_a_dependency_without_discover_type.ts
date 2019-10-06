@@ -7,8 +7,8 @@ import { expect } from "chai";
 
 describe('and it is a dependency without discover type', () => {
     let validator = new DiscoverDependencyHasValidDiscoverType();
-    let dep = new DiscoverDependency('name', 'desc', [], undefined);
-    let exception; 
+    let dep = new DiscoverDependency('name', 'desc', [], undefined as any);
+    let exception: Error; 
     try {
         validator.validate(dep as any);    
     } catch(error) {

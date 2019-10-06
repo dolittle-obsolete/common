@@ -8,7 +8,7 @@ import { Scripts, ContentBoilerplate } from "../../../internal";
 
 describe('and boilerplate cannot be parsed', () => {
     let context = new a_templates_boilerplate_parser();
-    let boilerplate = new ContentBoilerplate('language', 'name', 'desc', 'type', context.dependencies, 'namespace', new Scripts([], [], [], {}), undefined, undefined, undefined, 'Content', [], []);
+    let boilerplate = new ContentBoilerplate('language', 'name', 'desc', 'type', context.dependencies, 'namespace', new Scripts([], [], [], {}), undefined as any, undefined as any, undefined as any, 'Content', [], []);
 
     it('Should not be able to parse', () => context.parser.canParse(boilerplate).should.not.be.true);
 });    

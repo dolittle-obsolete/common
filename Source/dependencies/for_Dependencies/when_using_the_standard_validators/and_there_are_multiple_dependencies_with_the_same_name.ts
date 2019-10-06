@@ -6,7 +6,7 @@ import { Dependencies, StandardValidatorsForDependency, DiscoverDependency, name
 import { expect } from "chai";
 
 describe('and there are multiple dependencies with the same name', () => {
-    let exception;
+    let exception: Error;
     let first_dependency = new DiscoverDependency('a dependency', 'desc', [], namespaceDiscoverType,  undefined, 'some milestone');
     let second_dependency = new DiscoverDependency('a dependency', 'desc', [], namespaceDiscoverType,  undefined, 'some milestone');
     let dependencies = [

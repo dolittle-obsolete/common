@@ -8,8 +8,8 @@ import { a_dependency } from "../given/a_dependency";
 
 describe('and it is a dependency without type', () => {
     let validator = new DependencyHasType();
-    let dep = new a_dependency('name', 'desc', undefined,[]);
-    let exception; 
+    let dep = new a_dependency('name', 'desc', undefined as any,[]);
+    let exception: Error; 
     try {
         validator.validate(dep as any);    
     } catch(error) {

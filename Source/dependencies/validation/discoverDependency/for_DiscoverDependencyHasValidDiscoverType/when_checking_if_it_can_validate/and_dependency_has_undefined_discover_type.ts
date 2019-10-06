@@ -7,7 +7,7 @@ import { expect } from "chai";
 
 describe('and dependency has undefined discover type', () => {
     let validator = new DiscoverDependencyHasValidDiscoverType();
-    let dep = new DiscoverDependency('name', 'desc', [], undefined);
+    let dep = new DiscoverDependency('name', 'desc', [], undefined as any);
     let result = validator.canValidate(dep as any);
     
     it('Should not be able to validate dependency', () => result.should.be.equal(false));

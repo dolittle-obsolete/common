@@ -8,7 +8,7 @@ import { expect } from "chai";
 describe('and it is a dependency without from area', () => {
     let validator = new DiscoverDependencyHasValidArea();
     let dep = new DiscoverDependency('name', 'desc', [], 'type');
-    let exception; 
+    let exception: Error; 
     try {
         validator.validate(dep as any);    
     } catch(error) {

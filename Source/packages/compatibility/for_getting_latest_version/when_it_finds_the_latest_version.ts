@@ -8,7 +8,7 @@ import { expect } from 'chai';
 import {getLatestVersion} from '../../internal'
 
 describe('When latest package version finder throws an error', () => {
-    let result = null;
+    let result: string;
     const version = '2.0.0';
     before(async () => {
         result = await getLatestVersion('name', {find: sinon.stub().resolves(version)}, {isConnected: sinon.stub().resolves(true)}, new NullBusyIndicator());

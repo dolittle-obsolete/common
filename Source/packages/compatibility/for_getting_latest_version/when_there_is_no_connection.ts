@@ -9,7 +9,7 @@ import { expect } from 'chai';
 import {getLatestVersion, NotConnectedToInternet, ICanFindLatestVersionOfPackage} from '../../internal'
 
 describe('When there is no connection', () => {
-    let exception = null;
+    let exception: Error;
 
     before(async () => {
         try {

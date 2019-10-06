@@ -8,7 +8,7 @@ import { Substitute } from '@fluffy-spoon/substitute';
 import {requireInternet} from '../../internal';
 describe('When there is a connection', () => {
     let busyIndicator = Substitute.for<IBusyIndicator>();
-    busyIndicator.stop = sinon.stub();
+    (busyIndicator as any).stop = sinon.stub();
     before(async () => {
         await requireInternet({isConnected: sinon.stub().resolves(true)}, busyIndicator)
     });

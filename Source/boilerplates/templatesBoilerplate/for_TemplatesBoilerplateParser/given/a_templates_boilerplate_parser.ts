@@ -17,7 +17,7 @@ export class a_templates_boilerplate_parser {
         this.parser = new TemplatesBoilerplateParser(
             dependencyParsers, Substitute.for<IFolders>(), Substitute.for<IFileSystem>());
         this.dependencies = Substitute.for<IDependencies>();
-        this.dependencies.dependencies.returns([this.dependency]);
+        this.dependencies.dependencies.returns!([this.dependency]);
         
     }
 }

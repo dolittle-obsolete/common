@@ -13,7 +13,7 @@ describe('and parsing a discover and prompt dependency', () => {
     let context = new dependencies_and_a_system_that_knows_about_no_parsers();
     context.dependencyParsers.add(new DiscoverDependencyParser(Substitute.for<IRulesParser>()));
     context.dependencyParsers.add(new DiscoverDependencyParser(Substitute.for<IRulesParser>()));
-    let exception = null;
+    let exception: Error;;
 
     try {
         context.dependencyParsers.parse(context.discoverAndPromptDependency, context.promptDependency.name);
