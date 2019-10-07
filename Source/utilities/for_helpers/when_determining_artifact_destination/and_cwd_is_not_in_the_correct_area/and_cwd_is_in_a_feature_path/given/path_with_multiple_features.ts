@@ -4,6 +4,14 @@
  *--------------------------------------------------------------------------------------------*/
 
 export class path_with_multiple_features {
+    dolittleConfig: { language: { concepts: string; domain: string; events: string; read: string; }; };
+    area: string;
+    language: string;
+    name: string;
+    boundedContextPath: any;
+    boundedContextRoot: any;
+    featureSegments: string;
+    cwd: any;
     constructor() {
         this.dolittleConfig = {
             language: {

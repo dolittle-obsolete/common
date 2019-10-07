@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { MissingField, IPromptDependency, PromptDependencyValidator } from '../../internal';
+import { MissingField, IPromptDependency, PromptDependencyValidator, CannotValidateDependency } from '../../internal';
 
 /**
  * Represents a concrete implementation of {PromptDependencyValidator} that validates that a prompt dependency has the 'userInputType' field
@@ -14,6 +14,7 @@ import { MissingField, IPromptDependency, PromptDependencyValidator } from '../.
 export class PromptDependencyHasUserInputType extends PromptDependencyValidator {
 
     validate(dependency: IPromptDependency) {
+        if (!this.canValidate(dependency)) throw new CannotValidateDependency(dependency, this);
         if (dependency.userInputType === undefined || dependency.userInputType.trim() === '') 
             throw new MissingField(dependency, 'userInputType');
     }

@@ -7,7 +7,7 @@ import { a_configuration_for_cwd_at_root } from './given/a_configuration_for_cwd
 
 describe('when creating artifact without a feature', () => {
     const path = require('path');
-    let context = null;
+    let context: any = null;
     let result: {destination: string, name: string};
     (beforeEach => {
         context = new a_configuration_for_cwd_at_root();

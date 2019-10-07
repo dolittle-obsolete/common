@@ -6,7 +6,7 @@ import {determineDestination} from '../../../helpers';
 import { path_with_no_feature } from './given/a_path_with_no_feature';
 describe('when creating artifact with a feature', () => {
     const path = require('path');
-    let context = null;
+    let context: any = null;
     let result: {destination: string, name: string};
     let featureSegments = 'feature';
     (beforeEach => {

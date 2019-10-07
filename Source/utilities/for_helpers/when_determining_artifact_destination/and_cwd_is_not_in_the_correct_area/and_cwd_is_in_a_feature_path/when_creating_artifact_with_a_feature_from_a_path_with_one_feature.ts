@@ -8,7 +8,7 @@ import { path_with_one_feature } from './given/path_with_one_feature';
 const path = require('path');
 
 describe('when creating artifact with a feature from a path with one feature', () => {
-    let context = null;
+    let context: any = null;
     let result: {destination: string, name: string};
     let featureSegments = 'feature2';
     (beforeEach => {
