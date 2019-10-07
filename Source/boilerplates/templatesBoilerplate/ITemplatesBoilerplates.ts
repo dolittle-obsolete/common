@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ITemplate, IBoilerplates, CreatedTemplateDetails, ITemplatesBoilerplates, ITemplatesBoilerplate } from "../index";
+import { ITemplate, IBoilerplates, CreatedTemplateDetails, ITemplatesBoilerplates, ITemplatesBoilerplate } from "../internal";
 
 /**
  * Defines a system that knows about (ITemplatesBoilerplate) and can create an {ITemplate}

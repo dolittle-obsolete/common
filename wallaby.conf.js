@@ -46,6 +46,7 @@ module.exports = function (w) {
           '@dolittle/tooling.common.configurations': w.projectCacheDir + '/Source/configurations',
           '@dolittle/tooling.common.dependencies': w.projectCacheDir + '/Source/dependencies',
           '@dolittle/tooling.common.files': w.projectCacheDir + '/Source/files',
+          '@dolittle/tooling.common.host': w.projectCacheDir + '/Source/host',
           '@dolittle/tooling.common.logging': w.projectCacheDir + '/Source/logging',
           '@dolittle/tooling.common.packages': w.projectCacheDir + '/Source/packages',
           '@dolittle/tooling.common.plugins': w.projectCacheDir + '/Source/plugins',

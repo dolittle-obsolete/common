@@ -2,10 +2,10 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IDependencyParsers } from "@dolittle/tooling.common.dependencies";
+import { IDependencyParsers, DependenciesWithStandardValidators } from "@dolittle/tooling.common.dependencies";
 import { IFolders, IFileSystem } from "@dolittle/tooling.common.files";
 import path from 'path';
-import { ICanParseBoilerplates, Scripts, ContentBoilerplate, contentBoilerplateContentDirectoryName, CannotParseBoilerplate, boilerplateIsContentBoilerplate, contentBoilerplateContentDirectoryFromPath } from "../index";
+import { ICanParseBoilerplates, Scripts, ContentBoilerplate, contentBoilerplateContentDirectoryName, CannotParseBoilerplate, boilerplateIsContentBoilerplate, contentBoilerplateContentDirectoryFromPath } from "../internal";
 
 const binaryFiles = [
     '.jpg',
@@ -45,8 +45,9 @@ export class ContentBoilerplateParser implements ICanParseBoilerplates {
             boilerplate.description,
             boilerplate.type,
             boilerplate.dependencies !== undefined? 
-                Object.keys(boilerplate.dependencies).map(key => this._dependencyParsers.parse(boilerplate.dependencies[key], key))
-                : [],
+                new DependenciesWithStandardValidators(Object.keys(boilerplate.dependencies)
+                    .map(key => this._dependencyParsers.parse(boilerplate.dependencies[key], key)))
+                : new DependenciesWithStandardValidators([]),
             boilerplate.namespace,
             Scripts.fromJson(boilerplate.scripts),
             boilerplate.target,

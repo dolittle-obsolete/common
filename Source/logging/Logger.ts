@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import winston from 'winston';
-import {ICanLogMessages} from './index'
+import {ICanLogMessages} from './internal'
 
 /**
  * Represents an abstract implementation of {ICanLogMessages}

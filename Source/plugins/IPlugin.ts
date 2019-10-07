@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ICanProvideDefaultCommandGroups, ICanProvideDefaultCommands, ICanProvideNamespaces } from '@dolittle/tooling.common.commands';
+import { ICanProvideCommandGroups, ICanProvideCommands, ICanProvideNamespaces } from '@dolittle/tooling.common.commands';
 
 /**
  * Defines a tooling plugin
@@ -13,18 +13,18 @@ import { ICanProvideDefaultCommandGroups, ICanProvideDefaultCommands, ICanProvid
 export interface IPlugin {
 
     /**
-     * The default commands provider
+     * The commands provider
      *
-     * @type {ICanProvideDefaultCommands}
+     * @type {ICanProvideCommands}
      */
-    defaultCommandsProvider: ICanProvideDefaultCommands
+    commandsProvider: ICanProvideCommands
     
     /**
-     * The plugin's default command groups provider
+     * The plugin's command groups provider
      *
      * @type {ICanProvideDefaultCommandGroups}
      */
-    defaultCommandGroupsProvider: ICanProvideDefaultCommandGroups
+    commandGroupsProvider: ICanProvideCommandGroups
 
     /**
      * The plugin's namespace provider

@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { IPluginDiscoverers } from './index';
+import { IPluginDiscoverers } from './internal';
 
 /**
  * Finds and gets the plugins installed on the local machine

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import winston from 'winston';
 import { Format } from 'logform';
-import { Logger } from './index'
+import { Logger } from './internal'
 
 /**
  * Represents an implementation of {ICanLogMessages} for logging messages to console

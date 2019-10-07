@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {packageIsCompatible} from '../../index';
+import {packageIsCompatible} from '../../internal';
 import { a_tooling_package } from './given/a_tooling_package';
 
 describe('When package is valid but not compatible', () => {

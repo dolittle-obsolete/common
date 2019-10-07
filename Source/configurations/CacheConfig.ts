@@ -12,7 +12,7 @@ import path from 'path';
  * @class CacheConfig
  * @extends {Conf}
  */
-export abstract class CacheConfig extends Conf {
+export abstract class CacheConfig<T = unknown> extends Conf<T> {
 
     /**
      * Instantiates an instance of {CacheConfig}.

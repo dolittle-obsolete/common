@@ -4,20 +4,33 @@
  *--------------------------------------------------------------------------------------------*/
 import { GlobalCacheConfig } from '@dolittle/tooling.common.configurations'
 
+export type PluginConfigObject = {
+    /**
+     * The path to the runnable plugin file
+     *
+     * @type {string}
+     */
+    pluginPath: string,
+
+    /**
+     * The path to the actual folder of the plugin package
+     *
+     * @type {string}
+     */
+    packagePath: string
+}
+
 /**
- * Represents the cached plugins configuration file for the tooling
+ * Represents the cached plugins configuration file for the tooling.
  * 
- * Definition:
- * "<plugin package name>": {
- *      "pluginPath": "<path to module (index, plugin)>",
- *      "packagePath": "<path to package folder>"
- * }
+ * Key is the name of the plugin package
  *
  * @export
  * @class PluginsConfig
  * @extends {GlobalCacheConfig}
  */
-export class PluginsConfig extends GlobalCacheConfig {
+export class PluginsConfig extends GlobalCacheConfig<PluginConfigObject>
+{
     /**
      * Creates an instance of {PluginsConfig}.
      */

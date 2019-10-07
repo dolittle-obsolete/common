@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import { ToolingPackage, IPackages } from '@dolittle/tooling.common.packages';
-import { ICanFindOnlinePluginPackages, packageIsPluginPackage } from '../index';
+import { ICanFindOnlinePluginPackages, packageIsPluginPackage } from '../internal';
 
 const dolittleUser = 'woksin';
 /**

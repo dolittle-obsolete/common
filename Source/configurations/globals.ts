@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import rc from 'rc';
-import { GlobalCacheConfig, UserCacheConfig } from './index';
+import { GlobalCacheConfig, UserCacheConfig } from './internal';
 import { nodeModulesPath, userHomePath } from '@dolittle/tooling.common.packages';
 
 export const dolittleConfigDefault = {

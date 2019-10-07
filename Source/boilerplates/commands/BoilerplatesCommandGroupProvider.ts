@@ -2,13 +2,13 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ICanProvideDefaultCommandGroups, ICommandGroup } from "@dolittle/tooling.common.commands";
+import { ICanProvideCommandGroups, ICommandGroup } from "@dolittle/tooling.common.commands";
 import { IFileSystem } from "@dolittle/tooling.common.files";
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ILatestCompatiblePackageFinder, ICanDownloadPackages, IConnectionChecker } from "@dolittle/tooling.common.packages";
-import { BoilerplatesCommandGroup, IBoilerplateDiscoverers, IBoilerplates, OnlineBoilerplatesDiscoverer, OnlineDolittleBoilerplatesFinder, CheckCommand, InitCommand, InstalledCommand, ListCommand, InstallCommand, IBoilerplatesLoader } from "../index";
+import { BoilerplatesCommandGroup, IBoilerplateDiscoverers, IBoilerplates, OnlineBoilerplatesDiscoverer, OnlineDolittleBoilerplatesFinder, CheckCommand, InitCommand, InstalledCommand, ListCommand, InstallCommand, IBoilerplatesLoader } from "../internal";
 
-export class BoilerplatesCommandGroupProvider implements ICanProvideDefaultCommandGroups {
+export class BoilerplatesCommandGroupProvider implements ICanProvideCommandGroups {
 
     private _boilerplatesCommandGroup: BoilerplatesCommandGroup
 

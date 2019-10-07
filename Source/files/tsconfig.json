@@ -10,5 +10,5 @@
       "sourceRoot": "./"
     },
     "exclude": ["**/*.d.ts", "**/*.js", "**/for_*", "node_modules"],
-    "include": ["**/*.ts", "for_Folders/given/a_folders_system.js"]
+    "include": ["**/*.ts"]
   }

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import * as path from 'path';
 import shell from 'shelljs'
-import { IFolders, IFileSystem } from './index';
+import { IFolders, IFileSystem } from './internal';
 
 /**
  *  A class that contains functions for working with folders

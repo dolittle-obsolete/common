@@ -2,8 +2,8 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { IDependency } from '@dolittle/tooling.common.dependencies';
-import { ITemplatesBoilerplate } from '../index';
+import { IDependency, IDependencies } from '@dolittle/tooling.common.dependencies';
+import { ITemplatesBoilerplate } from '../internal';
 
 /**
  * Defines a template
@@ -41,9 +41,9 @@ export interface ITemplate
     /**
      * Gets the dependencies of the template
      *
-     * @type {Dependency[]}
+     * @type {IDependencies}
      */
-    readonly dependencies: IDependency[]
+    readonly dependencies: IDependencies
 
     /**
      * The list of files that needs to be templated

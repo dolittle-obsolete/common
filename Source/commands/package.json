@@ -1,7 +1,7 @@
 {
   "name": "@dolittle/tooling.common.commands",
   "description": "A system for dolittle tooling for commands",
-  "version": "7.1.0",
+  "version": "8.0.0",
   "publishConfig": {
     "access": "public"
   },
@@ -16,7 +16,7 @@
     "url": "https://github.com/dolittle-tools/common/issues"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=12.0.0"
   },
   "files": [
     "lib",
@@ -36,7 +36,7 @@
     "prepublishOnly": "yarn build"
   },
   "dependencies": {
-    "@dolittle/tooling.common.dependencies": "7.*",
-    "@dolittle/tooling.common.utilities": "7.*"
+    "@dolittle/tooling.common.dependencies": "8.*",
+    "@dolittle/tooling.common.utilities": "8.*"
   }
 }

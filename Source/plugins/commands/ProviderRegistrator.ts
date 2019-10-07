@@ -2,11 +2,11 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ICanRegisterProviders, ICommandManager, ICanProvideDefaultCommandGroups } from "@dolittle/tooling.common.commands";
+import { ICanRegisterProviders, ICommandManager, ICanProvideCommandGroups } from "@dolittle/tooling.common.commands";
 import { ILatestCompatiblePackageFinder, ICanDownloadPackages, IConnectionChecker } from "@dolittle/tooling.common.packages";
 import { IFileSystem } from "@dolittle/tooling.common.files";
 import { ILoggers } from "@dolittle/tooling.common.logging";
-import { PluginsCommandGroupProvider, IPluginDiscoverers, IPlugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, IPluginLoader } from "../index";
+import { PluginsCommandGroupProvider, IPluginDiscoverers, IPlugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, IPluginLoader } from "../internal";
 
 /**
  * Represents an implementation of {ICanRegisterProviders}
@@ -17,7 +17,7 @@ import { PluginsCommandGroupProvider, IPluginDiscoverers, IPlugins, OnlinePlugin
  */
 export class ProviderRegistrator implements ICanRegisterProviders {
     
-    private _commandGroupProviders: ICanProvideDefaultCommandGroups[] = [];
+    private _commandGroupProviders: ICanProvideCommandGroups[] = [];
     
     /**
      * Instantiates an instance of {ProviderRegistrator}.

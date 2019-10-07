@@ -2,9 +2,9 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ICommand, ICanProvideDefaultCommands } from "@dolittle/tooling.common.commands";
+import { ICommand, ICanProvideCommands } from "@dolittle/tooling.common.commands";
 import { ILoggers } from "@dolittle/tooling.common.logging";
-import { DocumentationCommand, ReloadPluginsCommand, IInitializer } from "../index";
+import { DocumentationCommand, ReloadPluginsCommand, IInitializer } from "../internal";
 
 /**
  * Represents an implementation of {ICanProvideDefaultCommands}
@@ -13,7 +13,7 @@ import { DocumentationCommand, ReloadPluginsCommand, IInitializer } from "../ind
  * @class CommandsProvider
  * @implements {ICanProvideDefaultCommands}
  */
-export class CommandsProvider implements ICanProvideDefaultCommands {
+export class CommandsProvider implements ICanProvideCommands {
 
     private _commands: ICommand[];
 

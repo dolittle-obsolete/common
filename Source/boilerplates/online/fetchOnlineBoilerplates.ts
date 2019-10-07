@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import { requireInternet, IConnectionChecker, ToolingPackage } from '@dolittle/tooling.common.packages';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { OnlineBoilerplatesDiscoverer } from '../index';
+import { OnlineBoilerplatesDiscoverer } from '../internal';
 
 /**
  * Fetches the online boilerplates

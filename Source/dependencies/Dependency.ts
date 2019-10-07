@@ -2,15 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {IDependency, DependencyMissingField} from './index';
-
-export const discoverDependencyType = 'discover';
-export const promptDependencyType = 'userInput';
-
-export const dependencyTypes = [
-    discoverDependencyType,
-    promptDependencyType
-];
+import {IDependency, IDependencyRule} from './internal';
 
 /**
  * Represents an abstract implementation of {IDependency} for the abstract base configuration class of a dependency
@@ -25,22 +17,21 @@ export abstract class Dependency implements IDependency {
      * @param {string} name
      * @param {string} description
      * @param {string} type
+     * @param {IDependencyRule[]} rules
      */
-    constructor (name: string, description: string, type: string) {
+    constructor (name: string, description: string, type: string, rules: IDependencyRule[]) {
         this.description = description;
         this.name = name;
         this.type = type;
-
-        this.throwIfInvalidName();
+        this.rules = rules;
     }
 
-    readonly name: string;
+    readonly name: string
 
-    readonly description: string;
+    readonly description: string
 
-    readonly type: string;
+    readonly type: string
 
-    private throwIfInvalidName() {
-        if (this.name === undefined || this.name.trim() === '') throw new DependencyMissingField(this, 'name');
-    }
+    readonly rules: IDependencyRule[]
+
 }

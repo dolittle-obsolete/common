@@ -13,6 +13,8 @@ cd ../dependencies
 npm publish
 cd ../files
 npm publish
+cd ../host
+npm publish
 cd ../logging
 npm publish
 cd ../packages

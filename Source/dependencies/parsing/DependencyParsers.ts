@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { IDependencyParsers, IDependency, ICanParseDependencies, MultipleParsersForDependency, CannotParseDependency  } from '../index';
+import { IDependencyParsers, IDependency, ICanParseDependencies, MultipleParsersForDependency, CannotParseDependency  } from '../internal';
 
 /**
  * Represents an implementation of {IDependencyParsers} responsible for parsing an object into a Dependency

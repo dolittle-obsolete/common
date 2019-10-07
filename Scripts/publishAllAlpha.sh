@@ -13,6 +13,8 @@ cd ../dependencies
 npm publish --tag alpha
 cd ../files
 npm publish --tag alpha
+cd ../host
+npm publish --tag alpha
 cd ../logging
 npm publish --tag alpha
 cd ../packages

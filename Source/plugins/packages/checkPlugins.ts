@@ -7,7 +7,7 @@ import {IFileSystem} from '@dolittle/tooling.common.files';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import semver from 'semver';
 import path from 'path';
-import {IPluginDiscoverers, pluginPackageKeyword } from '../index';
+import {IPluginDiscoverers, pluginPackageKeyword } from '../internal';
 
 export type OutOfDatePackage = {
     name: string, version: string, latest: string

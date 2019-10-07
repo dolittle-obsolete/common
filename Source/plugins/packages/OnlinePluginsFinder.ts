@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { ToolingPackage, IPackages } from '@dolittle/tooling.common.packages';
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { ICanFindOnlinePluginPackages } from '../index';
+import { ICanFindOnlinePluginPackages } from '../internal';
 
 /**
  * Represents an implementation of {ICanFindOnlinePluginPackages} that can find plugins online by going through the npm registry

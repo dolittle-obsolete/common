@@ -5,7 +5,7 @@
 import {IFileSystem} from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import path from 'path';
-import { PluginsConfig, IPlugin, IPluginLoader, PluginModule, PluginPackage } from "../index";
+import { PluginsConfig, IPlugin, IPluginLoader, PluginModule, PluginPackage } from "../internal";
 
 /**
  * Represents an implementation of {IPluginLoader}

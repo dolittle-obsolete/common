@@ -2,8 +2,9 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { IBoilerplatesLoader, IBoilerplates} from './index';
+import { IBoilerplatesLoader, IBoilerplates, IBoilerplate} from './internal';
 
+const anyType = 'any';
 /**
  * Represents an implementation of {IBoilerplates}
  */
@@ -28,22 +29,27 @@ export class Boilerplates implements IBoilerplates {
 
     byLanguage(language: string, namespace?: string) {
         return this.byNamespace(namespace).filter(_ => {
-            if (_.namespace) return _.namespace === namespace && _.language === language;
-            return _.language === language
+            return this.matchesLanguage(_, language);
         });
     }
 
     byType(type: string, namespace?: string) {
         return this.byNamespace(namespace).filter(_ => {
-            if (_.namespace) return _.namespace === namespace && _.type === type;
-            return _.type === type;
+            return this.matchesType(_, type);
         });
     }
 
     byLanguageAndType(language: string, type: string, namespace?: string) {
         return this.byNamespace(namespace).filter(_ => {
-            if (_.namespace) return _.namespace === namespace && _.language == language && _.type == type;
-            return _.language == language && _.type == type;
+            return this.matchesLanguage(_, language) && this.matchesType(_, type);
         });
+    }
+
+    private matchesType(boilerplate: IBoilerplate, type: string) {
+        return boilerplate.type === type || boilerplate.type === anyType;
+    }
+
+    private matchesLanguage(boilerplate: IBoilerplate, language: string) {
+        return boilerplate.language === language || boilerplate.language === anyType;
     }
 }

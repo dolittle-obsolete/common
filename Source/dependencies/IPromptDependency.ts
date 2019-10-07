@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { IDependency, DependencyChoice } from './index';
+import { IDependency, DependencyChoice } from './internal';
 
 /**
  * Represents the configuration of a prompt dependency

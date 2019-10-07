@@ -2,8 +2,8 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { IDependency } from '@dolittle/tooling.common.dependencies';
-import { Boilerplate, Scripts, IContentBoilerplate } from '../index';
+import { IDependency, IDependencies } from '@dolittle/tooling.common.dependencies';
+import { Boilerplate, Scripts, IContentBoilerplate } from '../internal';
 
 /**
  * Represents the implementation of {IContentBoilerplate}
@@ -16,7 +16,7 @@ export class ContentBoilerplate extends Boilerplate implements IContentBoilerpla
      * @param {string} name 
      * @param {string} description 
      * @param {string} type
-     * @param {IDependency[]} dependencies
+     * @param {IDependencies} dependencies
      * @param {string} namespace
      * @param {Scripts} scripts
      * @param {string} target
@@ -26,7 +26,7 @@ export class ContentBoilerplate extends Boilerplate implements IContentBoilerpla
      * @param {string[]} [pathsNeedingBinding]
      * @param {string[]} [filesNeedingBinding]
      */
-    constructor(language: string, name: string, description: string, type: string, dependencies: IDependency[], namespace: string, 
+    constructor(language: string, name: string, description: string, type: string, dependencies: IDependencies, namespace: string, 
         scripts: Scripts, target: string, framework: string, parent: { name: string; type: string; language: string; }, 
         contentDirectory: string, pathsNeedingBinding: string[], filesNeedingBinding: string[]) {
             super(language, name, description, type, dependencies, namespace, scripts, contentDirectory);

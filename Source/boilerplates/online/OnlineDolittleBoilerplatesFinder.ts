@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import { IPackages } from '@dolittle/tooling.common.packages';
-import { ICanFindOnlineBoilerplatePackages, packageIsBoilerplatePackage } from '../index';
+import { ICanFindOnlineBoilerplatePackages, packageIsBoilerplatePackage } from '../internal';
 
 const dolittleUser = 'woksin';
 

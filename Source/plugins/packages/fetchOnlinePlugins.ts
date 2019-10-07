@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import { requireInternet, IConnectionChecker } from '@dolittle/tooling.common.packages';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { OnlinePluginsFinder } from '../index';
+import { OnlinePluginsFinder } from '../internal';
 
 /**
  * Fetches the online plugins

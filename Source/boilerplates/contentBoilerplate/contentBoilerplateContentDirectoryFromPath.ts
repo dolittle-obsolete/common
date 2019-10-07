@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { getFileDirPath } from '@dolittle/tooling.common.files';
 import path from 'path';
-import { contentBoilerplateContentDirectoryName } from '../index';
+import { contentBoilerplateContentDirectoryName } from '../internal';
 
 /**
  * Returns the content directory path for a content boilerplate

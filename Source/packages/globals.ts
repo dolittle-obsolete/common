@@ -11,7 +11,7 @@ import {
     ICanFindLatestVersionOfPackage, ILocalPackageDiscoverers, LocalPackageDiscoverers, 
     LocalNpmPackageDiscoverer, NpmPackageDownloader,ICanDownloadPackages,
     IConnectionChecker, ConnectionChecker, ILatestCompatiblePackageFinder
-} from './index';
+} from './internal';
 
 
 let npmRootSpawn = spawn.sync('npm', ['root', '-g']);

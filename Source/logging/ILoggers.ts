@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { Format } from 'logform';
-import {ICanLogMessages} from './index';
+import {ICanLogMessages} from './internal';
 
 /**
  * Defines a system that knows about {ICanLogMessages}

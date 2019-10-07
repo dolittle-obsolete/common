@@ -2,10 +2,10 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { Command } from "@dolittle/tooling.common.commands";
+import { Command, CommandContext, IFailedCommandOutputter } from "@dolittle/tooling.common.commands";
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
-import { initPluginSystem, IPlugins } from '../index';
+import { initPluginSystem, IPlugins } from '../internal';
 import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
 
 const name = 'init';
@@ -27,14 +27,9 @@ export class InitCommand extends Command {
         super(name, description, false);
     }
 
-    async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string, 
-                outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
-        
+    async onAction(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, failedCommandOutputter: IFailedCommandOutputter, outputter: ICanOutputMessages, busyIndicator: IBusyIndicator) {
         this._logger.info(`Executing 'plugins init' command`);
         await initPluginSystem(this._plugins, busyIndicator);
     }
 
-    getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {
-        return this.dependencies;
-    }
 }

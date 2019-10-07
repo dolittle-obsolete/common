@@ -2,20 +2,20 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ICanProvideDefaultCommandGroups, ICommandGroup } from "@dolittle/tooling.common.commands";
+import { ICanProvideCommandGroups, ICommandGroup } from "@dolittle/tooling.common.commands";
 import { IFileSystem } from "@dolittle/tooling.common.files";
 import { ILoggers } from "@dolittle/tooling.common.logging";
 import { ILatestCompatiblePackageFinder, IConnectionChecker, ICanDownloadPackages } from "@dolittle/tooling.common.packages";
-import { PluginsCommandGroup, IPluginDiscoverers, IPlugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, CheckCommand, InitCommand, InstalledCommand, ListCommand, InstallCommand, IPluginLoader } from "../index";
+import { PluginsCommandGroup, IPluginDiscoverers, IPlugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, CheckCommand, InitCommand, InstalledCommand, ListCommand, InstallCommand, IPluginLoader } from "../internal";
 
 /**
- * Represents an implementation of {ICanProvideDefaultCommandGroups}
+ * Represents an implementation of {ICanProvideCommandGroups}
  *
  * @export
  * @class PluginsCommandGroupProvider
- * @implements {ICanProvideDefaultCommandGroups}
+ * @implements {ICanProvideCommandGroups}
  */
-export class PluginsCommandGroupProvider implements ICanProvideDefaultCommandGroups {
+export class PluginsCommandGroupProvider implements ICanProvideCommandGroups {
 
     private _pluginsCommandGroup: PluginsCommandGroup
     

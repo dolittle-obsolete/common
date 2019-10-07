@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import spawn from 'cross-spawn';
-import { ICanDownloadPackages, DownloadPackageInfo } from "../index";
+import { ICanDownloadPackages, DownloadPackageInfo } from "../internal";
 
 /**
  * Represents an implementation of {ICanDownloadPackages} that can download packages from npm

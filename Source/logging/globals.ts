@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import winston from 'winston';
-import { ILoggers, Loggers, ConsoleLogger } from './index';
+import { ILoggers, Loggers, ConsoleLogger } from './internal';
 
 export const loggerFormat = winston.format;
 export let loggers: ILoggers = new Loggers(new ConsoleLogger(false)); 

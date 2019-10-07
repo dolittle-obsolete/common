@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { IFileSystem } from "@dolittle/tooling.common.files";
-import { ICanDiscoverLocalPackages, packageIsToolingPackage, DiscoveredToolingPackage, ToolingPackage, MultiplePackagesWithSameName } from "../index";
+import { ICanDiscoverLocalPackages, packageIsToolingPackage, DiscoveredToolingPackage, ToolingPackage, MultiplePackagesWithSameName } from "../internal";
 import path from 'path';
 
 /**

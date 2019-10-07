@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { ICanOutputMessages, IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { IDependency, IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
+import { CommandContext, IFailedCommandOutputter } from './internal';
 
 /**
  * Define the structure of a Command
@@ -47,26 +48,25 @@ export interface ICommand {
     /**
      * The action performed when the command is invoked
      *
-     * @param {IDependencyResolvers} dependencyResolvers  
-     * @param {string} currentWorkingDirectory The current working directory 
-     * @param {string} coreLanguage The core language
-     * @param {string[]} [commandArguments] The non-optional arguments for the command
-     * @param {Map<string, string>} [commandOptions] The optional arguments/options for the command
-     * @param {string} [namespace] The namespace of the command, if applicable
-     * @param {ICanOutputMessages} [outputter] The system that can output messages
+     * @param {CommandContext} commandContext
+     * @param {IDependencyResolvers} dependencyResolvers
+     * @param {IFailedCommandOutputter} [failedCommandOutputter]
+     * @param {ICanOutputMessages} [outputter]
      * @param {IBusyIndicator} [busyIndicator]
+     * @returns {Promise<void>}
      */
-    action(dependencyResolvers: IDependencyResolvers, currentWorkingDirectory: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, any>, namespace?: string, outputter?: ICanOutputMessages, busyIndicator?: IBusyIndicator): Promise<void>
+    action(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, failedCommandOutputter?: IFailedCommandOutputter, outputter?: ICanOutputMessages, busyIndicator?: IBusyIndicator): Promise<void>
 
     /**
-     * Gets all the dependencies given the context and arguments
+     * The actual action that is performed when action is called on the command
      *
-     * @param {string} currentWorkingDirectory
-     * @param {string} coreLanguage
-     * @param {string[]} [commandArguments]
-     * @param {Map<string, string>} [commandOptions]
-     * @param {string} [namespace]
-     * @returns {IDependency[]}
+     * @param {CommandContext} commandContext
+     * @param {IDependencyResolvers} dependencyResolvers
+     * @param {IFailedCommandOutputter} failedCommandOutputter
+     * @param {ICanOutputMessages} outputter
+     * @param {IBusyIndicator} busyIndicator
+     * @returns {Promise<void>}
      */
-    getAllDependencies(currentWorkingDirectory: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, any>, namespace?: string): IDependency[]
+    onAction(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, failedCommandOutputter: IFailedCommandOutputter, outputter: ICanOutputMessages, busyIndicator: IBusyIndicator): Promise<void>
+
 }

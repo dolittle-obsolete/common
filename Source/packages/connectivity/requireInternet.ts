@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { IBusyIndicator } from "@dolittle/tooling.common.utilities";
-import { NotConnectedToInternet, IConnectionChecker } from '../index';
+import { NotConnectedToInternet, IConnectionChecker } from '../internal';
 
 /**
  * Checks whether or not the user is connected to the internet.

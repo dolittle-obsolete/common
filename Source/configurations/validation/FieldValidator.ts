@@ -2,7 +2,7 @@
 // *  Copyright (c) Dolittle. All rights reserved.
 // *  Licensed under the MIT License. See LICENSE in the project root for license information.
 // *--------------------------------------------------------------------------------------------*/
-// import { InvalidField, IFieldValidator } from "../index";
+// import { InvalidField, IFieldValidator } from "../internal";
 
 // export class FieldValidator<T> implements IFieldValidator {
 

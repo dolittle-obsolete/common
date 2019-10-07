@@ -5,13 +5,16 @@
 import { GlobalCacheConfig } from "@dolittle/tooling.common.configurations";
 
 /**
- * Represents the cached boilerplates configuration file for the tooling
+ * Represents the cached boilerplates configuration file for the tooling.
+ * 
+ * Key is the name of the boilerplate package.
+ * Value is the path to the folder of the boilerplate
  *
  * @export
  * @class BoilerplatesConfig
  * @extends {GlobalCacheConfig}
  */
-export class BoilerplatesConfig extends GlobalCacheConfig {
+export class BoilerplatesConfig extends GlobalCacheConfig<string> {
     
     /**
      * Instantiates an instance of {BoilerplatesConfig}.

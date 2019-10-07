@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { ICommand, IDiscoverableCommandGroup } from "./index";
+import { ICommand, IDiscoverableCommandGroup } from "./internal";
 
 /**
  * Represents an abstract implementation of {IDiscoverableCommandGroup}

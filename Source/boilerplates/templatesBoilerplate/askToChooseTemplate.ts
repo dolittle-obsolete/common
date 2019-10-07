@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { IDependencyResolvers, PromptDependency, chooseOneUserInputType } from '@dolittle/tooling.common.dependencies';
-import { ITemplate } from '../index';
+import { ITemplate } from '../internal';
 
 /**
  * Prompts the user to choose a template
@@ -21,7 +21,7 @@ export async function chooseTemplate(templates: ITemplate[], resolvers: IDepende
 
 async function askWhichTemplate(templates: ITemplate[], resolvers: IDependencyResolvers) {
     let choices = templates.map(_ => new Object({name: `${_.name} description: ${_.description}`, value: _}));
-    let dep = new PromptDependency('template','Choose a template', chooseOneUserInputType, 'Choose template:', false,  choices);
-    let answer = await resolvers.resolve({}, [dep]);
+    let dep = new PromptDependency('template','Choose a template', [], chooseOneUserInputType, 'Choose template:', false,  choices);
+    let answer = await resolvers.resolve({}, [dep], []);
     return answer['template'] as ITemplate;
 }

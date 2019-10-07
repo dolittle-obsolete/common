@@ -2,9 +2,8 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { IDependency } from '@dolittle/tooling.common.dependencies';
-import _path from 'path';
-import { Scripts } from './index';
+import { IDependencies } from '@dolittle/tooling.common.dependencies';
+import { Scripts } from './internal';
 
 /**
  * Defines a boilerplate
@@ -42,9 +41,9 @@ export interface IBoilerplate {
     /**
      * The dependencies of the {Boilerplate}
      *
-     * @type {IDependency[]}
+     * @type {IDependencies}
      */
-    readonly dependencies: IDependency[];
+    readonly dependencies: IDependencies;
 
     /**
      * The namespace of the {Boilerplate}

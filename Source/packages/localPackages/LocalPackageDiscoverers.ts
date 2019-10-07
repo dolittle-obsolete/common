@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ILocalPackageDiscoverers, ICanDiscoverLocalPackages, DiscoveredToolingPackage, ToolingPackage } from "../index";
+import { ILocalPackageDiscoverers, ICanDiscoverLocalPackages, DiscoveredToolingPackage, ToolingPackage } from "../internal";
 
 /**
  * Represents an implementation of {ILocalPackageDiscoverers}

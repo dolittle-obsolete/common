@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IPackages, ILatestCompatiblePackageFinder, ICanFindPackagesByUser, ICanFindPackagesWithKeywords, ToolingPackage, ToolingPackageDescriptor } from "./index";
+import { IPackages, ILatestCompatiblePackageFinder, ICanFindPackagesByUser, ICanFindPackagesWithKeywords, ToolingPackage, ToolingPackageDescriptor } from "./internal";
 
 /**
  * Represents an implementation of {IPackages}

@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { Format } from 'logform';
-import {ILoggers, ConsoleLogger, FileLogger, ICanLogMessages} from './index';
+import {ILoggers, ConsoleLogger, FileLogger, ICanLogMessages} from './internal';
 
 /**
  * Represents an instance of {ILoggers}

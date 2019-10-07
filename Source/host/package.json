@@ -1,0 +1,49 @@
+{
+  "name": "@dolittle/tooling.common.host",
+  "version": "8.0.0-alpha.9",
+  "description": "Common utilities needed for a host for the tooling platform",
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://dolittle.io",
+  "author": "Dolittle",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dolittle-tools/common.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dolittle-tools/common/issues"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "files": [
+    "lib",
+    "package.json",
+    "**/*.d.ts"
+  ],
+  "main": "lib/index.js",
+  "types": "index.d.ts",
+  "typings": "index.d.ts",
+  "scripts": {
+    "ts:cjs": "tsc -p tsconfig.json --declaration false",
+    "ts:typedefs": "tsc --outDir . --emitDeclarationOnly",
+    "ts:all": "yarn ts:cjs && yarn ts:typedefs",
+    "ts:clean": "rimraf ./*.d.ts **/*.d.ts lib",
+    "build": "yarn clean && yarn ts:all",
+    "clean": "rimraf dist && yarn ts:clean",
+    "prepublishOnly": "yarn build"
+  },
+  "dependencies": {
+    "@types/fs-extra": "7.0.0",
+    "cross-spawn": "6.0.5",
+    "fs-extra": "7.0.1",
+    "shelljs": "0.8.3",
+    "semver": "6.1.1"
+  },
+  "devDependencies": {
+    "@types/shelljs": "^0.8.5",
+    "@types/semver": "6.0.1"
+  }
+}

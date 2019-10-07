@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { IPromptDependency } from '@dolittle/tooling.common.dependencies';
-import { IBoilerplate, ITemplate } from '../index';
+import { IBoilerplate, ITemplate } from '../internal';
 
 /**
  * Defines a {Boilerplate} that has templates

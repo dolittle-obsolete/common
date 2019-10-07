@@ -2,13 +2,13 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { Command } from '@dolittle/tooling.common.commands';
+import { Command, CommandContext, IFailedCommandOutputter } from '@dolittle/tooling.common.commands';
 import { IDependencyResolvers, PromptDependency, argumentUserInputType } from '@dolittle/tooling.common.dependencies';
 import { IFileSystem } from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import { requireInternet, isGreaterVersion, ToolingPackage, ICanDownloadPackages, IConnectionChecker } from '@dolittle/tooling.common.packages';
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { fetchOnlinePlugins, fetchDolittlePlugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, getInstalledPlugins, IPluginDiscoverers, askToDownloadOrUpdatePlugins, PluginPackageInfo, IPlugins } from '../index';
+import { fetchOnlinePlugins, fetchDolittlePlugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, getInstalledPlugins, IPluginDiscoverers, askToDownloadOrUpdatePlugins, PluginPackageInfo, IPlugins } from '../internal';
 
 const name = 'install';
 const description = `Prompt to install plugins`;
@@ -16,6 +16,7 @@ const description = `Prompt to install plugins`;
 const dolittlePluginsDependency = new PromptDependency(
     'dolittle',
     'Whether to only find plugins under the Dolittle scope / user',
+    [],
     argumentUserInputType,
     'Find only plugins under Dolittle scope / user?',
     true
@@ -38,16 +39,19 @@ export class InstallCommand extends Command {
         super(name, description, false, undefined, [dolittlePluginsDependency]);
     }
 
-    async action(dependencyResolvers: IDependencyResolvers, cwd: string, coreLanguage: string, commandArguments: string[], commandOptions: Map<string, string>, namespace?: string, 
-                outputter: ICanOutputMessages = new NullMessageOutputter(), busyIndicator: IBusyIndicator = new NullBusyIndicator()) {
+    async onAction(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, failedCommandOutputter: IFailedCommandOutputter, outputter: ICanOutputMessages, busyIndicator: IBusyIndicator) {
         this._logger.info(`Executing 'plugins install' command`);
         await requireInternet(this._connectionChecker, busyIndicator);
-        let plugins: ToolingPackage[]
-        if (commandOptions.get(dolittlePluginsDependency.name))
+        let plugins: ToolingPackage[] = [];
+        let context = await dependencyResolvers.resolve({}, this.dependencies, [], commandContext.currentWorkingDirectory, commandContext.coreLanguage)
+        if (context.hasOwnProperty(dolittlePluginsDependency.name)? context[dolittlePluginsDependency.name] : undefined)
             plugins = await fetchDolittlePlugins(this._onlineDolittlePluginsFinder, this._connectionChecker, busyIndicator);
         else 
-            plugins = await fetchOnlinePlugins(this._onlinePluginsFinder, this._connectionChecker,busyIndicator, namespace? [namespace]: []);
+            plugins = await fetchOnlinePlugins(this._onlinePluginsFinder, this._connectionChecker,busyIndicator, commandContext.namespace? [commandContext.namespace]: []);
 
+        if (plugins.length === 0) {
+            return;
+        }
         let localPlugins = await getInstalledPlugins(this._pluginDiscoverers, busyIndicator);
         let newAvailablePlugins = plugins.filter(boilerplate => !localPlugins.map(_ => _.packageJson.name).includes(boilerplate.name));
         let upgradeablePlugins = plugins.filter(boilerplate => localPlugins.map(_ => _.packageJson.name).includes(boilerplate.name))
@@ -70,7 +74,4 @@ export class InstallCommand extends Command {
         await askToDownloadOrUpdatePlugins(pluginsToDownload as PluginPackageInfo[], this._plugins, dependencyResolvers, this._packageDownloader, this._connectionChecker, busyIndicator);    
     }
 
-    getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {
-        return this.dependencies;
-    }
 }
