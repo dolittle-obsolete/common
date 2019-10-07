@@ -22,4 +22,3 @@ export class Exception extends Error {
         Error.captureStackTrace(this, this.constructor);
     }
 }
-
