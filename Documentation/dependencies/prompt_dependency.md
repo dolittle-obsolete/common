@@ -3,6 +3,7 @@ title: Prompt Dependency
 description: Learn about the dependency system
 keywords: Tools, tooling platform, dependencies, prompt dependency
 author: einari, woksin
+aliases: /tools/common/dependencies/prompt_dependency
 ---
 
 As stated [previously](..), a prompt dependency is a dependency that is resolved by some kind of user interaction, either by a given argument or as an answer to a prompted question. 

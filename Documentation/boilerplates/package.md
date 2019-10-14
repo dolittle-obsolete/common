@@ -3,6 +3,7 @@ title: Package
 description: Learn about the boilerplates system
 keywords: Tools, tooling platform, boilerplates, package
 author: einari, woksin
+aliases: /tools/common/boilerplates/package
 ---
 
 Boilerplates are one of two extension points in the tooling. Anyone can publish new boilerplates 

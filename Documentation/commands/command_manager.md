@@ -3,6 +3,7 @@ title: Command Manager
 description: Learn about the commands system
 keywords: Tools, tooling platform, commands, command manager
 author: einari, woksin
+aliases: /tools/common/commands/command_manager
 ---
 
 We need a system that knows about and manages all [commands](../command), [command groups](../command_group), and [namespaces](../namespace).

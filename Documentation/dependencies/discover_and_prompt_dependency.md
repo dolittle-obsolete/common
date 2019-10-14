@@ -3,6 +3,7 @@ title: Discover and Prompt Dependency
 description: Learn about the dependency system
 keywords: Tools, tooling platform, dependencies, discover and prompt dependency
 author: einari, woksin
+aliases: /tools/common/dependencies/discover_and_prompt_dependency
 ---
 
 A discover and prompt dependency is a combination of a [discover dependency](../discover_dependency) and a [prompt dependency](../prompt_dependency) where *type* is *'discover'* and *userInputType* is not undefined.

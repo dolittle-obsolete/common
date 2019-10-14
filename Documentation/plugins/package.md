@@ -3,6 +3,7 @@ title: Package
 description: Learn about the plugins system
 keywords: Tools, tooling platform, plugins, package
 author: einari, woksin
+aliases: /tools/common/plugins/package
 ---
 
 Plugins are one of two extension points in the tooling. Anyone can publish new plugins 
