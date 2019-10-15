@@ -3,6 +3,7 @@ title: Package Directory
 description: Learn about the packages system
 keywords: Tools, tooling platform, packages, package directory
 author: einari, woksin
+aliases: /tools/common/packages/package_directory
 ---
 
 The [Tooling Platform](../..) would need a well-known place to look for, and install, packages in. Right now all the packages are put inside the global node_modules folder, as is, when they are installed.

@@ -3,6 +3,7 @@ title: Content Boilerplates
 description: Learn about the boilerplates system
 keywords: Tools, tooling platform, boilerplates, content boilerplates
 author: einari, woksin
+aliases: /tools/common/boilerplates/content_boilerplates
 ---
 
 The content boilerplate is the most complicated form of boilerplate. It's a type of boilerplate that describes a suit of files and directories that's going to be created.

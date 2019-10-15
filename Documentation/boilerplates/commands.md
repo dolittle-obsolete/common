@@ -3,6 +3,7 @@ title: Commands
 description: Learn about the boilerplates system
 keywords: Tools, tooling platform, boilerplates, commands
 author: einari, woksin
+aliases: /tools/common/boilerplates/commands
 ---
 
 The boilerplates system exposes a couple of commands that provides common functionality around boilerplates.

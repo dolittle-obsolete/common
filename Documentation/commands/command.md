@@ -3,6 +3,7 @@ title: Command
 description: Learn about the commands system
 keywords: Tools, tooling platform, commands, command
 author: einari, woksin
+aliases: /tools/common/commands/command
 ---
 
 A command represents something that can be done / performed. A command can either be a command directly in the [Tooling Platform](../..), a part of a [command group](../command_group) can have or a part of a [namespace](../namespace).
