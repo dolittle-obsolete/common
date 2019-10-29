@@ -24,7 +24,7 @@
     "**/*.ts"
   ],
   "main": "Distribution/index.js",
-  "types": "index.d.ts",
+  "types": "Distribution/index.d.ts",
   "scripts": {
     "tasks": "gulp --tasks --gulpfile ../../node_modules/@dolittle/typescript.build.node/Gulpfile.js",
     "clean": "gulp clean --gulpfile ../../node_modules/@dolittle/typescript.build.node/Gulpfile.js",
