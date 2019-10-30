@@ -4,7 +4,5 @@
     "rootDir": "./",
     "baseUrl": "./",
     "sourceRoot": "./"
-  },
-  "exclude": ["**/*.d.ts", "node_modules"],
-  "include": ["**/*.ts"]
+  }
 }
