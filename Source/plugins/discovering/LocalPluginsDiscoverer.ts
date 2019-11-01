@@ -50,9 +50,7 @@ export class LocalPluginsDiscoverer implements ICanDiscoverPlugins {
             let folderPath = discoveredPlugin.path;
             let toolingPackage = discoveredPlugin.package;
             let pluginJavascriptFiles = [
-                path.join(folderPath, 'lib', 'index.js'),
-                path.join(folderPath, 'dist', 'index.js'), 
-                path.join(folderPath, 'index.js')
+                path.join(folderPath, 'Distribution', 'index.js'),
             ];
             let foundPlugin = false;
             for (let pluginPath of pluginJavascriptFiles) {
