@@ -4,6 +4,7 @@ description: Learn about the packages system
 keywords: Tools, tooling platform, packages
 author: einari, woksin
 weight: 10
+aliases: /tools/common/packages
 ---
 
 The package system is essentially what makes the tooling built upon the [Tooling Platform](..) extensible.

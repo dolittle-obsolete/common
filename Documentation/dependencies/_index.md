@@ -4,6 +4,7 @@ description: Learn about the dependency system
 keywords: Tools, tooling platform, dependencies
 author: einari, woksin
 weight: 10
+aliases: /tools/common/dependecies
 ---
 
 A dependency is in essence just a requirement, an argument, to something.

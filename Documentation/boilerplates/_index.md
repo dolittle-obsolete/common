@@ -4,6 +4,7 @@ description: Learn about the boilerplates system
 keywords: Tools, tooling platform, boilerplates
 author: einari, woksin
 weight: 10
+aliases: /tools/common/boilerplates/
 ---
 
 The boilerplates is one of the key building blocks in the [Tooling Platform](../). A boilerplate is basically a description of something you'd want created, essentially a template.

@@ -3,6 +3,7 @@ title: Command Group
 description: Learn about the commands system
 keywords: Tools, tooling platform, commands, command group
 author: einari, woksin
+aliases: /tools/common/commands/command_group
 ---
 
 The command group represents a grouping of related commands. It can belong directly to the [Tooling Platform](../..) or be a part of a [namespace](../namespace). 

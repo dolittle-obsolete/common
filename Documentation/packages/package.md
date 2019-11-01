@@ -3,6 +3,7 @@ title: Package
 description: Learn about the packages system
 keywords: Tools, tooling platform, packages, package
 author: einari, woksin
+aliases: /tools/common/packages/package
 ---
 
 Packages are node packages used to extend the tooling. For now the extension points are limited to [boilerplates](../../boilerplates) and [plugins](../../plugins).
