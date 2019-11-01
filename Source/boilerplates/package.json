@@ -41,7 +41,6 @@
     "@dolittle/tooling.common.files": "8.*",
     "@dolittle/tooling.common.logging": "8.*",
     "@dolittle/tooling.common.utilities": "8.*",
-    "@types/handlebars": "4.1.0",
     "cross-spawn": "6.0.5",
     "handlebars": "4.1.2",
     "lodash": "4.17.15",

@@ -40,7 +40,6 @@
     "rc": "1.2.8"
   },
   "devDependencies": {
-    "@types/rc": "1.1.0",
-    "@types/conf": "3.0.0"
+    "@types/rc": "1.1.0"
   }
 }
