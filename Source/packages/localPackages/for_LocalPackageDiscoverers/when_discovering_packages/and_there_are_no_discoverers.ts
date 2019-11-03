@@ -9,7 +9,7 @@ describe('and there are no discoverers', () => {
 
     let result: DiscoveredToolingPackage[];
     beforeEach(async () => {
-        result = await discoverers.discover(() => true);
+        result = await discoverers.discover();
 
     });
     it('Should return no packages', () => result.should.be.empty)

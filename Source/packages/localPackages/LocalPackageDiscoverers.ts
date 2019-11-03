@@ -23,10 +23,10 @@ export class LocalPackageDiscoverers implements ILocalPackageDiscoverers {
         return this._discoverers;
     }
     
-    async discover(check?: (toolingPackage: ToolingPackage) => boolean) {
+    async discover(folder?: string, check?: (toolingPackage: ToolingPackage) => boolean) {
         let discoveredPackages = Array.prototype.concat.apply(
             [], 
-            await Promise.all(this._discoverers.map(_ => _.discover(check)))
+            await Promise.all(this._discoverers.map(_ => _.discover(folder, check)))
         ) as DiscoveredToolingPackage[];
 
         return discoveredPackages;

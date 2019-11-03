@@ -39,9 +39,9 @@ export class PluginDiscoverers implements IPluginDiscoverers {
         this._pluginDiscoverers.push(...pluginDiscoverers);
     }
 
-    async discover() {
+    async discover(folder?: string) {
         this._loggers.info('Discovering plugins');
-        await Promise.all(this.pluginDiscoverers.map(_ => _.discover()));
+        await Promise.all(this.pluginDiscoverers.map(_ => _.discover(folder)));
         this._loggers.info('Finished discovering plugins');
     }
 }

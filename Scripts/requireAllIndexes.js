@@ -14,7 +14,7 @@ glob(globPattern, (error, matches) => {
 
     matches.forEach(packagePath => {
         let dirName = path.parse(packagePath).dir;
-        let indexPath = `..${path.sep}${dirName}${path.sep}lib${path.sep}index`;
+        let indexPath = `..${path.sep}${dirName}${path.sep}Distribution${path.sep}index`;
         require(indexPath);
     });
 });

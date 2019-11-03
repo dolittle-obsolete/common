@@ -14,8 +14,9 @@ export interface ICanDiscoverPlugins {
 
     /**
      * Discovers plugins and writes them to the plugins configuration so they can be loaded.
+     * @param {string} [folder] The folder to start discovering from
      */
-    discover(): void
+    discover(folder?: string): void
 
     /**
      * The discovered plugins

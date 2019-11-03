@@ -6,6 +6,7 @@ import { ICanRegisterProviders, commandManager, providerRegistrators } from '@do
 import { dependencyParsers } from '@dolittle/tooling.common.dependencies';
 import { fileSystem, folders } from '@dolittle/tooling.common.files';
 import { loggers } from '@dolittle/tooling.common.logging';
+import { pluginLoader } from '@dolittle/tooling.common.plugins';
 import { toolingPackage, latestCompatiblePackageFinder, localPackageDiscoverers, packages, npmPackageDownloader, connectionChecker } from '@dolittle/tooling.common.packages';
 import {
     BoilerplatesConfig, IBoilerplatesLoader, BoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplateDiscoverers, LocalBoilerplatesDiscoverer, IBoilerplateDiscoverers, 
@@ -23,7 +24,7 @@ let instancesOfICanParseBoilerplates: ICanParseBoilerplates[] = [
 export const boilerplateParsers: IBoilerplateParsers = new BoilerplateParsers(instancesOfICanParseBoilerplates, loggers);
 export const boilerplatesLoader: IBoilerplatesLoader = new BoilerplatesLoader(boilerplateParsers, boilerplatesConfig, fileSystem, loggers);
 let instancesOfICanDiscoverBoilerplates: ICanDiscoverBoilerplates[] = [
-    new LocalBoilerplatesDiscoverer(boilerplatesConfig, boilerplatesLoader, localPackageDiscoverers, toolingPackage, loggers)
+    new LocalBoilerplatesDiscoverer(boilerplatesConfig, pluginLoader, boilerplatesLoader, localPackageDiscoverers, fileSystem, toolingPackage, loggers)
 ];
 
 export const boilerplateDiscoverers: IBoilerplateDiscoverers = new BoilerplateDiscoverers(instancesOfICanDiscoverBoilerplates, loggers);

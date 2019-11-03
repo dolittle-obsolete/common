@@ -39,10 +39,10 @@ export class LocalPluginsDiscoverer implements ICanDiscoverPlugins {
         return this._discoveredPlugins;
     }
     
-    async discover() {
+    async discover(folder?: string) {
         this._discoveredPlugins = [];
         this._pluginPaths = [];
-        let discoveredPluginPackages = await this._localPackageDiscoverers.discover(_ => packageIsPluginPackage(_));
+        let discoveredPluginPackages = await this._localPackageDiscoverers.discover(folder, _ => packageIsPluginPackage(_));
         
         let pluginsConfigObject: {[pluginPackageName: string]: PluginConfigObject} = {};
 
@@ -50,9 +50,7 @@ export class LocalPluginsDiscoverer implements ICanDiscoverPlugins {
             let folderPath = discoveredPlugin.path;
             let toolingPackage = discoveredPlugin.package;
             let pluginJavascriptFiles = [
-                path.join(folderPath, 'lib', 'index.js'),
-                path.join(folderPath, 'dist', 'index.js'), 
-                path.join(folderPath, 'index.js')
+                path.join(folderPath, 'Distribution', 'index.js'),
             ];
             let foundPlugin = false;
             for (let pluginPath of pluginJavascriptFiles) {

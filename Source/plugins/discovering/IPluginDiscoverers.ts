@@ -28,8 +28,9 @@ export interface IPluginDiscoverers {
 
     /**
      * Discovers plugins
+     * @param {string} [folder] The folder to start discovering from
      */
-    discover(): Promise<void>
+    discover(folder?: string): Promise<void>
 
     /**
      * The discovered plugin packages
