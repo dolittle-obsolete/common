@@ -19,7 +19,9 @@ if (npmRootSpawn.error) throw npmRootSpawn.error;
 export const nodeModulesPath = npmRootSpawn.stdout.toString().replace(/\n$/, '');
 export const userHomePath = os.homedir();
 
-export const toolingPackage = process.env.IS_TESTING? require('./package.json') : require('../package.json');
+export const toolingPackage = fileSystem.existsSync('./package.json')? 
+                                fileSystem.readJsonSync('./package.json')
+                                : fileSystem.readJsonSync('../package.json');
 
 export let latestNpmPackageVersionFinder: ICanFindLatestVersionOfPackage = new LatestNpmPackageVersionFinder();
 
