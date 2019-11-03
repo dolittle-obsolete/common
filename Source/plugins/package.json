@@ -35,6 +35,7 @@
     "prepublishOnly": "yarn build && yarn test:run && yarn test:clean"
   },
   "dependencies": {
+    "@dolittle/tooling.common.boilerplates": "8.*",
     "@dolittle/tooling.common.commands": "8.*",
     "@dolittle/tooling.common.configurations": "8.*",
     "@dolittle/tooling.common.dependencies": "8.*",

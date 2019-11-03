@@ -39,10 +39,10 @@ export class LocalPluginsDiscoverer implements ICanDiscoverPlugins {
         return this._discoveredPlugins;
     }
     
-    async discover() {
+    async discover(folder?: string) {
         this._discoveredPlugins = [];
         this._pluginPaths = [];
-        let discoveredPluginPackages = await this._localPackageDiscoverers.discover(_ => packageIsPluginPackage(_));
+        let discoveredPluginPackages = await this._localPackageDiscoverers.discover(folder, _ => packageIsPluginPackage(_));
         
         let pluginsConfigObject: {[pluginPackageName: string]: PluginConfigObject} = {};
 

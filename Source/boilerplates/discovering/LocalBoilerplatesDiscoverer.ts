@@ -33,10 +33,10 @@ export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
         return this._discovered;
     }
     
-    async discover() {
+    async discover(folder?: string) {
         this._boilerplatePaths = [];
         this._discovered = [];
-        let discoveredBoilerplatePackages = await this._localPackageDiscoverers.discover(toolingPackage => packageIsBoilerplatePackage(toolingPackage));
+        let discoveredBoilerplatePackages = await this._localPackageDiscoverers.discover(folder, toolingPackage => packageIsBoilerplatePackage(toolingPackage));
         
         let boilerplatesConfigObject: any = {};
 

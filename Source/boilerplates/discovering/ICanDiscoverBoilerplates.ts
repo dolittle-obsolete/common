@@ -15,9 +15,10 @@ export interface ICanDiscoverBoilerplates {
     
     /**
      * Discovers boilerplates and returns them.
+     * @param {string} [folder] The folder to start discovering from
      *
      */
-    discover(): Promise<void>
+    discover(folder?: string): Promise<void>
 
     /**
      * The discovered boilerplates

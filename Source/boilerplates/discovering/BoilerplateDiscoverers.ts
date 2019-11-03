@@ -40,9 +40,9 @@ export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
         this.discoverers.push(...boilerplateDiscoverers);
     }
 
-    async discover() {
+    async discover(folder?: string) {
         this._loggers.info('Discovering boilerplates');
-        await Promise.all(this.discoverers.map(_ => _.discover()));
+        await Promise.all(this.discoverers.map(_ => _.discover(folder)));
         this._loggers.info('Finished discovering boilerplates');
     }
 }

@@ -5,6 +5,7 @@
 import { IFileSystem } from "@dolittle/tooling.common.files";
 import { ICanDiscoverLocalPackages, packageIsToolingPackage, DiscoveredToolingPackage, ToolingPackage, MultiplePackagesWithSameName } from "../internal";
 import path from 'path';
+import { Exception } from "@dolittle/tooling.common.utilities";
 
 /**
  * Represents an implementation of {ICanDiscoverLocalPackages} that discover locally installed npm packages
@@ -26,19 +27,20 @@ export class LocalNpmPackageDiscoverer implements ICanDiscoverLocalPackages{
         private _nodeModulesFolder: string
     ) {}
 
-    async discover(check: (toolingPackage: ToolingPackage) => boolean = (_) => true) {
-        let discoveredPackages = await this.getPackages();
+    async discover(folder: string = this._nodeModulesFolder, check: (toolingPackage: ToolingPackage) => boolean = (_) => true) {
+        let discoveredPackages = await this.getPackages(folder);
         
         discoveredPackages = discoveredPackages.filter(_ => check(_.package))
         this.throwIfDuplicatePackages(discoveredPackages);
         return discoveredPackages;
     }
 
-    private async getPackages() {
+    private async getPackages(folder: string) {
         let discoveredPackages: DiscoveredToolingPackage[] = [];
-        let dirs = await this._fileSystem.readDirectory(this._nodeModulesFolder);
+        if (! (await this._fileSystem.stat(folder)).isDirectory()) throw new Exception(`Path '${folder}' is not a directory`);
+        let dirs = await this._fileSystem.readDirectory(folder);
         await Promise.all(dirs.map(async dir => {
-            const dirPath = path.join(this._nodeModulesFolder, dir);
+            const dirPath = path.join(folder, dir);
             try {
                 let subDir = await this._fileSystem.readDirectory(dirPath);
                 return this.searchDirectoryForPackages(dir, subDir.map(_ => path.join(dirPath, _)), discoveredPackages);
