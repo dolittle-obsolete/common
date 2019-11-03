@@ -40,6 +40,7 @@
     "@dolittle/tooling.common.dependencies": "8.*",
     "@dolittle/tooling.common.files": "8.*",
     "@dolittle/tooling.common.logging": "8.*",
+    "@dolittle/tooling.common.plugins": "8.*",
     "@dolittle/tooling.common.utilities": "8.*",
     "cross-spawn": "6.0.5",
     "handlebars": "4.1.2",

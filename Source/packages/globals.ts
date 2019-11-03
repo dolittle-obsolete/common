@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import spawn from 'cross-spawn';
 import os from 'os';
+import path from 'path';
 import { fileSystem } from '@dolittle/tooling.common.files';
 import { 
     LatestCompatibleNpmPackageFinder, IPackages, Packages, AllNpmPackageVersionsFinder, 
@@ -19,9 +20,9 @@ if (npmRootSpawn.error) throw npmRootSpawn.error;
 export const nodeModulesPath = npmRootSpawn.stdout.toString().replace(/\n$/, '');
 export const userHomePath = os.homedir();
 
-export const toolingPackage = fileSystem.existsSync('./package.json')? 
-                                fileSystem.readJsonSync('./package.json')
-                                : fileSystem.readJsonSync('../package.json');
+export const toolingPackage = fileSystem.existsSync(path.join(__dirname, 'package.json'))? 
+                                fileSystem.readJsonSync(path.join(__dirname, 'package.json'))
+                                : fileSystem.readJsonSync(path.join(__dirname, '..', 'package.json'));
 
 export let latestNpmPackageVersionFinder: ICanFindLatestVersionOfPackage = new LatestNpmPackageVersionFinder();
 

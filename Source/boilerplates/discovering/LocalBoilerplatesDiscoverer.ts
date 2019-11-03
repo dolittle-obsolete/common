@@ -3,9 +3,16 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { packageIsCompatible, ILocalPackageDiscoverers } from '@dolittle/tooling.common.packages';
+import { packageIsCompatible, ILocalPackageDiscoverers, DiscoveredToolingPackage } from '@dolittle/tooling.common.packages';
+import { IPluginLoader, PluginPackage } from '@dolittle/tooling.common.plugins';
+import path from 'path';
 import { IBoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplatesConfig, packageIsBoilerplatePackage, BoilerplatePackage } from '../internal';
+import { IFileSystem } from '@dolittle/tooling.common.files';
 
+const pluginBoilerplatesFolderNames = [
+    'boilerplates',
+    'Boilerplates'
+];
 /**
  * Represents an implementation of {ICanDiscoverBoilerplates} for discovering locally installed boilerplates
  */
@@ -22,8 +29,8 @@ export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
      * @param {any} _toolingPackage
      * @param {ILoggers} _logger
      */
-    constructor(private _boilerplatesConfig: BoilerplatesConfig, private _boilerplatesLoader: IBoilerplatesLoader, private _localPackageDiscoverers: ILocalPackageDiscoverers, 
-        private _toolingPackage: any, private _logger: ILoggers) {}
+    constructor(private _boilerplatesConfig: BoilerplatesConfig, private _pluginsLoader: IPluginLoader, private _boilerplatesLoader: IBoilerplatesLoader, 
+        private _localPackageDiscoverers: ILocalPackageDiscoverers, private _fileSystem: IFileSystem, private _toolingPackage: any, private _logger: ILoggers) {}
 
     get boilerplatePaths() {
         return this._boilerplatePaths;
@@ -37,7 +44,8 @@ export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
         this._boilerplatePaths = [];
         this._discovered = [];
         let discoveredBoilerplatePackages = await this._localPackageDiscoverers.discover(folder, toolingPackage => packageIsBoilerplatePackage(toolingPackage));
-        
+        if (this._pluginsLoader.needsReload) await this._pluginsLoader.load();
+        discoveredBoilerplatePackages.push(...(await this.discoverFromPlugins(this._pluginsLoader.pluginPackages))) 
         let boilerplatesConfigObject: any = {};
 
         discoveredBoilerplatePackages.forEach( discoveredPackage => {
@@ -59,5 +67,17 @@ export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
         });
         if (this._boilerplatesLoader.needsReload) this._boilerplatesConfig.store = boilerplatesConfigObject;
     }
-
+    private async discoverFromPlugins(pluginPackages: PluginPackage[]) {
+        let packages: DiscoveredToolingPackage[] = [];
+        for (let plugin of pluginPackages) {
+            for (let folderName of pluginBoilerplatesFolderNames) {
+                let boilerplatesFolder = path.join(plugin.pluginFilePath, '..', '..', folderName )
+                if ((await this._fileSystem.exists(boilerplatesFolder)) && (await this._fileSystem.stat(boilerplatesFolder)).isDirectory()) {
+                    packages.push(... (await this._localPackageDiscoverers.discover(boilerplatesFolder, toolingPackage => packageIsBoilerplatePackage(toolingPackage))))
+                    break;
+                }
+            }
+        }
+        return packages;
+    }
 }
