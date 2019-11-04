@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { ToolingPackage, IPackages } from '@dolittle/tooling.common.packages';
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { ICanFindOnlinePluginPackages } from '../internal';
+import { ICanFindOnlinePluginPackages, pluginPackageKeyword } from '../internal';
 
 /**
  * Represents an implementation of {ICanFindOnlinePluginPackages} that can find plugins online by going through the npm registry
@@ -24,7 +24,7 @@ export class OnlinePluginsFinder implements ICanFindOnlinePluginPackages {
     
     async findLatest(keywords: string[] = [], limit: number = 250): Promise<ToolingPackage[]> {
         this._logger.info(`Attempting to find online plugins`); 
-        let pluginPackages = await this._packages.latestCompatibleWithKeywords(keywords, limit);
+        let pluginPackages = await this._packages.latestCompatibleWithKeywords([pluginPackageKeyword].concat(keywords), limit);
         
         return pluginPackages;
     }
