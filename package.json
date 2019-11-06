@@ -12,7 +12,7 @@
     "test:clean": "gulp test-clean --gulpfile node_modules/@dolittle/typescript.build.node/Gulpfile.js"
   },
   "devDependencies": {
-    "@dolittle/typescript.build.node": "^1.0.15",
+    "@dolittle/typescript.build.node": "^1.1.2",
     "@types/cross-spawn": "^6.0.0",
     "@types/fs-extra": "^5.1.0"
   }
