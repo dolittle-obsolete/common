@@ -16,6 +16,7 @@ export * from './IDiscoverableCommandGroup';
 export * from './INamespace';
 
 export * from './Command';
+export * from './AuthenticatedCommand';
 export * from './CommandGroup';
 export * from './DiscoverableCommandGroup';
 export * from './Namespace';

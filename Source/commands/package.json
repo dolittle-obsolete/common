@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@dolittle/tooling.common.dependencies": "8.*",
+    "@dolittle/tooling.common.login": "8.*",
     "@dolittle/tooling.common.utilities": "8.*"
   }
 }
