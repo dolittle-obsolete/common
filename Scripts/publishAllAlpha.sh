@@ -17,6 +17,8 @@ cd ../host
 npm publish --tag alpha
 cd ../logging
 npm publish --tag alpha
+cd ../login
+npm publish --tag alpha
 cd ../packages
 npm publish --tag alpha
 cd ../plugins 

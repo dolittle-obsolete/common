@@ -17,6 +17,8 @@ cd ../host
 npm link
 cd ../logging
 npm link
+cd ../login
+npm link
 cd ../packages
 npm link
 cd ../plugins 

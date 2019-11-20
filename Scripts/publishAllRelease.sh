@@ -17,6 +17,8 @@ cd ../host
 npm publish
 cd ../logging
 npm publish
+cd ../login
+npm publish
 cd ../packages
 npm publish
 cd ../plugins 

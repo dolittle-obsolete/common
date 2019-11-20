@@ -1,6 +1,6 @@
 {
-  "name": "@dolittle/tooling.common.plugins",
-  "description": "The plugin system for dolittle tooling",
+  "name": "@dolittle/tooling.common.login",
+  "description": "The login system for common dolittle tooling",
   "version": "8.1.0",
   "publishConfig": {
     "access": "public"
@@ -16,7 +16,7 @@
     "url": "https://github.com/dolittle-tools/common/issues"
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">= 12.0.0"
   },
   "files": [
     "Distribution",
@@ -34,17 +34,12 @@
     "test:clean": "gulp test-clean --gulpfile ../../node_modules/@dolittle/typescript.build/Gulpfile.js",
     "prepublishOnly": "yarn build && yarn test:run && yarn test:clean"
   },
-  "dependencies": {
-    "@dolittle/tooling.common.commands": "8.*",
-    "@dolittle/tooling.common.configurations": "8.*",
-    "@dolittle/tooling.common.dependencies": "8.*",
-    "@dolittle/tooling.common.files": "8.*",
-    "@dolittle/tooling.common.logging": "8.*",
-    "@dolittle/tooling.common.packages": "8.*",
-    "@dolittle/tooling.common.utilities": "8.*",
-    "semver": "6.1.1"
-  },
   "devDependencies": {
-    "@types/semver": "6.0.1"
+    "@types/openid-client": "^3.7.0"
+  },
+  "dependencies": {
+    "@dolittle/tooling.common.configurations": "8.*",
+    "@dolittle/tooling.common.utilities": "8.*",
+    "openid-client": "^3.8.3"
   }
 }
