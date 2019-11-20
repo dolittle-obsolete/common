@@ -49,8 +49,8 @@ export class Contexts implements IContexts {
             return {contextName: key, context: this._contextsConfig.contexts[key]}
         }).filter(_ => contextEquals(context, _.context));
         
-        if(equalContexts.length > 0) {
-            equalContexts.every(_ => this._contextsConfig.addContext(_.contextName, _.context))
+        if (equalContexts.length > 0) {
+            equalContexts.every(_ => this._contextsConfig.addContext(_.contextName, context))
         }
         else {
             let contextName = this._createContextName(context);
