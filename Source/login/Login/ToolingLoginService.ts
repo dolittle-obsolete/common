@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { ICanOutputMessages } from '@dolittle/tooling.common.utilities';
+import { ICanOutputMessages, IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { IContexts, ILoginService, ICanHandleAuthentication} from '../index';
 
 /**
@@ -21,9 +21,9 @@ export class ToolingLoginService implements ILoginService {
      */
     constructor(private _authenticationHandler: ICanHandleAuthentication, private _contexts: IContexts, private _loggers: ILoggers) { } 
 
-    async login(outputter: ICanOutputMessages) {
+    async login(outputter: ICanOutputMessages, busyIndicator: IBusyIndicator) {
         this._loggers.info('Tooling Login Service: performing login')
-        let {tokens, userInfo} = await this._authenticationHandler.authenticate(outputter); 
+        let {tokens, userInfo} = await this._authenticationHandler.authenticate(outputter, busyIndicator); 
         this._loggers.info('Authenticated');
         
         this._contexts.createAndAdd(tokens.id_token!, tokens.expires_at!, userInfo.sub, userInfo.name, userInfo.tid, userInfo.tenant_name, tokens.refresh_token);
