@@ -13,6 +13,7 @@ const commonToolingPackages = [
     "@dolittle/tooling.common.dependencies",
     "@dolittle/tooling.common.files",
     "@dolittle/tooling.common.logging",
+    "@dolittle/tooling.common.login",
     "@dolittle/tooling.common.packages",
     "@dolittle/tooling.common.plugins",
     "@dolittle/tooling.common.utilities",
