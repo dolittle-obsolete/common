@@ -28,6 +28,14 @@ export interface IContexts {
     use(contextName: string): Context
 
     /**
+     * Use another context and set that as current context
+     *
+     * @param {Context} context
+     * @returns {Context}
+     */
+    useContext(context: Context): Context
+
+    /**
      * Change the name of a context
      *
      * @param {string} oldName

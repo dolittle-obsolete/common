@@ -13,6 +13,7 @@ import { Context, IContexts, IContextCreator, ContextsConfiguration, contextEqua
  * @implements {IContexts}
  */
 export class Contexts implements IContexts {
+    
 
     /**
      * Instantiates an instance of {Contexts}.
@@ -32,6 +33,17 @@ export class Contexts implements IContexts {
         let context = this._contextsConfig.contexts[contextName];
         this._contextsConfig.currentContext = contextName;
         return context;
+    }
+
+    useContext(context: Context) {
+        let contexts = this._contextsConfig.contexts;
+        for (let key in contexts) {
+            if (contextEquals(context, contexts[key])) {
+                this.use(key);
+                return context;
+            }
+        }
+        throw new Error(`Contexts configuration does not have context ${context}`);
     }
 
     rename(oldName: string, newName: string): void {
