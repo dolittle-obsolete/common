@@ -13,6 +13,11 @@ export * from './Contexts/ContextCreator';
 export * from './Contexts/ContextsConfiguration';
 export * from './Contexts/Contexts';
 
+export * from './Authentication/UserInfoResponse';
+export * from './Authentication/AuthenticationResponse';
+export * from './Authentication/ICanHandleAuthentication';
+export * from './Authentication/OpenID/OpenIDDeviceFlowAuthorizer';
+export * from './Authentication/OpenID/ToolingDeviceFlowAuthorizer';
+
 export * from './Login/ILoginService'; 
-export * from './Login/BaseLoginService';
-export * from './Login/CLILoginService';
+export * from './Login/ToolingLoginService';

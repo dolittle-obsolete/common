@@ -19,4 +19,5 @@ export interface ILoginService {
      * @returns {Promise<void>}
      */
     login(outputter: ICanOutputMessages): Promise<void>
+
 }

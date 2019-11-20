@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@dolittle/tooling.common.configurations": "8.*",
+    "@dolittle/tooling.common.logging": "8.*",
     "@dolittle/tooling.common.utilities": "8.*",
     "openid-client": "^3.8.3"
   }
