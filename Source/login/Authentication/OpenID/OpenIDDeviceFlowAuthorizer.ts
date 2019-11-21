@@ -26,7 +26,7 @@ export abstract class OpenIDDeviceFlowAuthorizer implements ICanHandleAuthentica
     constructor(private _discoveryDocumentURL: string, private _clientID: string, private _clientSecret: string, private _scope: string, private _connectionChecker: IConnectionChecker) {}
 
     async authenticate(outputter: ICanOutputMessages, busyIndicator: IBusyIndicator) {
-        requireInternet(this._connectionChecker, busyIndicator)
+        await requireInternet(this._connectionChecker, busyIndicator)
         let issuer = await Issuer.discover(this._discoveryDocumentURL);
         let client = new issuer.Client({
             client_id: this._clientID,
