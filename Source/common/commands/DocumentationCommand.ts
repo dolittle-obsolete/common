@@ -4,8 +4,8 @@
 *--------------------------------------------------------------------------------------------*/
 import { Command, IFailedCommandOutputter, CommandContext } from "@dolittle/tooling.common.commands";
 import { ILoggers } from "@dolittle/tooling.common.logging";
-import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
-import { IDependencyResolvers, IDependency } from "@dolittle/tooling.common.dependencies";
+import { ICanOutputMessages, IBusyIndicator } from "@dolittle/tooling.common.utilities";
+import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
 import open from 'open';
 
 const name = 'documentation';

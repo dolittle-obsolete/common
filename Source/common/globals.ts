@@ -8,10 +8,11 @@ import { commandManager, providerRegistrators, ICanRegisterProviders } from "@do
 import { plugins } from "@dolittle/tooling.common.plugins";
 import { loggers } from "@dolittle/tooling.common.logging";
 import {ProviderRegistrator} from './internal';
+import { contexts } from "@dolittle/tooling.common.login";
 
 export let initializer: IInitializer = new Initializer(providerRegistrators, commandManager, plugins, boilerplates, boilerplatesLoader, loggers);
 
-let providerRegistrator: ICanRegisterProviders = new ProviderRegistrator(commandManager, initializer, loggers);
+let providerRegistrator: ICanRegisterProviders = new ProviderRegistrator(commandManager, initializer, contexts, loggers);
 providerRegistrators.addRegistrators(providerRegistrator);
 
 export let projectConfig = new ProjectConfig();
