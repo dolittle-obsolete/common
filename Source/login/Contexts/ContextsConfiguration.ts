@@ -76,7 +76,7 @@ export class ContextsConfiguration extends UserCacheConfig<string | ContextsObje
         let context = this.contexts[oldName];
         this.addContext(newName, context);
         this.deleteContext(oldName);
-        if (this.currentContext === oldName) this.currentContext = newName;
+        if (this.currentContext === '') this.currentContext = newName;
     }
 
     renameCurrent(newName: string) {
@@ -89,7 +89,7 @@ export class ContextsConfiguration extends UserCacheConfig<string | ContextsObje
         let contexts = obj['contexts'] as ContextsObject;
         let hasContext = contexts[contextName] !== undefined;
         if (hasContext) {
-            if (this.currentContext === contextName) this.currentContext = '';
+            if (obj.currentContext === contextName) obj.currentContext = '';
             delete contexts[contextName];
             obj['contexts'] = contexts;
             this.store = obj;

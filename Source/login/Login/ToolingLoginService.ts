@@ -26,7 +26,9 @@ export class ToolingLoginService implements ILoginService {
         let {tokens, userInfo} = await this._authenticationHandler.authenticate(outputter, busyIndicator); 
         this._loggers.info('Authenticated');
         
-        return this._contexts.createAndAdd(tokens.access_token!, tokens.expires_at!, userInfo.sub, userInfo.name, userInfo.tid, userInfo.tenant_name, tokens.refresh_token);
+        let context = this._contexts.createAndAdd(tokens.access_token!, tokens.expires_at!, userInfo.sub, userInfo.name, userInfo.tid, userInfo.tenant_name, tokens.refresh_token);
+        this._contexts.useContext(context);
+        return context;
     }
 
 }
