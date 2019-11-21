@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { CacheConfig } from './internal';
-
+import fs from 'fs';
 /**
  * Represents a config file that's used as a user cache storage for the tooling. 
  *
@@ -21,5 +21,12 @@ export class UserCacheConfig<T = unknown> extends CacheConfig<T> {
      */
     constructor(configName: string, defaultObj: { [key: string]: any; }) {
         super(configName, UserCacheConfig.userHomeFolder, defaultObj);
+        
+        if (!fs.existsSync(this.path)) this.store = defaultObj;
+        const mode = fs.statSync(this.path).mode;
+        if (mode & (fs.constants.S_IRGRP | fs.constants.S_IWGRP )
+            || mode & (fs.constants.S_IROTH | fs.constants.S_IWOTH )) {
+            fs.chmodSync(this.path, 0o600);
+        }
     }
 }
