@@ -23,7 +23,7 @@ export abstract class OpenIDDeviceFlowAuthorizer implements ICanHandleAuthentica
      * @param {string} _clientSecret
      * @param {string} _scope The scopes of the grant
      */
-    constructor(private _discoveryDocumentURL: string, private _clientID: string, private _clientSecret: string, private _scope: string, private _connectionChecker: IConnectionChecker) {}
+    constructor(private _discoveryDocumentURL: string, private _clientID: string, private _clientSecret: string | undefined, private _scope: string, private _connectionChecker: IConnectionChecker) {}
 
     async authenticate(outputter: ICanOutputMessages, busyIndicator: IBusyIndicator) {
         await requireInternet(this._connectionChecker, busyIndicator)
