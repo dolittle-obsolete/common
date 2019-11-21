@@ -5,8 +5,11 @@
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import { ICanOutputMessages, IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { IContexts, ILoginService, ICanHandleAuthentication} from '../index';
-import { IDependencyResolvers, PromptDependency, IsNotEmpty, argumentUserInputType } from '@dolittle/tooling.common.dependencies';
+import { IDependencyResolvers, PromptDependency, IsNotEmpty, inputUserInputType } from '@dolittle/tooling.common.dependencies';
 
+function isUndefinedContextName(name: string) {
+    return name.split('-', 2).filter(_ => _.trim() === 'undefined').length > 0;
+}
 /**
  * Represents an implementation of {ILoginService} which 
  *
@@ -29,12 +32,14 @@ export class ToolingLoginService implements ILoginService {
         
         let context = this._contexts.createAndAdd(tokens.access_token!, tokens.expires_at!, userInfo.sub, userInfo.name, userInfo.tid, userInfo.tenant_name, tokens.refresh_token);
         this._contexts.useContext(context);
-        if (!context.userInfo.tenantName || !context.userInfo.name) {
+        let { contextName } = this._contexts.current();
+        if ((!context.userInfo.tenantName || !context.userInfo.name)
+            && isUndefinedContextName(contextName) ) {
             let contextNameDependency = new PromptDependency(
                 'promptName',
                 'The name of the context',
                 [new IsNotEmpty()],
-                argumentUserInputType,
+                inputUserInputType,
                 'The name of the context'
             );
             const dependencyContext = await dependencyResolvers.resolve({}, [contextNameDependency]);
