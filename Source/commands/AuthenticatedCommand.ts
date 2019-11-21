@@ -36,7 +36,7 @@ export abstract class AuthenticatedCommand extends Command {
         try {
             let {context} = this._contexts.current();
             if (context === undefined || this._contexts.contextHasExpired(context)) {
-                let context = await this._loginService.login(outputter, busyIndicator);
+                let context = await this._loginService.login(dependencyResolvers, outputter, busyIndicator);
                 this._contexts.useContext(context);
             }
         } catch (error) {
