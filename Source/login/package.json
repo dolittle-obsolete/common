@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@dolittle/tooling.common.configurations": "8.*",
+    "@dolittle/tooling.common.dependencies": "8.*",
     "@dolittle/tooling.common.logging": "8.*",
     "@dolittle/tooling.common.packages": "8.*",
     "@dolittle/tooling.common.utilities": "8.*",

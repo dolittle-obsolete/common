@@ -16,9 +16,9 @@ export class ContextCreator implements IContextCreator {
     create(access_token: string, expires_at: number, sub: string, name: string, tid: string, tenant_name: string, refresh_token?: string) {
         if (!access_token) throw new Error('Missing access_token');
         if (!sub) throw new Error('Missing sub');
-        if (!name) throw new Error('Missing name');
+        // if (!name) throw new Error('Missing name');
         if (!tid) throw new Error('Missing tid');
-        if (!tenant_name) throw new Error('Missing tenant_name');
+        // if (!tenant_name) throw new Error('Missing tenant_name');
 
         let context: Context = {
             token: access_token,
