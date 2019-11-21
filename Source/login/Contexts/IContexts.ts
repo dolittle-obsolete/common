@@ -75,7 +75,7 @@ export interface IContexts {
     /**
      * Adds a new {Context}
      *
-     * @param {string} id_token
+     * @param {string} access_token
      * @param {string} expires_at
      * @param {string} sub Subject ID
      * @param {string} name Name of the subject
@@ -84,7 +84,7 @@ export interface IContexts {
      * @param {string} [refresh_token]
      * @returns {Context} The added {Context}
      */
-    createAndAdd(id_token: string, expires_at: number, sub: string, name: string, tid: string, tenant_name: string, refresh_token?: string): Context
+    createAndAdd(access_token: string, expires_at: number, sub: string, name: string, tid: string, tenant_name: string, refresh_token?: string): Context
 
     /**
      * Deletes a {Context} by its name

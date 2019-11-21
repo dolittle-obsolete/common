@@ -81,8 +81,8 @@ export class Contexts implements IContexts {
         return this._contextsConfig.contexts;
     }
     
-    createAndAdd(id_token: string, expires_at: number, sub: string, name: string, tid: string, tenant_name: string, refresh_token?: string) {
-        let context = this._contextCreator.create(id_token, expires_at, sub, name, tid, tenant_name, refresh_token);
+    createAndAdd(access_token: string, expires_at: number, sub: string, name: string, tid: string, tenant_name: string, refresh_token?: string) {
+        let context = this._contextCreator.create(access_token, expires_at, sub, name, tid, tenant_name, refresh_token);
 
         this.add(context);
         return context;

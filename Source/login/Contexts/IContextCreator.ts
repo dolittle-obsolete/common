@@ -15,7 +15,7 @@ export interface IContextCreator {
     /**
      * Creates a {Context}
      *
-     * @param {string} id_token
+     * @param {string} access_token
      * @param {number} expires_at
      * @param {string} sub Subject ID
      * @param {string} name Name of the subject
@@ -24,5 +24,5 @@ export interface IContextCreator {
      * @param {string} [refresh_token]
      * @returns {Context}
      */
-    create(id_token: string, expires_at: number, sub: string, name: string, tid: string, tenant_name: string, refresh_token?: string): Context
+    create(access_token: string, expires_at: number, sub: string, name: string, tid: string, tenant_name: string, refresh_token?: string): Context
 }

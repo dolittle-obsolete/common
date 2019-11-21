@@ -13,7 +13,7 @@ export function contextEquals(context: Context, otherContext: Context) {
  */
 export type Context = {
     /**
-     * The id_token used for authentication
+     * The access_token used for authentication
      *
      * @type {string}
      */
