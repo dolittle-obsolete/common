@@ -17,7 +17,7 @@ const newNameDependency = new PromptDependency(
 export class RenameCurrentContextCommand extends Command {
     
     constructor(private _contexts: IContexts) {
-        super('rename', 'Renames a context', false, undefined, [newNameDependency])
+        super('rename-current', 'Renames the current context', false, undefined, [newNameDependency])
     }
 
     async onAction(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, failedCommandOutputter: IFailedCommandOutputter, outputter: ICanOutputMessages, busyIndicator: IBusyIndicator) {

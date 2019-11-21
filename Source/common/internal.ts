@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 export * from './HostPackage';
-export * from '@dolittle/tooling.common/Distribution/IInitializer';
+export * from './IInitializer';
 
 export * from './Initializer';
 
