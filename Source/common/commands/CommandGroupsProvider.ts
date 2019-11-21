@@ -3,8 +3,8 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { ICanProvideCommandGroups, ICommandGroup } from "@dolittle/tooling.common.commands";
-import { ContextsCommandGroup, CurrentContextCommand, ListContextsCommand, RenameContextCommand, RenameCurrentContextCommand } from "../internal";
 import { IContexts } from "@dolittle/tooling.common.login";
+import { ContextsCommandGroup, CurrentContextCommand, ListContextsCommand, RenameContextCommand, RenameCurrentContextCommand, UseContextCommand } from "../internal";
 
 /**
  * Represents an implementation of {ICanProvideDefaultCommands}
@@ -27,7 +27,8 @@ export class CommandGroupsProvider implements ICanProvideCommandGroups {
                 new CurrentContextCommand(contexts),
                 new ListContextsCommand(contexts),
                 new RenameContextCommand(contexts),
-                new RenameCurrentContextCommand(contexts)
+                new RenameCurrentContextCommand(contexts),
+                new UseContextCommand(contexts)
             ])
 
         ];
