@@ -75,7 +75,7 @@ export class ContextsConfiguration extends UserCacheConfig<string | ContextsObje
 
         let context = this.contexts[oldName];
         this.addContext(newName, context);
-        this.delete(oldName);
+        this.deleteContext(oldName);
     }
 
     renameCurrent(newName: string) {
