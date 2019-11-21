@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import { ICanProvideCommandGroups, ICommandGroup } from "@dolittle/tooling.common.commands";
 import { IContexts } from "@dolittle/tooling.common.login";
-import { ContextsCommandGroup, CurrentContextCommand, ListContextsCommand, RenameContextCommand, RenameCurrentContextCommand, UseContextCommand } from "../internal";
+import { ContextsCommandGroup, CurrentContextCommand, ListContextsCommand, RenameContextCommand, RenameCurrentContextCommand, UseContextCommand, RemoveContextCommand } from "../internal";
 
 /**
  * Represents an implementation of {ICanProvideDefaultCommands}
@@ -28,7 +28,8 @@ export class CommandGroupsProvider implements ICanProvideCommandGroups {
                 new ListContextsCommand(contexts),
                 new RenameContextCommand(contexts),
                 new RenameCurrentContextCommand(contexts),
-                new UseContextCommand(contexts)
+                new UseContextCommand(contexts),
+                new RemoveContextCommand(contexts)
             ])
 
         ];

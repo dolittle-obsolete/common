@@ -3,30 +3,29 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { Command, CommandContext, IFailedCommandOutputter } from "@dolittle/tooling.common.commands";
-import { IContexts, contextsObjectToString, contexts, currentContextToContextsObject } from '@dolittle/tooling.common.login';
+import { IContexts } from '@dolittle/tooling.common.login';
 import { IDependencyResolvers, PromptDependency, IsNotEmpty, argumentUserInputType } from "@dolittle/tooling.common.dependencies";
 import { ICanOutputMessages, IBusyIndicator } from "@dolittle/tooling.common.utilities";
 
 const contextDependency = new PromptDependency(
     'contextName',
-    'The context to use',
+    'The context to remove',
     [new IsNotEmpty()],
     argumentUserInputType,
-    'The name of the context to use'
+    'The name of the context to remove'
 );
-export class UseContextCommand extends Command {
+export class RemoveContextCommand extends Command {
     
     constructor(private _contexts: IContexts) {
-        super('use', 'Use another context', false, undefined, [contextDependency])
+        super('remove', 'Removes a context', false, undefined, [contextDependency])
     }
 
     async onAction(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, failedCommandOutputter: IFailedCommandOutputter, outputter: ICanOutputMessages, busyIndicator: IBusyIndicator) {
         let dependencyContext = await dependencyResolvers.resolve({}, this.dependencies) 
         let contextName = dependencyContext[contextDependency.name]; 
-        let context = contexts.use(contextName);
+        let result = this._contexts.delete(contextName);
         
-        outputter.print(contextsObjectToString(currentContextToContextsObject({contextName, context})));
-        outputter.print(this._contexts.contextHasExpired(context)? 'Expired' : 'Not expired');
+        outputter.print(result? `Deleted context '${contextName}'` : `No context with name '${contextName}'`)
     }
 
 }
