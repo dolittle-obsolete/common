@@ -6,7 +6,8 @@
 export * from './Contexts/Context'; 
 export * from './Contexts/UserInfo'; 
 export * from './Contexts/ContextsConfiguration'; 
-
+export * from './Contexts/contextsObjectToString';
+export * from './Contexts/currentContextToContextsObject';
 export * from './Contexts/IContextCreator';
 export * from './Contexts/IContexts';
 export * from './Contexts/ContextCreator';
