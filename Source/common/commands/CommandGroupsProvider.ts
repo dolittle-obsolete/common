@@ -2,9 +2,8 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ICommand,  ICanProvideCommandGroups, ICommandGroup } from "@dolittle/tooling.common.commands";
-import { ILoggers } from "@dolittle/tooling.common.logging";
-import { IInitializer, ContextsCommandGroup, CurrentContextCommand, ListContextsCommand } from "../internal";
+import { ICanProvideCommandGroups, ICommandGroup } from "@dolittle/tooling.common.commands";
+import { ContextsCommandGroup, CurrentContextCommand, ListContextsCommand, RenameContextCommand, RenameCurrentContextCommand } from "../internal";
 import { IContexts } from "@dolittle/tooling.common.login";
 
 /**
@@ -26,7 +25,9 @@ export class CommandGroupsProvider implements ICanProvideCommandGroups {
         this._commandGroups = [
             new ContextsCommandGroup([
                 new CurrentContextCommand(contexts),
-                new ListContextsCommand(contexts)
+                new ListContextsCommand(contexts),
+                new RenameContextCommand(contexts),
+                new RenameCurrentContextCommand(contexts)
             ])
 
         ];

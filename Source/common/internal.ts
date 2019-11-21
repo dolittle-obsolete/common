@@ -14,6 +14,8 @@ export * from './configurations/ProjectConfig';
 export * from './commands/contexts/ContextsCommandGroup';
 export * from './commands/contexts/CurrentContextCommand';
 export * from './commands/contexts/ListContextsCommand';
+export * from './commands/contexts/RenameContextCommand';
+export * from './commands/contexts/RenameCurrentContextCommand';
 export * from './commands/DocumentationCommand';
 export * from './commands/ReloadPluginsCommand';
 export * from './commands/CommandsProvider';
