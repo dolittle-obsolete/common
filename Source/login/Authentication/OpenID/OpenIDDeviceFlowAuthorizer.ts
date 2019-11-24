@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import { IConnectionChecker, requireInternet } from '@dolittle/tooling.common.packages';
 import { ICanOutputMessages, IBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { Client, Issuer } from 'openid-client';
+import { Client, Issuer, custom } from 'openid-client';
 import { ICanHandleAuthentication, UserInfoResponse } from '../../internal';
 
 /**
@@ -31,6 +31,7 @@ export abstract class OpenIDDeviceFlowAuthorizer implements ICanHandleAuthentica
             client_id: this._clientID,
             token_endpoint_auth_method: 'none',
         });
+        client[custom.clock_tolerance] = 10;
         let tokens = await this._requestTokens(client, outputter)
         let userInfo = await client.userinfo(tokens) as UserInfoResponse;
 
