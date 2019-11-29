@@ -8,6 +8,7 @@ export function contextEquals(context: Context, otherContext: Context) {
     return otherContext.userInfo.subjectID === context.userInfo.subjectID
             && otherContext.userInfo.tenantID === context.userInfo.tenantID;
 }
+
 /**
  * Represents a login context
  */

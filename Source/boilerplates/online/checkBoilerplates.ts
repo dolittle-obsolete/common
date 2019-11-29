@@ -49,11 +49,7 @@ async function getOutOfDatePackages(locallyInstalledPackages: {name: string, ver
             busyIndicator.text = `Checking ${pkg.name}`;
             await latestPackageFinder.find(pkg.name, boilerplatePackageKeyword)
                 .then(packageJson => {
-                    if (packageJson === null) {
-                        busyIndicator.fail(`'${pkg.name}' is not a boilerplate`);
-                        busyIndicator = busyIndicator.createNew().start();
-                    }
-                    else {
+                    if (packageJson !== null) {
                         let latestVersion = packageJson.version;
                         if (semver.gt(latestVersion, pkg.version)) {
                             outOfDatePackages.push({name: pkg.name, version: pkg.version, latest: latestVersion});
@@ -69,5 +65,6 @@ async function getOutOfDatePackages(locallyInstalledPackages: {name: string, ver
         if (outOfDatePackages.length < 1) {
             busyIndicator.succeed('There are no out-of-date boilerplates');
         }
+        else busyIndicator.warn(`${outOfDatePackages.length} out-of-date boilerplates`);
         return outOfDatePackages;
 }

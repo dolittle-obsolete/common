@@ -32,7 +32,7 @@ export abstract class OpenIDDeviceFlowAuthorizer implements ICanHandleAuthentica
             token_endpoint_auth_method: 'none',
         });
         client[custom.clock_tolerance] = 10;
-        let tokens = await this._requestTokens(client, outputter)
+        let tokens = await this._requestTokens(client, outputter);
         let userInfo = await client.userinfo(tokens) as UserInfoResponse;
 
         return {tokens, userInfo};
