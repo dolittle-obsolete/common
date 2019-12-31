@@ -11,16 +11,16 @@ import { IPlugin, PluginPackage } from './internal';
  * @interface IPlugins
  */
 export interface IPlugins {
-    
+
     /**
      * The loaded plugins
      *
      * @returns {Promise<IPlugin[]>}
      */
     getPlugins(): Promise<IPlugin[]>
-    
+
     /**
-     * The packages of the loaded plugins 
+     * The packages of the loaded plugins
      *
      * @returns {Promise<ToolingPackage[]>}
      */

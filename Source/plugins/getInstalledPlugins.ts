@@ -16,15 +16,15 @@ export async function getInstalledPlugins(pluginDiscoverers: IPluginDiscoverers,
     busyIndicator = busyIndicator.createNew().start('Getting installed plugins:\n');
     try {
         await pluginDiscoverers.discover();
-        let pluginPackages = pluginDiscoverers.discovered;
-        let numPlugins = pluginPackages.length;
+        const pluginPackages = pluginDiscoverers.discovered;
+        const numPlugins = pluginPackages.length;
         if (numPlugins > 0) busyIndicator.succeed(`Found ${numPlugins} installed plugins`);
         else busyIndicator.info('Could not find any installed plugins.');
-        
+
         return pluginPackages;
-        
+
     } catch (error) {
-        busyIndicator.fail(`An error occurred: ${error.message? error.message : error}`);
+        busyIndicator.fail(`An error occurred: ${error.message ? error.message : error}`);
         throw error;
     }
 }

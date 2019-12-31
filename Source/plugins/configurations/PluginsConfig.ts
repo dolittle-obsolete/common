@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { GlobalCacheConfig } from '@dolittle/tooling.common.configurations'
+import { GlobalCacheConfig } from '@dolittle/tooling.common.configurations';
 
 export type PluginConfigObject = {
     /**
@@ -18,11 +18,11 @@ export type PluginConfigObject = {
      * @type {string}
      */
     packagePath: string
-}
+};
 
 /**
  * Represents the cached plugins configuration file for the tooling.
- * 
+ *
  * Key is the name of the plugin package
  *
  * @export

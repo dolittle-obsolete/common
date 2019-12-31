@@ -3,17 +3,17 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import { requireInternet, ILatestCompatiblePackageFinder, IConnectionChecker } from '@dolittle/tooling.common.packages';
-import {IFileSystem} from '@dolittle/tooling.common.files';
+import { IFileSystem } from '@dolittle/tooling.common.files';
 import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import semver from 'semver';
 import path from 'path';
-import {IPluginDiscoverers, pluginPackageKeyword } from '../internal';
+import { IPluginDiscoverers, pluginPackageKeyword } from '../internal';
 
 export type OutOfDatePackage = {
     name: string, version: string, latest: string
-}
+};
 /**
- * Checks the versions of the installed plugins against what's found online. 
+ * Checks the versions of the installed plugins against what's found online.
  *
  * @export
  * @param {IPluginDiscoverers} pluginsDiscoverers
@@ -27,25 +27,25 @@ export async function checkPlugins(pluginDiscoverers: IPluginDiscoverers, latest
     busyIndicator = busyIndicator.createNew().start('Checking versions:\n');
 
     await pluginDiscoverers.discover();
-    let paths = pluginDiscoverers.paths;
+    const paths = pluginDiscoverers.paths;
     if (paths.length < 1) {
         busyIndicator.info('No plugins installed');
         return [];
     }
-    let locallyInstalled: {name: string, version: string}[] = [];
+    const locallyInstalled: {name: string, version: string}[] = [];
 
     await Promise.all(paths.map(async filePath => {
-        let packageJson = await fileSystem.readJson(path.join(filePath, 'package.json'));
+        const packageJson = await fileSystem.readJson(path.join(filePath, 'package.json'));
         locallyInstalled.push({name: packageJson.name, version: packageJson.version});
     }));
 
-    let outOfDatePackages = await getOutOfDatePackages(locallyInstalled, latestPackageFinder, busyIndicator);
+    const outOfDatePackages = await getOutOfDatePackages(locallyInstalled, latestPackageFinder, busyIndicator);
     return outOfDatePackages;
 }
 
 async function getOutOfDatePackages(locallyInstalledPackages: {name: string, version: string}[], latestPackageFinder: ILatestCompatiblePackageFinder, busyIndicator: IBusyIndicator  ) {
-    let outOfDatePackages: OutOfDatePackage[] = [];
-        for (let pkg of locallyInstalledPackages) {
+    const outOfDatePackages: OutOfDatePackage[] = [];
+        for (const pkg of locallyInstalledPackages) {
             busyIndicator.text = (`Checking ${pkg.name}`);
             await latestPackageFinder.find(pkg.name, pluginPackageKeyword)
                 .then(packageJson => {
@@ -54,7 +54,7 @@ async function getOutOfDatePackages(locallyInstalledPackages: {name: string, ver
                         busyIndicator = busyIndicator.createNew().start();
                     }
                     else {
-                        let latestVersion = packageJson.version;
+                        const latestVersion = packageJson.version;
                         if (semver.gt(latestVersion, pkg.version)) {
                             outOfDatePackages.push({name: pkg.name, version: pkg.version, latest: latestVersion});
                             busyIndicator.warn(`${pkg.name}@${pkg.version} ==> ${latestVersion}`);

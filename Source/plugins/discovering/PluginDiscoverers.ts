@@ -2,8 +2,8 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ICanDiscoverPlugins, PluginPackage, IPluginDiscoverers } from "../internal";
-import { ILoggers } from "@dolittle/tooling.common.logging";
+import { ICanDiscoverPlugins, PluginPackage, IPluginDiscoverers } from '../internal';
+import { ILoggers } from '@dolittle/tooling.common.logging';
 
 /**
  * Represents an implementation of {IPluginDiscoverers}
@@ -12,7 +12,7 @@ import { ILoggers } from "@dolittle/tooling.common.logging";
  * @class PluginDiscoverers
  */
 export class PluginDiscoverers implements IPluginDiscoverers {
-    
+
     /**
      * Instantiates an instance of {PluginDiscoverers}.
      * @param {ICanDiscoverPlugins[]} pluginDiscoverers
@@ -22,19 +22,19 @@ export class PluginDiscoverers implements IPluginDiscoverers {
     get pluginDiscoverers() {
         return this._pluginDiscoverers;
     }
-    
+
     get discovered() {
-        let plugins: PluginPackage[] = [];
+        const plugins: PluginPackage[] = [];
         this.pluginDiscoverers.forEach(_ => plugins.push(..._.discovered));
         return plugins;
     }
-    
+
     get paths() {
-        let paths: string[] = [];
+        const paths: string[] = [];
         this.pluginDiscoverers.forEach(_ => paths.push(..._.pluginPaths));
         return paths;
     }
-    
+
     add(...pluginDiscoverers: ICanDiscoverPlugins[]) {
         this._pluginDiscoverers.push(...pluginDiscoverers);
     }

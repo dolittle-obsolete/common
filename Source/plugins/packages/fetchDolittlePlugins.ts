@@ -16,12 +16,12 @@ import { OnlineDolittlePluginsFinder } from '../internal';
 export async function fetchDolittlePlugins(onlinePluginsDiscoverer: OnlineDolittlePluginsFinder, connectionChecker: IConnectionChecker,busyIndicator: IBusyIndicator) {
     await requireInternet(connectionChecker, busyIndicator);
     busyIndicator = busyIndicator.createNew().start('Getting dolittle plugins (this might take a while, depending on your internet connection): ');
-    let plugins = await onlinePluginsDiscoverer.findLatest()
+    const plugins = await onlinePluginsDiscoverer.findLatest()
         .then(plugins => {
             busyIndicator.succeed(`Found ${plugins.length} dolittle plugins`);
             return plugins;
         }).catch(error => {
-            busyIndicator.fail(`An error occurred ${error.message? error.message : error}`);
+            busyIndicator.fail(`An error occurred ${error.message ? error.message : error}`);
             throw error;
         });
     return plugins;

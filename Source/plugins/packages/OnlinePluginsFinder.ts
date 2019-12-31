@@ -14,18 +14,18 @@ import { ICanFindOnlinePluginPackages, pluginPackageKeyword } from '../internal'
  * @implements {ICanFindOnlinePluginPackages}
  */
 export class OnlinePluginsFinder implements ICanFindOnlinePluginPackages {
-    
+
     /**
      * Instantiates an instance of {OnlinePluginsFinder}
      * @param {ILatestCompatiblePluginsFinder} _latestCompatibleFinder
      * @param {ILoggers} _logger
      */
     constructor(private _packages: IPackages, private _logger: ILoggers) {}
-    
+
     async findLatest(keywords: string[] = [], limit: number = 250): Promise<ToolingPackage[]> {
-        this._logger.info(`Attempting to find online plugins`); 
-        let pluginPackages = await this._packages.latestCompatibleWithKeywords([pluginPackageKeyword].concat(keywords), limit);
-        
+        this._logger.info('Attempting to find online plugins');
+        const pluginPackages = await this._packages.latestCompatibleWithKeywords([pluginPackageKeyword].concat(keywords), limit);
+
         return pluginPackages;
     }
 }

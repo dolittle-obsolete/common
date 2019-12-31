@@ -2,12 +2,12 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { Command, CommandContext, IFailedCommandOutputter } from "@dolittle/tooling.common.commands";
-import { IFileSystem } from "@dolittle/tooling.common.files";
-import { ILoggers } from "@dolittle/tooling.common.logging";
-import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
-import { getInstalledPlugins, IPluginDiscoverers } from "../internal";
-import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
+import { Command, CommandContext, IFailedCommandOutputter } from '@dolittle/tooling.common.commands';
+import { IFileSystem } from '@dolittle/tooling.common.files';
+import { ILoggers } from '@dolittle/tooling.common.logging';
+import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
+import { getInstalledPlugins, IPluginDiscoverers } from '../internal';
+import { IDependencyResolvers } from '@dolittle/tooling.common.dependencies';
 
 const name = 'installed';
 const description = 'Lists installed plugins';
@@ -20,7 +20,7 @@ const description = 'Lists installed plugins';
  * @extends {Command}
  */
 export class InstalledCommand extends Command {
-    
+
     /**
      * Instantiates an instance of {InstalledCommand}.
      */
@@ -29,8 +29,8 @@ export class InstalledCommand extends Command {
     }
 
     async onAction(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, failedCommandOutputter: IFailedCommandOutputter, outputter: ICanOutputMessages, busyIndicator: IBusyIndicator) {
-        this._logger.info(`Executing 'plugins installed' command`);
-        let plugins = await getInstalledPlugins(this._pluginDiscoverers, busyIndicator)
+        this._logger.info("Executing 'plugins installed' command");
+        const plugins = await getInstalledPlugins(this._pluginDiscoverers, busyIndicator)
             .catch((error: Error) => {
                 if (busyIndicator.isBusy) busyIndicator.stop();
                 outputter.warn('An error occured while getting the installed plugins.\nError message:');
@@ -40,7 +40,7 @@ export class InstalledCommand extends Command {
             });
         plugins.forEach(_ => outputter.print(`${_.packageJson.name}@${_.packageJson.version}`));
     }
-    
+
     getAllDependencies(cwd: string, coreLanguage: string, commandArguments?: string[], commandOptions?: Map<string, string>, namespace?: string) {
         return this.dependencies;
     }
