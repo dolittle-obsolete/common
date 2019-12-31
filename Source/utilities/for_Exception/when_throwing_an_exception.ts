@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import {Exception} from '../internal';
+import { Exception } from '../internal';
 import { expect } from 'chai';
 import 'mocha';
 

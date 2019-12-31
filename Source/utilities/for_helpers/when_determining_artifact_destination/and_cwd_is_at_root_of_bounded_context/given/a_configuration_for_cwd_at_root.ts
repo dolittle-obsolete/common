@@ -5,12 +5,12 @@
 
 export class a_configuration_for_cwd_at_root {
     dolittleConfig: any;
-    area: string
-    language: string
-    name: string
-    boundedContextPath: string
-    boundedContextRoot: string
-    cwd: string
+    area: string;
+    language: string;
+    name: string;
+    boundedContextPath: string;
+    boundedContextRoot: string;
+    cwd: string;
     constructor() {
         this.dolittleConfig = {
             language: {

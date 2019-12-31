@@ -11,13 +11,13 @@
  * @extends {Error}
  */
 export class Exception extends Error {
-    
+
     /**
      * Instantiates an instance of {Exception}.
      * @param {string} [message]
      */
     constructor(message?: string) {
-        super(message? message : '');
+        super(message ? message : '');
         this.name = this.constructor.name;
         Error.captureStackTrace(this, this.constructor);
     }
