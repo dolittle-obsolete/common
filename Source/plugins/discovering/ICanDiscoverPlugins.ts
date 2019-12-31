@@ -26,9 +26,9 @@ export interface ICanDiscoverPlugins {
     discovered: PluginPackage[]
 
     /**
-    * Gets the paths of the Dolittle plugins
-    *
-    * @type {string[]} Filesystem paths of the Dolittle plugins installed on the system
-    */
+     * Gets the paths of the Dolittle plugins
+     *
+     * @type {string[]} Filesystem paths of the Dolittle plugins installed on the system
+     */
     pluginPaths: string[]
 }

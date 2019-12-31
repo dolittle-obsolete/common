@@ -13,10 +13,10 @@ import { IPlugin, PluginPackage } from '../internal';
 export interface IPluginLoader {
 
      /**
-     * Gets the loaded plugins
-     *
-     * @type {IPlugin[]}
-     */
+      * Gets the loaded plugins
+      *
+      * @type {IPlugin[]}
+      */
     readonly loaded: IPlugin[]
 
     /**

@@ -40,10 +40,10 @@ export interface IPluginDiscoverers {
     discovered: PluginPackage[]
 
     /**
-    * Gets the paths of the Dolittle plugins
-    *
-    * @readonly
-    * @type {string[]} Filesystem paths of the Dolittle boilerplates installed on the system
-    */
+     * Gets the paths of the Dolittle plugins
+     *
+     * @readonly
+     * @type {string[]} Filesystem paths of the Dolittle boilerplates installed on the system
+     */
     paths: string[]
 }
