@@ -7,6 +7,6 @@ import { isGreaterVersion } from '../../../internal';
 describe('when minor version is less', () => {
     const greaterVersion = '1.1.0';
     const lesserVersion = '1.0.0';
-    let result = isGreaterVersion(lesserVersion, greaterVersion);
+    const result = isGreaterVersion(lesserVersion, greaterVersion);
     it('should not be a greater version', () => result.should.be.false);
 });

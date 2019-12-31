@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {ToolingPackageDescriptor, ToolingPackage} from './internal';
+import { ToolingPackageDescriptor, ToolingPackage } from './internal';
 
 /**
  * Defines a system that knows about tooling packages
@@ -11,9 +11,9 @@ import {ToolingPackageDescriptor, ToolingPackage} from './internal';
  * @interface IPackages
  */
 export interface IPackages {
-    
+
     /**
-     * Finds tooling packages with additional keywords 
+     * Finds tooling packages with additional keywords
      *
      * @param {string[]} keywords
      * @param {number} [limit]
@@ -31,7 +31,7 @@ export interface IPackages {
     byUser(user: string, check?: (toolingPackage: ToolingPackage) => boolean): Promise<ToolingPackageDescriptor[]>
 
     /**
-     * Finds the latest compatible tooling packages with additional keywords 
+     * Finds the latest compatible tooling packages with additional keywords
      *
      * @param {string[]} keywords
      * @param {number} [limit]
@@ -47,5 +47,5 @@ export interface IPackages {
      * @returns {Promise<ToolingPackageDescriptor[]>}
      */
     latestCompatibleByUser(user: string, check?: (toolingPackage: ToolingPackage) => boolean): Promise<ToolingPackage[]>
-   
+
 }

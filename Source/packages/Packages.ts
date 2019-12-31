@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IPackages, ILatestCompatiblePackageFinder, ICanFindPackagesByUser, ICanFindPackagesWithKeywords, ToolingPackage, ToolingPackageDescriptor } from "./internal";
+import { IPackages, ILatestCompatiblePackageFinder, ICanFindPackagesByUser, ICanFindPackagesWithKeywords, ToolingPackage, ToolingPackageDescriptor } from './internal';
 
 /**
  * Represents an implementation of {IPackages}
@@ -12,7 +12,7 @@ import { IPackages, ILatestCompatiblePackageFinder, ICanFindPackagesByUser, ICan
  * @implements {IPackages}
  */
 export class Packages implements IPackages {
-    
+
     /**
      * Instantiates an instance of {Packages}.
      * @param {ILatestCompatiblePackageFinder} _latestCompatiblePackageFinder
@@ -23,32 +23,32 @@ export class Packages implements IPackages {
         private _latestCompatiblePackageFinder: ILatestCompatiblePackageFinder,
         private _packagesByUserFinders: ICanFindPackagesByUser[],
         private _packagesWithKeywordsFinders: ICanFindPackagesWithKeywords[] ) {}
-     
+
     async withKeywords(keywords: string[], limit?: number) {
-        let packages = await Promise.all(this._packagesWithKeywordsFinders.map(_ => _.find(keywords, limit)));
+        const packages = await Promise.all(this._packagesWithKeywordsFinders.map(_ => _.find(keywords, limit)));
         return Array.prototype.concat.apply([], packages) as ToolingPackageDescriptor[];
     }
 
     async byUser(user: string, check?: ((toolingPackage: ToolingPackage) => boolean)) {
-        let packages = await Promise.all(this._packagesByUserFinders.map(_ => _.find(user, check)));
+        const packages = await Promise.all(this._packagesByUserFinders.map(_ => _.find(user, check)));
         return Array.prototype.concat.apply([], packages) as ToolingPackageDescriptor[];
     }
 
     async latestCompatibleWithKeywords(keywords: string[], limit?: number) {
-        let packages = await this.withKeywords(keywords, limit);
-        let latestCompatiblePackages = await this.getLatestCompatiblePackages(packages);
+        const packages = await this.withKeywords(keywords, limit);
+        const latestCompatiblePackages = await this.getLatestCompatiblePackages(packages);
 
         return latestCompatiblePackages;
     }
     async latestCompatibleByUser(user: string, check?: ((toolingPackage: ToolingPackage) => boolean)) {
-        let packages = await this.byUser(user, check);
-        let latestCompatiblePackages = await this.getLatestCompatiblePackages(packages);
+        const packages = await this.byUser(user, check);
+        const latestCompatiblePackages = await this.getLatestCompatiblePackages(packages);
 
         return latestCompatiblePackages;
     }
 
     private async getLatestCompatiblePackages(packages: ToolingPackageDescriptor[]) {
-        let latestCompatiblePackages = (await Promise
+        const latestCompatiblePackages = (await Promise
             .all(packages
                     .map(_ => _.name)
                     .map(_ => this._latestCompatiblePackageFinder.find(_))
@@ -57,5 +57,5 @@ export class Packages implements IPackages {
         return latestCompatiblePackages;
     }
 
-    
+
 }

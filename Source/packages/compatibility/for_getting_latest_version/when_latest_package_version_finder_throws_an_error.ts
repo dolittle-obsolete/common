@@ -5,11 +5,11 @@
 import { NullBusyIndicator } from '@dolittle/tooling.common.utilities';
 import sinon from 'sinon';
 import { expect } from 'chai';
-import {getLatestVersion} from '../../internal'
+import { getLatestVersion } from '../../internal';
 
 describe('When latest package version finder throws an error', () => {
     let exception: Error;
-    let error = new Error('some error')
+    const error = new Error('some error');
     before(async () => {
         try {
             await getLatestVersion('name', {find: sinon.stub().rejects(error)}, {isConnected: sinon.stub().resolves(true)}, new NullBusyIndicator());
@@ -20,5 +20,5 @@ describe('When latest package version finder throws an error', () => {
     });
 
     it('Should throw an exception', () => expect(exception).to.not.be.undefined);
-    it('Should throw the correct Error', () => exception.should.be.equal(error))
+    it('Should throw the correct Error', () => exception.should.be.equal(error));
 });

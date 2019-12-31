@@ -15,7 +15,7 @@ import { requireInternet, IConnectionChecker, ICanFindLatestVersionOfPackage } f
  * @param {ICanFindLatestVersionOfPackage} latestPackageVersionFinder
  * @param {IConnectionChecker} connectionChecker
  * @param {IBusyIndicator} busyIndicator
- * @returns 
+ * @returns
  */
 export async function getLatestVersion(pkgName: string, latestPackageVersionFinder: ICanFindLatestVersionOfPackage, connectionChecker: IConnectionChecker, busyIndicator: IBusyIndicator) {
     await requireInternet(connectionChecker, busyIndicator);
@@ -25,13 +25,13 @@ export async function getLatestVersion(pkgName: string, latestPackageVersionFind
         busyIndicator.stop();
         return version;
     } catch (error) {
-        busyIndicator.fail(`Failed to get the latest version of ${pkgName}. Error: ${error.message? error.message : error}`);
+        busyIndicator.fail(`Failed to get the latest version of ${pkgName}. Error: ${error.message ? error.message : error}`);
         throw error;
     }
 }
 
 /**
- * Checks whether or not the 'to' version is greater than 'from' 
+ * Checks whether or not the 'to' version is greater than 'from'
  *
  * @export
  * @param {string} to

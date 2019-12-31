@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { ToolingPackageDescriptor } from "../internal";
+import { ToolingPackageDescriptor } from '../internal';
 
 /**
  * Defines a system that finds tooling packages with a given set of keywords
@@ -19,5 +19,5 @@ export interface ICanFindPackagesWithKeywords {
      * @param {number} [limit]
      * @returns {Promise<ToolingPackageDescriptor[]>}
      */
-    find(keywords: string[], limit?: number): Promise<ToolingPackageDescriptor[]> 
+    find(keywords: string[], limit?: number): Promise<ToolingPackageDescriptor[]>
 }
