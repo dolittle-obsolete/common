@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { Format } from 'logform';
-import {ILoggers, ConsoleLogger, FileLogger, ICanLogMessages} from './internal';
+import { ILoggers, ConsoleLogger, FileLogger, ICanLogMessages } from './internal';
 
 /**
  * Represents an instance of {ILoggers}
@@ -15,7 +15,7 @@ import {ILoggers, ConsoleLogger, FileLogger, ICanLogMessages} from './internal';
 export class Loggers implements ILoggers {
     private _exitOnError = false;
     private _fileLoggers: FileLogger[] = [];
-    
+
     /**
      * Instantiates an instance of {Loggers}.
      * @param {(ICanLogMessages | undefined)} _consoleLogger
@@ -23,7 +23,7 @@ export class Loggers implements ILoggers {
     constructor(private _consoleLogger: ICanLogMessages | undefined) {}
 
     get loggers() {
-        return this._consoleLogger? 
+        return this._consoleLogger ?
                 [this._consoleLogger, ...this._fileLoggers]
                 : this._fileLoggers;
     }
@@ -38,7 +38,7 @@ export class Loggers implements ILoggers {
     }
 
     get logFilePaths() {
-        let paths: string[] = [];
+        const paths: string[] = [];
         this.loggers.forEach(_ => paths.push(..._.logFilePaths));
         return paths;
     }
@@ -46,17 +46,17 @@ export class Loggers implements ILoggers {
     info(message: string) {
         this.loggers.forEach(_ => _.info(message));
     }
-    
+
     warn(message: string) {
         this.loggers.forEach(_ => _.warn(message));
     }
-    
+
     error(message: string) {
         this.loggers.forEach(_ => _.error(message));
     }
 
     createNewConsoleLogger(level?: string, format?: Format) {
-        this._consoleLogger = new ConsoleLogger(this._exitOnError, level, format)
+        this._consoleLogger = new ConsoleLogger(this._exitOnError, level, format);
     }
 
     removeConsoleLogger() {

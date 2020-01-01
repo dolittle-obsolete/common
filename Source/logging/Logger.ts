@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import winston from 'winston';
-import {ICanLogMessages} from './internal'
+import { ICanLogMessages } from './internal';
 
 /**
  * Represents an abstract implementation of {ICanLogMessages}
@@ -28,8 +28,8 @@ export abstract class Logger implements ICanLogMessages {
 
     get exitOnError() {
         return this._logger.exitOnError as boolean;
-    };
-    
+    }
+
     info(message: string) {
         this._logger.info(message);
     }

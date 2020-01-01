@@ -26,21 +26,21 @@ export interface ICanLogMessages {
     exitOnError: boolean
 
     /**
-     * Logs an info message 
+     * Logs an info message
      *
      * @param {string} message
      */
     info(message: string): void
 
     /**
-     * Logs a warning message 
+     * Logs a warning message
      *
      * @param {string} message
      */
     warn(message: string): void
 
     /**
-     * Logs an error message 
+     * Logs an error message
      *
      * @param {string} message
      */
@@ -51,7 +51,7 @@ export interface ICanLogMessages {
      *
      */
     turnOn(): void
-    
+
     /**
      * Turn off logger
      *

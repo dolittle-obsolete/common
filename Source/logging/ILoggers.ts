@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { Format } from 'logform';
-import {ICanLogMessages} from './internal';
+import { ICanLogMessages } from './internal';
 
 /**
  * Defines a system that knows about {ICanLogMessages}
@@ -12,7 +12,7 @@ import {ICanLogMessages} from './internal';
  * @interface ILoggers
  */
 export interface ILoggers {
-    
+
     /**
      * Gets the instances of {ICanLogMessages}
      *
@@ -40,14 +40,14 @@ export interface ILoggers {
      * @param {string} message
      */
     info(message: string): void
-    
+
     /**
      * Logs a warning message through all loggers
      *
      * @param {string} message
      */
     warn(message: string): void
-    
+
     /**
      * Logs an error message through all loggers
      *
