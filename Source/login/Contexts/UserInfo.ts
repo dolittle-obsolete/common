@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 
 /**
- * Represents the user info 
+ * Represents the user info
  */
 export type UserInfo = {
     /**

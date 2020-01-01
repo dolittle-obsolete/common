@@ -12,9 +12,9 @@ import { ContextsObject } from '../internal';
  * @returns
  */
 export function contextsObjectToString(contexts: ContextsObject) {
-    let contextsAndNames = Object.keys(contexts).map(_ => {
+    const contextsAndNames = Object.keys(contexts).map(_ => {
         return {contextName: _, context: contexts[_]};
     });
-    return contextsAndNames.length === 0? 'No context to show' : contextsAndNames.map(_ => `${_.contextName}:\n${JSON.stringify(_.context, undefined, 4)}`)
+    return contextsAndNames.length === 0 ? 'No context to show' : contextsAndNames.map(_ => `${_.contextName}:\n${JSON.stringify(_.context, undefined, 4)}`)
                             .join('\n');
 }

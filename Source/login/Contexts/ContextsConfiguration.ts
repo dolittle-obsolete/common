@@ -8,13 +8,13 @@ import { Context } from '../index';
 /**
  * Represents a dictionary of {Context}
  */
-export type ContextsObject = {[key: string]: Context}
+export type ContextsObject = {[key: string]: Context};
 
 /**
  * Represents the configuration for contexts.
- * 
+ *
  * This configuration has two keys: 'currentContext' and 'contexts'
- * 
+ *
  * - 'currentContext': A string denoting the current context in use
  * - 'contexts': A dictionary of the contexts. The dictionary key is the name of the context and the value is a {Context}
  *
@@ -34,7 +34,7 @@ export class ContextsConfiguration extends UserCacheConfig<string | ContextsObje
         return {
             currentContext: '',
             contexts: {}
-        }
+        };
     }
     /**
      * Instantiates an instance of {Contexts}.
@@ -50,21 +50,21 @@ export class ContextsConfiguration extends UserCacheConfig<string | ContextsObje
     get numContexts() {
         return Object.keys(this.contexts).length;
     }
-    
+
     get currentContext() {
         return this.get('currentContext') as string;
     }
 
     set currentContext(contextName: string) {
-        this.set('currentContext', contextName)
+        this.set('currentContext', contextName);
     }
 
     get contexts() {
-        return this.get('contexts') as ContextsObject; 
+        return this.get('contexts') as ContextsObject;
     }
 
     addContext(contextName: string, context: Context) {
-        let obj = this.store;
+        const obj = this.store;
         (obj.contexts as ContextsObject)[contextName] = context;
         this.store = obj;
     }
@@ -72,8 +72,8 @@ export class ContextsConfiguration extends UserCacheConfig<string | ContextsObje
     renameContext(oldName: string, newName: string) {
         if (!this.hasContext(oldName)) throw new Error(`No context with name '${oldName}'`);
         if (this.hasContext(newName)) throw new Error(`A context with name '${newName}' already exists`);
-        
-        let context = this.contexts[oldName];
+
+        const context = this.contexts[oldName];
         this.addContext(newName, context);
         this.deleteContext(oldName);
         if (this.currentContext === '') this.currentContext = newName;
@@ -85,9 +85,9 @@ export class ContextsConfiguration extends UserCacheConfig<string | ContextsObje
     }
 
     deleteContext(contextName: string) {
-        let obj = this.store;
-        let contexts = obj['contexts'] as ContextsObject;
-        let hasContext = contexts[contextName] !== undefined;
+        const obj = this.store;
+        const contexts = obj['contexts'] as ContextsObject;
+        const hasContext = contexts[contextName] !== undefined;
         if (hasContext) {
             if (obj.currentContext === contextName) obj.currentContext = '';
             delete contexts[contextName];
@@ -98,8 +98,8 @@ export class ContextsConfiguration extends UserCacheConfig<string | ContextsObje
     }
 
     hasContext(contextName: string) {
-        let obj = this.store;
-        let contexts = obj['contexts'] as ContextsObject;
+        const obj = this.store;
+        const contexts = obj['contexts'] as ContextsObject;
         return contexts[contextName] !== undefined;
     }
 }

@@ -15,7 +15,7 @@ import { ICanHandleAuthentication, UserInfoResponse } from '../../internal';
  * @implements {ICanRetrieveTokens}
  */
 export abstract class OpenIDDeviceFlowAuthorizer implements ICanHandleAuthentication {
-    
+
     /**
      * Instantiates an instance of {OpenIDDeviceFlowAuthorizer}.
      * @param {string} _discoveryDocumentURL The URL of the discovery document for creating an issuer
@@ -25,21 +25,21 @@ export abstract class OpenIDDeviceFlowAuthorizer implements ICanHandleAuthentica
     constructor(private _discoveryDocumentURL: string, private _clientID: string, private _scope: string, private _connectionChecker: IConnectionChecker) {}
 
     async authenticate(outputter: ICanOutputMessages, busyIndicator: IBusyIndicator) {
-        await requireInternet(this._connectionChecker, busyIndicator)
-        let issuer = await Issuer.discover(this._discoveryDocumentURL);
-        let client = new issuer.Client({
+        await requireInternet(this._connectionChecker, busyIndicator);
+        const issuer = await Issuer.discover(this._discoveryDocumentURL);
+        const client = new issuer.Client({
             client_id: this._clientID,
             token_endpoint_auth_method: 'none',
         });
         client[custom.clock_tolerance] = 10;
-        let tokens = await this._requestTokens(client, outputter)
-        let userInfo = await client.userinfo(tokens) as UserInfoResponse;
+        const tokens = await this._requestTokens(client, outputter);
+        const userInfo = await client.userinfo(tokens) as UserInfoResponse;
 
         return {tokens, userInfo};
     }
 
     private async _requestTokens(client: Client, outputter: ICanOutputMessages) {
-        let handle = await client.deviceAuthorization({
+        const handle = await client.deviceAuthorization({
             client_id: client.metadata.client_id,
             scope: this._scope
         });

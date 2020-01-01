@@ -11,7 +11,7 @@ import { Context } from '../index';
  * @interface IContextCreator
  */
 export interface IContextCreator {
-    
+
     /**
      * Creates a {Context}
      *
@@ -20,7 +20,7 @@ export interface IContextCreator {
      * @param {string} sub Subject ID
      * @param {string} name Name of the subject
      * @param {string} tid Tenant ID
-     * @param {string} tenant_name 
+     * @param {string} tenant_name
      * @param {string} [refresh_token]
      * @returns {Context}
      */

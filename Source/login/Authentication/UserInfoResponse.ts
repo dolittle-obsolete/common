@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { UserinfoResponse } from "openid-client";
+import { UserinfoResponse } from 'openid-client';
 
 /**
  * Defines the response from a user info request
@@ -11,6 +11,7 @@ import { UserinfoResponse } from "openid-client";
  * @interface UserInfoResponse
  * @extends {UserinfoResponse}
  */
+// tslint:disable-next-line: interface-name
 export interface UserInfoResponse extends UserinfoResponse {
     /**
      * The Tenant ID the user is associated with
@@ -39,4 +40,4 @@ export interface UserInfoResponse extends UserinfoResponse {
      * @type {string}
      */
     readonly sub: string
-};
+}
