@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IBusyIndicator } from "./internal";
+import { IBusyIndicator } from './internal';
 
 /**
  * Represents a null-implementation of {IBusyIndicator}.
@@ -13,8 +13,8 @@ import { IBusyIndicator } from "./internal";
  */
 export class NullBusyIndicator implements IBusyIndicator {
 
-    text = ''
-   
+    text = '';
+
     readonly isBusy = false;
 
     createNew(text?: string) { return this; }
@@ -22,7 +22,7 @@ export class NullBusyIndicator implements IBusyIndicator {
     start(text?: string)  { return this; }
 
     stop() { return this; }
-    
+
     stopAndPersist(text?: string)  { return this; }
 
     succeed(text?: string)  { return this; }

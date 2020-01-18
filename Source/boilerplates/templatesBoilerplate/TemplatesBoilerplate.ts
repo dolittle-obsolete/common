@@ -11,9 +11,9 @@ import { Boilerplate, Scripts, ITemplate, templatesBoilerplateType, ITemplatesBo
 export class TemplatesBoilerplate extends Boilerplate implements ITemplatesBoilerplate {
     /**
      * Instantiates a new instance of {TemplatesBoilerplate}
-     * @param {string} language 
-     * @param {string} name 
-     * @param {string} description 
+     * @param {string} language
+     * @param {string} name
+     * @param {string} description
      * @param {IDependencies} dependencies
      * @param {string} namespace
      * @param {Scripts} scripts
@@ -22,13 +22,13 @@ export class TemplatesBoilerplate extends Boilerplate implements ITemplatesBoile
     constructor(language: string, name: string, description: string, dependencies: IDependencies, namespace: string, scripts: Scripts, contentDirectory: string, private _templates: ITemplate[]) {
         super(language, name, description, templatesBoilerplateType, dependencies, namespace, scripts, contentDirectory);
     }
-    
+
     readonly nameDependency = new PromptDependency(
         'name',
         'The name of the template to be created',
         [new IsNotEmpty()],
         argumentUserInputType,
-        'The name of the template to be created', 
+        'The name of the template to be created',
         false
     );
 

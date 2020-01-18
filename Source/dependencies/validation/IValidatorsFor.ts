@@ -11,7 +11,7 @@ import { IDependency, ICanValidateDependency } from '../internal';
  * @interface ICanValidateDependency
  */
 export interface IValidatorsFor<T extends IDependency> {
-    
+
     /**
      * Adds validators
      *

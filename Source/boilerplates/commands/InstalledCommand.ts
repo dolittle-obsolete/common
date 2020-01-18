@@ -2,12 +2,12 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { Command, CommandContext, IFailedCommandOutputter } from "@dolittle/tooling.common.commands";
-import { IFileSystem } from "@dolittle/tooling.common.files";
-import { ILoggers } from "@dolittle/tooling.common.logging";
-import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from "@dolittle/tooling.common.utilities";
-import { getInstalledBoilerplates, IBoilerplateDiscoverers } from "../internal";
-import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
+import { Command, CommandContext, IFailedCommandOutputter } from '@dolittle/tooling.common.commands';
+import { IFileSystem } from '@dolittle/tooling.common.files';
+import { ILoggers } from '@dolittle/tooling.common.logging';
+import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
+import { getInstalledBoilerplates, IBoilerplateDiscoverers } from '../internal';
+import { IDependencyResolvers } from '@dolittle/tooling.common.dependencies';
 
 const name = 'installed';
 const description = 'Lists installed boilerplates';
@@ -20,7 +20,7 @@ const description = 'Lists installed boilerplates';
  * @extends {Command}
  */
 export class InstalledCommand extends Command {
-    
+
     /**
      * Instantiates an instance of {InstalledCommand}.
      */
@@ -29,8 +29,8 @@ export class InstalledCommand extends Command {
     }
 
     async onAction(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, failedCommandOutputter: IFailedCommandOutputter, outputter: ICanOutputMessages, busyIndicator: IBusyIndicator) {
-        this._logger.info(`Executing 'boilerplates installed' command`);
-        let boilerplates = await getInstalledBoilerplates(this._boilerplateDiscoverers, this._fileSystem, busyIndicator)
+        this._logger.info("Executing 'boilerplates installed' command");
+        const boilerplates = await getInstalledBoilerplates(this._boilerplateDiscoverers, this._fileSystem, busyIndicator)
             .catch((error: Error) => {
                 if (busyIndicator.isBusy) busyIndicator.stop();
                 outputter.warn('An error occured while getting the installed boilerplates.\nError message:');

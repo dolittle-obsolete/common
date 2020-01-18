@@ -9,7 +9,7 @@
  * @interface ICanOutputMessages
  */
 export interface ICanOutputMessages {
-    
+
     /**
      * Outputs a message
      *

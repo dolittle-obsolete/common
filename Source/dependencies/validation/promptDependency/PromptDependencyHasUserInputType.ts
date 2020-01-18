@@ -15,7 +15,7 @@ export class PromptDependencyHasUserInputType extends PromptDependencyValidator 
 
     validate(dependency: IPromptDependency) {
         if (!this.canValidate(dependency)) throw new CannotValidateDependency(dependency, this);
-        if (dependency.userInputType === undefined || dependency.userInputType.trim() === '') 
+        if (dependency.userInputType === undefined || dependency.userInputType.trim() === '')
             throw new MissingField(dependency, 'userInputType');
     }
 

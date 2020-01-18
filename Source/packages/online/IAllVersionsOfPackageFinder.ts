@@ -11,12 +11,12 @@ import { ToolingPackage } from '../internal';
  * @interface IAllVersionsOfPackageFinder
  */
 export interface IAllVersionsOfPackageFinder {
-    
+
     /**
      * Gets all the tooling packages in an ascending order of the versions
      *
      * @param {string} packageName
-     * 
+     *
      * @returns {Promise<ToolingPackage[]>}
      */
     find(packageName: string): Promise<ToolingPackage[]>

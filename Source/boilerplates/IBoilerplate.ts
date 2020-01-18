@@ -60,17 +60,17 @@ export interface IBoilerplate {
     readonly scripts: Scripts;
 
     /**
-     * The path of the directory of the boilerplate files 
+     * The path of the directory of the boilerplate files
      *
      * @type {string}
      */
     readonly contentDirectory: string;
-    
+
 
     /**
      * Whether or not this {BaseBoilerplate} is the {BaseBoilerplate} of an {InteractionLayer}
      *
-     * @returns {boolean} 
+     * @returns {boolean}
      */
     isInteractionLayer(): boolean
 

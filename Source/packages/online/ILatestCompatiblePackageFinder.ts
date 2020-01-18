@@ -11,13 +11,13 @@ import { ToolingPackage } from '../internal';
  * @interface ILatestCompatiblePackageFinder
  */
 export interface ILatestCompatiblePackageFinder {
-    
+
     /**
      * Gets the package.json of the latest version of the package compatible with the tooling
      *
      * @param {string} packageName
      * @param {...string} additionalKeywords
-     * 
+     *
      * @returns {Promise<ToolingPackage | null>}
      */
     find(packageName: string, ...additionalKeywords: string[]): Promise<ToolingPackage | null>

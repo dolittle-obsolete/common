@@ -2,13 +2,13 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { PromptDependency, PromptDependencyHasPromptMessage } from "../../../../internal";
-import { expect } from "chai";
+import { PromptDependency, PromptDependencyHasPromptMessage } from '../../../../internal';
+import { expect } from 'chai';
 
 describe('and it can validate dependency', () => {
-    let validator = new PromptDependencyHasPromptMessage();
-    let dep = new PromptDependency('name', 'desc', [], 'type', 'prompt');
-    let result = validator.canValidate(dep);
-    
+    const validator = new PromptDependencyHasPromptMessage();
+    const dep = new PromptDependency('name', 'desc', [], 'type', 'prompt');
+    const result = validator.canValidate(dep);
+
     it('Should be able to validate dependency', () => result.should.be.equal(true));
 });

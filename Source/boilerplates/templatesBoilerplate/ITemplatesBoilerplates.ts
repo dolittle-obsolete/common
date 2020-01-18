@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ITemplate, IBoilerplates, CreatedTemplateDetails, ITemplatesBoilerplate } from "../internal";
+import { ITemplate, IBoilerplates, CreatedTemplateDetails, ITemplatesBoilerplate } from '../internal';
 
 /**
  * Defines a system that knows about (ITemplatesBoilerplate) and can create an {ITemplate}
@@ -25,10 +25,10 @@ export interface ITemplatesBoilerplates extends IBoilerplates {
      * @type {ITemplate[]}
      */
     readonly templates: ITemplate[]
-    
+
     /**
      * Get all boilerplates for a namespace
-     * 
+     *
      * @param {string | undefined} namespace
      * @returns {ITemplatesBoilerplate[]}
      */
@@ -36,7 +36,7 @@ export interface ITemplatesBoilerplates extends IBoilerplates {
 
     /**
      * Get all boilerplates for a specific language
-     * 
+     *
      * @param {string} language
      * @param {string} [namespace]
      * @returns {ITemplatesBoilerplate[]}
@@ -45,7 +45,7 @@ export interface ITemplatesBoilerplates extends IBoilerplates {
 
     /**
      * Get all boilerplates for a specific type
-     * 
+     *
      * @param {string} type
      * @param {string} [namespace]
      * @returns {ITemplatesBoilerplate[]}
@@ -54,11 +54,11 @@ export interface ITemplatesBoilerplates extends IBoilerplates {
 
     /**
      * Get all boilerplates for a specific language and type
-     * 
+     *
      * @param {string} language
      * @param {string} type
      * @param {string} [namespace]
-     * @returns {ITemplatesBoilerplate[]} 
+     * @returns {ITemplatesBoilerplate[]}
      */
     byLanguageAndType(language: string, type: string, namespace?: string): ITemplatesBoilerplate[];
 
@@ -70,11 +70,11 @@ export interface ITemplatesBoilerplates extends IBoilerplates {
      * @returns {ITemplate[]}
      */
     templatesByType(templateType: string, namespace?: string): ITemplate[]
-    
+
     /**
      * Creates a template base on the {ITemplate} at the given destination
-     * 
-     * @param {any} context 
+     *
+     * @param {any} context
      * @param {ITemplate} template
      * @param {ITemplatesBoilerplate} boilerplate
      * @param {string} destinationPath

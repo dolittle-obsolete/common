@@ -8,8 +8,8 @@ import { expect } from 'chai';
 
 
 describe('when a valid discover dependency', () => {
-    let context = new a_valid_configuration_for_discover_dependency();
-    let dependency = new DiscoverDependency(context.name, context.description, [], context.discoverType, context.withNamespace, context.milestone.source, context.fileMatch, context.contentMatch, context.fromArea);
+    const context = new a_valid_configuration_for_discover_dependency();
+    const dependency = new DiscoverDependency(context.name, context.description, [], context.discoverType, context.withNamespace, context.milestone.source, context.fileMatch, context.contentMatch, context.fromArea);
 
     it('Should have the correct name', () => dependency.name.should.be.equal(context.name));
     it('Should have the correct description', () => dependency.description.should.be.equal(context.description));

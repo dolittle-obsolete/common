@@ -12,7 +12,7 @@ import { Context, IContextCreator } from '../index';
  * @implements {IContextsCreator}
  */
 export class ContextCreator implements IContextCreator {
-    
+
     create(access_token: string, expires_at: number, sub: string, name: string, tid: string, tenant_name: string, refresh_token?: string) {
         if (!access_token) throw new Error('Missing access_token');
         if (!sub) throw new Error('Missing sub');
@@ -20,7 +20,7 @@ export class ContextCreator implements IContextCreator {
         if (!tid) throw new Error('Missing tid');
         // if (!tenant_name) throw new Error('Missing tenant_name');
 
-        let context: Context = {
+        const context: Context = {
             token: access_token,
             expiresAt: expires_at,
             refreshToken: refresh_token,

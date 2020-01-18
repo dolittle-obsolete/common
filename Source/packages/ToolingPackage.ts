@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-export const toolingPackageKeywords = ['dolittle', 'tooling']; 
+export const toolingPackageKeywords = ['dolittle', 'tooling'];
 
 /**
  * Whether or not the package object represents a dolittle tooling boilerplate package
@@ -24,7 +24,7 @@ export type ToolingPackage =  {
     name: string;
 
     /**
-     * The version of the package 
+     * The version of the package
      *
      * @type {string}
      */
@@ -50,7 +50,7 @@ export type ToolingPackage =  {
      * @type {{tooling: string}}
      */
     dolittle: {tooling: string}
-}
+};
 
 export type ToolingPackageDescriptor =  {
 
@@ -67,4 +67,4 @@ export type ToolingPackageDescriptor =  {
      * @type {string}
      */
     description: string;
-}
+};

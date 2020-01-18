@@ -16,17 +16,17 @@ const dolittleUser = 'woksin';
  * @implements {ICanFindOnlineBoilerplatePackages}
  */
 export class OnlineDolittleBoilerplatesFinder implements ICanFindOnlineBoilerplatePackages {
-    
+
     /**
      * Instantiates an instance of {OnlineBoilerplatesDiscoverer}
      * @param {IPackages} _packages
      * @param {ILoggers} _logger
      */
     constructor(private _packages: IPackages, private _logger: ILoggers) {}
-    
+
     async findLatest(keywords: string[] = [], limit: number = 250) {
-        let boilerplatePackages = await this._packages.latestCompatibleByUser(
-            dolittleUser, 
+        const boilerplatePackages = await this._packages.latestCompatibleByUser(
+            dolittleUser,
             _ => packageIsBoilerplatePackage(_) && keywords.every(keyword => _.keywords.includes(keyword)));
         return boilerplatePackages;
     }

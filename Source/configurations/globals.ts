@@ -28,9 +28,9 @@ export let dolittleConfig = rc('dolittle', dolittleConfigDefault);
  * @export
  * @param {*} [config] If config is undefined the config will be the joined result of dolittlerc configurations
  */
-export function setNewDolittleConfig(config?: any) { 
+export function setNewDolittleConfig(config?: any) {
     if (!config)
-        config = rc('dolittle', dolittleConfigDefault); 
+        config = rc('dolittle', dolittleConfigDefault);
     dolittleConfig = config;
 }
 

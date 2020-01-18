@@ -2,9 +2,9 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IDependency, IValidatorsFor, IDependencies, DuplicateDependencies } from "./internal";
+import { IDependency, IValidatorsFor, IDependencies, DuplicateDependencies } from './internal';
 
- /**
+/**
  * Represents an implementation of {IDependencies}
  *
  * @export
@@ -22,7 +22,7 @@ export class Dependencies implements IDependencies {
         _dependencies.forEach(_ => {
             if (_validators.canValidate(_)) _validators.validate(_);
         });
-        this.throwIfDuplicateDependencies()
+        this.throwIfDuplicateDependencies();
     }
 
     get dependencies() {
@@ -41,7 +41,7 @@ export class Dependencies implements IDependencies {
     }
 
     private throwIfDuplicateDependencies() {
-        let names = this._dependencies.map(_ => _.name);
+        const names = this._dependencies.map(_ => _.name);
         names.forEach((name, i) => {
             if (names.slice(i + 1).includes(name)) throw new DuplicateDependencies(name);
         });

@@ -2,8 +2,8 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir, IFolders } from "@dolittle/tooling.common.files";
-import {IFileSystem} from '@dolittle/tooling.common.files';
+import { getFileDirPath, getFileName, getFileNameAndExtension, getFileDir, IFolders } from '@dolittle/tooling.common.files';
+import { IFileSystem } from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import { MissingDestinationPath, MissingCoreLanguage, namespaceDiscoverType, multipleFilesDiscoverType, IDependencyDiscoverResolver, MissingField, DependencyDiscoverResult, IDiscoverDependency } from '../internal';
 
@@ -15,7 +15,7 @@ import { MissingDestinationPath, MissingCoreLanguage, namespaceDiscoverType, mul
  * @implements {IDependencyDiscoverResolver}
  */
 export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
-    
+
     /**
      * Instantiates an instance of {DependencyDiscoverResolver}.
      * @param {IFolders} _folders
@@ -28,13 +28,13 @@ export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
     async resolve(dependency: IDiscoverDependency, startLocation: string, coreLanguage: string, dolittleConfig: any = this._dolittleConfig ): Promise<DependencyDiscoverResult> {
         if (!startLocation) throw new MissingDestinationPath();
         if (!coreLanguage) throw new MissingCoreLanguage();
-        
+
         if (dependency.discoverType === namespaceDiscoverType) {
-            let discoverResult = await this.createNamespace(dependency, startLocation);
+            const discoverResult = await this.createNamespace(dependency, startLocation);
             return discoverResult;
         }
         else if (dependency.discoverType === multipleFilesDiscoverType) {
-            let discoverResult = await this.discoverMultipleFiles(dependency, startLocation, coreLanguage, dolittleConfig);
+            const discoverResult = await this.discoverMultipleFiles(dependency, startLocation, coreLanguage, dolittleConfig);
             return discoverResult;
         }
 
@@ -50,33 +50,33 @@ export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
         else {
             const folders = await this._folders.getNearestDirectoriesSearchingUpwards(location, new RegExp(dolittleConfig[language][dependency.fromArea]));
             if (!dependency.fileMatch) throw new MissingField(dependency, 'fileMatch');
-            let files = await Promise.all(folders.map(folder => this._folders.getFilesRecursively(folder, <RegExp>dependency.fileMatch)));
+            const files = await Promise.all(folders.map(folder => this._folders.getFilesRecursively(folder, dependency.fileMatch as RegExp)));
             files.forEach(_ => filePaths.push(..._));
         }
-        let results: any[] = [];
+        const results: any[] = [];
 
-        if (dependency.contentMatch === undefined) { 
-            for (let filePath of filePaths) {
+        if (dependency.contentMatch === undefined) {
+            for (const filePath of filePaths) {
                 let namespace = '';
                     if (dependency.withNamespace)
                         namespace = await this.createNamespace(dependency, getFileDirPath(filePath));
 
-                    let item = dependency.withNamespace?  {value: filePath, namespace: namespace}
+                    const item = dependency.withNamespace ?  {value: filePath, namespace: namespace}
                         : filePath;
                     results.push(item);
             }
         }
         else {
-            for (let filePath of filePaths) {
-                let content = await this._fileSystem.readFile(filePath);
+            for (const filePath of filePaths) {
+                const content = await this._fileSystem.readFile(filePath);
                 if (!dependency.contentMatch) throw new MissingField(dependency, 'contentMatch');
-                let theMatch = content.match(dependency.contentMatch);
+                const theMatch = content.match(dependency.contentMatch);
                 if (theMatch !== null && theMatch.length > 0) {
                     let namespace = '';
                     if (dependency.withNamespace)
                         namespace = await this.createNamespace(dependency, getFileDirPath(filePath));
 
-                    let item = dependency.withNamespace?  {value: theMatch[1], namespace: namespace}
+                    const item = dependency.withNamespace ?  {value: theMatch[1], namespace: namespace}
                         : theMatch[1];
                     results.push(item);
                 }
@@ -86,7 +86,7 @@ export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
     }
 
     private async createNamespace(dependency: IDiscoverDependency, location: string) {
-        let milestoneRegexp = dependency.milestone;
+        const milestoneRegexp = dependency.milestone;
         if (!milestoneRegexp) throw new MissingField(dependency, 'milestone');
         const milestonePaths = await this._folders.getNearestFilesSearchingUpwards(location, milestoneRegexp);
         if (milestonePaths.length === 0) {
@@ -98,14 +98,14 @@ export class DependencyDiscoverResolver implements IDependencyDiscoverResolver {
         let namespaceSegments = [];
         let segmentPath = location;
         let segment = getFileNameAndExtension(segmentPath);
-        
+
         while ((await this._folders.getFiles(segmentPath, milestoneRegexp)).length === 0) {
             namespaceSegments.push(segment);
             segmentPath = getFileDir(segmentPath);
             segment = getFileName(segmentPath);
-        } 
+        }
         namespaceSegments = namespaceSegments.reverse();
-        
+
         let namespace = milestoneFileName;
         namespaceSegments.forEach(element => {
             namespace += '.' + element;

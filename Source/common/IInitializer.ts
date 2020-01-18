@@ -2,24 +2,24 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IBusyIndicator } from "@dolittle/tooling.common.utilities";
+import { IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { HostPackage } from './internal';
-import { IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
+import { IDependencyResolvers } from '@dolittle/tooling.common.dependencies';
 /**
  * Defines a system that initializes the tooling system
  */
 export interface IInitializer {
-    
+
     /**
      * Whether the tooling system has been initialized
      *
      * @type {boolean}
      */
     readonly isInitialized: boolean;
-    
+
     /**
      * Initializes the tooling system
-     * 
+     *
      * @param {IBusyIndicator} busyIndicator
      * @returns {Promise<void>}
      */

@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ICommand } from "./internal";
+import { ICommand } from './internal';
 
 /**
  * Defines the structure of a Command Group
@@ -11,7 +11,7 @@ import { ICommand } from "./internal";
  * @interface ICommandGroup
  */
 export interface ICommandGroup {
-    
+
     /**
      * Whether or not this is a common on boilerplates
      *
@@ -23,7 +23,7 @@ export interface ICommandGroup {
      * The name of the command group
      */
     readonly name: string
-    
+
     /**
      * The description of the command group.
      */
@@ -36,9 +36,9 @@ export interface ICommandGroup {
 
     /**
      * The commands under this command group
-     * 
+     *
      * @returns {Promise<ICommand[]>}
      */
     getCommands(): Promise<ICommand[]>
-    
+
 }

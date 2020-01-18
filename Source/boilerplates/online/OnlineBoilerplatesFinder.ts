@@ -14,16 +14,16 @@ import { ICanFindOnlineBoilerplatePackages, boilerplatePackageKeyword } from '..
  * @implements {ICanFindOnlineBoilerplatePackages}
  */
 export class OnlineBoilerplatesDiscoverer implements ICanFindOnlineBoilerplatePackages {
-    
+
     /**
      * Instantiates an instance of {OnlineBoilerplatesDiscoverer}
      * @param {IPAckages} _packages
      * @param {ILoggers} _logger
      */
     constructor(private _packages: IPackages, private _logger: ILoggers) {}
-    
+
     async findLatest(keywords: string[] = [], limit: number = 250) {
-        let boilerplatePackages = await this._packages.latestCompatibleWithKeywords([boilerplatePackageKeyword].concat(keywords), limit);
-        return boilerplatePackages 
+        const boilerplatePackages = await this._packages.latestCompatibleWithKeywords([boilerplatePackageKeyword].concat(keywords), limit);
+        return boilerplatePackages;
     }
 }

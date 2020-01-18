@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { ICommand, IDiscoverableCommandGroup } from "./internal";
+import { ICommand, IDiscoverableCommandGroup } from './internal';
 
 /**
  * Represents an abstract implementation of {IDiscoverableCommandGroup}
@@ -13,7 +13,7 @@ import { ICommand, IDiscoverableCommandGroup } from "./internal";
  * @implements {IDiscoverableCommandGroup}
  */
 export abstract class DiscoverableCommandGroup implements IDiscoverableCommandGroup {
-    
+
     /**
      * Instantiates an instance of {CommandGroup}.
      * @param {string} _name
@@ -21,16 +21,16 @@ export abstract class DiscoverableCommandGroup implements IDiscoverableCommandGr
      * @param {string} [_shortDescription=_description]
      */
     constructor(private _name: string, private _description: string, private _isBoilerplatesCommandGroup: boolean, private _shortDescription: string = _description) {}
-    
+
     get isBoilerplatesCommandGroup() { return this._isBoilerplatesCommandGroup; }
-    
+
     get name() { return this._name; }
 
     get description() { return this._description; }
-    
-    get shortDescription() { return this._shortDescription; }
-    
-    abstract getCommands(): Promise<ICommand[]>
 
-    abstract loadCommands(): Promise<void>
+    get shortDescription() { return this._shortDescription; }
+
+    abstract getCommands(): Promise<ICommand[]>;
+
+    abstract loadCommands(): Promise<void>;
 }

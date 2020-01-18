@@ -14,12 +14,12 @@ import { IDiscoverDependency, DiscoverDependencyValidator, MissingField, CannotV
 export class DiscoverDependencyHasMilestoneWhenDiscoveringNamespace extends DiscoverDependencyValidator {
 
     canValidate(dependency: IDiscoverDependency) {
-        return super.canValidate(dependency) 
+        return super.canValidate(dependency)
             && (dependency.withNamespace === true || dependency.discoverType === 'namespace');
     }
     validate(dependency: IDiscoverDependency) {
         if (!this.canValidate(dependency)) throw new CannotValidateDependency(dependency, this);
-        if (dependency.milestone === undefined || dependency.milestone.source.trim() === '') 
+        if (dependency.milestone === undefined || dependency.milestone.source.trim() === '')
             throw new MissingField(dependency, 'milestone');
     }
 

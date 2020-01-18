@@ -9,21 +9,21 @@ import { loggers } from '@dolittle/tooling.common.logging';
 import { pluginLoader } from '@dolittle/tooling.common.plugins';
 import { toolingPackage, latestCompatiblePackageFinder, localPackageDiscoverers, packages, npmPackageDownloader, connectionChecker } from '@dolittle/tooling.common.packages';
 import {
-    BoilerplatesConfig, IBoilerplatesLoader, BoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplateDiscoverers, LocalBoilerplatesDiscoverer, IBoilerplateDiscoverers, 
+    BoilerplatesConfig, IBoilerplatesLoader, BoilerplatesLoader, ICanDiscoverBoilerplates, BoilerplateDiscoverers, LocalBoilerplatesDiscoverer, IBoilerplateDiscoverers,
     OnlineBoilerplatesDiscoverer, ITemplatesBoilerplates, TemplatesBoilerplates, IBoilerplateParsers, BoilerplateParsers, ICanParseBoilerplates, ContentBoilerplateParser, TemplatesBoilerplateParser,
     Boilerplates, IBoilerplates, OnlineDolittleBoilerplatesFinder, handlebars, IContentBoilerplates, ContentBoilerplates, IScriptRunner, ScriptRunner, ProviderRegistrator
 } from './internal';
 
-export const boilerplatesConfig = new BoilerplatesConfig(); 
+export const boilerplatesConfig = new BoilerplatesConfig();
 
-let instancesOfICanParseBoilerplates: ICanParseBoilerplates[] = [
+const instancesOfICanParseBoilerplates: ICanParseBoilerplates[] = [
     new ContentBoilerplateParser(dependencyParsers, folders, fileSystem),
     new TemplatesBoilerplateParser(dependencyParsers, folders, fileSystem)
 ];
 
 export const boilerplateParsers: IBoilerplateParsers = new BoilerplateParsers(instancesOfICanParseBoilerplates, loggers);
 export const boilerplatesLoader: IBoilerplatesLoader = new BoilerplatesLoader(boilerplateParsers, boilerplatesConfig, fileSystem, loggers);
-let instancesOfICanDiscoverBoilerplates: ICanDiscoverBoilerplates[] = [
+const instancesOfICanDiscoverBoilerplates: ICanDiscoverBoilerplates[] = [
     new LocalBoilerplatesDiscoverer(boilerplatesConfig, pluginLoader, boilerplatesLoader, localPackageDiscoverers, fileSystem, toolingPackage, loggers)
 ];
 

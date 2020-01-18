@@ -6,4 +6,4 @@ import winston from 'winston';
 import { ILoggers, Loggers, ConsoleLogger } from './internal';
 
 export const loggerFormat = winston.format;
-export let loggers: ILoggers = new Loggers(new ConsoleLogger(false)); 
+export let loggers: ILoggers = new Loggers(new ConsoleLogger(false));

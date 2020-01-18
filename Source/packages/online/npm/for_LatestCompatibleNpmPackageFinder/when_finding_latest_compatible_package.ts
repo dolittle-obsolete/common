@@ -4,6 +4,6 @@
  *--------------------------------------------------------------------------------------------*/
 
 describe('when finding latest compatible package', () => {
-    
+
     it('Should be true', () => true.should.be.true);
 });

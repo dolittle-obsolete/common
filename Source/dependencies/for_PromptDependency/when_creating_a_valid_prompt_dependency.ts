@@ -7,15 +7,15 @@ import { a_valid_configuration_for_a_prompt_dependency } from './given/a_valid_c
 import { expect } from 'chai';
 
 describe('when creating a valid prompt dependency', () => {
-    let context = new a_valid_configuration_for_a_prompt_dependency();
-    let dependency = new PromptDependency(context.name, context.description, [], context.userInputType, context.promptMessage);
+    const context = new a_valid_configuration_for_a_prompt_dependency();
+    const dependency = new PromptDependency(context.name, context.description, [], context.userInputType, context.promptMessage);
 
     it('Should have the correct name', () => dependency.name.should.be.equal(context.name));
     it('Should have the correct description', () => dependency.description.should.be.equal(context.description));
     it('Should have the correct type', () => dependency.type.should.be.equal(promptDependencyType));
     it('Should have the correct userInputType', () => dependency.userInputType.should.be.equal(context.userInputType));
-    it('Should have the correct promptMessage', () => dependency.promptMessage.should.be.equal(context.promptMessage));  
-    it('Should have the correct choices', () => expect(dependency.choices).to.be.undefined);  
+    it('Should have the correct promptMessage', () => dependency.promptMessage.should.be.equal(context.promptMessage));
+    it('Should have the correct choices', () => expect(dependency.choices).to.be.undefined);
     it('Should have the correct customInput', () => expect(dependency.customInput).to.be.undefined);
-    
+
 });

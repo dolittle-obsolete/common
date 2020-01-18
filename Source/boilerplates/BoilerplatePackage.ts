@@ -2,11 +2,11 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ToolingPackage } from "@dolittle/tooling.common.packages";
+import { ToolingPackage } from '@dolittle/tooling.common.packages';
 
 
 export type BoilerplatePackage = {
-    
+
     /**
      * The path of the boilerplate package
      *
@@ -20,5 +20,5 @@ export type BoilerplatePackage = {
      * @type {ToolingPackage}
      */
     readonly packageJson: ToolingPackage
-    
-}
+
+};

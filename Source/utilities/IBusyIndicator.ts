@@ -17,7 +17,7 @@ export interface IBusyIndicator {
      * @type {string}
      */
     text: string
-   
+
     /**
      * Whether or not the indicator is busy
      *
@@ -33,7 +33,7 @@ export interface IBusyIndicator {
      * @returns {IBusyIndicator}
      */
     createNew(text?: string): IBusyIndicator
-    
+
     /**
      * Starts the busy indicator
      *
@@ -47,7 +47,7 @@ export interface IBusyIndicator {
      * @returns {IBusyIndicator}
      */
     stop(): IBusyIndicator
-    
+
     /**
      * Stops and persists the current text or the given text
      *

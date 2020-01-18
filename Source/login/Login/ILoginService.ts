@@ -2,9 +2,9 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ICanOutputMessages, IBusyIndicator } from "@dolittle/tooling.common.utilities";
+import { ICanOutputMessages, IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { IDependencyResolvers } from '@dolittle/tooling.common.dependencies';
-import { Context } from "../internal";
+import { Context } from '../internal';
 
 /**
  * Defines a system that can deal with login
@@ -13,7 +13,7 @@ import { Context } from "../internal";
  * @interface ILoginService
  */
 export interface ILoginService {
-    
+
     /**
      * Logs a user in and stores login information in a context map. Returns the created login context
      *

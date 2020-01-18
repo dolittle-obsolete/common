@@ -12,7 +12,7 @@ export class a_valid_configuration_for_discover_dependency {
     fileMatch: any;
     contentMatch: any;
     fromArea: any;
-    
+
     constructor() {
         this.name = 'name';
         this.description = 'description';

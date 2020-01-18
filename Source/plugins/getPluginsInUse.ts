@@ -8,15 +8,15 @@ import { PluginPackage, IPluginLoader } from './internal';
 /**
  * Gets the plugins used by the tooling
  *
- * @param {IPlugins} _plugins 
+ * @param {IPlugins} _plugins
  * @param {IBusyIndicator} busyIndicator
  * @export
  */
 export async function getPluginsInUse(_pluginLoader: IPluginLoader, busyIndicator: IBusyIndicator): Promise<PluginPackage[]> {
     busyIndicator = busyIndicator.createNew().start('Getting plugins in use:\n');
     try {
-        let plugins = await _pluginLoader.pluginPackages;
-        let numPlugins = plugins.length;
+        const plugins = await _pluginLoader.pluginPackages;
+        const numPlugins = plugins.length;
         if (numPlugins > 0) {
             busyIndicator.succeed(`There are ${numPlugins} in use`);
         }
@@ -24,8 +24,8 @@ export async function getPluginsInUse(_pluginLoader: IPluginLoader, busyIndicato
 
         return plugins;
 
-    } catch(error) {
-        busyIndicator.fail(`An error occurred: ${error.message? error.message : error}`);
+    } catch (error) {
+        busyIndicator.fail(`An error occurred: ${error.message ? error.message : error}`);
         throw error;
     }
 }

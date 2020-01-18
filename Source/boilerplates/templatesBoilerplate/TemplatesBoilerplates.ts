@@ -34,7 +34,7 @@ export class TemplatesBoilerplates extends Boilerplates implements ITemplatesBoi
     get templates() {
         return this.boilerplates.map(_ => _.templates).reduce((a, b) => a.concat(b), []);
     }
-    
+
     byNamespace(namespace: string | undefined) {
         return super.byNamespace(namespace) as ITemplatesBoilerplate[];
     }
@@ -56,23 +56,23 @@ export class TemplatesBoilerplates extends Boilerplates implements ITemplatesBoi
         return this.byNamespace(namespace)
                     .map((_: any) => (_ as ITemplatesBoilerplate).templatesByType(templateType)).reduce((a, b) => a.concat(b), []);
     }
-    
+
     async create(context: any, template: ITemplate, boilerplate: ITemplatesBoilerplate, destinationPath: string): Promise<CreatedTemplateDetails> {
         this._logger.info(`Creating a template of type '${template.type}' and language '${boilerplate.language}' at destination ${destinationPath}`);
-        
+
         await this._folders.makeFolderIfNotExists(destinationPath);
-        let filesToCreate = template.filesToCreate;
-        
+        const filesToCreate = template.filesToCreate;
+
         await Promise.all(filesToCreate.map(async filePath => {
             const filename = getFileNameAndExtension(filePath);
             const oldContent = await this._fileSystem.readFile(filePath);
-            let segments: string[] = [];
+            const segments: string[] = [];
 
             path.join(destinationPath, filename).split(/(\\|\/)/).forEach(segment => segments.push(this._handlebars.compile(segment)(context)));
-            let newFilePath = segments.join('');
-           
-            let template = this._handlebars.compile(oldContent);
-            let newContent = template(context);
+            const newFilePath = segments.join('');
+
+            const template = this._handlebars.compile(oldContent);
+            const newContent = template(context);
             await this._fileSystem.writeFile(newFilePath, newContent);
         }));
 

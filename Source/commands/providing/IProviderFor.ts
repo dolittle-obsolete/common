@@ -10,7 +10,7 @@
  * @template T What to provide
  */
 export interface IProviderFor<T> {
-    
+
     /**
      * Provides instances of {T}
      *

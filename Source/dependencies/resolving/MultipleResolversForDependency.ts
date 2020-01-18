@@ -2,8 +2,8 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { Exception } from "@dolittle/tooling.common.utilities";
-import { IDependency } from "../internal";
+import { Exception } from '@dolittle/tooling.common.utilities';
+import { IDependency } from '../internal';
 
 /**
  * The exception that gets thrown when multiple dependency resolvers are found for a dependency
@@ -13,7 +13,7 @@ import { IDependency } from "../internal";
  * @extends {Exception}
  */
 export class MultipleResolversForDependency extends Exception {
-    
+
     /**
      * Instantiates an instance of {MultipleResolversForDependency}.
      * @param {IDependency} dependency

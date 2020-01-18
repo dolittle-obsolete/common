@@ -11,7 +11,7 @@ import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndic
 import { fetchOnlinePlugins, fetchDolittlePlugins, OnlinePluginsFinder, OnlineDolittlePluginsFinder, getInstalledPlugins, IPluginDiscoverers, askToDownloadOrUpdatePlugins, PluginPackageInfo, IPlugins } from '../internal';
 
 const name = 'install';
-const description = `Prompt to install plugins`;
+const description = 'Prompt to install plugins';
 
 const dolittlePluginsDependency = new PromptDependency(
     'dolittle',
@@ -23,7 +23,7 @@ const dolittlePluginsDependency = new PromptDependency(
 );
 
 /**
- * Represents an implementation of {ICommand} for finding and installing boilerplates 
+ * Represents an implementation of {ICommand} for finding and installing boilerplates
  *
  * @export
  * @class InstallCommand
@@ -34,44 +34,44 @@ export class InstallCommand extends Command {
     /**
      * Instantiates an instance of {DolittleCommand}.
      */
-    constructor(private _plugins: IPlugins, private _pluginDiscoverers: IPluginDiscoverers, private _onlinePluginsFinder: OnlinePluginsFinder, private _onlineDolittlePluginsFinder: OnlineDolittlePluginsFinder, 
+    constructor(private _plugins: IPlugins, private _pluginDiscoverers: IPluginDiscoverers, private _onlinePluginsFinder: OnlinePluginsFinder, private _onlineDolittlePluginsFinder: OnlineDolittlePluginsFinder,
                 private _packageDownloader: ICanDownloadPackages, private _connectionChecker: IConnectionChecker, private _fileSystem: IFileSystem, private _logger: ILoggers) {
         super(name, description, false, undefined, [dolittlePluginsDependency]);
     }
 
     async onAction(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, failedCommandOutputter: IFailedCommandOutputter, outputter: ICanOutputMessages, busyIndicator: IBusyIndicator) {
-        this._logger.info(`Executing 'plugins install' command`);
+        this._logger.info("Executing 'plugins install' command");
         await requireInternet(this._connectionChecker, busyIndicator);
         let plugins: ToolingPackage[] = [];
-        let context = await dependencyResolvers.resolve({}, this.dependencies, [], commandContext.currentWorkingDirectory, commandContext.coreLanguage)
-        if (context.hasOwnProperty(dolittlePluginsDependency.name)? context[dolittlePluginsDependency.name] : undefined)
+        const context = await dependencyResolvers.resolve({}, this.dependencies, [], commandContext.currentWorkingDirectory, commandContext.coreLanguage);
+        if (context.hasOwnProperty(dolittlePluginsDependency.name) ? context[dolittlePluginsDependency.name] : undefined)
             plugins = await fetchDolittlePlugins(this._onlineDolittlePluginsFinder, this._connectionChecker, busyIndicator);
-        else 
-            plugins = await fetchOnlinePlugins(this._onlinePluginsFinder, this._connectionChecker,busyIndicator, commandContext.namespace? [commandContext.namespace]: []);
+        else
+            plugins = await fetchOnlinePlugins(this._onlinePluginsFinder, this._connectionChecker,busyIndicator, commandContext.namespace ? [commandContext.namespace] : []);
 
         if (plugins.length === 0) {
             return;
         }
-        let localPlugins = await getInstalledPlugins(this._pluginDiscoverers, busyIndicator);
-        let newAvailablePlugins = plugins.filter(boilerplate => !localPlugins.map(_ => _.packageJson.name).includes(boilerplate.name));
-        let upgradeablePlugins = plugins.filter(boilerplate => localPlugins.map(_ => _.packageJson.name).includes(boilerplate.name))
+        const localPlugins = await getInstalledPlugins(this._pluginDiscoverers, busyIndicator);
+        const newAvailablePlugins = plugins.filter(boilerplate => !localPlugins.map(_ => _.packageJson.name).includes(boilerplate.name));
+        const upgradeablePlugins = plugins.filter(boilerplate => localPlugins.map(_ => _.packageJson.name).includes(boilerplate.name))
             .map(plugin => {
-                let localPlugin = localPlugins.find(_ => _.packageJson.name === plugin.name);
+                const localPlugin = localPlugins.find(_ => _.packageJson.name === plugin.name);
                 if (localPlugin) {
                     return {name: plugin.name, version: plugin.version, localVersion: localPlugin.packageJson.version};
                 }
                 return undefined;
             })
             .filter(_ => _ && isGreaterVersion(_.version, _.localVersion));
-        
+
         outputter.warn(`Found ${newAvailablePlugins.length} new plugins`);
         outputter.print(newAvailablePlugins.map(_ => `${_.name} v${_.version}`).join('\t\n'));
-        
+
         outputter.warn(`Found ${upgradeablePlugins.length} upgradeable plugins`);
         outputter.print(upgradeablePlugins.map((_: any) => `${_.name} v${_.localVersion} --> v${_.version}`).join('\t\n'));
-            
-        let pluginsToDownload = newAvailablePlugins.concat(<any>upgradeablePlugins);
-        await askToDownloadOrUpdatePlugins(pluginsToDownload as PluginPackageInfo[], this._plugins, dependencyResolvers, this._packageDownloader, this._connectionChecker, busyIndicator);    
+
+        const pluginsToDownload = newAvailablePlugins.concat(upgradeablePlugins as any);
+        await askToDownloadOrUpdatePlugins(pluginsToDownload as PluginPackageInfo[], this._plugins, dependencyResolvers, this._packageDownloader, this._connectionChecker, busyIndicator);
     }
 
 }

@@ -6,7 +6,7 @@ export * from './OnStdCallback';
 export * from './ToolingPackage';
 
 export * from './IPackages';
-export * from './Packages'
+export * from './Packages';
 
 // online
 export * from './online/ICanFindLatestVersionOfPackage';
@@ -17,9 +17,9 @@ export * from './online/ICanFindPackagesWithKeywords';
 
 export * from './online/npm/LatestNpmPackageVersionFinder';
 export * from './online/npm/AllNpmPackageVersionsFinder';
-export * from './online/npm/LatestCompatibleNpmPackageFinder'
-export * from './online/npm/NpmPackagesByUserFinder'
-export * from './online/npm/NpmPackagesWithKeywordsFinder'
+export * from './online/npm/LatestCompatibleNpmPackageFinder';
+export * from './online/npm/NpmPackagesByUserFinder';
+export * from './online/npm/NpmPackagesWithKeywordsFinder';
 
 // connectivity
 export * from './connectivity/NotConnectedToInternet';

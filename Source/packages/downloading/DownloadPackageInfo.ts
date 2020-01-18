@@ -8,7 +8,7 @@ export type DownloadPackageInfo =  {
      */
     name: string;
     /**
-     * The version of the package 
+     * The version of the package
      */
     version?: string;
-}
+};

@@ -19,7 +19,6 @@ export class Application {
      * @param {*} obj
      * @param {string} path
      * @returns {Application}
- 
      */
     static fromJson(obj: any, path: string): Application {
         return new Application(obj.id, obj.name, path);
@@ -31,12 +30,12 @@ export class Application {
      * @param {string} name Name of application
      * @param {string} path Path of application configuration file
      */
-    constructor(id: string, name:string, path: string) {
+    constructor(id: string, name: string, path: string) {
         this.id = id;
         this.name = name;
         this.path = path;
     }
-    
+
     /**
      * Gets the unique identifier for the application
      * @type {string}

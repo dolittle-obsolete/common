@@ -6,7 +6,7 @@ import { getFileName } from '../helpers';
 describe('when getting file name', () => {
     const path = require('path');
     const name = 'file';
-    const filePath = path.join('some', 'folder', 'to', name +'.something');
+    const filePath = path.join('some', 'folder', 'to', name + '.something');
     let result = '';
     (beforeEach => {
         result = getFileName(filePath);

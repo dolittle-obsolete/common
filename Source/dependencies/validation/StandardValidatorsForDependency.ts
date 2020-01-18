@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import {
-    IDependency, ValidatorsFor, DependencyHasName, DependencyHasType, DependencyHasValidType, 
+    IDependency, ValidatorsFor, DependencyHasName, DependencyHasType, DependencyHasValidType,
     DiscoverDependencyHasDiscoverType, DiscoverDependencyHasFileMatchWhenDiscoveringFiles,
     DiscoverDependencyHasMilestoneWhenDiscoveringNamespace, DiscoverDependencyHasValidArea,
     DiscoverDependencyHasValidDiscoverType,
@@ -20,7 +20,7 @@ import {
  * @extends {ValidatorsFor<IDependency>}
  */
 export class StandardValidatorsForDependency extends ValidatorsFor<IDependency> {
-    
+
     /**
      * Instantiates an instance of {StandardValidatorsForDependency}.
      */

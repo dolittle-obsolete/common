@@ -3,9 +3,9 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-export * from './Contexts/Context'; 
-export * from './Contexts/UserInfo'; 
-export * from './Contexts/ContextsConfiguration'; 
+export * from './Contexts/Context';
+export * from './Contexts/UserInfo';
+export * from './Contexts/ContextsConfiguration';
 export * from './Contexts/contextsObjectToString';
 export * from './Contexts/currentContextToContextsObject';
 export * from './Contexts/IContextCreator';
@@ -20,5 +20,5 @@ export * from './Authentication/ICanHandleAuthentication';
 export * from './Authentication/OpenID/OpenIDDeviceFlowAuthorizer';
 export * from './Authentication/OpenID/ToolingDeviceFlowAuthorizer';
 
-export * from './Login/ILoginService'; 
+export * from './Login/ILoginService';
 export * from './Login/ToolingLoginService';

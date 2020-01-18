@@ -5,7 +5,7 @@
 import path from 'path';
 import winston from 'winston';
 import { Format } from 'logform';
-import { Logger } from './internal'
+import { Logger } from './internal';
 
 /**
  * Represents an implementation of {ICanLogMessages} for logging messages to files
@@ -20,7 +20,7 @@ export class FileLogger extends Logger {
         winston.format.timestamp(),
     );
     private static _defaultLogLevel = 'info';
-    
+
 
     /**
      * Instantiates an instance of {ConsoleLogger}.
@@ -33,11 +33,11 @@ export class FileLogger extends Logger {
             exitOnError: exitOnError,
             level: level || FileLogger._defaultLogLevel,
             format: format || FileLogger._defaultFormat,
-            transports: separateErrorFile? [
+            transports: separateErrorFile ? [
                 new winston.transports.File({filename: filePath}),
                 new winston.transports.File(
                     {
-                        level: 'error', 
+                        level: 'error',
                         filename: path.parse(filePath).dir + path.parse(filePath).name + '_error' + path.parse(filePath).ext
                     }
                 )
@@ -46,7 +46,7 @@ export class FileLogger extends Logger {
                 new winston.transports.File({filename: filePath})
             ]
         }));
-        this.logFilePaths = separateErrorFile? [filePath, path.parse(filePath).dir + path.parse(filePath).name + '_error' + path.parse(filePath).ext]
+        this.logFilePaths = separateErrorFile ? [filePath, path.parse(filePath).dir + path.parse(filePath).name + '_error' + path.parse(filePath).ext]
                             : [filePath];
     }
     readonly logFilePaths: string[];

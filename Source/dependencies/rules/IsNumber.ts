@@ -12,7 +12,7 @@ import { IDependencyRule } from '../internal';
  * @implements {IDependencyRule}
  */
 export class IsNumber implements IDependencyRule {
-    
+
     isRespected(value: any) {
         return typeof value === 'number' || (!isNaN(value) && value !== '');
     }

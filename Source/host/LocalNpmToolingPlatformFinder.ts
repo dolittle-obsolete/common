@@ -5,7 +5,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 import semver from 'semver';
-import { ICanFindLocalToolingPlatform } from "./internal";
+import { ICanFindLocalToolingPlatform } from './internal';
 /**
  * Represents an implementation of {I}
  *
@@ -13,7 +13,7 @@ import { ICanFindLocalToolingPlatform } from "./internal";
  * @class LocalNpmToolingPlatformFinder
  */
 export class LocalNpmToolingPlatformFinder implements ICanFindLocalToolingPlatform {
-    
+
     /**
      * Instantiates an instance of {LocalNpmToolingPlatformFinder}.
      * @param {string} _nodeModulesFolder
@@ -21,20 +21,20 @@ export class LocalNpmToolingPlatformFinder implements ICanFindLocalToolingPlatfo
     constructor(private _nodeModulesFolder: string, private _commonToolingPackages: string[]) {}
 
     async exists(toolingPackage: {version: string}) {
-        let dolittleFolder = path.join(this._nodeModulesFolder, '@dolittle');
+        const dolittleFolder = path.join(this._nodeModulesFolder, '@dolittle');
         let exists = true;
-        let filesInFolder = await fs.readdir(dolittleFolder);
-        let folders: string[] = [];
+        const filesInFolder = await fs.readdir(dolittleFolder);
+        const folders: string[] = [];
         await Promise.all(filesInFolder.map(async (file) => {
             file = path.join(dolittleFolder, file);
-            let stat = await fs.stat(file);
+            const stat = await fs.stat(file);
             if (stat.isDirectory())
                 folders.push(file);
         }));
         await Promise.all(this._commonToolingPackages.map(async (toolingPackageName) => {
             if (!exists) return;
             let hasPackage = false;
-            for (let folder of folders) {
+            for (const folder of folders) {
                 if (await this.hasCorrectPackage(folder, toolingPackageName, toolingPackage.version)) {
                     hasPackage = true;
                     break;
@@ -46,9 +46,9 @@ export class LocalNpmToolingPlatformFinder implements ICanFindLocalToolingPlatfo
     }
 
     private async hasCorrectPackage(packageFolder: string, packageName: string, version: string) {
-        let packageJsonFile = path.join(packageFolder, 'package.json');
+        const packageJsonFile = path.join(packageFolder, 'package.json');
         if (await fs.pathExists(packageJsonFile)) {
-            let packageJson = await fs.readJson(packageJsonFile);
+            const packageJson = await fs.readJson(packageJsonFile);
             return packageJson.name === packageName && semver.major(version) === semver.major(packageJson.version);
         }
         return false;

@@ -12,10 +12,10 @@ import { IDependency, MissingField, DependencyValidator, CannotValidateDependenc
  * @extends {DependencyValidator}
  */
 export class DependencyHasType extends DependencyValidator {
-    
+
     validate(dependency: IDependency) {
         if (!this.canValidate(dependency)) throw new CannotValidateDependency(dependency, this);
-        if (dependency.type === undefined || dependency.type.trim() === '') 
+        if (dependency.type === undefined || dependency.type.trim() === '')
             throw new MissingField(dependency, 'type');
     }
 

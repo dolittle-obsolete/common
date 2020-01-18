@@ -5,7 +5,7 @@
 import { IBoilerplate } from '../internal';
 
 /**
- * Defines the content boilerplate 
+ * Defines the content boilerplate
  */
 export interface IContentBoilerplate extends IBoilerplate {
 

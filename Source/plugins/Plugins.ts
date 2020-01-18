@@ -20,12 +20,12 @@ export class Plugins implements IPlugins {
      */
     constructor(private _pluginDiscoverers: IPluginDiscoverers, private _pluginLoader: IPluginLoader, private _logger: ILoggers) {}
 
-    async getPlugins() { 
+    async getPlugins() {
         this._logger.info('Getting plugins');
         if (this._pluginLoader.needsReload) await this._pluginLoader.load();
-        return this._pluginLoader.loaded; 
+        return this._pluginLoader.loaded;
     }
-    async getPluginPackages() { 
+    async getPluginPackages() {
         this._logger.info('Getting plugin packages');
         if (this._pluginLoader.needsReload) await this._pluginLoader.load();
         return this._pluginLoader.pluginPackages;

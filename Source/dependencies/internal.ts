@@ -17,7 +17,7 @@ export * from './IPromptDependency';
 export * from './IDependencies';
 
 export * from './Dependency';
-export * from './DependencyChoice'
+export * from './DependencyChoice';
 export * from './DependencyDiscoverResult';
 export * from './DiscoverDependency';
 export * from './DiscoverAndPromptDependency';

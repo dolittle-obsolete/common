@@ -7,7 +7,7 @@ import { dolittleConfigDefault } from '@dolittle/tooling.common.configurations';
 import _Handlebars from 'handlebars';
 
 export type Handlebars = typeof _Handlebars;
-export let handlebars = _Handlebars; 
+export let handlebars = _Handlebars;
 
 /**
  * Sets up the handlebars system with custom helpers
@@ -17,12 +17,12 @@ export let handlebars = _Handlebars;
         return Guid.create();
     });
     handlebars.registerHelper('dolittleConfigDefault', () => {
-        let config: any  = dolittleConfigDefault;
+        const config: any  = dolittleConfigDefault;
         if (config['_']) config['_'] = undefined;
         return JSON.stringify(config, null, 4).normalize();
     });
     handlebars.registerHelper('addUniqueCSharpNamespace', objects => {
-        return objects.map((_: any) => _.namespace).filter((v: any, i: any, a: { indexOf: (arg0: any) => void; }) =>  a.indexOf(v) === i)
+        return objects.map((_: any) => _.namespace).filter((v: any, i: any, a: { indexOf(arg0: any): void; }) =>  a.indexOf(v) === i)
                                                    .map((_: any) => `using ${_};`).join('\n');
     });
 })();

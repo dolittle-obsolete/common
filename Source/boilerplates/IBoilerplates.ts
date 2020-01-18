@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IBoilerplate } from "./internal";
+import { IBoilerplate } from './internal';
 
 /**
  * Defines a system that knows about {IBoilerplate}
@@ -12,7 +12,7 @@ import { IBoilerplate } from "./internal";
  */
 export interface IBoilerplates {
 
-     /**
+    /**
      * Get all boilerplates
      *
      * @type {IBoilerplate[]}
@@ -21,7 +21,7 @@ export interface IBoilerplates {
 
     /**
      * Get all boilerplates for a namespace
-     * 
+     *
      * @param {string | undefined} namespace
      * @returns {IBoilerplate[]}
      */
@@ -29,7 +29,7 @@ export interface IBoilerplates {
 
     /**
      * Get all boilerplates for a specific language
-     * 
+     *
      * @param {string} language
      * @param {string} [namespace]
      * @returns {IBoilerplate[]}
@@ -38,7 +38,7 @@ export interface IBoilerplates {
 
     /**
      * Get all boilerplates for a specific type
-     * 
+     *
      * @param {string} type
      * @param {string} [namespace]
      * @returns {IBoilerplate[]}
@@ -47,11 +47,11 @@ export interface IBoilerplates {
 
     /**
      * Get all boilerplates for a specific language and type
-     * 
+     *
      * @param {string} language
      * @param {string} type
      * @param {string} [namespace]
-     * @returns {IBoilerplate[]} 
+     * @returns {IBoilerplate[]}
      */
     byLanguageAndType(language: string, type: string, namespace?: string): IBoilerplate[];
 }

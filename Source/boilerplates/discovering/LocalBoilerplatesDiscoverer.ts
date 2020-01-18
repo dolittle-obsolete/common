@@ -29,32 +29,32 @@ export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
      * @param {any} _toolingPackage
      * @param {ILoggers} _logger
      */
-    constructor(private _boilerplatesConfig: BoilerplatesConfig, private _pluginsLoader: IPluginLoader, private _boilerplatesLoader: IBoilerplatesLoader, 
+    constructor(private _boilerplatesConfig: BoilerplatesConfig, private _pluginsLoader: IPluginLoader, private _boilerplatesLoader: IBoilerplatesLoader,
         private _localPackageDiscoverers: ILocalPackageDiscoverers, private _fileSystem: IFileSystem, private _toolingPackage: any, private _logger: ILoggers) {}
 
     get boilerplatePaths() {
         return this._boilerplatePaths;
     }
-    
+
     get discovered() {
         return this._discovered;
     }
-    
+
     async discover(folder?: string) {
         this._boilerplatePaths = [];
         this._discovered = [];
-        let discoveredBoilerplatePackages = await this._localPackageDiscoverers.discover(folder, toolingPackage => packageIsBoilerplatePackage(toolingPackage));
+        const discoveredBoilerplatePackages = await this._localPackageDiscoverers.discover(folder, toolingPackage => packageIsBoilerplatePackage(toolingPackage));
         if (this._pluginsLoader.needsReload) await this._pluginsLoader.load();
-        discoveredBoilerplatePackages.push(...(await this.discoverFromPlugins(this._pluginsLoader.pluginPackages))) 
-        let boilerplatesConfigObject: any = {};
+        discoveredBoilerplatePackages.push(...(await this.discoverFromPlugins(this._pluginsLoader.pluginPackages)));
+        const boilerplatesConfigObject: any = {};
 
         discoveredBoilerplatePackages.forEach( discoveredPackage => {
-            let packageFolderPath = discoveredPackage.path;
-            let boilerplatePackage = discoveredPackage.package;
+            const packageFolderPath = discoveredPackage.path;
+            const boilerplatePackage = discoveredPackage.package;
             if (packageIsCompatible(boilerplatePackage, this._toolingPackage)) {
                 if (boilerplatesConfigObject[boilerplatePackage.name]) {
                     this._logger.warn(`Discovered a boilerplate with an already in-use name '${boilerplatePackage.name}'.`);
-                    throw new Error(`Found two boilerplates with the same package name targeting the same tooling version.`);
+                    throw new Error('Found two boilerplates with the same package name targeting the same tooling version.');
                 }
                 this._boilerplatePaths.push(packageFolderPath);
                 this._discovered.push({
@@ -68,12 +68,12 @@ export class LocalBoilerplatesDiscoverer implements ICanDiscoverBoilerplates {
         if (this._boilerplatesLoader.needsReload) this._boilerplatesConfig.store = boilerplatesConfigObject;
     }
     private async discoverFromPlugins(pluginPackages: PluginPackage[]) {
-        let packages: DiscoveredToolingPackage[] = [];
-        for (let plugin of pluginPackages) {
-            for (let folderName of pluginBoilerplatesFolderNames) {
-                let boilerplatesFolder = path.join(plugin.pluginFilePath, '..', '..', folderName )
+        const packages: DiscoveredToolingPackage[] = [];
+        for (const plugin of pluginPackages) {
+            for (const folderName of pluginBoilerplatesFolderNames) {
+                const boilerplatesFolder = path.join(plugin.pluginFilePath, '..', '..', folderName );
                 if ((await this._fileSystem.exists(boilerplatesFolder)) && (await this._fileSystem.stat(boilerplatesFolder)).isDirectory()) {
-                    packages.push(... (await this._localPackageDiscoverers.discover(boilerplatesFolder, toolingPackage => packageIsBoilerplatePackage(toolingPackage))))
+                    packages.push(... (await this._localPackageDiscoverers.discover(boilerplatesFolder, toolingPackage => packageIsBoilerplatePackage(toolingPackage))));
                     break;
                 }
             }

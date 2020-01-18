@@ -18,36 +18,33 @@ export class Core
      * @static
      * @param {*} obj The raw core object from within then bounded-context.json
      * @returns {Core}
- 
      */
     static fromJson(obj: any): Core {
         return new Core(obj.language, obj.entryPoint);
     }
 
     /**
-      * Instantiates an instance of {Core}
-      * @param {string} language 
-      * @param {string} entryPoint
-      */
+     * Instantiates an instance of {Core}
+     * @param {string} language
+     * @param {string} entryPoint
+     */
      constructor (language: string, entryPoint: string) {
         this.language = language;
         this.entryPoint = entryPoint;
-        
+
     }
 
     /**
      * The programming language
      *
      * @type {string}
- 
      */
     readonly language: string;
-    
+
     /**
      * The entry point of the bounded context's Core.  A relative path to the folder
      *
      * @type {string}
- 
      */
     readonly entryPoint: string;
 

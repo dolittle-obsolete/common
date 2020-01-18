@@ -11,7 +11,7 @@ import { Context, ContextsObject } from '../index';
  * @interface IContexts
  */
 export interface IContexts {
-    
+
     /**
      * Gets the current context
      *
@@ -49,14 +49,14 @@ export interface IContexts {
      * @param {string} newName
      */
     renameCurrent(newName: string): void
-    
+
     /**
      * Adds a {Context}
      *
      * @param {Context} context
      */
     add(context: Context): void
-    
+
     /**
      * Gets a specific {Context}
      *
@@ -64,14 +64,14 @@ export interface IContexts {
      * @returns {Context | undefined} Returns the context or undefined if not found
      */
     get(contextName: string): Context
-    
+
     /**
      * Gets all {Context} contexts and context names as a dictionary
      *
      * @returns {ContextsObject}
      */
     all(): ContextsObject
-    
+
     /**
      * Adds a new {Context}
      *

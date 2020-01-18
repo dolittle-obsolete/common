@@ -15,4 +15,4 @@ import { contentBoilerplateContentDirectoryName } from '../internal';
  */
 export function contentBoilerplateContentDirectoryFromPath(boilerplatePath: string) {
     return path.join(getFileDirPath(boilerplatePath), contentBoilerplateContentDirectoryName);
-} 
+}

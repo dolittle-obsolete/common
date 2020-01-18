@@ -7,7 +7,7 @@ import { IBoilerplateDiscoverers, IBoilerplatesLoader } from './internal';
 
 /**
  * Initializes the boilerplates system in the common tooling
- * 
+ *
  * @param {IBoilerplateDiscoverers} boilerplateDiscoverers
  * @param {IBusyIndicator} busyIndicator
  */
@@ -18,7 +18,7 @@ export async function initBoilerplatesSystem(boilerplateDiscoverers: IBoilerplat
         if (boilerplatesLoader.needsReload) await boilerplatesLoader.load();
         busyIndicator.succeed('Boilerplates system initialized');
     } catch (error) {
-        busyIndicator.fail(`An error occurred: ${error.message? error.message : error}`);
+        busyIndicator.fail(`An error occurred: ${error.message ? error.message : error}`);
         throw error;
     }
 }

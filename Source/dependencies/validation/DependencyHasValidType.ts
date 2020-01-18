@@ -13,14 +13,14 @@ import { IDependency, DependencyValidator, InvalidField, dependencyTypes, Cannot
  * @extends {DependencyValidator}
  */
 export class DependencyHasValidType extends DependencyValidator {
-    
+
     canValidate(dependency: IDependency) {
-        return super.canValidate(dependency) 
+        return super.canValidate(dependency)
             && (dependency.type !== undefined && dependency.type.trim() !== '');
     }
     validate(dependency: IDependency) {
         if (!this.canValidate(dependency)) throw new CannotValidateDependency(dependency, this);
-        if (!dependencyTypes.includes(dependency.type)) 
+        if (!dependencyTypes.includes(dependency.type))
             throw new InvalidField(dependency, 'type', `expected 'type' to be any of [${dependencyTypes.join(', ')}]`);
     }
 

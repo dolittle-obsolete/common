@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { ICanOutputMessages, IBusyIndicator } from '@dolittle/tooling.common.utilities';
-import { IDependency, IDependencyResolvers } from "@dolittle/tooling.common.dependencies";
+import { IDependency, IDependencyResolvers } from '@dolittle/tooling.common.dependencies';
 import { CommandContext, IFailedCommandOutputter } from './internal';
 
 /**
@@ -20,13 +20,13 @@ export interface ICommand {
      * @type {boolean}
      */
     readonly isBoilerplatesCommand: boolean;
-    
+
     /**
      * The name of the command
      * @type {string}
      */
     readonly name: string
-    
+
     /**
      * The description of the command
      * @type {string}
@@ -38,7 +38,7 @@ export interface ICommand {
      * @type {string}
      */
     readonly shortDescription: string
-    
+
     /**
      * The pre-defined dependencies of a command
      * @type {string}

@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {WriteOptions, ReadOptions, Stats, WriteFileOptions, CopyOptions, CopyOptionsSync, EnsureOptions} from 'fs-extra';
+import { WriteOptions, ReadOptions, Stats, WriteFileOptions, CopyOptions, CopyOptionsSync, EnsureOptions } from 'fs-extra';
 
 /**
  * Defines a low-level system for interacting with files
@@ -56,7 +56,7 @@ export interface IFileSystem {
     readFile(file: string, encoding?: string): Promise<string>
 
     /**
-     * Reads a file 
+     * Reads a file
      *
      * @param {string} file
      * @param {string} [encoding]
@@ -95,7 +95,7 @@ export interface IFileSystem {
      * @returns {Promise<string[]>}
      */
     readDirectorySync(path: string): string[]
-    
+
     /**
      * Writes a json object to file
      *
@@ -114,7 +114,7 @@ export interface IFileSystem {
      * @param {WriteOptions} [options]
      */
     writeJsonSync(file: string, object: any, options?: WriteOptions): void
-    
+
     /**
      * Writes to a file
      *
@@ -160,7 +160,7 @@ export interface IFileSystem {
      * @returns {Promise<void>}
      */
     copy(source: string, destination: string, options?: CopyOptions): Promise<void>
-    
+
     /**
      * Copies from source to destination
      *

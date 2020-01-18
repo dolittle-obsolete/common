@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import {TokenSet} from 'openid-client';
+import { TokenSet } from 'openid-client';
 import { Context, IContexts, IContextCreator, ContextsConfiguration, contextEquals } from '../index';
 
 /**
@@ -13,7 +13,7 @@ import { Context, IContexts, IContextCreator, ContextsConfiguration, contextEqua
  * @implements {IContexts}
  */
 export class Contexts implements IContexts {
-    
+
 
     /**
      * Instantiates an instance of {Contexts}.
@@ -21,23 +21,23 @@ export class Contexts implements IContexts {
      * @param {ContextsConfiguration} _contextsConfig
      */
     constructor(private _contextCreator: IContextCreator, private _contextsConfig: ContextsConfiguration) {}
-    
+
     current() {
-        let contextName = this._contextsConfig.currentContext;
-        let context = this._contextsConfig.contexts[contextName];
+        const contextName = this._contextsConfig.currentContext;
+        const context = this._contextsConfig.contexts[contextName];
         return {contextName, context};
     }
 
     use(contextName: string) {
         if (!this._contextsConfig.hasContext(contextName)) throw new Error(`Contexts configuration does not have a context with name ${contextName}`);
-        let context = this._contextsConfig.contexts[contextName];
+        const context = this._contextsConfig.contexts[contextName];
         this._contextsConfig.currentContext = contextName;
         return context;
     }
 
     useContext(context: Context) {
-        let contexts = this._contextsConfig.contexts;
-        for (let key in contexts) {
+        const contexts = this._contextsConfig.contexts;
+        for (const key in contexts) {
             if (contextEquals(context, contexts[key])) {
                 this.use(key);
                 return context;
@@ -57,18 +57,18 @@ export class Contexts implements IContexts {
     }
 
     add(context: Context) {
-        let equalContexts = Object.keys(this._contextsConfig.contexts).map(key => {
-            return {contextName: key, context: this._contextsConfig.contexts[key]}
+        const equalContexts = Object.keys(this._contextsConfig.contexts).map(key => {
+            return {contextName: key, context: this._contextsConfig.contexts[key]};
         }).filter(_ => contextEquals(context, _.context));
-        
+
         if (equalContexts.length > 0) {
-            equalContexts.every(_ => this._contextsConfig.addContext(_.contextName, context))
+            equalContexts.every(_ => this._contextsConfig.addContext(_.contextName, context));
         }
         else {
-            let contextName = this._createContextName(context);
+            const contextName = this._createContextName(context);
             this._contextsConfig.addContext(contextName, context);
             if (this._contextsConfig.numContexts === 1) {
-                this.use(contextName);   
+                this.use(contextName);
             }
         }
     }
@@ -80,9 +80,9 @@ export class Contexts implements IContexts {
     all() {
         return this._contextsConfig.contexts;
     }
-    
+
     createAndAdd(access_token: string, expires_at: number, sub: string, name: string, tid: string, tenant_name: string, refresh_token?: string) {
-        let context = this._contextCreator.create(access_token, expires_at, sub, name, tid, tenant_name, refresh_token);
+        const context = this._contextCreator.create(access_token, expires_at, sub, name, tid, tenant_name, refresh_token);
 
         this.add(context);
         return context;
@@ -97,12 +97,12 @@ export class Contexts implements IContexts {
     }
 
     private _createContextName(context: Context) {
-        let standardName = `${context.userInfo.name} - ${context.userInfo.tenantName}`;
+        const standardName = `${context.userInfo.name} - ${context.userInfo.tenantName}`;
         let name = standardName;
         let i = 0;
         while (this._contextsConfig.hasContext(name)) {
-            name = `${standardName} - ${i.toString()}`;  
-            i++;
+            name = `${standardName} - ${i.toString()}`;
+            i += 1;
         }
         return name;
     }
@@ -113,9 +113,9 @@ export class Contexts implements IContexts {
     contextHasExpired(context: Context) {
         return new TokenSet({expires_at: context.expiresAt}).expired();
     }
-    
+
     hasExpired(contextName: string) {
-        let context = this.get(contextName);
+        const context = this.get(contextName);
         return this.contextHasExpired(context);
     }
 }

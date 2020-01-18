@@ -13,7 +13,7 @@ import { ICanDiscoverBoilerplates, IBoilerplateDiscoverers, BoilerplatePackage }
  * @implements {IBoilerplateDiscoverers}
  */
 export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
-    
+
     /**
      * Instantiates an instance of {BoilerplateDiscoverers}.
      * @param {ICanDiscoverBoilerplates[]} boilerplateDiscoverers
@@ -21,17 +21,17 @@ export class BoilerplateDiscoverers implements IBoilerplateDiscoverers {
     constructor(boilerplateDiscoverers: ICanDiscoverBoilerplates[], private _loggers: ILoggers) {
         this.discoverers = boilerplateDiscoverers;
     }
-    
+
     readonly discoverers: ICanDiscoverBoilerplates[];
-    
+
     get boilerplatePaths() {
-        let paths: string[] = [];
+        const paths: string[] = [];
         this.discoverers.forEach(_ => paths.push(..._.boilerplatePaths));
         return paths;
     }
 
     get discovered() {
-        let boilerplates: BoilerplatePackage[] = [];
+        const boilerplates: BoilerplatePackage[] = [];
         this.discoverers.forEach(_ => boilerplates.push(..._.discovered));
         return boilerplates;
     }

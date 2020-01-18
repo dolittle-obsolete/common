@@ -2,10 +2,10 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {DiscoverDependency, IPromptDependency, IDependencyRule} from './internal';
+import { DiscoverDependency, IPromptDependency, IDependencyRule } from './internal';
 
 /**
- * Represents an implementation of {IPromptDependency} for the configuration of a dependency which has both a 'discover' element and a 'prompt' element. 
+ * Represents an implementation of {IPromptDependency} for the configuration of a dependency which has both a 'discover' element and a 'prompt' element.
  *
  * @export
  * @class DiscoverAndPromptDependency
@@ -13,7 +13,7 @@ import {DiscoverDependency, IPromptDependency, IDependencyRule} from './internal
  * @implements {IPromptDependency}
  */
 export class DiscoverAndPromptDependency extends DiscoverDependency implements IPromptDependency {
-    
+
     /**
      * Instantiates an instance of {DiscoverAndPromptDependency}.
      * @param {string} name
@@ -31,7 +31,7 @@ export class DiscoverAndPromptDependency extends DiscoverDependency implements I
      * @param {string} [fromArea]
      */
     constructor (name: string, description: string, rules: IDependencyRule[], discoverType: string, userInputType: string, promptMessage: string,
-            choices?: any[], customInput?: string, withNamespace?: boolean, milestone?: string, fileMatch?: string, 
+            choices?: any[], customInput?: string, withNamespace?: boolean, milestone?: string, fileMatch?: string,
             contentMatch?: string, fromArea?: string ) {
         super(name, description, rules, discoverType, withNamespace, milestone, fileMatch, contentMatch, fromArea);
         this.userInputType = userInputType;
@@ -39,14 +39,14 @@ export class DiscoverAndPromptDependency extends DiscoverDependency implements I
         this.promptMessage = promptMessage;
         this.customInput = customInput;
     }
-    
+
     readonly optional = false;
-    
+
     readonly userInputType: string;
-    
+
     readonly promptMessage: string;
-    
+
     readonly choices?: any[];
-    
+
     readonly customInput?: string;
 }

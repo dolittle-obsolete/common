@@ -12,23 +12,23 @@ import { IDependency, DependencyChoice } from './internal';
  * @extends {IDependency}
  */
 export interface IPromptDependency extends IDependency {
-   
+
     /**
      * Whether or not this dependency is optional. Default value is false
      *
      * @type {boolean}
      */
     readonly optional: boolean;
-    
+
     /**
      * The user input type of the dependency, it defines how the user should be prompted.
-     * 
+     *
      * The 'argument' user input type is a CLI specific thing defining user input that should be arguments in a command
-     * 
-     * The 'input' user input type prompts the user for input. Use the 'promptMessage' property for 
-     * 
+     *
+     * The 'input' user input type prompts the user for input. Use the 'promptMessage' property for
+     *
      * The 'chooseOne' user input type prompts the user to choose one alternative. The choices can come from a 'discovery' or from the 'choices' property
-     * 
+     *
      * The 'chooseMultiple' user input type prompts the user to choose one or more alternatives. The choices can come from a 'discovery' or from the 'choices' property
      *
      * @readonly

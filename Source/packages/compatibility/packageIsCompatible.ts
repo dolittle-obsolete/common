@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 import semver from 'semver';
-import { ToolingPackage } from "../internal";
+import { ToolingPackage } from '../internal';
 
 /**
  * Whether or not this boilerplate package is compatible with the tooling version

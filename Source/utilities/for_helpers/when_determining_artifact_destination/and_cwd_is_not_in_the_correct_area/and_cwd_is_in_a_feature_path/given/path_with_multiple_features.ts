@@ -26,7 +26,7 @@ export class path_with_multiple_features {
         this.name = 'artifact';
         this.boundedContextPath = require('path').join('some', 'path', 'to', 'boundedcontext-root', 'bounded-context.json');
         this.boundedContextRoot = require('path').dirname(this.boundedContextPath);
-        
+
         this.featureSegments = 'feature1.feature2';
         this.cwd = require('path').join(this.boundedContextRoot, 'OtherArea', ...this.featureSegments.split('.'));
     }

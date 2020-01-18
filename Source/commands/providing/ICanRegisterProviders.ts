@@ -6,7 +6,7 @@
  * Defines a system that can register providers to the {ICommandManager}
  */
 export interface ICanRegisterProviders {
-    
+
     /**
      * Registers providers to the {ICommandManager}
      *

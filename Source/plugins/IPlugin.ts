@@ -18,7 +18,7 @@ export interface IPlugin {
      * @type {ICanProvideCommands}
      */
     commandsProvider: ICanProvideCommands
-    
+
     /**
      * The plugin's command groups provider
      *

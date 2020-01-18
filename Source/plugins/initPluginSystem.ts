@@ -7,7 +7,7 @@ import { IPlugins } from './internal';
 
 /**
  * Initializes the boilerplates system in the common tooling
- * 
+ *
  * @param {IPlugins} plugins
  * @param {IBusyIndicator} busyIndicator
  */
@@ -17,7 +17,7 @@ export async function initPluginSystem(plugins: IPlugins, busyIndicator: IBusyIn
         await plugins.discoverNewPlugins();
         busyIndicator.succeed('Plugins initialized');
     } catch (error) {
-        busyIndicator.fail(`An error occurred: ${error.message? error.message : error}`);
+        busyIndicator.fail(`An error occurred: ${error.message ? error.message : error}`);
         throw error;
     }
 }

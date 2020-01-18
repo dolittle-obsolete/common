@@ -26,4 +26,4 @@ export type CommandContext = {
      */
     namespace?: string;
 
-}
+};

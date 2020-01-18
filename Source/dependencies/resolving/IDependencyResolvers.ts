@@ -30,11 +30,11 @@ export interface IDependencyResolvers {
      * Resolves the dependencies
      *
      * Throws an exception if there are multiple resolvers for a dependency
-     * 
+     *
      * @param {*} context The context to base off of. Fields will be appended to the context and returned
      * @param {IDependency[]} dependencies The dependencies to resolve
      * @param {IDependencyRuleFor<IDependency>[]} [additionalRules]
-     * @param {string} [destinationPath] The optional source path for where the discovery mechanism should start from 
+     * @param {string} [destinationPath] The optional source path for where the discovery mechanism should start from
      * @param {string} [coreLanguage] The optional core language
      * @returns {Promise<any>}
      */

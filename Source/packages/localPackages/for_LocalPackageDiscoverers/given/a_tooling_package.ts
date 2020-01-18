@@ -1,4 +1,4 @@
-import { ToolingPackage } from "../../../internal";
+import { ToolingPackage } from '../../../internal';
 
 /*---------------------------------------------------------------------------------------------
  *  Copyright (c) Dolittle. All rights reserved.
@@ -12,4 +12,4 @@ export let a_tooling_package: ToolingPackage = {
     dolittle: {
         tooling: '1.*'
     }
-}
+};

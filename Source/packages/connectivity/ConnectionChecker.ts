@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import isOnline from 'is-online';
-import {IConnectionChecker} from '../internal';
+import { IConnectionChecker } from '../internal';
 /**
  * Represents an implementation of {IConnectionChecker}
  *

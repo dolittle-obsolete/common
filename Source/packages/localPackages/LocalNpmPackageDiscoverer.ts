@@ -2,10 +2,10 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IFileSystem } from "@dolittle/tooling.common.files";
-import { ICanDiscoverLocalPackages, packageIsToolingPackage, DiscoveredToolingPackage, ToolingPackage, MultiplePackagesWithSameName } from "../internal";
+import { IFileSystem } from '@dolittle/tooling.common.files';
+import { ICanDiscoverLocalPackages, packageIsToolingPackage, DiscoveredToolingPackage, ToolingPackage, MultiplePackagesWithSameName } from '../internal';
 import path from 'path';
-import { Exception } from "@dolittle/tooling.common.utilities";
+import { Exception } from '@dolittle/tooling.common.utilities';
 
 /**
  * Represents an implementation of {ICanDiscoverLocalPackages} that discover locally installed npm packages
@@ -29,22 +29,23 @@ export class LocalNpmPackageDiscoverer implements ICanDiscoverLocalPackages{
 
     async discover(folder: string = this._nodeModulesFolder, check: (toolingPackage: ToolingPackage) => boolean = (_) => true) {
         let discoveredPackages = await this.getPackages(folder);
-        
-        discoveredPackages = discoveredPackages.filter(_ => check(_.package))
+
+        discoveredPackages = discoveredPackages.filter(_ => check(_.package));
         this.throwIfDuplicatePackages(discoveredPackages);
         return discoveredPackages;
     }
 
     private async getPackages(folder: string) {
-        let discoveredPackages: DiscoveredToolingPackage[] = [];
+        const discoveredPackages: DiscoveredToolingPackage[] = [];
         if (! (await this._fileSystem.stat(folder)).isDirectory()) throw new Exception(`Path '${folder}' is not a directory`);
-        let dirs = await this._fileSystem.readDirectory(folder);
+        const dirs = await this._fileSystem.readDirectory(folder);
         await Promise.all(dirs.map(async dir => {
             const dirPath = path.join(folder, dir);
             try {
-                let subDir = await this._fileSystem.readDirectory(dirPath);
+                const subDir = await this._fileSystem.readDirectory(dirPath);
                 return this.searchDirectoryForPackages(dir, subDir.map(_ => path.join(dirPath, _)), discoveredPackages);
             }
+            // tslint:disable-next-line: no-empty
             catch (err) {}
         }));
 
@@ -53,30 +54,30 @@ export class LocalNpmPackageDiscoverer implements ICanDiscoverLocalPackages{
 
     private async searchDirectoryForPackages(dirName: string, filePaths: string[], discoveredPackages: DiscoveredToolingPackage[]) {
         for (let filePath of filePaths) {
-            let fileName = path.parse(filePath).name;
+            const fileName = path.parse(filePath).name;
             const fileStat = await this._fileSystem.stat(filePath);
             if (fileStat.isFile()) {
                 filePath = path.normalize(filePath);
                 if (path.parse(filePath).base === LocalNpmPackageDiscoverer.packageName) {
-                    let packageJson = await this._fileSystem.readJson(filePath);
+                    const packageJson = await this._fileSystem.readJson(filePath);
                     if (packageIsToolingPackage(packageJson)) {
-                        let folderPath = path.parse(filePath).dir;
-                        let discoveredPackage: DiscoveredToolingPackage = {path: folderPath, package: packageJson as ToolingPackage}
+                        const folderPath = path.parse(filePath).dir;
+                        const discoveredPackage: DiscoveredToolingPackage = {path: folderPath, package: packageJson as ToolingPackage};
                         discoveredPackages.push(discoveredPackage);
                     }
                 }
             }
             else if (fileStat.isDirectory() && dirName.startsWith('@')) {
-                let subDir = await this._fileSystem.readDirectory(filePath);
-                await this.searchDirectoryForPackages(fileName, subDir.map(_ => path.join(filePath, _)), discoveredPackages);   
+                const subDir = await this._fileSystem.readDirectory(filePath);
+                await this.searchDirectoryForPackages(fileName, subDir.map(_ => path.join(filePath, _)), discoveredPackages);
             }
         }
     }
-    
+
     private throwIfDuplicatePackages(discoveredPackages: DiscoveredToolingPackage[]) {
-        let packageNames = discoveredPackages.map(_ => _.package.name);
+        const packageNames = discoveredPackages.map(_ => _.package.name);
         packageNames.forEach((packageName, i) => {
             if (packageNames.slice(i + 1).includes(packageName)) throw new MultiplePackagesWithSameName(packageName);
-        })
+        });
     }
 }

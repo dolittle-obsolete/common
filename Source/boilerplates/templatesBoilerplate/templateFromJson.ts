@@ -17,7 +17,7 @@ import { Template } from '../internal';
  */
 export function templateFromJson(obj: any, path: string, includedFiles: string[], dependencyParsers: IDependencyParsers) {
     return new Template(obj.name, obj.type, obj.area, obj.description,
-        obj.dependencies !== undefined? 
+        obj.dependencies !== undefined ?
             new DependenciesWithStandardValidators(Object.keys(obj.dependencies).map(key => dependencyParsers.parse(obj.dependencies[key], key)))
             : new DependenciesWithStandardValidators([]), includedFiles, path);
 }

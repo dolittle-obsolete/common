@@ -8,7 +8,7 @@ import { IFileSystem } from '@dolittle/tooling.common.files';
 import { requireInternet, ILatestCompatiblePackageFinder, IConnectionChecker, ICanDownloadPackages } from '@dolittle/tooling.common.packages';
 import { ICanOutputMessages, NullMessageOutputter, IBusyIndicator, NullBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { askToDownloadOrUpdateBoilerplates, checkBoilerplates, IBoilerplateDiscoverers, IBoilerplatesLoader } from '../internal'
+import { askToDownloadOrUpdateBoilerplates, checkBoilerplates, IBoilerplateDiscoverers, IBoilerplatesLoader } from '../internal';
 
 const name = 'check';
 const description = `Checks whether you have boilerplates that are out of date.
@@ -31,31 +31,31 @@ export class CheckCommand extends Command {
     /**
      * Instantiates an instance of {CheckCommand}.
      */
-    constructor(private _boilerplatesDiscoverers: IBoilerplateDiscoverers, private _boilerplatesLoader: IBoilerplatesLoader, private _latestPackageFinder: ILatestCompatiblePackageFinder, 
+    constructor(private _boilerplatesDiscoverers: IBoilerplateDiscoverers, private _boilerplatesLoader: IBoilerplatesLoader, private _latestPackageFinder: ILatestCompatiblePackageFinder,
                 private _packageDownloader: ICanDownloadPackages, private _connectionChecker: IConnectionChecker, private _fileSystem: IFileSystem, private _logger: ILoggers) {
         super(name, description, false, shortDescription);
     }
 
     async onAction(commandContext: CommandContext, dependencyResolvers: IDependencyResolvers, failedCommandOutputter: IFailedCommandOutputter, outputter: ICanOutputMessages, busyIndicator: IBusyIndicator) {
-        this._logger.info(`Executing 'boilerplates check' command`);
+        this._logger.info("Executing 'boilerplates check' command");
 
         await requireInternet(this._connectionChecker, busyIndicator);
-        
-        let outOfDatePackages = await checkBoilerplates(
-            this._boilerplatesDiscoverers, 
-            this._latestPackageFinder, 
-            this._fileSystem, 
-            this._connectionChecker, 
+
+        const outOfDatePackages = await checkBoilerplates(
+            this._boilerplatesDiscoverers,
+            this._latestPackageFinder,
+            this._fileSystem,
+            this._connectionChecker,
             busyIndicator
         );
         await askToDownloadOrUpdateBoilerplates(
-            outOfDatePackages, 
-            this._boilerplatesDiscoverers, 
-            this._boilerplatesLoader, 
-            dependencyResolvers, 
-            this._packageDownloader, 
-            this._connectionChecker, 
+            outOfDatePackages,
+            this._boilerplatesDiscoverers,
+            this._boilerplatesLoader,
+            dependencyResolvers,
+            this._packageDownloader,
+            this._connectionChecker,
             busyIndicator
-        );  
+        );
     }
 }

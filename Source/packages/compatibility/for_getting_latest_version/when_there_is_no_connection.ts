@@ -3,10 +3,10 @@
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { NullBusyIndicator } from '@dolittle/tooling.common.utilities';
-import {Substitute} from '@fluffy-spoon/substitute'
-import sinon from 'sinon'; 
+import { Substitute } from '@fluffy-spoon/substitute';
+import sinon from 'sinon';
 import { expect } from 'chai';
-import {getLatestVersion, NotConnectedToInternet, ICanFindLatestVersionOfPackage} from '../../internal'
+import { getLatestVersion, NotConnectedToInternet, ICanFindLatestVersionOfPackage } from '../../internal';
 
 describe('When there is no connection', () => {
     let exception: Error;
@@ -21,5 +21,5 @@ describe('When there is no connection', () => {
     });
 
     it('Should throw an exception', () => expect(exception).to.not.be.undefined);
-    it('Should throw a NotConnectedToInternet exception', () => exception.should.be.instanceof(NotConnectedToInternet))
+    it('Should throw a NotConnectedToInternet exception', () => exception.should.be.instanceof(NotConnectedToInternet));
 });

@@ -13,17 +13,17 @@ import { OnlineDolittleBoilerplatesFinder } from '../internal';
  * @param {IBusyIndicator} busyIndicator
  * @returns
  */
-export async function fetchDolittleBoilerplates(onlineBoilerplatesDiscoverer: OnlineDolittleBoilerplatesFinder, 
+export async function fetchDolittleBoilerplates(onlineBoilerplatesDiscoverer: OnlineDolittleBoilerplatesFinder,
     connectionChecker: IConnectionChecker,busyIndicator: IBusyIndicator ) {
-    
+
     await requireInternet(connectionChecker, busyIndicator);
     busyIndicator = busyIndicator.createNew().start('Getting dolittle boilerplates (this might take a while, depending on your internet connection): ');
-    let boilerplates = await onlineBoilerplatesDiscoverer.findLatest()
+    const boilerplates = await onlineBoilerplatesDiscoverer.findLatest()
         .then(boilerplates => {
             busyIndicator.succeed(`Found ${boilerplates.length} dolittle boilerplates`);
             return boilerplates;
         }).catch(error => {
-            busyIndicator.fail(`An error occurred ${error.message? error.message : error}`);
+            busyIndicator.fail(`An error occurred ${error.message ? error.message : error}`);
             throw error;
         });
     return boilerplates;

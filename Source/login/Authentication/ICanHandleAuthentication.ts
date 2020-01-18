@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ICanOutputMessages, IBusyIndicator } from "@dolittle/tooling.common.utilities";
+import { ICanOutputMessages, IBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { AuthenticationResponse } from '../internal';
 
 /**
@@ -12,7 +12,7 @@ import { AuthenticationResponse } from '../internal';
  * @interface ICanHandleAuthentication
  */
 export interface ICanHandleAuthentication {
-    
+
     /**
      * Authenticates the user and returns a response consisting of tokens and information on the user
      *

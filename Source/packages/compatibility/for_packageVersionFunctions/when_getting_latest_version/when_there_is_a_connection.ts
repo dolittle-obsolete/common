@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import { NullBusyIndicator } from '@dolittle/tooling.common.utilities';
 import { IConnectionChecker, ICanFindLatestVersionOfPackage, getLatestVersion } from '../../../internal';
-;
+
 describe('when there is a connection', () => {
     const packageName = 'name';
     const latestVersion = '1.0.0';

@@ -18,20 +18,20 @@ export class Scripts
      * @returns {Scripts}
      */
     static fromJson(scripts: any): Scripts {
-        let creationScriptObjects = scripts && scripts.creation || [];
-        let buildScriptObjects = scripts && scripts.build || [];
-        let runScriptObject = scripts && scripts.run || [];
+        const creationScriptObjects = scripts && scripts.creation || [];
+        const buildScriptObjects = scripts && scripts.build || [];
+        const runScriptObject = scripts && scripts.run || [];
 
         return new Scripts(
-            creationScriptObjects.map((_: any) => _.command? new Script(_.command, _.arguments, _.currentWorkingDirectory) : _),
-            buildScriptObjects.map((_: any) => _.command? new Script(_.command, _.arguments, _.currentWorkingDirectory) : _),
-            runScriptObject.map((_: any) => _.command? new Script(_.command, _.arguments, _.currentWorkingDirectory) : _), 
-            scripts? lodash.omit(scripts, ['creation', 'build', 'run']) : {});
+            creationScriptObjects.map((_: any) => _.command ? new Script(_.command, _.arguments, _.currentWorkingDirectory) : _),
+            buildScriptObjects.map((_: any) => _.command ? new Script(_.command, _.arguments, _.currentWorkingDirectory) : _),
+            runScriptObject.map((_: any) => _.command ? new Script(_.command, _.arguments, _.currentWorkingDirectory) : _),
+            scripts ? lodash.omit(scripts, ['creation', 'build', 'run']) : {});
     }
 
-    /**
+     /**
       * Instantiates an instance of {Scripts}
-      * @param {{cmd: string, args: string[], cwd: string}[] | string[]} creation 
+      * @param {{cmd: string, args: string[], cwd: string}[] | string[]} creation
       * @param {any[] | string[]} build
       * @param {any[] | string[]} run
       * @param {any} rest
@@ -55,7 +55,7 @@ export class Scripts
      * @type {Script[] | string[]}
      * @readonly
      */
-    readonly build: Script[] | string[]
+    readonly build: Script[] | string[];
 
     /**
      * Gets the run scripts

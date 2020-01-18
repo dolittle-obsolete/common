@@ -14,7 +14,7 @@ export class Guid {
     /**
      * Get the empty representation of a {Guid}
      *
-     * @readonly 
+     * @readonly
      * @static
      * @returns {string}
      */
@@ -29,10 +29,10 @@ export class Guid {
      * @returns {string} String representation of {Guid}
      */
     static create(): string {
-        let S4 = () => {
+        const S4 = () => {
             return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
         };
-        let guid = (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4());
+        const guid = (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4());
         return guid;
     }
 }

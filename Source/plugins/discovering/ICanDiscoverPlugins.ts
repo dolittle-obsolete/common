@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { PluginPackage } from "../internal";
+import { PluginPackage } from '../internal';
 
 /**
  * Defines a system that can discovering plugins
@@ -26,9 +26,9 @@ export interface ICanDiscoverPlugins {
     discovered: PluginPackage[]
 
     /**
-    * Gets the paths of the Dolittle plugins
-    *
-    * @type {string[]} Filesystem paths of the Dolittle plugins installed on the system
-    */
+     * Gets the paths of the Dolittle plugins
+     *
+     * @type {string[]} Filesystem paths of the Dolittle plugins installed on the system
+     */
     pluginPaths: string[]
 }

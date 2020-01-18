@@ -15,18 +15,18 @@ const dolittleUser = 'woksin';
  * @implements {ICanFindOnlinePluginPackages}
  */
 export class OnlineDolittlePluginsFinder implements ICanFindOnlinePluginPackages {
-    
+
     /**
      * Instantiates an instance of {OnlineBoilerplatesDiscoverer}
      * @param {ILatestCompatiblePackageFinder} _latestCompatibleFinder
      * @param {ILoggers} _logger
      */
     constructor(private _packages: IPackages, private _logger: ILoggers) {}
-    
+
     async findLatest(keywords: string[] = [], limit: number = 250): Promise<ToolingPackage[]> {
-        this._logger.info(`Attempting to find online dolittle plugins`);
-        let pluginPackages  = await this._packages.latestCompatibleByUser(
-            dolittleUser, 
+        this._logger.info('Attempting to find online dolittle plugins');
+        const pluginPackages  = await this._packages.latestCompatibleByUser(
+            dolittleUser,
             _ => packageIsPluginPackage(_) && keywords.every(keyword => _.keywords.includes(keyword)));
 
         return pluginPackages;

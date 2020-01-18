@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {determineDestination} from '../../../../helpers';
+import { determineDestination } from '../../../../helpers';
 import { path_with_multiple_features } from './given/path_with_multiple_features';
 
 const path = require('path');
@@ -10,7 +10,7 @@ const path = require('path');
 describe('when creating artifact with multiple features from a path with multiple features', () => {
     let context: any = null;
     let result: {destination: string, name: string};
-    let featureSegments = 'feature3.feature4';
+    const featureSegments = 'feature3.feature4';
     (beforeEach => {
         context = new path_with_multiple_features();
         result = determineDestination(context.area, context.language, `${featureSegments}.${context.name}`, context.cwd, context.boundedContextPath, context.dolittleConfig);

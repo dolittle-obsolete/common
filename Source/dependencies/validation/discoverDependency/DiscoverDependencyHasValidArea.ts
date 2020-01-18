@@ -19,7 +19,7 @@ export class DiscoverDependencyHasValidArea extends DiscoverDependencyValidator 
     }
     validate(dependency: IDiscoverDependency) {
         if (!this.canValidate(dependency)) throw new CannotValidateDependency(dependency, this);
-        if (! areas.includes(dependency.fromArea!)) 
+        if (! areas.includes(dependency.fromArea!))
             throw new InvalidField(dependency, 'fromArea', `Expected 'fromArea' to be any of [${areas.join(', ')}]`);
     }
 

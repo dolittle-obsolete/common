@@ -32,10 +32,10 @@ export function getFileNameAndExtension(filePath: string): string {
     return path.parse(filePath).base;
 }
 /**
-  * Gets the directory name
-  * @param {string} filePath
-  * @returns {string} file dirname
-  */
+ * Gets the directory name
+ * @param {string} filePath
+ * @returns {string} file dirname
+ */
 export function getFileDir(filePath: string): string {
     filePath = path.normalize(filePath);
     return path.dirname(filePath);

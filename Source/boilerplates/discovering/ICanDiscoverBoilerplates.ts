@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { BoilerplatePackage } from "../internal";
+import { BoilerplatePackage } from '../internal';
 
 
 /**
@@ -12,7 +12,7 @@ import { BoilerplatePackage } from "../internal";
  * @interface ICanDiscoverBoilerplates
  */
 export interface ICanDiscoverBoilerplates {
-    
+
     /**
      * Discovers boilerplates and returns them.
      * @param {string} [folder] The folder to start discovering from
@@ -28,10 +28,10 @@ export interface ICanDiscoverBoilerplates {
     discovered: BoilerplatePackage[]
 
     /**
-    * The paths of the Dolittle boilerplates
-    *
-    * @readonly
-    * @type {string[]} Filesystem paths of the Dolittle boilerplates installed on the system
-    */
+     * The paths of the Dolittle boilerplates
+     *
+     * @readonly
+     * @type {string[]} Filesystem paths of the Dolittle boilerplates installed on the system
+     */
     boilerplatePaths: string[]
 }

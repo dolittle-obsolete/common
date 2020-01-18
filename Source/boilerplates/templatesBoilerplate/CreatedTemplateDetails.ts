@@ -12,7 +12,7 @@ export type CreatedTemplateDetails = {
     * @type {ITemplatesBoilerplate}
     */
    boilerplate: ITemplatesBoilerplate;
-   
+
    /**
     * The template that was created
     *
@@ -26,4 +26,4 @@ export type CreatedTemplateDetails = {
     * @type {string}
     */
    destination: string;
-}
+};

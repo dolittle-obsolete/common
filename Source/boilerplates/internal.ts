@@ -45,9 +45,9 @@ export * from './parsing/CannotParseBoilerplate';
 export * from './parsing/ICanParseBoilerplates';
 export * from './parsing/IBoilerplateParsers';
 
-export * from './parsing/BoilerplateParsers'
+export * from './parsing/BoilerplateParsers';
 
-// loading 
+// loading
 export * from './loading/IBoilerplatesLoader';
 
 export * from './loading/BoilerplatesLoader';

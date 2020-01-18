@@ -28,11 +28,11 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
     }
 
     needsReload = true;
-    
-    get boilerplatesConfigurationPath() { 
+
+    get boilerplatesConfigurationPath() {
         return this._boilerplatesConfig.path;
     }
-    
+
     get loaded() {
         return this._loadedBoilerplates;
     }
@@ -40,10 +40,10 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
     async load() {
         this._logger.info('Loading boilerplates');
         this._loadedBoilerplates = [];
-        let boilerplatesConfigObject: any = this._boilerplatesConfig.store;
+        const boilerplatesConfigObject: any = this._boilerplatesConfig.store;
 
-        for (let key of Object.keys(boilerplatesConfigObject)) {
-            let folderPath = path.resolve(boilerplatesConfigObject[key]);
+        for (const key of Object.keys(boilerplatesConfigObject)) {
+            const folderPath = path.resolve(boilerplatesConfigObject[key]);
             if (! (await this._fileSystem.exists(folderPath))) {
                 this._logger.warn(`Boilerplate path '${folderPath}' does not exist. Removing entry from boilerplates configuration`);
                 delete boilerplatesConfigObject[key];
@@ -56,18 +56,18 @@ export class BoilerplatesLoader implements IBoilerplatesLoader {
         this._logger.info('Finished loading boilerplates');
         return this._loadedBoilerplates;
     }
-    
+
     private async getFromFolder(folder: string) {
-        let boilerplatePath = path.join(folder, 'boilerplate.json');
+        const boilerplatePath = path.join(folder, 'boilerplate.json');
         const boilerplateExists = await this._fileSystem.exists(boilerplatePath);
         if (! boilerplateExists) {
             this._logger.info(`The path of a boilerplate defined in the boilerplates configuration does not exists. Path: ${boilerplatePath}`);
             throw new Error(`Could not find boilerplate configuration in '${folder}'`);
         }
 
-        let boilerplateObject = await this._fileSystem.readJson(boilerplatePath);
+        const boilerplateObject = await this._fileSystem.readJson(boilerplatePath);
 
         return this._boilerplateParsers.parse(boilerplateObject, boilerplatePath);
     }
-    
+
 }

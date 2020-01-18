@@ -15,7 +15,7 @@ import { ICanFindPackagesByUser, packageIsToolingPackage, ToolingPackage } from 
 export class NpmPackagesByUserFinder implements ICanFindPackagesByUser {
 
     async find(user: string, check: (toolingPackage: ToolingPackage) => boolean = (_) => true) {
-        let packages = await npmUserPackages(user);
+        const packages = await npmUserPackages(user);
         return packages.filter(packageJson => packageIsToolingPackage(packageJson) && check(packageJson as any as ToolingPackage));
     }
 }

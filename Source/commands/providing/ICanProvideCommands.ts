@@ -3,7 +3,7 @@
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
 
-import { ICommand, IProviderFor } from "../internal";
+import { ICommand, IProviderFor } from '../internal';
 
 /**
  * Defines a system that can provide commands
@@ -12,5 +12,5 @@ import { ICommand, IProviderFor } from "../internal";
  * @interface ICanProvideCommands
  */
 export interface ICanProvideCommands extends IProviderFor<ICommand> {
-    
+
 }

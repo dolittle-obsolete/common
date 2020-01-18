@@ -5,4 +5,4 @@
 
 describe('test', () => {
     it('should evaluate true as true', () => true.should.be.true);
-})
+});

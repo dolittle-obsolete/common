@@ -2,15 +2,15 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { DiscoverAndPromptDependencyParser, CannotParseDependency } from "../../../internal";
-import {a_discover_and_prompt_dependency} from '../given/a_discover_and_prompt_dependency';
-import { expect } from "chai";
+import { DiscoverAndPromptDependencyParser, CannotParseDependency } from '../../../internal';
+import { a_discover_and_prompt_dependency } from '../given/a_discover_and_prompt_dependency';
+import { expect } from 'chai';
 
 describe('and dependency is a discover and prompt dependency', () => {
-    let context = new a_discover_and_prompt_dependency();
-    let parser = new DiscoverAndPromptDependencyParser({parse: () => []});
-    let result = parser.parse(context.dependency, context.dependency.name);
-    
+    const context = new a_discover_and_prompt_dependency();
+    const parser = new DiscoverAndPromptDependencyParser({parse: () => []});
+    const result = parser.parse(context.dependency, context.dependency.name);
+
     it('Should be able to parse dependency', () => expect(result).to.not.be.undefined);
     it('Should parse to the same dependency object', () => {
         expect(result.name).to.equal(context.dependency.name);

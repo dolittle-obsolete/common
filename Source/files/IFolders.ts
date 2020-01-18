@@ -49,7 +49,7 @@ export interface IFolders {
      * @returns {Promise<string[]>}
      */
     getFolders(folder: string, pattern?: RegExp): Promise<string[]>
-    
+
     /**
      * Get top level folders in a given path
      * @param {string} folder The directory to search
@@ -65,7 +65,7 @@ export interface IFolders {
      * @returns {Promise<string[]>}
      */
     getFiles(folder: string, pattern?: RegExp): Promise<string[]>
-    
+
     /**
      * Get top level files in a given path
      * @param {string} folder The directory to search
@@ -81,7 +81,7 @@ export interface IFolders {
      * @returns {Promise<string[]>}
      */
     getFilesRecursively(folder: string, pattern?: RegExp): Promise<string[]>
-    
+
     /**
      * Get all files within a folder recursively
      * @param {string} folder Path of the folder to get from
@@ -97,7 +97,7 @@ export interface IFolders {
      * @returns {Promise<string[]>}
      */
     getFilesAndFoldersRecursively(folder: string, pattern?: RegExp): Promise<string[]>
-    
+
     /**
      * Get all files and folders within a folder recursively
      * @param {string} folder Path of the folder to get from
@@ -110,7 +110,7 @@ export interface IFolders {
      * Gets the paths of the nearest directories matching the regular expression, searching upwards
      * @param {string} folder the start folder
      * @param {RegExp} pattern
-     * @returns {Promise<string[]>} 
+     * @returns {Promise<string[]>}
      */
     getNearestDirectoriesSearchingUpwards(folder: string, pattern: RegExp): Promise<string[]>
 
@@ -118,7 +118,7 @@ export interface IFolders {
      * Gets the paths of the nearest directories matching the regular expression, searching upwards
      * @param {string} folder the start folder
      * @param {RegExp} pattern
-     * @returns {string[]} 
+     * @returns {string[]}
      */
     getNearestDirectoriesSearchingUpwardsSync(folder: string, pattern: RegExp): string[]
 
@@ -126,7 +126,7 @@ export interface IFolders {
      * Gets the paths of the nearest file matching the regular expression, searching upwards
      * @param {string} folder the start folder
      * @param {RegExp} pattern
-     * @returns {Promise<string[]>} 
+     * @returns {Promise<string[]>}
      */
     getNearestFilesSearchingUpwards(folder: string, pattern: RegExp): Promise<string[]>
 
@@ -134,7 +134,7 @@ export interface IFolders {
      * Gets the paths of the nearest file matching the regular expression, searching upwards
      * @param {string} folder the start folder
      * @param {RegExp} pattern
-     * @returns {string[]} 
+     * @returns {string[]}
      */
     getNearestFilesSearchingUpwardsSync(folder: string, pattern: RegExp): string[]
 }

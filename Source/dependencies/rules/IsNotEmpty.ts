@@ -12,7 +12,7 @@ import { IDependencyRule } from '../internal';
  * @implements {IDependencyRule}
  */
 export class IsNotEmpty implements IDependencyRule {
-    
+
     isRespected(value: any) {
         return value !== undefined && value !== '';
     }

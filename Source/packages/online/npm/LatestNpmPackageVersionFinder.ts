@@ -2,8 +2,8 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import latestVersion from "latest-version";
-import { ICanFindLatestVersionOfPackage } from "../../internal";
+import latestVersion from 'latest-version';
+import { ICanFindLatestVersionOfPackage } from '../../internal';
 
 /**
  * Represents an implementation of {ICanFindLatestVersionOfPackage} that finds latest version of npm package
@@ -13,7 +13,7 @@ import { ICanFindLatestVersionOfPackage } from "../../internal";
  * @implements {ICanFindLatestVersionOfPackage}
  */
 export class LatestNpmPackageVersionFinder implements ICanFindLatestVersionOfPackage {
-    
+
     async find(packageName: string) {
         const version = await latestVersion(packageName);
         return version;

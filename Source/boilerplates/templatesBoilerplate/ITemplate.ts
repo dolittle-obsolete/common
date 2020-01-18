@@ -58,14 +58,14 @@ export interface ITemplate
      * @type {string}
      */
     readonly path: string
-    
+
     /**
      * Gets a list of the files that needs to be created
      *
      * @type {string[]}
      */
     readonly filesToCreate: string[]
-    
+
     /**
      * Gets all the dependencies needed to create this template
      *

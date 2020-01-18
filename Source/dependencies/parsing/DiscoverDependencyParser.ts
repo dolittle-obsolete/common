@@ -12,7 +12,7 @@ import { ICanParseDependencies, discoverDependencyType, IDiscoverDependency, Dis
  * @implements {ICanParseDependencies}
  */
 export class DiscoverDependencyParser implements ICanParseDependencies {
-     
+
     /**
      * Instantiates an instance of {DiscoverDependencyParser}.
      * @param {IRulesParser} _rulesParser
