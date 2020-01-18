@@ -2,8 +2,8 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { Exception } from "@dolittle/tooling.common.utilities";
-import { ICommand } from "./internal";
+import { Exception } from '@dolittle/tooling.common.utilities';
+import { ICommand } from './internal';
 
 /**
  * The exception that gets thrown when a command throws an exception in its onAction procedure

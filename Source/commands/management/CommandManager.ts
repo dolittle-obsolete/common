@@ -2,17 +2,17 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ILoggers } from "@dolittle/tooling.common.logging";
-import { 
-    ICommandManager, INamespaces, ICommands, ICommandGroups, ICanProvideCommands, 
+import { ILoggers } from '@dolittle/tooling.common.logging';
+import {
+    ICommandManager, INamespaces, ICommands, ICommandGroups, ICanProvideCommands,
     ICanProvideCommandGroups, ICanProvideNamespaces, INamespace
-} from "../internal";
+} from '../internal';
 
 /**
  * Represents an implementation of {ICommandManager}
  */
 export class CommandManager implements ICommandManager {
-    
+
     /**
      * Instantiates an instance of {CommandManager}.
      * @param {INamespaces} _namespaces
@@ -21,18 +21,18 @@ export class CommandManager implements ICommandManager {
      * @param {ILoggers} _logger
      */
     constructor(private _namespaces: INamespaces, private _commandGroups: ICommandGroups, private _commands: ICommands, private _logger: ILoggers) {}
-    
-    get namespaces() { 
-        let namespaces = this._namespaces.namespaces;
+
+    get namespaces() {
+        const namespaces = this._namespaces.namespaces;
         this.addBoilerplateCommandsToNamespaces(namespaces);
         return namespaces;
     }
-    
-    get commands() { 
+
+    get commands() {
         return this._commands.commands;
     }
 
-    get commandGroups() { 
+    get commandGroups() {
         return this._commandGroups.commandGroups;
     }
 

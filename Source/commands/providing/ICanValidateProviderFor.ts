@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IProviderFor } from "../internal";
+import { IProviderFor } from '../internal';
 
 /**
  * Defines a provider
@@ -12,7 +12,7 @@ import { IProviderFor } from "../internal";
  * @template T What to provide
  */
 export interface ICanValidateProviderFor<T> {
-    
+
     /**
      * Validates a provider for {T}
      *

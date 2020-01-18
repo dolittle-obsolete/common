@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ICommandGroup, ICommand } from "./internal";
+import { ICommandGroup, ICommand } from './internal';
 
 /**
  * Defines a namespace
@@ -25,17 +25,17 @@ export interface INamespace {
      * @type {string}
      */
     readonly name: string
-    
+
     /**
      * The description of the namespace.
-     * 
+     *
      * @type {string}
      */
     readonly description: string
 
     /**
      * The short description of the namespace. If none is specified the short description is the normal description
-     * 
+     *
      * @type {string}
      */
     readonly shortDescription: string
@@ -53,7 +53,7 @@ export interface INamespace {
      * @type {ICommandGroup[]}
      */
     readonly commandGroups: ICommandGroup[]
-    
+
     /**
      * Adds default commands to the namespace
      *
@@ -67,5 +67,5 @@ export interface INamespace {
      * @param {ICommandGroup[]} commandGroups
      */
     addDefaultCommandGroups(commandGroups: ICommandGroup[]): void
-    
+
 }
