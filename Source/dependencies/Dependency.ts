@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {IDependency, IDependencyRule} from './internal';
+import { IDependency, IDependencyRule } from './internal';
 
 /**
  * Represents an abstract implementation of {IDependency} for the abstract base configuration class of a dependency
@@ -11,7 +11,7 @@ import {IDependency, IDependencyRule} from './internal';
  * @class Dependency
  */
 export abstract class Dependency implements IDependency {
-    
+
     /**
      * Instantiates an instance of Dependency.
      * @param {string} name
@@ -26,12 +26,12 @@ export abstract class Dependency implements IDependency {
         this.rules = rules;
     }
 
-    readonly name: string
+    readonly name: string;
 
-    readonly description: string
+    readonly description: string;
 
-    readonly type: string
+    readonly type: string;
 
-    readonly rules: IDependencyRule[]
+    readonly rules: IDependencyRule[];
 
 }

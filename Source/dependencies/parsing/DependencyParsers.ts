@@ -12,13 +12,13 @@ import { IDependencyParsers, IDependency, ICanParseDependencies, MultipleParsers
  * @interface IDependencyParser
  */
 export class DependencyParsers implements IDependencyParsers {
-    
+
     /**
      * Instantiates an instance of {DependencyParsers}.
      * @param {ICanParseDependencies[]} _parsers
      */
     constructor(private _parsers: ICanParseDependencies[], private _loggers: ILoggers) {}
-    
+
     get parsers() {
         return this._parsers;
     }
@@ -26,7 +26,7 @@ export class DependencyParsers implements IDependencyParsers {
     add(...parsers: ICanParseDependencies[]) {
         this._parsers.push(...parsers);
     }
-    
+
     parse(obj: any, name: string): IDependency {
         this._loggers.info(`Parsing dependency ${name}`);
         let parser: ICanParseDependencies | null = null;
@@ -38,7 +38,7 @@ export class DependencyParsers implements IDependencyParsers {
             }
         });
         if (parser === null) throw new CannotParseDependency(name);
-        let parsedDependency = (parser as ICanParseDependencies).parse(obj, name);
+        const parsedDependency = (parser as ICanParseDependencies).parse(obj, name);
         this._loggers.info('Parsed dependency');
         return parsedDependency;
     }

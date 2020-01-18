@@ -11,7 +11,7 @@ import { IDependency, ICanValidateDependency, IValidatorsFor } from '../internal
  * @interface ICanValidateDependency
  */
 export abstract class ValidatorsFor<T extends IDependency> implements IValidatorsFor<T> {
-    
+
     /**
      * Instantiates an instance of {ValidatorsFor}.
      * @param {ICanValidateDependency<T>[]} _validators
@@ -23,7 +23,7 @@ export abstract class ValidatorsFor<T extends IDependency> implements IValidator
     }
 
     canValidate(dependency: T) {
-        for (let validator of this._validators) {
+        for (const validator of this._validators) {
             if (validator.canValidate(dependency)) return true;
         }
         return false;
@@ -32,7 +32,7 @@ export abstract class ValidatorsFor<T extends IDependency> implements IValidator
     validate(dependency: T) {
         this._validators.forEach(_ => {
             if (_.canValidate(dependency)) _.validate(dependency);
-        })
+        });
     }
 
 }

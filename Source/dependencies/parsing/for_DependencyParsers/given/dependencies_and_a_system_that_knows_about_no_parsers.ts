@@ -2,9 +2,9 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { DependencyParsers, PromptDependency, DiscoverDependency, DiscoverAndPromptDependency } from "../../../internal";
-import { ILoggers } from "@dolittle/tooling.common.logging";
-import Substitute from "@fluffy-spoon/substitute";
+import { DependencyParsers, PromptDependency, DiscoverDependency, DiscoverAndPromptDependency } from '../../../internal';
+import { ILoggers } from '@dolittle/tooling.common.logging';
+import Substitute from '@fluffy-spoon/substitute';
 
 export class dependencies_and_a_system_that_knows_about_no_parsers {
     dependencyParsers: DependencyParsers;
@@ -21,4 +21,3 @@ export class dependencies_and_a_system_that_knows_about_no_parsers {
 
     }
 }
-    

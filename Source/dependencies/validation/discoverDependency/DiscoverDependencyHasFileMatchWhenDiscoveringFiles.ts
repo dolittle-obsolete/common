@@ -18,15 +18,15 @@ export class DiscoverDependencyHasFileMatchWhenDiscoveringFiles extends Discover
     }
     validate(dependency: IDiscoverDependency) {
         if (!this.canValidate(dependency)) throw new CannotValidateDependency(dependency, this);
-        if (dependency.fileMatch === undefined || dependency.fileMatch.source.trim() === '') 
+        if (dependency.fileMatch === undefined || dependency.fileMatch.source.trim() === '')
             throw new MissingField(dependency, 'fileMatch');
     }
 
     private isDiscoveringFiles(dependency: IDiscoverDependency) {
         return [
-            fileDiscoverType, 
-            fileContentDiscoverType, 
-            multipleFilesDiscoverType, 
-            multipleFileContentsDiscoverType].includes(dependency.discoverType)
+            fileDiscoverType,
+            fileContentDiscoverType,
+            multipleFilesDiscoverType,
+            multipleFileContentsDiscoverType].includes(dependency.discoverType);
     }
 }

@@ -2,15 +2,15 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { PromptDependencyParser, IRulesParser } from "../../../internal";
-import {a_prompt_dependency} from '../given/a_prompt_dependency';
-import Substitute from "@fluffy-spoon/substitute";
-import { expect } from "chai";
+import { PromptDependencyParser, IRulesParser } from '../../../internal';
+import { a_prompt_dependency } from '../given/a_prompt_dependency';
+import Substitute from '@fluffy-spoon/substitute';
+import { expect } from 'chai';
 
 describe('and dependency is a prompt dependency', () => {
-    let context = new a_prompt_dependency();
-    let parser = new PromptDependencyParser(Substitute.for<IRulesParser>());
-    let result = parser.parse(context.dependency, context.dependency.name);
+    const context = new a_prompt_dependency();
+    const parser = new PromptDependencyParser(Substitute.for<IRulesParser>());
+    const result = parser.parse(context.dependency, context.dependency.name);
     it('Should be able to parse dependency', () => expect(result).to.not.be.undefined);
     it('Should parse to the same dependency object', () => {
         expect(result.name).to.equal(context.dependency.name);

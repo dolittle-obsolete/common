@@ -2,8 +2,8 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {dolittleConfig} from '@dolittle/tooling.common.configurations';
-import { DiscoverDependencyResolver, PromptDependency, DiscoverDependency, DiscoverAndPromptDependency } from "../../../internal";
+import { dolittleConfig } from '@dolittle/tooling.common.configurations';
+import { DiscoverDependencyResolver, PromptDependency, DiscoverDependency, DiscoverAndPromptDependency } from '../../../internal';
 import Substitute from '@fluffy-spoon/substitute';
 import { IDependencyDiscoverResolver } from '../../../internal';
 import { AllArguments } from '@fluffy-spoon/substitute/dist/src/Arguments';
@@ -15,7 +15,7 @@ export class dependencies_and_a_discover_dependency_resolver {
     discoverAndPromptDependency: DiscoverAndPromptDependency;
     argumentDependency: PromptDependency;
     constructor() {
-        let dependencyDiscoverResolver = Substitute.for<IDependencyDiscoverResolver>();
+        const dependencyDiscoverResolver = Substitute.for<IDependencyDiscoverResolver>();
         dependencyDiscoverResolver.resolve(new AllArguments()).returns(Promise.resolve('something'));
         this.discoverDependencyResolver = new DiscoverDependencyResolver(
             dependencyDiscoverResolver,

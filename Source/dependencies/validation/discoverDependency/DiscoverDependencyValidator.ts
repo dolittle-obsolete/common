@@ -6,18 +6,18 @@ import { ICanValidateDependency, IDiscoverDependency, dependencyIsDiscoverDepend
 
 /**
  * Represents an abstract implementation of {ICanValidateDependency} for validating {IDiscoverDependency} discover dependencies
- * 
+ *
  * @export
  * @abstract
  * @class DiscoverDependencyValidator
  * @implements {ICanValidateDependency<IDiscoverDependency>}
  */
 export abstract class DiscoverDependencyValidator implements ICanValidateDependency<IDiscoverDependency> {
-    
+
     canValidate(dependency: IDiscoverDependency) {
         return dependencyIsDiscoverDependency(dependency) ;
     }
 
-    abstract validate(dependency: IDiscoverDependency): void
+    abstract validate(dependency: IDiscoverDependency): void;
 
 }

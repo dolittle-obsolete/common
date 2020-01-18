@@ -2,13 +2,13 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { PromptDependencyHasUserInputType, DiscoverDependency } from "../../../../internal";
-import { expect } from "chai";
+import { PromptDependencyHasUserInputType, DiscoverDependency } from '../../../../internal';
+import { expect } from 'chai';
 
 describe('and it cannot validate dependency', () => {
-    let validator = new PromptDependencyHasUserInputType();
-    let dep = new DiscoverDependency('name', 'desc', [], 'type');
-    let result = validator.canValidate(dep as any);
-    
+    const validator = new PromptDependencyHasUserInputType();
+    const dep = new DiscoverDependency('name', 'desc', [], 'type');
+    const result = validator.canValidate(dep as any);
+
     it('Should not be able to validate dependency', () => result.should.be.equal(false));
 });

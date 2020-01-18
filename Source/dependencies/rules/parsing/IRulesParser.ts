@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IDependencyRule } from "../../internal";
+import { IDependencyRule } from '../../internal';
 
 /**
  * Defines a system that can parse rules from a dependency object

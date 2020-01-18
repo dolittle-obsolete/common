@@ -11,10 +11,10 @@ import { IDiscoverDependency, DependencyDiscoverResult } from '../internal';
  * @class IDependencyDiscoverResolver
  */
 export interface IDependencyDiscoverResolver {
-    
+
     /**
      * Resolves the 'discover' part of a dependency
-     * @param {Dependency} dependency The dependency 
+     * @param {Dependency} dependency The dependency
      * @param {string} startLocation The path to start searching from
      * @param {string} language The core language
      * @param {any} dolittleConfig

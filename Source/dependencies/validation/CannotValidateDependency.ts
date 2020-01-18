@@ -2,11 +2,11 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { Exception } from "@dolittle/tooling.common.utilities";
-import { IDependency, ICanValidateDependency } from "../internal";
+import { Exception } from '@dolittle/tooling.common.utilities';
+import { IDependency, ICanValidateDependency } from '../internal';
 
 /**
- * The exception that gets throw when a dependency validator is attempting to validate a dependency that it cannot validate 
+ * The exception that gets throw when a dependency validator is attempting to validate a dependency that it cannot validate
  *
  * @export
  * @class CannotValidateDependency

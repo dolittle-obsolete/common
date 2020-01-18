@@ -15,7 +15,7 @@ export class DiscoverDependencyHasDiscoverType extends DiscoverDependencyValidat
 
     validate(dependency: IDiscoverDependency) {
         if (!this.canValidate(dependency)) throw new CannotValidateDependency(dependency, this);
-        if (dependency.discoverType === undefined || dependency.discoverType.trim() === '') 
+        if (dependency.discoverType === undefined || dependency.discoverType.trim() === '')
             throw new MissingField(dependency, 'discoverType');
     }
 

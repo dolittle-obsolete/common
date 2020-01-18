@@ -6,18 +6,18 @@ import { ICanValidateDependency, dependencyIsPromptDependency, IPromptDependency
 
 /**
  * Represents an abstract implementation of {ICanValidateDependency} for validating {IPromptDependency} prompt dependencies
- * 
+ *
  * @export
  * @abstract
  * @class PromptDependencyValidator
  * @implements {ICanValidateDependency<IPromptDependency>}
  */
 export abstract class PromptDependencyValidator implements ICanValidateDependency<IPromptDependency> {
-    
+
     canValidate(dependency: IPromptDependency) {
         return dependencyIsPromptDependency(dependency) ;
     }
 
-    abstract validate(dependency: IPromptDependency): void
+    abstract validate(dependency: IPromptDependency): void;
 
 }

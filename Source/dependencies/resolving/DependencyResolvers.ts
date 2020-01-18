@@ -24,34 +24,34 @@ import { ILoggers } from '@dolittle/tooling.common.logging';
     add(...resolvers: ICanResolveDependencies[]): void {
         this._resolvers.push(...resolvers);
     }
-    
+
     async resolve(context: any, dependencies: IDependency[], additionalRules?: IDependencyRuleFor<IDependency>[], destinationPath?: string, coreLanguage?: string): Promise<any> {
         this._loggers.info('Resolving dependencies');
-        let resolversMap = this.getResolverToDependenciesMap(dependencies).entries();
-        for (let entry of resolversMap) {
-            let resolver = entry[0];
-            let deps = entry[1];
-            context = await Promise.resolve(resolver.resolve(context, deps, additionalRules? additionalRules : [], destinationPath, coreLanguage));
+        const resolversMap = this.getResolverToDependenciesMap(dependencies).entries();
+        for (const entry of resolversMap) {
+            const resolver = entry[0];
+            const deps = entry[1];
+            context = await Promise.resolve(resolver.resolve(context, deps, additionalRules ? additionalRules : [], destinationPath, coreLanguage));
         }
         this._loggers.info('Finished resolving dependencies');
         return context;
     }
 
     private getResolverToDependenciesMap(dependencies: IDependency[]) {
-        let resolverToDependenciesMap = new Map<ICanResolveDependencies, IDependency[]>();
+        const resolverToDependenciesMap = new Map<ICanResolveDependencies, IDependency[]>();
         dependencies.forEach(dep => {
             let resolvers = 0;
-            let resolver: ICanResolveDependencies | undefined 
+            let resolver: ICanResolveDependencies | undefined;
             this._resolvers.forEach(_ => {
                 if (_.canResolve(dep)) {
-                    resolvers++;
+                    resolvers += 1;
                     resolver = _;
                 }
             });
             if (!resolver) throw new CannotResolveDependency(dep);
             if (resolvers > 1) throw new MultipleResolversForDependency(dep);
-            
-            let deps = resolverToDependenciesMap.get(resolver);
+
+            const deps = resolverToDependenciesMap.get(resolver);
             if (deps) resolverToDependenciesMap.set(resolver, [...deps, dep]);
             else resolverToDependenciesMap.set(resolver, [dep]);
         });

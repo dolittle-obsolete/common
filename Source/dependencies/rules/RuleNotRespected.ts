@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {Exception} from '@dolittle/tooling.common.utilities';
+import { Exception } from '@dolittle/tooling.common.utilities';
 import { IDependency, IDependencyRule } from '../internal';
 
 /**

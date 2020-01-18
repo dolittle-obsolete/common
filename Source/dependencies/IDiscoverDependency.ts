@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import {IDependency} from './internal';
+import { IDependency } from './internal';
 
 /**
  * Defines the configuration of a discover dependency
@@ -12,26 +12,26 @@ import {IDependency} from './internal';
  * @extends {IDependency}
  */
 export interface IDiscoverDependency extends IDependency {
-   
+
     /**
      * The discover type of the dependency, it dictates what should be discovered and how it will be discovered.
-     * 
-     * The 'namespace' discovery type tries to resolve a namespace for a tempalte by going upwards in the file system and finding a file matching the 'milestone' parameter and then creating the namespace by joining folder names with '.'. 
-     * 
+     *
+     * The 'namespace' discovery type tries to resolve a namespace for a tempalte by going upwards in the file system and finding a file matching the 'milestone' parameter and then creating the namespace by joining folder names with '.'.
+     *
      * The 'file' discovery type tries to find a file that matches the given 'fileMatch' parameter and sets the file name as the dependency. If the 'contentMatch' parameter is also given then the system will match the file by the fileMatch and contentMatch
-     * 
+     *
      * The 'fileContent' discovery type does the same as the 'file' type, but the dependency is the file's content, not its file name.
-     * 
+     *
      * The 'multipleFiles' discovery type does the same as the 'file' type, but it discovers multiple files instead of just one.
-     * 
+     *
      * The 'multipleFileContents' discovery type does the same as the 'fileContent' type, but it discovers multiple files instead of just one.
      *
      * @readonly
      */
     readonly discoverType: string;
-    
+
     /**
-     * Whether or not to generate namespaces for each file that's discovered. 
+     * Whether or not to generate namespaces for each file that's discovered.
      *
      * @readonly
      */

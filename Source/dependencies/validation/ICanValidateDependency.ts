@@ -11,7 +11,7 @@ import { IDependency } from '../internal';
  * @interface ICanValidateDependency
  */
 export interface ICanValidateDependency<T extends IDependency> {
-    
+
     /**
      * Whether this system can validate dependency
      *

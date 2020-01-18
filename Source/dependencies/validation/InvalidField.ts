@@ -2,11 +2,11 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { Exception } from "@dolittle/tooling.common.utilities";
-import { IDependency } from "../internal";
+import { Exception } from '@dolittle/tooling.common.utilities';
+import { IDependency } from '../internal';
 
 /**
- * The exception that gets throw when a dependency has a field that is invalid 
+ * The exception that gets throw when a dependency has a field that is invalid
  *
  * @export
  * @class InvalidField
@@ -21,6 +21,6 @@ export class InvalidField extends Exception {
      * @param {string} [message]
      */
     constructor(dependency: IDependency, field: string, message?: string) {
-        super(`Dependency with name '${dependency.name}' has invalid field '${field}'.${message? ` ${message}` : ''}`);
+        super(`Dependency with name '${dependency.name}' has invalid field '${field}'.${message ? ` ${message}` : ''}`);
     }
 }

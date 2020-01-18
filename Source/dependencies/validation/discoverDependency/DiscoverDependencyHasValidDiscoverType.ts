@@ -12,13 +12,13 @@ import { InvalidField, IDiscoverDependency, DiscoverDependencyValidator, depende
  * @extends {DiscoverDependencyValidator}
  */
 export class DiscoverDependencyHasValidDiscoverType extends DiscoverDependencyValidator {
-    
+
     canValidate(dependency: IDiscoverDependency) {
         return super.canValidate(dependency) && dependency.discoverType !== undefined;
     }
     validate(dependency: IDiscoverDependency) {
         if (!this.canValidate(dependency)) throw new CannotValidateDependency(dependency, this);
-        if (dependency.discoverType === undefined || !dependencyDiscoverTypes.includes(dependency.discoverType)) 
+        if (dependency.discoverType === undefined || !dependencyDiscoverTypes.includes(dependency.discoverType))
             throw new InvalidField(dependency, 'discoverType', `Expected 'discoverType' to be any of [${dependencyDiscoverTypes.join(', ')}]`);
     }
 

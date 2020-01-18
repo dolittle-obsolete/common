@@ -12,17 +12,17 @@ import { IDependency, IDependencyRuleFor } from '../internal';
  * @implements {IDependencyRule<IDependency>}
  */
 export abstract class DependencyRule implements IDependencyRuleFor<IDependency> {
-    
+
     /**
      * Instantiates an instance of {DependencyRule}.
      * @param {IDependency[]} _dependencies
      */
     constructor(private _dependencies: IDependency[]) {}
-    
+
     isRuleFor(dependency: IDependency) {
         return this._dependencies.map(_ => _.name).includes(dependency.name);
     }
-    
-    abstract isRespected(value: any): boolean
+
+    abstract isRespected(value: any): boolean;
 
 }
