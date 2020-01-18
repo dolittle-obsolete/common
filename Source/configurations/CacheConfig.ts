@@ -6,7 +6,7 @@ import Conf from 'conf';
 import path from 'path';
 
 /**
- * Represents a config file that's used as a cache storage for the tooling. 
+ * Represents a config file that's used as a cache storage for the tooling.
  *
  * @export
  * @class CacheConfig
@@ -22,7 +22,7 @@ export abstract class CacheConfig<T = unknown> extends Conf<T> {
      */
     constructor(configName: string, folder: string, defaultObj: { [key: string]: any; }) {
         super({
-            projectName: '.dolittle', 
+            projectName: '.dolittle',
             configName,
             cwd: path.join(folder, '.dolittle'),
             defaults: defaultObj,

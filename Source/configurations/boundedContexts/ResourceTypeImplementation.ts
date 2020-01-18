@@ -5,7 +5,7 @@
 
 /**
  * Represents a Bounded Context's resources type implementation configuration
- * 
+ *
  * @export
  * @class ResourceTypeImplementation
  */
@@ -25,7 +25,7 @@ export class ResourceTypeImplementation
 
     /**
      * Instantiates an instance of {ResourceTypeImplementation}
-     * @param {string} development 
+     * @param {string} development
      * @param {string} production
      */
     constructor (development: string, production: string) {

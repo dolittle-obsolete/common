@@ -5,14 +5,14 @@
 import { CacheConfig } from './internal';
 import fs from 'fs';
 /**
- * Represents a config file that's used as a user cache storage for the tooling. 
+ * Represents a config file that's used as a user cache storage for the tooling.
  *
  * @export
  * @class UserCacheConfig
  * @extends {CacheConfig}
  */
 export class UserCacheConfig<T = unknown> extends CacheConfig<T> {
-    static userHomeFolder = '/'
+    static userHomeFolder = '/';
     /**
      * Instantiates an instance of {UserCacheConfig}.
      * @param {string} configName The name of the configuration. Becomes the filename
@@ -21,7 +21,7 @@ export class UserCacheConfig<T = unknown> extends CacheConfig<T> {
      */
     constructor(configName: string, defaultObj: { [key: string]: any; }) {
         super(configName, UserCacheConfig.userHomeFolder, defaultObj);
-        
+
         if (!fs.existsSync(this.path)) this.store = defaultObj;
         const mode = fs.statSync(this.path).mode;
         if (mode & (fs.constants.S_IRGRP | fs.constants.S_IWGRP )

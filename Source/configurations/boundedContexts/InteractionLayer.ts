@@ -21,12 +21,12 @@ export class InteractionLayer
     }
 
     /**
-      * Instantiates an instance of {InteractionLayer}
-      * @param {string} type
-      * @param {string} language
-      * @param {string} framework 
-      * @param {string} entryPoint
-      */
+     * Instantiates an instance of {InteractionLayer}
+     * @param {string} type
+     * @param {string} language
+     * @param {string} framework
+     * @param {string} entryPoint
+     */
      constructor (type: string, language: string, framework: string, entryPoint: string) {
         this.type = type;
         this.language = language;
@@ -54,9 +54,9 @@ export class InteractionLayer
      * @type {string}
      */
     readonly framework: string;
-    
+
     /**
-     * The entry point of this specific interaction layer.  A relative path to the folder 
+     * The entry point of this specific interaction layer.  A relative path to the folder
      *
      * @type {string}
      */
