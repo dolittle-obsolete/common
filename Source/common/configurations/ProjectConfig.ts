@@ -11,10 +11,10 @@ export type ProjectConfigObject = {
      * @type {string}
      */
     coreLanguage: string;
-}
+};
 /**
  * Represents the cached project configuration file for the tooling.
- * 
+ *
  * Keys:
  *  The keys are defined in the {ProjectConfigObject} type
  *

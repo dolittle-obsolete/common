@@ -8,6 +8,6 @@ import { CommandGroup, ICommand } from '@dolittle/tooling.common.commands';
 export class ContextsCommandGroup extends CommandGroup {
 
     constructor(commands: ICommand[]) {
-        super('contexts', commands, 'Commands related to login contexts', false)
+        super('contexts', commands, 'Commands related to login contexts', false);
     }
 }
