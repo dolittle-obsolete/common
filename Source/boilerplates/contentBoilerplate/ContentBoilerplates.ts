@@ -5,7 +5,7 @@
 import { IFolders, IFileSystem } from '@dolittle/tooling.common.files';
 import { ILoggers } from '@dolittle/tooling.common.logging';
 import path from 'path';
-import { Handlebars, IContentBoilerplates, IContentBoilerplate, boilerplateIsContentBoilerplate, Boilerplates, IBoilerplatesLoader} from '../internal';
+import { Handlebars, IContentBoilerplates, IContentBoilerplate, boilerplateIsContentBoilerplate, Boilerplates, IBoilerplatesLoader } from '../internal';
 
 /**
  * Represents an implementation of {IContentBoilerplates}
@@ -23,11 +23,11 @@ export class ContentBoilerplates extends Boilerplates implements IContentBoilerp
     constructor(boilerplatesLoader: IBoilerplatesLoader, private _folders: IFolders, private _fileSystem: IFileSystem, private _logger: ILoggers, private _handlebars: Handlebars) {
         super(boilerplatesLoader);
     }
-    
+
     get boilerplates() {
         return super.boilerplates.filter(boilerplateIsContentBoilerplate);
     }
-    
+
     byNamespace(namespace: string | undefined) {
         return super.byNamespace(namespace) as IContentBoilerplate[];
     }
@@ -68,25 +68,25 @@ export class ContentBoilerplates extends Boilerplates implements IContentBoilerp
         this._logger.info(`Creating boilerplate with name '${boilerplate.name}' at destination '${destination}'`);
         await this._folders.makeFolderIfNotExists(destination);
         await this._folders.copy(destination, boilerplate.contentDirectory);
-        
-        let tasks: Promise<void>[] = [];
+
+        const tasks: Promise<void>[] = [];
         boilerplate.pathsNeedingBinding.forEach(_ => {
-            let pathToRename = path.join(destination, _);
-            let segments: string[]  = [];
+            const pathToRename = path.join(destination, _);
+            const segments: string[]  = [];
             pathToRename.split(/(\\|\/)/).forEach(segment => segments.push(this._handlebars.compile(segment)(context)));
-            let result = segments.join('');
+            const result = segments.join('');
             tasks.push(this._fileSystem.rename(pathToRename, result));
         });
-        
+
         tasks.push(...boilerplate.filesNeedingBinding.map(async _ => {
-            let file = path.join(destination, _);
-            let content = await this._fileSystem.readFile(file, 'utf8');
-            let template = this._handlebars.compile(content);
-            let result = template(context);
+            const file = path.join(destination, _);
+            const content = await this._fileSystem.readFile(file, 'utf8');
+            const template = this._handlebars.compile(content);
+            const result = template(context);
             await this._fileSystem.writeFile(file, result);
         }));
         await Promise.all(tasks);
-        this._logger.info(`Boilerplate created`);
+        this._logger.info('Boilerplate created');
         return {boilerplate, destination};
     }
 }

@@ -10,14 +10,14 @@ export class Script
 {
     /**
      * Instantiates an instance of {Script}
-     * @param {string} command 
+     * @param {string} command
      * @param {string[]} arguments
      * @param {string} currentWorkingDirectory
      */
     constructor (command: string, _arguments: string[], currentWorkingDirectory: string) {
         this.command = command;
         this.arguments = _arguments;
-        this.currentWorkingDirectory = currentWorkingDirectory;  
+        this.currentWorkingDirectory = currentWorkingDirectory;
     }
 
     /**
@@ -40,7 +40,7 @@ export class Script
      * @readonly
      */
     readonly currentWorkingDirectory: string;
-    
+
     toJson() {
         return {
             cmd: this.command,

@@ -2,7 +2,7 @@
  *  Copyright (c) Dolittle. All rights reserved.
  *  Licensed under the MIT License. See LICENSE in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { IBoilerplatesLoader, IBoilerplates, IBoilerplate} from './internal';
+import { IBoilerplatesLoader, IBoilerplates, IBoilerplate } from './internal';
 
 const anyType = 'any';
 /**
@@ -15,7 +15,7 @@ export class Boilerplates implements IBoilerplates {
      * @param {IBoilerplatesLoader} _boilerplatesLoader
      */
     constructor(private _boilerplatesLoader: IBoilerplatesLoader) {}
-    
+
     get boilerplates() {
         return this._boilerplatesLoader.loaded;
     }

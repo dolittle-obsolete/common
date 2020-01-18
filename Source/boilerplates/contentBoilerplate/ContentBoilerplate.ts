@@ -12,9 +12,9 @@ export class ContentBoilerplate extends Boilerplate implements IContentBoilerpla
 
     /**
      * Instantiates an instance of {ContentBoilerplate}
-     * @param {string} language 
-     * @param {string} name 
-     * @param {string} description 
+     * @param {string} language
+     * @param {string} name
+     * @param {string} description
      * @param {string} type
      * @param {IDependencies} dependencies
      * @param {string} namespace
@@ -22,12 +22,12 @@ export class ContentBoilerplate extends Boilerplate implements IContentBoilerpla
      * @param {string} target
      * @param {string} framework
      * @param {{name: string, type: string, language: string}} parent
-     * @param {string} contentDirectory 
+     * @param {string} contentDirectory
      * @param {string[]} [pathsNeedingBinding]
      * @param {string[]} [filesNeedingBinding]
      */
-    constructor(language: string, name: string, description: string, type: string, dependencies: IDependencies, namespace: string, 
-        scripts: Scripts, target: string, framework: string, parent: { name: string; type: string; language: string; }, 
+    constructor(language: string, name: string, description: string, type: string, dependencies: IDependencies, namespace: string,
+        scripts: Scripts, target: string, framework: string, parent: { name: string; type: string; language: string; },
         contentDirectory: string, pathsNeedingBinding: string[], filesNeedingBinding: string[]) {
             super(language, name, description, type, dependencies, namespace, scripts, contentDirectory);
             this.target = target;
@@ -36,7 +36,7 @@ export class ContentBoilerplate extends Boilerplate implements IContentBoilerpla
             this.pathsNeedingBinding = pathsNeedingBinding || [];
             this.filesNeedingBinding = filesNeedingBinding || [];
     }
-    
+
 
     readonly target: string;
 

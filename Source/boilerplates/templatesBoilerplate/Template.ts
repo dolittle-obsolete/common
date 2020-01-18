@@ -34,7 +34,7 @@ export class Template implements ITemplate
         this.dependencies = dependencies || [];
         this.includedFiles = includedFiles || [];
         this.path = path;
-    
+
         this.throwIfInvalidArea();
 
         const dir = getFileDirPath(this.path);
@@ -54,7 +54,7 @@ export class Template implements ITemplate
     readonly includedFiles: string[];
 
     readonly path: string;
-    
+
     get filesToCreate(): string[] {return this._filesToCreate;}
 
     getAllDependencies(boilerplate: ITemplatesBoilerplate): IDependency[] {return boilerplate.dependencies.dependencies.concat(this.dependencies.dependencies);}

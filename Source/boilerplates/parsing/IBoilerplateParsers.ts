@@ -2,7 +2,7 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { ICanParseBoilerplates, IBoilerplate } from "../internal";
+import { ICanParseBoilerplates, IBoilerplate } from '../internal';
 
 /**
  * Defines a system that knows about boilerplate parsers {ICanParseBoilerplates}
@@ -26,7 +26,7 @@ export interface IBoilerplateParsers {
      * @returns {boolean}
      */
     canParse(boilerplate: any, boilerplatePath: string): boolean
-    
+
     /**
      * Parses the boilerplate object
      *

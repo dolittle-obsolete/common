@@ -2,10 +2,10 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IDependencyParsers, DependenciesWithStandardValidators } from "@dolittle/tooling.common.dependencies";
-import { IFolders, IFileSystem } from "@dolittle/tooling.common.files";
+import { IDependencyParsers, DependenciesWithStandardValidators } from '@dolittle/tooling.common.dependencies';
+import { IFolders, IFileSystem } from '@dolittle/tooling.common.files';
 import path from 'path';
-import { ICanParseBoilerplates, Scripts, ContentBoilerplate, contentBoilerplateContentDirectoryName, CannotParseBoilerplate, boilerplateIsContentBoilerplate, contentBoilerplateContentDirectoryFromPath } from "../internal";
+import { ICanParseBoilerplates, Scripts, ContentBoilerplate, contentBoilerplateContentDirectoryName, CannotParseBoilerplate, boilerplateIsContentBoilerplate, contentBoilerplateContentDirectoryFromPath } from '../internal';
 
 const binaryFiles = [
     '.jpg',
@@ -31,20 +31,20 @@ export class ContentBoilerplateParser implements ICanParseBoilerplates {
      * @param {IFileSystem} _fileSystem
      */
     constructor (private _dependencyParsers: IDependencyParsers, private _folders: IFolders, private _fileSystem: IFileSystem) {}
-    
+
     canParse(boilerplate: any) {
         return boilerplateIsContentBoilerplate(boilerplate);
     }
-    
+
     async parse(boilerplate: any, boilerplatePath: string) {
         if (!this.canParse(boilerplate)) throw new CannotParseBoilerplate(boilerplatePath);
-        let bindings = await this.getBindingsFor(boilerplatePath);
+        const bindings = await this.getBindingsFor(boilerplatePath);
         return new ContentBoilerplate(
             boilerplate.language || 'any',
             boilerplate.name,
             boilerplate.description,
             boilerplate.type,
-            boilerplate.dependencies !== undefined? 
+            boilerplate.dependencies !== undefined ?
                 new DependenciesWithStandardValidators(Object.keys(boilerplate.dependencies)
                     .map(key => this._dependencyParsers.parse(boilerplate.dependencies[key], key)))
                 : new DependenciesWithStandardValidators([]),
@@ -61,37 +61,37 @@ export class ContentBoilerplateParser implements ICanParseBoilerplates {
 
     /**
      * Gets the path and file bindings for a boilerplate
-     * 
+     *
      * @param {string} boilerplatePath The path to the boilerplate.json file
-     * @returns {{pathsNeedingBinding: string[], filesNeedingBinding: string[]}} 
+     * @returns {{pathsNeedingBinding: string[], filesNeedingBinding: string[]}}
      */
     private async getBindingsFor(boilerplatePath: string): Promise<{ pathsNeedingBinding: string[]; filesNeedingBinding: string[]; }> {
         let pathsNeedingBinding: string[] = [];
-        let filesNeedingBinding: string[] = [];
+        const filesNeedingBinding: string[] = [];
         const contentFolder = path.join(path.dirname(boilerplatePath), contentBoilerplateContentDirectoryName);
         const fileExists = await this._fileSystem.exists(contentFolder);
         if (! fileExists) {
             throw new Error(`Missing folder with name ${contentBoilerplateContentDirectoryName} at root level when parsing boilerplate at path ${boilerplatePath}`);
         }
-        
+
         let paths = await this._folders.getFilesAndFoldersRecursively(contentFolder);
-        paths = this.filterOutBinaryFiles(paths)
+        paths = this.filterOutBinaryFiles(paths);
         pathsNeedingBinding = paths.filter(_ => _.indexOf('{{') > 0).map(_ => _.substr(contentFolder.length + 1));
         await Promise.all(paths.map(async _ => {
-            let stat = await this._fileSystem.stat(_);
+            const stat = await this._fileSystem.stat(_);
             if (!stat.isDirectory()) {
-                let file = await this._fileSystem.readFile(_);
+                const file = await this._fileSystem.readFile(_);
                 if (file.indexOf('{{') >= 0) {
                     filesNeedingBinding.push(_.substr(contentFolder.length + 1));
                 }
             }
         }));
-        let ret = {
+        const ret = {
             pathsNeedingBinding,
             filesNeedingBinding
         };
         return ret;
-        
+
     }
 
     private filterOutBinaryFiles(filePaths: string[]) {

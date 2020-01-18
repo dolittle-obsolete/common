@@ -18,12 +18,12 @@ export async function fetchOnlineBoilerplates(onlineBoilerplatesDiscoverer: Onli
     busyIndicator: IBusyIndicator, keywords: string[] = [], limit: number = 250): Promise<ToolingPackage[]> {
     await requireInternet(connectionChecker, busyIndicator);
     busyIndicator = busyIndicator.createNew().start('Getting boilerplates (this might take a while, depending on your internet connection): ');
-    let boilerplates = await onlineBoilerplatesDiscoverer.findLatest(keywords, limit)
+    const boilerplates = await onlineBoilerplatesDiscoverer.findLatest(keywords, limit)
         .then(boilerplates => {
             busyIndicator.succeed(`Found ${boilerplates.length} boilerplates`);
             return boilerplates;
         }).catch(error => {
-            busyIndicator.fail(`An error occurred: ${error.message? error.message : error}`);
+            busyIndicator.fail(`An error occurred: ${error.message ? error.message : error}`);
             throw error;
         });
     return boilerplates;

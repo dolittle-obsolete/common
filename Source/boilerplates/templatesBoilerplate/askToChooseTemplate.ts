@@ -13,15 +13,15 @@ import { ITemplate } from '../internal';
  */
 export async function chooseTemplate(templates: ITemplate[], resolvers: IDependencyResolvers) {
     if (templates.length && templates.length > 0) {
-        let template = await askWhichTemplate(templates, resolvers);
+        const template = await askWhichTemplate(templates, resolvers);
         return template;
     }
     return null;
 }
 
 async function askWhichTemplate(templates: ITemplate[], resolvers: IDependencyResolvers) {
-    let choices = templates.map(_ => new Object({name: `${_.name} description: ${_.description}`, value: _}));
-    let dep = new PromptDependency('template','Choose a template', [], chooseOneUserInputType, 'Choose template:', false,  choices);
-    let answer = await resolvers.resolve({}, [dep], []);
+    const choices = templates.map(_ => new Object({name: `${_.name} description: ${_.description}`, value: _}));
+    const dep = new PromptDependency('template','Choose a template', [], chooseOneUserInputType, 'Choose template:', false,  choices);
+    const answer = await resolvers.resolve({}, [dep], []);
     return answer['template'] as ITemplate;
 }

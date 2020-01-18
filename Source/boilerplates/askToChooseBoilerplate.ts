@@ -12,15 +12,15 @@ import { IBoilerplate } from './internal';
  */
 export async function chooseBoilerplate(boilerplates: IBoilerplate[], resolvers: IDependencyResolvers) {
     if (boilerplates.length && boilerplates.length > 0) {
-        let boilerplate = await askWhichBoilerplate(boilerplates, resolvers);
+        const boilerplate = await askWhichBoilerplate(boilerplates, resolvers);
         return boilerplate;
     }
     return null;
 }
 
 async function askWhichBoilerplate(boilerplates: IBoilerplate[], resolvers: IDependencyResolvers) {
-    let choices = boilerplates.map(boilerplate => new Object({name: `${boilerplate.namespace? `${boilerplate.namespace}::`: ''}${boilerplate.name} language: ${boilerplate.language}`, value: boilerplate}));
-    let dep = new PromptDependency('boilerplate', 'Choose a boilerplate', [], chooseOneUserInputType, 'Choose boilerplate:', false, choices);
-    let answer = await resolvers.resolve({}, [dep], []);
+    const choices = boilerplates.map(boilerplate => new Object({name: `${boilerplate.namespace ? `${boilerplate.namespace}::` : ''}${boilerplate.name} language: ${boilerplate.language}`, value: boilerplate}));
+    const dep = new PromptDependency('boilerplate', 'Choose a boilerplate', [], chooseOneUserInputType, 'Choose boilerplate:', false, choices);
+    const answer = await resolvers.resolve({}, [dep], []);
     return answer['boilerplate'] as IBoilerplate;
 }
