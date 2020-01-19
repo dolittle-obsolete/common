@@ -7,7 +7,7 @@ import { IPlugins, fetchDolittlePlugins, OnlineDolittlePluginsFinder } from '@do
 import { IBusyIndicator, NullBusyIndicator, ICanOutputMessages, NullMessageOutputter } from '@dolittle/tooling.common.utilities';
 import { INamespace, Namespace, ICommandManager, IProviderRegistrators, ICanProvideCommands, ICanProvideCommandGroups, ICanProvideNamespaces } from '@dolittle/tooling.common.commands';
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { DownloadPackageInfo, IConnectionChecker, ICanDownloadPackages } from '@dolittle/tooling.common.packages';
+import { DownloadPackageInfo, IConnectionChecker, ICanDownloadPackages, ILatestCompatiblePackageFinder, isGreaterVersion } from '@dolittle/tooling.common.packages';
 import { IDependencyResolvers, dependencyResolvers as _dependencyResolvers } from '@dolittle/tooling.common.dependencies';
 import { IInitializer, HostPackage } from './internal';
 
@@ -25,7 +25,7 @@ export class Initializer implements IInitializer {
     constructor(private _providerRegistrators: IProviderRegistrators, private _commandManager: ICommandManager, private _plugins: IPlugins,
                 private _boilerplates: IBoilerplates, private _boilerplatesLoader: IBoilerplatesLoader, private _boilerplateDiscoverers: IBoilerplateDiscoverers,
                 private _dolittlePluginsFinder: OnlineDolittlePluginsFinder, private _connectionChecker: IConnectionChecker,
-                private _packageDownloader: ICanDownloadPackages, private _logger: ILoggers) {}
+                private _latestCompatiblePackageFinder: ILatestCompatiblePackageFinder, private _packageDownloader: ICanDownloadPackages, private _toolingPackage: any, private _logger: ILoggers) {}
 
     get isInitialized() {
         return this._isInitialized;
@@ -58,6 +58,37 @@ export class Initializer implements IInitializer {
             throw new Error(error);
         }
         busyIndicator.succeed('Plugins reloaded');
+    }
+
+    async toolingPlatformHasUpdate() {
+        const latestCompatibleVersion = (await this._latestCompatiblePackageFinder.find('@dolittle/tooling.common'))?.version!;
+        return isGreaterVersion(latestCompatibleVersion, this._toolingPackage.version);
+    }
+
+    async updateToolingPlatform() {
+        const latestCompatibleVersion = (await this._latestCompatiblePackageFinder.find('@dolittle/tooling.common'))?.version!;
+        const shouldUpdate = isGreaterVersion(latestCompatibleVersion, this._toolingPackage.version);
+        if (shouldUpdate) {
+            this._packageDownloader.downloadSync([
+                '@dolittle/tooling.common',
+                '@dolittle/tooling.common.boilerplates',
+                '@dolittle/tooling.common.commands',
+                '@dolittle/tooling.common.configurations',
+                '@dolittle/tooling.common.dependencies',
+                '@dolittle/tooling.common.files',
+                '@dolittle/tooling.common.logging',
+                '@dolittle/tooling.common.login',
+                '@dolittle/tooling.common.packages',
+                '@dolittle/tooling.common.plugins',
+                '@dolittle/tooling.common.utilities',
+                ].map(_ => {
+                    return {
+                        name: _,
+                        version: latestCompatibleVersion
+                    } as DownloadPackageInfo;
+                }));
+        }
+        return shouldUpdate;
     }
 
     private async installDefaultPluginsIfNeeded(hostPackage: HostPackage, busyIndicator: IBusyIndicator, outputter: ICanOutputMessages) {
