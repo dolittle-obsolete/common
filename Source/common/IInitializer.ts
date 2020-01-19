@@ -32,4 +32,18 @@ export interface IInitializer {
      * @returns {Promise<void>}
      */
     reloadPlugins(busyIndicator?: IBusyIndicator): Promise<void>
+
+    /**
+     * Whether or not the tooling platform has any updates.
+     *
+     * @returns {Promise<boolean>}
+     */
+    toolingPlatformHasUpdate(): Promise<boolean>
+
+    /**
+     * Updated the tooling platform if any new updates.
+     *
+     * @returns {Promise<boolean>}
+     */
+    updateToolingPlatform(): Promise<boolean>
 }

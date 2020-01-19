@@ -9,9 +9,9 @@ import { plugins, onlineDolittlePluginsFinder } from '@dolittle/tooling.common.p
 import { loggers } from '@dolittle/tooling.common.logging';
 import { ProviderRegistrator } from './internal';
 import { contexts } from '@dolittle/tooling.common.login';
-import { connectionChecker, npmPackageDownloader } from '@dolittle/tooling.common.packages';
+import { connectionChecker, npmPackageDownloader, latestCompatiblePackageFinder, toolingPackage } from '@dolittle/tooling.common.packages';
 
-export let initializer: IInitializer = new Initializer(providerRegistrators, commandManager, plugins, boilerplates, boilerplatesLoader, boilerplateDiscoverers, onlineDolittlePluginsFinder, connectionChecker, npmPackageDownloader, loggers);
+export let initializer: IInitializer = new Initializer(providerRegistrators, commandManager, plugins, boilerplates, boilerplatesLoader, boilerplateDiscoverers, onlineDolittlePluginsFinder, connectionChecker, latestCompatiblePackageFinder, npmPackageDownloader, toolingPackage, loggers);
 
 const providerRegistrator: ICanRegisterProviders = new ProviderRegistrator(commandManager, initializer, contexts, loggers);
 providerRegistrators.addRegistrators(providerRegistrator);
