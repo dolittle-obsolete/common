@@ -2,12 +2,12 @@
 *  Copyright (c) Dolittle. All rights reserved.
 *  Licensed under the MIT License. See LICENSE in the project root for license information.
 *--------------------------------------------------------------------------------------------*/
-import { IBoilerplates, IBoilerplatesLoader } from '@dolittle/tooling.common.boilerplates';
-import { IPlugins, fetchDolittlePlugins, onlineDolittlePluginsFinder, askToDownloadOrUpdatePlugins } from '@dolittle/tooling.common.plugins';
+import { IBoilerplates, IBoilerplatesLoader, IBoilerplateDiscoverers, initBoilerplatesSystem } from '@dolittle/tooling.common.boilerplates';
+import { IPlugins, fetchDolittlePlugins, OnlineDolittlePluginsFinder } from '@dolittle/tooling.common.plugins';
 import { IBusyIndicator, NullBusyIndicator, ICanOutputMessages, NullMessageOutputter } from '@dolittle/tooling.common.utilities';
 import { INamespace, Namespace, ICommandManager, IProviderRegistrators, ICanProvideCommands, ICanProvideCommandGroups, ICanProvideNamespaces } from '@dolittle/tooling.common.commands';
 import { ILoggers } from '@dolittle/tooling.common.logging';
-import { connectionChecker, npmPackageDownloader, DownloadPackageInfo } from '@dolittle/tooling.common.packages';
+import { DownloadPackageInfo, IConnectionChecker, ICanDownloadPackages } from '@dolittle/tooling.common.packages';
 import { IDependencyResolvers, dependencyResolvers as _dependencyResolvers } from '@dolittle/tooling.common.dependencies';
 import { IInitializer, HostPackage } from './internal';
 
@@ -23,7 +23,9 @@ export class Initializer implements IInitializer {
     private _isInitialized = false;
 
     constructor(private _providerRegistrators: IProviderRegistrators, private _commandManager: ICommandManager, private _plugins: IPlugins,
-                private _boilerplates: IBoilerplates, private _boilerplatesLoader: IBoilerplatesLoader, private _logger: ILoggers) {}
+                private _boilerplates: IBoilerplates, private _boilerplatesLoader: IBoilerplatesLoader, private _boilerplateDiscoverers: IBoilerplateDiscoverers,
+                private _dolittlePluginsFinder: OnlineDolittlePluginsFinder, private _connectionChecker: IConnectionChecker,
+                private _packageDownloader: ICanDownloadPackages, private _logger: ILoggers) {}
 
     get isInitialized() {
         return this._isInitialized;
@@ -36,7 +38,7 @@ export class Initializer implements IInitializer {
         }
         else {
             this._logger.info('Initializing the tooling system');
-            if (hostPackage) await this.installDefaultPluginsIfNeeded(hostPackage, dependencyResolvers, busyIndicator, outputter);
+            if (hostPackage) await this.installDefaultPluginsIfNeeded(hostPackage, busyIndicator, outputter);
             this._providerRegistrators.register();
             await this.providePlugins();
             await this.provideBoilerplateNamespaces();
@@ -58,13 +60,13 @@ export class Initializer implements IInitializer {
         busyIndicator.succeed('Plugins reloaded');
     }
 
-    private async installDefaultPluginsIfNeeded(hostPackage: HostPackage, dependencyResolvers: IDependencyResolvers, busyIndicator: IBusyIndicator, outputter: ICanOutputMessages) {
+    private async installDefaultPluginsIfNeeded(hostPackage: HostPackage, busyIndicator: IBusyIndicator, outputter: ICanOutputMessages) {
         const hostDefaultPlugins = hostPackage.dolittle.host.defaultPlugins;
         if (! await this.hasAllDefaultPlugins(hostDefaultPlugins)) {
-            const pluginPackages = await fetchDolittlePlugins(onlineDolittlePluginsFinder, connectionChecker, busyIndicator);
+            const pluginPackages = await fetchDolittlePlugins(this._dolittlePluginsFinder, this._connectionChecker, busyIndicator);
             const pluginsToDownload = pluginPackages.filter(_ => hostDefaultPlugins.includes(_.name));
             const missingPlugins = hostDefaultPlugins.filter(plugin => !pluginPackages.map(_ => _.name).includes(plugin));
-            npmPackageDownloader.downloadSync(pluginsToDownload.map(_ => {
+            this._packageDownloader.downloadSync(pluginsToDownload.map(_ => {
                 return {
                     name: _.name,
                     version: _.version
@@ -74,6 +76,7 @@ export class Initializer implements IInitializer {
                 outputter.print('Missing default plugins. Tooling might not function as intended. If this causes problems please report issue at https://github.com/dolittle-tools/common/issues');
                 missingPlugins.forEach(_ => outputter.print(`\t${_}`));
             }
+            if (pluginsToDownload.length > 0) await initBoilerplatesSystem(this._boilerplateDiscoverers, this._boilerplatesLoader, busyIndicator);
         }
     }
 
