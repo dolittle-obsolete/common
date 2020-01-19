@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common.boilerplates",
-  "version": "8.1.1",
+  "version": "8.2.0",
   "description": "The boilerplates system for common dolittle tooling",
   "publishConfig": {
     "access": "public"
