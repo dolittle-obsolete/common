@@ -50,7 +50,6 @@ async function getOutOfDatePackages(locallyInstalledPackages: {name: string, ver
             await latestPackageFinder.find(pkg.name, boilerplatePackageKeyword)
                 .then(packageJson => {
                     if (packageJson === null) {
-                        busyIndicator.fail(`'${pkg.name}' is not a boilerplate`);
                         busyIndicator = busyIndicator.createNew().start();
                     }
                     else {
