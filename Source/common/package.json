@@ -1,6 +1,6 @@
 {
   "name": "@dolittle/tooling.common",
-  "version": "8.2.0",
+  "version": "8.2.1",
   "description": "The aggregated common tooling system for dolittle",
   "publishConfig": {
     "access": "public"
@@ -14,6 +14,9 @@
   },
   "bugs": {
     "url": "https://github.com/dolittle-tools/common/issues"
+  },
+  "dolittle": {
+    "tooling": "8.*"
   },
   "engines": {
     "node": ">=12.0.0"
