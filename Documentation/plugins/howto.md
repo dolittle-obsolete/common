@@ -7,7 +7,7 @@ You should first understand some of the basic points about a [Plugin.](https://d
 
 For this example a plugin that would work like this:
 ```bash
-$ dolittle names add name"John Madden" "Maddenstreet 10"
+$ dolittle names add name "John Madden" "Maddenstreet 10"
 John Madded added
 $ dolittle names get name "John Madden"
 John Madden: Maddenstreet 10 
