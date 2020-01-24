@@ -1,9 +1,12 @@
 ---
 title: .dolittlerc
+# url: /tooling/tooling-platform/configurations/
 description: Learn about the configuration system
 keywords: Tools, tooling platform, configurations, .dolittlerc
 author: einari, woksin
-aliases: /tools/common/configurations/dolittlerc
+aliases:
+    - /tools/common/configurations/dolittlerc
+    - tooling/tooling-platform/configurations/dolittlerc/
 ---
 
 The configurations system uses [rc](https://www.npmjs.com/package/rc) to use rc configuration files called .dolittlerc to give the [Tooling Platform](../..) a dolittle configuration object.
