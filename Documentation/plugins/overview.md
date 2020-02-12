@@ -1,13 +1,11 @@
 ---
 title: Overview
-url: /tooling/tooling-platform/plugins/
 description: Learn about the plugin system
 keywords: Tools, tooling platform, plugin
 author: einari, woksin
 weight: 10
 aliases:
     - /tools/common/plugins
-    - /tooling/tooling-platform/plugins/overview/
 ---
 
 Plugins are one of the key building blocks in the [Tooling Platform](../). It provides a system for providing new [commands](../commands/command), [command groups](../commands/command_group) and [namespaces](../commands/namespace) into the tooling system.

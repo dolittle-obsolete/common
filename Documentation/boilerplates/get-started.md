@@ -1,6 +1,5 @@
 ---
 title: Get started
-url: /tooling/tooling-platform/boilerplates/
 description: Learn about the boilerplates system
 keywords: Tools, tooling platform, boilerplates
 author: einari, woksin

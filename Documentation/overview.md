@@ -1,6 +1,5 @@
 ---
 title: Overview
-url: /tooling/tooling-platform/
 description: Learn about the tooling platform
 keywords: Tools, tooling platform 
 author: einari, woksin
@@ -8,7 +7,6 @@ weight: 1
 repository: https://github.com/dolittle-tools/common
 aliases:
     - /tools/common
-    - /tooling/tooling-platform/overview/
 ---
 
 [Common tooling](https://www.github.com/dolittle-tools/common) represents a set of [Node](https://nodejs.org/) packages that makes up a tooling system / platform for which Dolittle tools can be built upon.
