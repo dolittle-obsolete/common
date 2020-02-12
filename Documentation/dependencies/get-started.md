@@ -1,13 +1,11 @@
 ---
 title: Get started
-url: /tooling/tooling-platform/dependencies/
 description: Learn about the dependency system
 keywords: Tools, tooling platform, dependencies
 author: einari, woksin, joel
 weight: 10
 aliases:
     - /tools/common/dependecies
-    - /tooling/tooling-platform/dependencies/get-started/
 ---
 
 A dependency is in essence just a requirement, an argument, to something.
